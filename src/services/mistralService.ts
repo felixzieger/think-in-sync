@@ -5,7 +5,7 @@ const client = new Mistral({ apiKey });
 
 export const generateAIResponse = async (currentWord: string, currentSentence: string[]) => {
   const response = await client.chat.complete({
-    model: "ministral-8b-latest",
+    model: "mistral-large-latest",
     messages: [
       {
         role: "system",
