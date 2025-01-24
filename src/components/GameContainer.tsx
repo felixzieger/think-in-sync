@@ -3,6 +3,7 @@ import { getRandomWord } from "@/lib/words";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
+import { generateAIResponse } from "@/services/mistralService";
 
 type GameState = "welcome" | "showing-word" | "building-sentence";
 
@@ -11,6 +12,7 @@ export const GameContainer = () => {
   const [currentWord, setCurrentWord] = useState<string>("");
   const [sentence, setSentence] = useState<string[]>([]);
   const [playerInput, setPlayerInput] = useState<string>("");
+  const [isAiThinking, setIsAiThinking] = useState(false);
 
   const handleStart = () => {
     const word = getRandomWord();
@@ -19,21 +21,7 @@ export const GameContainer = () => {
     console.log("Game started with word:", word);
   };
 
-  const getAIWord = (currentSentence: string[]) => {
-    // Simple AI that adds connecting words or basic descriptive words
-    const connectingWords = ["is", "looks", "appears", "seems", "feels"];
-    const descriptiveWords = ["very", "quite", "really", "extremely", "notably"];
-    
-    if (currentSentence.length === 0) {
-      return "this";
-    } else if (currentSentence.length === 1) {
-      return connectingWords[Math.floor(Math.random() * connectingWords.length)];
-    } else {
-      return descriptiveWords[Math.floor(Math.random() * descriptiveWords.length)];
-    }
-  };
-
-  const handlePlayerWord = (e: React.FormEvent) => {
+  const handlePlayerWord = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!playerInput.trim()) return;
 
@@ -41,12 +29,17 @@ export const GameContainer = () => {
     const newSentence = [...sentence, playerInput.trim()];
     setSentence(newSentence);
     setPlayerInput("");
+    setIsAiThinking(true);
 
-    // AI's turn
-    setTimeout(() => {
-      const aiWord = getAIWord(newSentence);
+    try {
+      // AI's turn
+      const aiWord = await generateAIResponse(currentWord, newSentence);
       setSentence([...newSentence, aiWord]);
-    }, 1000);
+    } catch (error) {
+      console.error('Error in AI turn:', error);
+    } finally {
+      setIsAiThinking(false);
+    }
   };
 
   const handleContinue = () => {
@@ -124,13 +117,14 @@ export const GameContainer = () => {
                 onChange={(e) => setPlayerInput(e.target.value)}
                 placeholder="Enter your word..."
                 className="mb-4"
+                disabled={isAiThinking}
               />
               <Button
                 type="submit"
                 className="w-full bg-primary text-lg hover:bg-primary/90"
-                disabled={!playerInput.trim()}
+                disabled={!playerInput.trim() || isAiThinking}
               >
-                Add Word
+                {isAiThinking ? "AI is thinking..." : "Add Word"}
               </Button>
             </form>
             <p className="text-sm text-gray-600">
