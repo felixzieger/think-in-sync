@@ -33,4 +33,4 @@ export const generateAIResponse = async (currentWord: string, currentSentence: s
     console.error('Error generating AI response:', error);
     return 'the'; // Fallback word in case of error
   }
-});
+};
