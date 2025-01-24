@@ -22,11 +22,15 @@ export const generateAIResponse = async (currentWord: string, currentSentence: s
                     Do not add quotes or punctuation.`
         }
       ],
-      max_tokens: 10,
+      maxTokens: 10,
       temperature: 0.7
     });
 
-    const word = response.choices[0].message.content.trim().split(' ').pop().replace(/"/g, '');
+    const content = response.choices[0].message.content;
+    const word = typeof content === 'string' 
+      ? content.trim().split(' ').pop()?.replace(/"/g, '') || 'the'
+      : 'the';
+      
     console.log('AI generated word:', word);
     return word;
   } catch (error) {
