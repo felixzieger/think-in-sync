@@ -74,6 +74,15 @@ export const HighScoreBoard = ({
       return;
     }
 
+    if (currentScore < 1) {
+      toast({
+        title: "Error",
+        description: "You need to complete at least one round to submit a score",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (hasSubmitted) {
       toast({
         title: "Error",
@@ -139,7 +148,7 @@ export const HighScoreBoard = ({
         </p>
       </div>
 
-      {!hasSubmitted && (
+      {!hasSubmitted && currentScore > 0 && (
         <div className="flex gap-4 mb-6">
           <Input
             placeholder="Enter your name"
