@@ -45,7 +45,11 @@ export const GameContainer = () => {
   // Focus input when entering building-sentence state
   useEffect(() => {
     if (gameState === 'building-sentence') {
-      inputRef.current?.focus();
+      // Add a small delay to ensure the input is mounted
+      setTimeout(() => {
+        inputRef.current?.focus();
+        console.log("Focusing input field");
+      }, 100);
     }
   }, [gameState]);
 
