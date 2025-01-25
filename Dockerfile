@@ -13,6 +13,12 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
+# Ensure the correct ownership and permissions
+RUN chown -R node:node /app
+
+# Switch to the non-root 'node' user
+USER node
+
 # Build the Vite application
 RUN npm run build
 
