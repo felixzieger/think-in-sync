@@ -15,6 +15,9 @@ serve(async (req) => {
     const { currentWord, currentSentence } = await req.json();
     console.log('Generating word for:', { currentWord, currentSentence });
 
+    // currentSentence is already a string from the client
+    const existingSentence = currentSentence || '';
+
     const client = new Mistral({
       apiKey: Deno.env.get('MISTRAL_API_KEY'),
     });
@@ -33,7 +36,7 @@ serve(async (req) => {
               role: "system",
               content: `You are helping in a word game. The secret word is "${currentWord}". 
                     Your task is to find a sentence to describe this word without using it directly. 
-                    Answer with a complete, grammatically correct sentence that starts with "${currentSentence.join(' ')}".
+                    Answer with a complete, grammatically correct sentence that starts with "${existingSentence}".
                     Do not add quotes or backticks. Just answer with the sentence.`
             }
           ],
@@ -45,9 +48,8 @@ serve(async (req) => {
         console.log('AI full response:', aiResponse);
         
         // Extract the new word by comparing with the existing sentence
-        const existingWords = currentSentence.join(' ');
         const newWord = aiResponse
-          .slice(existingWords.length)
+          .slice(existingSentence.length)
           .trim()
           .split(' ')[0]
           .replace(/[.,!?]$/, ''); // Remove any punctuation at the end
