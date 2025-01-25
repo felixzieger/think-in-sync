@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
-import { KeyboardEvent, useRef, useEffect } from "react";
+import { KeyboardEvent, useRef, useEffect, useState } from "react";
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -25,11 +25,15 @@ export const SentenceBuilder = ({
   onMakeGuess,
 }: SentenceBuilderProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
 
-  // Function to check if image exists
-  const imageExists = new Image();
-  imageExists.src = imagePath;
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setImageLoaded(true);
+    img.src = imagePath;
+    console.log("Attempting to load image:", imagePath);
+  }, [imagePath]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -59,7 +63,7 @@ export const SentenceBuilder = ({
         Take turns with AI to describe your word without using the word itself!
       </p>
       <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
-        {imageExists.complete && (
+        {imageLoaded && (
           <img
             src={imagePath}
             alt={currentWord}

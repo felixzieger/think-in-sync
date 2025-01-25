@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface WordDisplayProps {
   currentWord: string;
@@ -8,11 +9,15 @@ interface WordDisplayProps {
 }
 
 export const WordDisplay = ({ currentWord, successfulRounds, onContinue }: WordDisplayProps) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
 
-  // Function to check if image exists
-  const imageExists = new Image();
-  imageExists.src = imagePath;
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setImageLoaded(true);
+    img.src = imagePath;
+    console.log("Attempting to load image:", imagePath);
+  }, [imagePath]);
 
   return (
     <motion.div
@@ -22,7 +27,7 @@ export const WordDisplay = ({ currentWord, successfulRounds, onContinue }: WordD
     >
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">Your Word</h2>
       <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
-        {imageExists.complete && (
+        {imageLoaded && (
           <img
             src={imagePath}
             alt={currentWord}
