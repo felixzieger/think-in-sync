@@ -7,6 +7,7 @@ interface GuessDisplayProps {
   currentWord: string;
   onNextRound: () => void;
   onPlayAgain: () => void;
+  onViewHighScores?: () => void;
 }
 
 export const GuessDisplay = ({
@@ -15,6 +16,7 @@ export const GuessDisplay = ({
   currentWord,
   onNextRound,
   onPlayAgain,
+  onViewHighScores,
 }: GuessDisplayProps) => {
   const isGuessCorrect = () => aiGuess.toLowerCase() === currentWord.toLowerCase();
 
@@ -42,12 +44,31 @@ export const GuessDisplay = ({
           )}
         </p>
       </div>
-      <Button
-        onClick={isGuessCorrect() ? onNextRound : onPlayAgain}
-        className="w-full bg-primary text-lg hover:bg-primary/90"
-      >
-        {isGuessCorrect() ? "Next Round ⏎" : "Play Again ⏎"}
-      </Button>
+      <div className="flex flex-col gap-4">
+        {isGuessCorrect() ? (
+          <Button
+            onClick={onNextRound}
+            className="w-full bg-primary text-lg hover:bg-primary/90"
+          >
+            Next Round ⏎
+          </Button>
+        ) : (
+          <>
+            <Button
+              onClick={onViewHighScores}
+              className="w-full bg-secondary text-lg hover:bg-secondary/90"
+            >
+              View High Scores
+            </Button>
+            <Button
+              onClick={onPlayAgain}
+              className="w-full bg-primary text-lg hover:bg-primary/90"
+            >
+              Play Again ⏎
+            </Button>
+          </>
+        )}
+      </div>
     </motion.div>
   );
 };
