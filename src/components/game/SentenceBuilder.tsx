@@ -44,9 +44,24 @@ export const SentenceBuilder = ({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
-      if (sentence.length > 0 && !isAiThinking) {
+      handleMakeGuess();
+    }
+  };
+
+  const handleMakeGuess = () => {
+    if (playerInput.trim()) {
+      // Create a synthetic form event to add the current word
+      const syntheticEvent = {
+        preventDefault: () => {},
+      } as React.FormEvent;
+      onSubmitWord(syntheticEvent);
+      
+      // Wait a brief moment for the state to update before making the guess
+      setTimeout(() => {
         onMakeGuess();
-      }
+      }, 100);
+    } else {
+      onMakeGuess();
     }
   };
 
@@ -105,9 +120,9 @@ export const SentenceBuilder = ({
           </Button>
           <Button
             type="button"
-            onClick={onMakeGuess}
+            onClick={handleMakeGuess}
             className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
-            disabled={sentence.length === 0 || isAiThinking}
+            disabled={(!sentence.length && !playerInput.trim()) || isAiThinking}
           >
             {isAiThinking ? "AI is thinking..." : "Make AI Guess ⇧⏎"}
           </Button>
