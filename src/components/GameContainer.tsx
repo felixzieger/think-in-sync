@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
 import { useToast } from "@/components/ui/use-toast";
+import { HighScoreBoard } from "./HighScoreBoard";
 
-type GameState = "welcome" | "showing-word" | "building-sentence" | "showing-guess" | "game-over";
+type GameState = "welcome" | "showing-word" | "building-sentence" | "showing-guess" | "game-over" | "high-scores";
 
 export const GameContainer = () => {
   const [gameState, setGameState] = useState<GameState>("welcome");
@@ -16,6 +17,7 @@ export const GameContainer = () => {
   const [isAiThinking, setIsAiThinking] = useState(false);
   const [aiGuess, setAiGuess] = useState<string>("");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
+  const [totalWords, setTotalWords] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -32,7 +34,7 @@ export const GameContainer = () => {
           if (correct) {
             handleNextRound();
           } else {
-            handlePlayAgain();
+            setGameState("high-scores");
           }
         }
       }
@@ -58,6 +60,7 @@ export const GameContainer = () => {
     setCurrentWord(word);
     setGameState("showing-word");
     setSuccessfulRounds(0);
+    setTotalWords(0);
     console.log("Game started with word:", word);
   };
 
@@ -69,12 +72,14 @@ export const GameContainer = () => {
     const newSentence = [...sentence, word];
     setSentence(newSentence);
     setPlayerInput("");
+    setTotalWords(prev => prev + 1);
 
     setIsAiThinking(true);
     try {
       const aiWord = await generateAIResponse(currentWord, newSentence);
       const newSentenceWithAi = [...newSentence, aiWord];
       setSentence(newSentenceWithAi);
+      setTotalWords(prev => prev + 1);
       // Focus the input after AI's turn
       setTimeout(() => {
         inputRef.current?.focus();
@@ -127,6 +132,7 @@ export const GameContainer = () => {
     setAiGuess("");
     setCurrentWord("");
     setSuccessfulRounds(0);
+    setTotalWords(0);
   };
 
   const handleContinue = () => {
@@ -143,7 +149,7 @@ export const GameContainer = () => {
       setSuccessfulRounds(prev => prev + 1);
       return true;
     }
-    setGameState("game-over");
+    setGameState("high-scores");
     return false;
   };
 
@@ -154,6 +160,11 @@ export const GameContainer = () => {
         handleMakeGuess();
       }
     }
+  };
+
+  const getAverageWordsPerRound = () => {
+    if (successfulRounds === 0) return 0;
+    return totalWords / successfulRounds;
   };
 
   return (
@@ -312,6 +323,13 @@ export const GameContainer = () => {
               {isGuessCorrect() ? "Next Round ⏎" : "Play Again ⏎"}
             </Button>
           </motion.div>
+        ) : gameState === "high-scores" ? (
+          <HighScoreBoard
+            currentScore={successfulRounds}
+            avgWordsPerRound={getAverageWordsPerRound()}
+            onClose={() => setGameState("game-over")}
+            onPlayAgain={handlePlayAgain}
+          />
         ) : gameState === "game-over" ? (
           <motion.div
             initial={{ opacity: 0 }}
@@ -324,12 +342,20 @@ export const GameContainer = () => {
             <p className="mb-6 text-lg text-gray-800">
               You completed {successfulRounds} rounds successfully!
             </p>
-            <Button
-              onClick={handlePlayAgain}
-              className="w-full bg-primary text-lg hover:bg-primary/90"
-            >
-              Play Again ⏎
-            </Button>
+            <div className="flex gap-4">
+              <Button
+                onClick={() => setGameState("high-scores")}
+                className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
+              >
+                View High Scores
+              </Button>
+              <Button
+                onClick={handlePlayAgain}
+                className="flex-1 bg-primary text-lg hover:bg-primary/90"
+              >
+                Play Again ⏎
+              </Button>
+            </div>
           </motion.div>
         ) : null}
       </motion.div>
