@@ -38,6 +38,19 @@ interface HighScoreBoardProps {
 
 const ITEMS_PER_PAGE = 10;
 
+const getRankMedal = (rank: number) => {
+  switch (rank) {
+    case 1:
+      return "🥇";
+    case 2:
+      return "🥈";
+    case 3:
+      return "🥉";
+    default:
+      return null;
+  }
+};
+
 export const HighScoreBoard = ({
   currentScore,
   avgWordsPerRound,
@@ -176,14 +189,21 @@ export const HighScoreBoard = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {paginatedScores?.map((score, index) => (
-              <TableRow key={score.id}>
-                <TableCell>{startIndex + index + 1}</TableCell>
-                <TableCell>{score.player_name}</TableCell>
-                <TableCell>{score.score}</TableCell>
-                <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
-              </TableRow>
-            ))}
+            {paginatedScores?.map((score, index) => {
+              const absoluteRank = startIndex + index + 1;
+              const medal = getRankMedal(absoluteRank);
+              return (
+                <TableRow key={score.id}>
+                  <TableCell>
+                    {absoluteRank}
+                    {medal && <span className="ml-2">{medal}</span>}
+                  </TableCell>
+                  <TableCell>{score.player_name}</TableCell>
+                  <TableCell>{score.score}</TableCell>
+                  <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
+                </TableRow>
+              );
+            })}
             {!paginatedScores?.length && (
               <TableRow>
                 <TableCell colSpan={4} className="text-center">
