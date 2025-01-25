@@ -34,11 +34,21 @@ serve(async (req) => {
       temperature: 0.7
     });
 
-    const word = response.choices[0].message.content.trim().split(' ').pop().replace(/"/g, '');
-    console.log('Generated word:', word);
+    const aiResponse = response.choices[0].message.content.trim();
+    console.log('AI full response:', aiResponse);
+    
+    // Extract the new word by comparing with the existing sentence
+    const existingWords = currentSentence.join(' ');
+    const newWord = aiResponse
+      .slice(existingWords.length)
+      .trim()
+      .split(' ')[0]
+      .replace(/[.,!?]$/, ''); // Remove any punctuation at the end
+    
+    console.log('Extracted new word:', newWord);
 
     return new Response(
-      JSON.stringify({ word }),
+      JSON.stringify({ word: newWord }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
