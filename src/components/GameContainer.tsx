@@ -143,7 +143,7 @@ export const GameContainer = () => {
 
   const getAverageWordsPerRound = () => {
     if (successfulRounds === 0) return 0;
-    return totalWords / successfulRounds + 1; // The total words include the ones in the failed last round, so we also count it in the denominator
+    return totalWords / (successfulRounds + 1); // The total words include the ones in the failed last round, so we also count it in the denominator
   };
 
   return (
