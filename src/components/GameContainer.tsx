@@ -38,7 +38,7 @@ export const GameContainer = () => {
       setIsAiThinking(true);
       try {
         const finalSentence = newSentence.join(' ');
-
+        
         // Validate the sentence
         const isValid = await validateSentence(finalSentence);
         if (!isValid) {
@@ -70,17 +70,14 @@ export const GameContainer = () => {
 
     setIsAiThinking(true);
     try {
-      const aiSentence = await generateAIResponse(currentWord, newSentence);
-      const newSentenceLength = newSentence.length;
-      const aiWords = aiSentence.split(' '); // Split aiSentence into words
-      const aiWord = aiWords[newSentenceLength]; // Get the word at the index of newSentence length
+      const aiWord = await generateAIResponse(currentWord, newSentence);
       const newSentenceWithAi = [...newSentence, aiWord];
       setSentence(newSentenceWithAi);
 
       // Check if AI ended the sentence
       if (aiWord.endsWith('.')) {
         const finalSentence = newSentenceWithAi.join(' ');
-
+        
         // Validate the sentence
         const isValid = await validateSentence(finalSentence);
         if (!isValid) {
