@@ -35,11 +35,21 @@ export const SentenceBuilder = ({
     console.log("Attempting to load image:", imagePath);
   }, [imagePath]);
 
+  // Focus input on initial render
   useEffect(() => {
     setTimeout(() => {
       inputRef.current?.focus();
     }, 100);
   }, []);
+
+  // Focus input after AI finishes thinking
+  useEffect(() => {
+    if (!isAiThinking && sentence.length > 0 && sentence.length % 2 === 0) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [isAiThinking, sentence.length]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'Enter') {
