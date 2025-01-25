@@ -19,15 +19,21 @@ export const GameContainer = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  // Add event listener for Enter key when game is over
+  // Add event listener for Enter key for various game states
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && (gameState === 'game-over' || gameState === 'showing-guess')) {
-        const correct = isGuessCorrect();
-        if (correct) {
-          handleNextRound();
-        } else {
-          handlePlayAgain();
+      if (e.key === 'Enter') {
+        if (gameState === 'welcome') {
+          handleStart();
+        } else if (gameState === 'showing-word') {
+          handleContinue();
+        } else if (gameState === 'game-over' || gameState === 'showing-guess') {
+          const correct = isGuessCorrect();
+          if (correct) {
+            handleNextRound();
+          } else {
+            handlePlayAgain();
+          }
         }
       }
     };
@@ -154,13 +160,13 @@ export const GameContainer = () => {
           >
             <h1 className="mb-6 text-4xl font-bold text-gray-900">Word Game</h1>
             <p className="mb-8 text-gray-600">
-              Ready to play? Click start to begin!
+              Ready to play? Click start or press Enter to begin!
             </p>
             <Button
               onClick={handleStart}
               className="w-full bg-primary text-lg hover:bg-primary/90"
             >
-              Start Game
+              Start Game ⏎
             </Button>
           </motion.div>
         ) : gameState === "showing-word" ? (
@@ -192,7 +198,7 @@ export const GameContainer = () => {
               onClick={handleContinue}
               className="w-full bg-primary text-lg hover:bg-primary/90"
             >
-              Continue
+              Continue ⏎
             </Button>
           </motion.div>
         ) : gameState === "building-sentence" ? (
