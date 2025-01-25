@@ -95,8 +95,12 @@ export const GameContainer = () => {
     setSentence([]);
   };
 
-  const handleGuessResult = () => {
-    if (aiGuess.toLowerCase() === currentWord.toLowerCase()) {
+  const isGuessCorrect = () => {
+    return aiGuess.toLowerCase() === currentWord.toLowerCase();
+  };
+
+  const handleGuessComplete = () => {
+    if (isGuessCorrect()) {
       setSuccessfulRounds(prev => prev + 1);
       return true;
     }
@@ -231,7 +235,7 @@ export const GameContainer = () => {
                 AI guessed: {aiGuess}
               </p>
               <p className="mt-4 text-lg">
-                {handleGuessResult() ? (
+                {isGuessCorrect() ? (
                   <span className="text-green-600">
                     Correct guess! 🎉 Ready for the next round?
                   </span>
@@ -243,10 +247,17 @@ export const GameContainer = () => {
               </p>
             </div>
             <Button
-              onClick={handleGuessResult() ? handleNextRound : handlePlayAgain}
+              onClick={() => {
+                const correct = handleGuessComplete();
+                if (correct) {
+                  handleNextRound();
+                } else {
+                  handlePlayAgain();
+                }
+              }}
               className="w-full bg-primary text-lg hover:bg-primary/90"
             >
-              {handleGuessResult() ? "Next Round" : "Play Again"}
+              {isGuessCorrect() ? "Next Round" : "Play Again"}
             </Button>
           </motion.div>
         ) : gameState === "game-over" ? (
