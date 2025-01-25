@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { HighScoreBoard } from "@/components/HighScoreBoard";
 
 interface GuessDisplayProps {
   sentence: string[];
@@ -7,7 +13,8 @@ interface GuessDisplayProps {
   currentWord: string;
   onNextRound: () => void;
   onPlayAgain: () => void;
-  onViewHighScores?: () => void;
+  currentScore: number;
+  avgWordsPerRound: number;
 }
 
 export const GuessDisplay = ({
@@ -16,7 +23,8 @@ export const GuessDisplay = ({
   currentWord,
   onNextRound,
   onPlayAgain,
-  onViewHighScores,
+  currentScore,
+  avgWordsPerRound,
 }: GuessDisplayProps) => {
   const isGuessCorrect = () => aiGuess.toLowerCase() === currentWord.toLowerCase();
 
@@ -54,12 +62,23 @@ export const GuessDisplay = ({
           </Button>
         ) : (
           <>
-            <Button
-              onClick={onViewHighScores}
-              className="w-full bg-secondary text-lg hover:bg-secondary/90"
-            >
-              View High Scores
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  className="w-full bg-secondary text-lg hover:bg-secondary/90"
+                >
+                  View High Scores
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-md">
+                <HighScoreBoard
+                  currentScore={currentScore}
+                  avgWordsPerRound={avgWordsPerRound}
+                  onClose={() => {}}
+                  onPlayAgain={onPlayAgain}
+                />
+              </DialogContent>
+            </Dialog>
             <Button
               onClick={onPlayAgain}
               className="w-full bg-primary text-lg hover:bg-primary/90"

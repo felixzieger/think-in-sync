@@ -10,7 +10,7 @@ import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
 import { GameOver } from "./game/GameOver";
 
-type GameState = "welcome" | "showing-word" | "building-sentence" | "showing-guess" | "game-over" | "high-scores";
+type GameState = "welcome" | "showing-word" | "building-sentence" | "showing-guess" | "game-over";
 
 export const GameContainer = () => {
   const [gameState, setGameState] = useState<GameState>("welcome");
@@ -175,18 +175,10 @@ export const GameContainer = () => {
             sentence={sentence}
             aiGuess={aiGuess}
             currentWord={currentWord}
-            onNextRound={() => {
-              handleGuessComplete();
-              handleNextRound();
-            }}
+            onNextRound={handleNextRound}
             onPlayAgain={handlePlayAgain}
-          />
-        ) : gameState === "high-scores" ? (
-          <HighScoreBoard
             currentScore={successfulRounds}
             avgWordsPerRound={getAverageWordsPerRound()}
-            onClose={() => setGameState("game-over")}
-            onPlayAgain={handlePlayAgain}
           />
         ) : gameState === "game-over" ? (
           <GameOver
