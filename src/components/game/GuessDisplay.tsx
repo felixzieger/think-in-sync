@@ -70,7 +70,7 @@ export const GuessDisplay = ({
                   View High Scores
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-md">
+              <DialogContent className="max-w-md bg-white">
                 <HighScoreBoard
                   currentScore={currentScore}
                   avgWordsPerRound={avgWordsPerRound}
