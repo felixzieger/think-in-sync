@@ -25,11 +25,9 @@ serve(async (req) => {
         {
           role: "system",
           content: `You are helping in a word game. The secret word is "${currentWord}". 
-                    Your task is to add ONE word to help describe this word without using it directly. 
-                    The words must form a correct sentence in English when combined with "${currentSentence.join(' ')}".
-                    Respond with one appropriate word that continues the sentence naturally.
-                    Your word will be appended to the existing sentence, so make sure it fits grammatically.
-                    Do not add quotes or punctuation unless it's a period to end the sentence.`
+                    Your task is to find a sentence to describe this word without using it directly. 
+                    Answer with a complete, grammatically correct sentence that starts with "${currentSentence.join(' ')}".
+                    Do not add quotes or backticks. Just answer with the sentence.`
         }
       ],
       maxTokens: 10,
