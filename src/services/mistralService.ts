@@ -35,17 +35,3 @@ export const guessWord = async (sentence: string): Promise<string> => {
   console.log('AI guessed:', data.guess);
   return data.guess;
 };
-
-export const validateSentence = async (sentence: string): Promise<boolean> => {
-  const { data, error } = await supabase.functions.invoke('validate-sentence', {
-    body: { sentence }
-  });
-
-  if (error) {
-    console.error('Error validating sentence:', error);
-    throw error;
-  }
-
-  console.log('Sentence validation result:', data.isValid);
-  return data.isValid;
-};

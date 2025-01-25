@@ -3,7 +3,7 @@ import { getRandomWord } from "@/lib/words";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
-import { generateAIResponse, guessWord, validateSentence } from "@/services/mistralService";
+import { generateAIResponse, guessWord } from "@/services/mistralService";
 import { useToast } from "@/components/ui/use-toast";
 
 type GameState = "welcome" | "showing-word" | "building-sentence" | "showing-guess" | "game-over";
@@ -33,73 +33,37 @@ export const GameContainer = () => {
     setSentence(newSentence);
     setPlayerInput("");
 
-    // Check if the sentence is complete (ends with a period)
-    if (word.endsWith('.')) {
-      setIsAiThinking(true);
-      try {
-        const finalSentence = newSentence.join(' ');
-        
-        // Validate the sentence
-        const isValid = await validateSentence(finalSentence);
-        if (!isValid) {
-          toast({
-            title: "Invalid Sentence",
-            description: "The sentence is not grammatically correct. Game Over!",
-            variant: "destructive",
-          });
-          setGameState("game-over");
-          setIsAiThinking(false);
-          return;
-        }
-
-        const guess = await guessWord(finalSentence);
-        setAiGuess(guess);
-        setGameState("showing-guess");
-      } catch (error) {
-        console.error('Error getting AI guess:', error);
-        toast({
-          title: "Error",
-          description: "Failed to get AI's guess. Please try again.",
-          variant: "destructive",
-        });
-      } finally {
-        setIsAiThinking(false);
-      }
-      return;
-    }
-
     setIsAiThinking(true);
     try {
       const aiWord = await generateAIResponse(currentWord, newSentence);
       const newSentenceWithAi = [...newSentence, aiWord];
       setSentence(newSentenceWithAi);
-
-      // Check if AI ended the sentence
-      if (aiWord.endsWith('.')) {
-        const finalSentence = newSentenceWithAi.join(' ');
-        
-        // Validate the sentence
-        const isValid = await validateSentence(finalSentence);
-        if (!isValid) {
-          toast({
-            title: "Invalid Sentence",
-            description: "The AI generated an invalid sentence. Game Over!",
-            variant: "destructive",
-          });
-          setGameState("game-over");
-          setIsAiThinking(false);
-          return;
-        }
-
-        const guess = await guessWord(finalSentence);
-        setAiGuess(guess);
-        setGameState("showing-guess");
-      }
     } catch (error) {
       console.error('Error in AI turn:', error);
       toast({
         title: "Error",
         description: "Failed to get AI's response. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAiThinking(false);
+    }
+  };
+
+  const handleMakeGuess = async () => {
+    if (sentence.length === 0) return;
+
+    setIsAiThinking(true);
+    try {
+      const finalSentence = sentence.join(' ');
+      const guess = await guessWord(finalSentence);
+      setAiGuess(guess);
+      setGameState("showing-guess");
+    } catch (error) {
+      console.error('Error getting AI guess:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get AI's guess. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -159,7 +123,7 @@ export const GameContainer = () => {
             </div>
             <p className="mb-8 text-gray-600">
               Remember this word! You'll take turns with AI to create a sentence
-              that describes it. End the sentence with a period when you're done, and another AI will try to guess it!
+              that describes it. When you're ready, click the "Make AI Guess" button to see if another AI can guess it!
             </p>
             <Button
               onClick={handleContinue}
@@ -196,44 +160,30 @@ export const GameContainer = () => {
                 type="text"
                 value={playerInput}
                 onChange={(e) => setPlayerInput(e.target.value.replace(/\s/g, ''))}
-                placeholder="Enter your word (end with . to finish)..."
+                placeholder="Enter your word..."
                 className="mb-4"
                 disabled={isAiThinking}
               />
-              <Button
-                type="submit"
-                className="w-full bg-primary text-lg hover:bg-primary/90"
-                disabled={!playerInput.trim() || isAiThinking}
-              >
-                {isAiThinking ? "AI is thinking..." : "Add Word"}
-              </Button>
+              <div className="flex gap-4">
+                <Button
+                  type="submit"
+                  className="flex-1 bg-primary text-lg hover:bg-primary/90"
+                  disabled={!playerInput.trim() || isAiThinking}
+                >
+                  {isAiThinking ? "AI is thinking..." : "Add Word"}
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleMakeGuess}
+                  className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
+                  disabled={sentence.length === 0 || isAiThinking}
+                >
+                  Make AI Guess
+                </Button>
+              </div>
             </form>
           </motion.div>
-        ) : gameState === "game-over" ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center"
-          >
-            <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-              Game Over
-            </h2>
-            <div className="mb-6 rounded-lg bg-gray-50 p-4">
-              <p className="mb-4 text-lg text-gray-800">
-                Your sentence was not grammatically correct:
-              </p>
-              <p className="italic text-gray-600">
-                {sentence.join(" ")}
-              </p>
-            </div>
-            <Button
-              onClick={handlePlayAgain}
-              className="w-full bg-primary text-lg hover:bg-primary/90"
-            >
-              Play Again
-            </Button>
-          </motion.div>
-        ) : (
+        ) : gameState === "showing-guess" ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -264,7 +214,7 @@ export const GameContainer = () => {
               Play Again
             </Button>
           </motion.div>
-        )}
+        ) : null}
       </motion.div>
     </div>
   );
