@@ -15,12 +15,14 @@ export const GameContainer = () => {
   const [playerInput, setPlayerInput] = useState<string>("");
   const [isAiThinking, setIsAiThinking] = useState(false);
   const [aiGuess, setAiGuess] = useState<string>("");
+  const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
   const { toast } = useToast();
 
   const handleStart = () => {
     const word = getRandomWord();
     setCurrentWord(word);
     setGameState("showing-word");
+    setSuccessfulRounds(0);
     console.log("Game started with word:", word);
   };
 
@@ -71,16 +73,35 @@ export const GameContainer = () => {
     }
   };
 
+  const handleNextRound = () => {
+    const word = getRandomWord();
+    setCurrentWord(word);
+    setGameState("showing-word");
+    setSentence([]);
+    setAiGuess("");
+    console.log("Next round started with word:", word);
+  };
+
   const handlePlayAgain = () => {
     setGameState("welcome");
     setSentence([]);
     setAiGuess("");
     setCurrentWord("");
+    setSuccessfulRounds(0);
   };
 
   const handleContinue = () => {
     setGameState("building-sentence");
     setSentence([]);
+  };
+
+  const handleGuessResult = () => {
+    if (aiGuess.toLowerCase() === currentWord.toLowerCase()) {
+      setSuccessfulRounds(prev => prev + 1);
+      return true;
+    }
+    setGameState("game-over");
+    return false;
   };
 
   return (
@@ -116,11 +137,16 @@ export const GameContainer = () => {
             <h2 className="mb-4 text-2xl font-semibold text-gray-900">
               Your Word
             </h2>
-            <div className="mb-8 rounded-lg bg-secondary/10 p-6">
+            <div className="mb-4 rounded-lg bg-secondary/10 p-6">
               <p className="text-4xl font-bold tracking-wider text-secondary">
                 {currentWord}
               </p>
             </div>
+            {successfulRounds > 0 && (
+              <p className="mb-4 text-green-600">
+                Successful rounds: {successfulRounds}
+              </p>
+            )}
             <p className="mb-8 text-gray-600">
               Remember this word! You'll take turns with AI to create a sentence
               that describes it. When you're ready, click the "Make AI Guess" button to see if another AI can guess it!
@@ -150,6 +176,11 @@ export const GameContainer = () => {
                 {currentWord}
               </p>
             </div>
+            {successfulRounds > 0 && (
+              <p className="mb-4 text-green-600">
+                Successful rounds: {successfulRounds}
+              </p>
+            )}
             <div className="mb-6 rounded-lg bg-gray-50 p-4">
               <p className="text-lg text-gray-800">
                 {sentence.length > 0 ? sentence.join(" ") : "Start your sentence..."}
@@ -200,13 +231,36 @@ export const GameContainer = () => {
                 AI guessed: {aiGuess}
               </p>
               <p className="mt-4 text-lg">
-                {aiGuess.toLowerCase() === currentWord.toLowerCase() ? (
-                  <span className="text-green-600">Correct guess! 🎉</span>
+                {handleGuessResult() ? (
+                  <span className="text-green-600">
+                    Correct guess! 🎉 Ready for the next round?
+                  </span>
                 ) : (
-                  <span className="text-red-600">Wrong! The word was {currentWord}</span>
+                  <span className="text-red-600">
+                    Game Over! You completed {successfulRounds} rounds successfully!
+                  </span>
                 )}
               </p>
             </div>
+            <Button
+              onClick={handleGuessResult() ? handleNextRound : handlePlayAgain}
+              className="w-full bg-primary text-lg hover:bg-primary/90"
+            >
+              {handleGuessResult() ? "Next Round" : "Play Again"}
+            </Button>
+          </motion.div>
+        ) : gameState === "game-over" ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center"
+          >
+            <h2 className="mb-4 text-2xl font-semibold text-gray-900">
+              Game Over!
+            </h2>
+            <p className="mb-6 text-lg text-gray-800">
+              You completed {successfulRounds} rounds successfully!
+            </p>
             <Button
               onClick={handlePlayAgain}
               className="w-full bg-primary text-lg hover:bg-primary/90"
