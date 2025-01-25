@@ -157,7 +157,7 @@ export const GameContainer = () => {
                 {currentWord}
               </p>
             </div>
-            <p className="mb-6 text-gray-600">
+            <p className="mb-8 text-gray-600">
               Remember this word! You'll take turns with AI to create a sentence
               that describes it. End the sentence with a period when you're done, and another AI will try to guess it!
             </p>
