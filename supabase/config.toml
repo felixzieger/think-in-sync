@@ -1,1 +1,7 @@
 project_id = "rrrchnzqzjbnphuurbio"
+[api]
+enabled = true
+[analytics]
+enabled = false
+[realtime]
+enabled = false
