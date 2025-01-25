@@ -1,11 +1,14 @@
-import { useState, useRef, KeyboardEvent, useEffect } from "react";
+import { useState, KeyboardEvent, useEffect } from "react";
 import { getRandomWord } from "@/lib/words";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
 import { useToast } from "@/components/ui/use-toast";
 import { HighScoreBoard } from "./HighScoreBoard";
+import { WelcomeScreen } from "./game/WelcomeScreen";
+import { WordDisplay } from "./game/WordDisplay";
+import { SentenceBuilder } from "./game/SentenceBuilder";
+import { GuessDisplay } from "./game/GuessDisplay";
+import { GameOver } from "./game/GameOver";
 
 type GameState = "welcome" | "showing-word" | "building-sentence" | "showing-guess" | "game-over" | "high-scores";
 
@@ -18,10 +21,8 @@ export const GameContainer = () => {
   const [aiGuess, setAiGuess] = useState<string>("");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
   const [totalWords, setTotalWords] = useState<number>(0);
-  const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  // Add event listener for Enter key for various game states
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
@@ -43,17 +44,6 @@ export const GameContainer = () => {
     window.addEventListener('keydown', handleKeyPress as any);
     return () => window.removeEventListener('keydown', handleKeyPress as any);
   }, [gameState, aiGuess, currentWord]);
-
-  // Focus input when entering building-sentence state
-  useEffect(() => {
-    if (gameState === 'building-sentence') {
-      // Add a small delay to ensure the input is mounted
-      setTimeout(() => {
-        inputRef.current?.focus();
-        console.log("Focusing input field");
-      }, 100);
-    }
-  }, [gameState]);
 
   const handleStart = () => {
     const word = getRandomWord();
@@ -80,16 +70,12 @@ export const GameContainer = () => {
       const newSentenceWithAi = [...newSentence, aiWord];
       setSentence(newSentenceWithAi);
       setTotalWords(prev => prev + 1);
-      // Focus the input after AI's turn
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
     } catch (error) {
       console.error('Error in AI turn:', error);
       toast({
         title: "AI Response Delayed",
         description: "The AI is currently busy. Please try adding another word or wait a moment.",
-        variant: "default", // Changed from "destructive" to "default"
+        variant: "default",
       });
     } finally {
       setIsAiThinking(false);
@@ -110,7 +96,7 @@ export const GameContainer = () => {
       toast({
         title: "AI Response Delayed",
         description: "The AI is currently busy. Please try again in a moment.",
-        variant: "default", // Changed from "destructive" to "default"
+        variant: "default",
       });
     } finally {
       setIsAiThinking(false);
@@ -153,15 +139,6 @@ export const GameContainer = () => {
     return false;
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.shiftKey && e.key === 'Enter') {
-      e.preventDefault();
-      if (sentence.length > 0 && !isAiThinking) {
-        handleMakeGuess();
-      }
-    }
-  };
-
   const getAverageWordsPerRound = () => {
     if (successfulRounds === 0) return 0;
     return totalWords / successfulRounds;
@@ -175,154 +152,35 @@ export const GameContainer = () => {
         className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg"
       >
         {gameState === "welcome" ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center"
-          >
-            <h1 className="mb-6 text-4xl font-bold text-gray-900">Word Game</h1>
-            <p className="mb-8 text-gray-600">
-              Ready to play? Click start or press Enter to begin!
-            </p>
-            <Button
-              onClick={handleStart}
-              className="w-full bg-primary text-lg hover:bg-primary/90"
-            >
-              Start Game ⏎
-            </Button>
-          </motion.div>
+          <WelcomeScreen onStart={handleStart} />
         ) : gameState === "showing-word" ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center"
-          >
-            <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-              Your Word
-            </h2>
-            <div className="mb-4 rounded-lg bg-secondary/10 p-6">
-              <p className="text-4xl font-bold tracking-wider text-secondary">
-                {currentWord}
-              </p>
-            </div>
-            {successfulRounds > 0 && (
-              <p className="mb-4 text-green-600">
-                Successful rounds: {successfulRounds}
-              </p>
-            )}
-            <p className="mb-8 text-gray-600">
-              You'll take turns with AI to create a sentence that describes this word.
-            </p>
-            <p className="mb-8 text-gray-600">
-               Click the "Make AI Guess" button to see if another AI can guess it!
-            </p>
-            <Button
-              onClick={handleContinue}
-              className="w-full bg-primary text-lg hover:bg-primary/90"
-            >
-              Continue ⏎
-            </Button>
-          </motion.div>
+          <WordDisplay
+            currentWord={currentWord}
+            successfulRounds={successfulRounds}
+            onContinue={handleContinue}
+          />
         ) : gameState === "building-sentence" ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center"
-          >
-            <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-              Build a Description
-            </h2>
-            <p className="mb-6 text-sm text-gray-600">
-              Take turns with AI to describe your word without using the word
-              itself!
-            </p>
-            <div className="mb-4 rounded-lg bg-secondary/10 p-4">
-              <p className="text-2xl font-bold tracking-wider text-secondary">
-                {currentWord}
-              </p>
-            </div>
-            {successfulRounds > 0 && (
-              <p className="mb-4 text-green-600">
-                Successful rounds: {successfulRounds}
-              </p>
-            )}
-            <div className="mb-6 rounded-lg bg-gray-50 p-4">
-              <p className="text-lg text-gray-800">
-                {sentence.length > 0 ? sentence.join(" ") : "Start your sentence..."}
-              </p>
-            </div>
-            <form onSubmit={handlePlayerWord} className="mb-4">
-              <Input
-                ref={inputRef}
-                type="text"
-                value={playerInput}
-                onChange={(e) => setPlayerInput(e.target.value.replace(/\s/g, ''))}
-                onKeyDown={handleKeyDown}
-                placeholder="Enter your word..."
-                className="mb-4"
-                disabled={isAiThinking}
-              />
-              <div className="flex gap-4">
-                <Button
-                  type="submit"
-                  className="flex-1 bg-primary text-lg hover:bg-primary/90"
-                  disabled={!playerInput.trim() || isAiThinking}
-                >
-                  {isAiThinking ? "AI is thinking..." : "Add Word ⏎"}
-                </Button>
-                <Button
-                  type="button"
-                  onClick={handleMakeGuess}
-                  className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
-                  disabled={sentence.length === 0 || isAiThinking}
-                >
-                  {isAiThinking ? "AI is thinking..." : "Make AI Guess ⇧⏎"}
-                </Button>
-              </div>
-            </form>
-          </motion.div>
+          <SentenceBuilder
+            currentWord={currentWord}
+            successfulRounds={successfulRounds}
+            sentence={sentence}
+            playerInput={playerInput}
+            isAiThinking={isAiThinking}
+            onInputChange={setPlayerInput}
+            onSubmitWord={handlePlayerWord}
+            onMakeGuess={handleMakeGuess}
+          />
         ) : gameState === "showing-guess" ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center"
-          >
-            <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-              AI's Guess
-            </h2>
-            <div className="mb-6 rounded-lg bg-gray-50 p-4">
-              <p className="mb-4 text-lg text-gray-800">
-                Your sentence: {sentence.join(" ")}
-              </p>
-              <p className="text-xl font-bold text-primary">
-                AI guessed: {aiGuess}
-              </p>
-              <p className="mt-4 text-lg">
-                {isGuessCorrect() ? (
-                  <span className="text-green-600">
-                    Correct guess! 🎉 Ready for the next round? Press Enter
-                  </span>
-                ) : (
-                  <span className="text-red-600">
-                    Game Over! You completed {successfulRounds} rounds successfully! Press Enter to play again
-                  </span>
-                )}
-              </p>
-            </div>
-            <Button
-              onClick={() => {
-                const correct = handleGuessComplete();
-                if (correct) {
-                  handleNextRound();
-                } else {
-                  handlePlayAgain();
-                }
-              }}
-              className="w-full bg-primary text-lg hover:bg-primary/90"
-            >
-              {isGuessCorrect() ? "Next Round ⏎" : "Play Again ⏎"}
-            </Button>
-          </motion.div>
+          <GuessDisplay
+            sentence={sentence}
+            aiGuess={aiGuess}
+            currentWord={currentWord}
+            onNextRound={() => {
+              handleGuessComplete();
+              handleNextRound();
+            }}
+            onPlayAgain={handlePlayAgain}
+          />
         ) : gameState === "high-scores" ? (
           <HighScoreBoard
             currentScore={successfulRounds}
@@ -331,32 +189,11 @@ export const GameContainer = () => {
             onPlayAgain={handlePlayAgain}
           />
         ) : gameState === "game-over" ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center"
-          >
-            <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-              Game Over!
-            </h2>
-            <p className="mb-6 text-lg text-gray-800">
-              You completed {successfulRounds} rounds successfully!
-            </p>
-            <div className="flex gap-4">
-              <Button
-                onClick={() => setGameState("high-scores")}
-                className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
-              >
-                View High Scores
-              </Button>
-              <Button
-                onClick={handlePlayAgain}
-                className="flex-1 bg-primary text-lg hover:bg-primary/90"
-              >
-                Play Again ⏎
-              </Button>
-            </div>
-          </motion.div>
+          <GameOver
+            successfulRounds={successfulRounds}
+            onViewHighScores={() => setGameState("high-scores")}
+            onPlayAgain={handlePlayAgain}
+          />
         ) : null}
       </motion.div>
     </div>
