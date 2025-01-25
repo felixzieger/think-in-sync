@@ -3,7 +3,6 @@ import { getRandomWord } from "@/lib/words";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
 import { useToast } from "@/components/ui/use-toast";
-import { HighScoreBoard } from "./HighScoreBoard";
 import { WelcomeScreen } from "./game/WelcomeScreen";
 import { WordDisplay } from "./game/WordDisplay";
 import { SentenceBuilder } from "./game/SentenceBuilder";
@@ -35,7 +34,7 @@ export const GameContainer = () => {
           if (correct) {
             handleNextRound();
           } else {
-            setGameState("high-scores");
+            setGameState("game-over");
           }
         }
       }
@@ -104,12 +103,16 @@ export const GameContainer = () => {
   };
 
   const handleNextRound = () => {
-    const word = getRandomWord();
-    setCurrentWord(word);
-    setGameState("showing-word");
-    setSentence([]);
-    setAiGuess("");
-    console.log("Next round started with word:", word);
+    if (handleGuessComplete()) {
+      const word = getRandomWord();
+      setCurrentWord(word);
+      setGameState("showing-word");
+      setSentence([]);
+      setAiGuess("");
+      console.log("Next round started with word:", word);
+    } else {
+      setGameState("game-over");
+    }
   };
 
   const handlePlayAgain = () => {
@@ -135,7 +138,6 @@ export const GameContainer = () => {
       setSuccessfulRounds(prev => prev + 1);
       return true;
     }
-    setGameState("high-scores");
     return false;
   };
 
@@ -183,7 +185,6 @@ export const GameContainer = () => {
         ) : gameState === "game-over" ? (
           <GameOver
             successfulRounds={successfulRounds}
-            onViewHighScores={() => setGameState("high-scores")}
             onPlayAgain={handlePlayAgain}
           />
         ) : null}
