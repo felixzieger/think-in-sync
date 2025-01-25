@@ -18,9 +18,6 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         You will be given a secret word. Your goal is to describe this secret word so that an AI can guess it.
         However, you are only allowed to say one word at the time, taking turns with another AI.
       </p>
-      <p className="mb-8 text-gray-600">
-        Ready to play? Click start or press Enter to begin!
-      </p>
       <Button
         onClick={onStart}
         className="w-full bg-primary text-lg hover:bg-primary/90"
