@@ -117,6 +117,18 @@ export const HighScoreBoard = ({
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedScores = highScores?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(p => p - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(p => p + 1);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="text-center">
@@ -179,8 +191,8 @@ export const HighScoreBoard = ({
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious 
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
+                onClick={handlePreviousPage}
+                className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
               />
             </PaginationItem>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -195,8 +207,8 @@ export const HighScoreBoard = ({
             ))}
             <PaginationItem>
               <PaginationNext
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
+                onClick={handleNextPage}
+                className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
               />
             </PaginationItem>
           </PaginationContent>
