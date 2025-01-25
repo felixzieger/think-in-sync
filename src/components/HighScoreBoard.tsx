@@ -12,6 +12,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 interface HighScore {
   id: string;
@@ -28,6 +36,8 @@ interface HighScoreBoardProps {
   onPlayAgain: () => void;
 }
 
+const ITEMS_PER_PAGE = 10;
+
 export const HighScoreBoard = ({
   currentScore,
   avgWordsPerRound,
@@ -37,6 +47,7 @@ export const HighScoreBoard = ({
   const [playerName, setPlayerName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const { toast } = useToast();
 
   const { data: highScores, refetch } = useQuery({
@@ -102,6 +113,10 @@ export const HighScoreBoard = ({
     }
   };
 
+  const totalPages = highScores ? Math.ceil(highScores.length / ITEMS_PER_PAGE) : 0;
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedScores = highScores?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
   return (
     <div className="space-y-6">
       <div className="text-center">
@@ -140,15 +155,15 @@ export const HighScoreBoard = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {highScores?.map((score, index) => (
+            {paginatedScores?.map((score, index) => (
               <TableRow key={score.id}>
-                <TableCell>{index + 1}</TableCell>
+                <TableCell>{startIndex + index + 1}</TableCell>
                 <TableCell>{score.player_name}</TableCell>
                 <TableCell>{score.score}</TableCell>
                 <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
               </TableRow>
             ))}
-            {!highScores?.length && (
+            {!paginatedScores?.length && (
               <TableRow>
                 <TableCell colSpan={4} className="text-center">
                   No high scores yet. Be the first!
@@ -158,6 +173,35 @@ export const HighScoreBoard = ({
           </TableBody>
         </Table>
       </div>
+
+      {totalPages > 1 && (
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious 
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+              />
+            </PaginationItem>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  onClick={() => setCurrentPage(page)}
+                  isActive={currentPage === page}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
 
       <div className="flex justify-end gap-4">
         <Button variant="outline" onClick={onClose}>
