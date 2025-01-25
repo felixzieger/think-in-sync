@@ -36,6 +36,7 @@ export const HighScoreBoard = ({
 }: HighScoreBoardProps) => {
   const [playerName, setPlayerName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const { toast } = useToast();
 
   const { data: highScores, refetch } = useQuery({
@@ -62,6 +63,15 @@ export const HighScoreBoard = ({
       return;
     }
 
+    if (hasSubmitted) {
+      toast({
+        title: "Error",
+        description: "You have already submitted your score for this game",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const { error } = await supabase.from("high_scores").insert({
@@ -77,6 +87,7 @@ export const HighScoreBoard = ({
         description: "Your score has been recorded",
       });
       
+      setHasSubmitted(true);
       await refetch();
       setPlayerName("");
     } catch (error) {
@@ -101,20 +112,22 @@ export const HighScoreBoard = ({
         </p>
       </div>
 
-      <div className="flex gap-4 mb-6">
-        <Input
-          placeholder="Enter your name"
-          value={playerName}
-          onChange={(e) => setPlayerName(e.target.value)}
-          className="flex-1"
-        />
-        <Button
-          onClick={handleSubmitScore}
-          disabled={isSubmitting || !playerName.trim()}
-        >
-          {isSubmitting ? "Submitting..." : "Submit Score"}
-        </Button>
-      </div>
+      {!hasSubmitted && (
+        <div className="flex gap-4 mb-6">
+          <Input
+            placeholder="Enter your name"
+            value={playerName}
+            onChange={(e) => setPlayerName(e.target.value)}
+            className="flex-1"
+          />
+          <Button
+            onClick={handleSubmitScore}
+            disabled={isSubmitting || !playerName.trim() || hasSubmitted}
+          >
+            {isSubmitting ? "Submitting..." : "Submit Score"}
+          </Button>
+        </div>
+      )}
 
       <div className="rounded-md border">
         <Table>
