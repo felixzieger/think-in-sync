@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { generateAIResponse, guessWord, validateSentence } from "@/services/mistralService";
 import { useToast } from "@/components/ui/use-toast";
 
-type GameState = "welcome" | "showing-word" | "building-sentence" | "showing-guess";
+type GameState = "welcome" | "showing-word" | "building-sentence" | "showing-guess" | "game-over";
 
 export const GameContainer = () => {
   const [gameState, setGameState] = useState<GameState>("welcome");
@@ -44,10 +44,10 @@ export const GameContainer = () => {
         if (!isValid) {
           toast({
             title: "Invalid Sentence",
-            description: "The sentence is not grammatically correct. Try again!",
+            description: "The sentence is not grammatically correct. Game Over!",
             variant: "destructive",
           });
-          setSentence(sentence); // Revert to previous sentence
+          setGameState("game-over");
           setIsAiThinking(false);
           return;
         }
@@ -83,10 +83,10 @@ export const GameContainer = () => {
         if (!isValid) {
           toast({
             title: "Invalid Sentence",
-            description: "The AI generated an invalid sentence. Trying again...",
+            description: "The AI generated an invalid sentence. Game Over!",
             variant: "destructive",
           });
-          setSentence(newSentence); // Revert to previous sentence
+          setGameState("game-over");
           setIsAiThinking(false);
           return;
         }
@@ -107,16 +107,16 @@ export const GameContainer = () => {
     }
   };
 
-  const handleContinue = () => {
-    setGameState("building-sentence");
-    setSentence([]);
-  };
-
   const handlePlayAgain = () => {
     setGameState("welcome");
     setSentence([]);
     setAiGuess("");
     setCurrentWord("");
+  };
+
+  const handleContinue = () => {
+    setGameState("building-sentence");
+    setSentence([]);
   };
 
   return (
@@ -208,6 +208,30 @@ export const GameContainer = () => {
               Take turns with AI to describe "{currentWord}" without using the word
               itself!
             </p>
+          </motion.div>
+        ) : gameState === "game-over" ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center"
+          >
+            <h2 className="mb-4 text-2xl font-semibold text-gray-900">
+              Game Over
+            </h2>
+            <div className="mb-6 rounded-lg bg-gray-50 p-4">
+              <p className="mb-4 text-lg text-gray-800">
+                Your sentence was not grammatically correct:
+              </p>
+              <p className="italic text-gray-600">
+                {sentence.join(" ")}
+              </p>
+            </div>
+            <Button
+              onClick={handlePlayAgain}
+              className="w-full bg-primary text-lg hover:bg-primary/90"
+            >
+              Play Again
+            </Button>
           </motion.div>
         ) : (
           <motion.div
