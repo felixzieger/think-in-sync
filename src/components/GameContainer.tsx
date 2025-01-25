@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { getRandomWord } from "@/lib/words";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,7 @@ export const GameContainer = () => {
   const [isAiThinking, setIsAiThinking] = useState(false);
   const [aiGuess, setAiGuess] = useState<string>("");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   const handleStart = () => {
@@ -40,6 +41,10 @@ export const GameContainer = () => {
       const aiWord = await generateAIResponse(currentWord, newSentence);
       const newSentenceWithAi = [...newSentence, aiWord];
       setSentence(newSentenceWithAi);
+      // Focus the input after AI's turn
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
     } catch (error) {
       console.error('Error in AI turn:', error);
       toast({
@@ -194,6 +199,7 @@ export const GameContainer = () => {
             </div>
             <form onSubmit={handlePlayerWord} className="mb-4">
               <Input
+                ref={inputRef}
                 type="text"
                 value={playerInput}
                 onChange={(e) => setPlayerInput(e.target.value.replace(/\s/g, ''))}
@@ -207,7 +213,7 @@ export const GameContainer = () => {
                   className="flex-1 bg-primary text-lg hover:bg-primary/90"
                   disabled={!playerInput.trim() || isAiThinking}
                 >
-                  {isAiThinking ? "AI is thinking..." : "Add Word"}
+                  {isAiThinking ? "AI is thinking..." : "Add Word ⏎"}
                 </Button>
                 <Button
                   type="button"
