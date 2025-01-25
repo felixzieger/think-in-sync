@@ -1,8 +1,13 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export const generateAIResponse = async (currentWord: string, currentSentence: string[]): Promise<string> => {
+  console.log('Calling generate-word function with:', { currentWord, currentSentence });
+  
   const { data, error } = await supabase.functions.invoke('generate-word', {
-    body: { currentWord, currentSentence }
+    body: { 
+      currentWord, 
+      currentSentence: currentSentence.join(' ') 
+    }
   });
 
   if (error) {
@@ -13,7 +18,8 @@ export const generateAIResponse = async (currentWord: string, currentSentence: s
     throw error;
   }
 
-  if (!data.word) {
+  if (!data?.word) {
+    console.error('No word generated in response:', data);
     throw new Error('No word generated');
   }
 
@@ -22,6 +28,8 @@ export const generateAIResponse = async (currentWord: string, currentSentence: s
 };
 
 export const guessWord = async (sentence: string): Promise<string> => {
+  console.log('Calling guess-word function with sentence:', sentence);
+  
   const { data, error } = await supabase.functions.invoke('guess-word', {
     body: { sentence }
   });
@@ -34,7 +42,8 @@ export const guessWord = async (sentence: string): Promise<string> => {
     throw error;
   }
 
-  if (!data.guess) {
+  if (!data?.guess) {
+    console.error('No guess generated in response:', data);
     throw new Error('No guess generated');
   }
 
