@@ -12,8 +12,8 @@ serve(async (req) => {
   }
 
   try {
-    const { currentWord, currentSentence } = await req.json();
-    console.log('Generating word for:', { currentWord, currentSentence });
+    const { sentence } = await req.json();
+    console.log('Validating sentence:', sentence);
 
     const client = new Mistral({
       apiKey: Deno.env.get('MISTRAL_API_KEY'),
@@ -24,27 +24,27 @@ serve(async (req) => {
       messages: [
         {
           role: "system",
-          content: `You are helping in a word game. The secret word is "${currentWord}". 
-                    Your task is to add ONE word to help describe this word without using it directly. 
-                    The words must form a correct sentence in English when combined with "${currentSentence.join(' ')}".
-                    Respond with one appropriate word that continues the sentence naturally.
-                    Your word will be appended to the existing sentence, so make sure it fits grammatically.
-                    Do not add quotes or punctuation unless it's a period to end the sentence.`
+          content: `You are an English language validator. Your task is to determine if the given sentence is grammatically correct and makes sense in English.
+                    Respond with ONLY "true" or "false".`
+        },
+        {
+          role: "user",
+          content: `Is this a valid, grammatically correct English sentence that makes sense: "${sentence}"?`
         }
       ],
       maxTokens: 10,
-      temperature: 0.7
+      temperature: 0.1
     });
 
-    const word = response.choices[0].message.content.trim().split(' ').pop().replace(/"/g, '');
-    console.log('Generated word:', word);
+    const isValid = response.choices[0].message.content.trim().toLowerCase() === 'true';
+    console.log('Sentence validation result:', isValid);
 
     return new Response(
-      JSON.stringify({ word }),
+      JSON.stringify({ isValid }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('Error generating word:', error);
+    console.error('Error validating sentence:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { 

@@ -3,7 +3,7 @@ import { getRandomWord } from "@/lib/words";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
-import { generateAIResponse, guessWord } from "@/services/mistralService";
+import { generateAIResponse, guessWord, validateSentence } from "@/services/mistralService";
 import { useToast } from "@/components/ui/use-toast";
 
 type GameState = "welcome" | "showing-word" | "building-sentence" | "showing-guess";
@@ -38,6 +38,20 @@ export const GameContainer = () => {
       setIsAiThinking(true);
       try {
         const finalSentence = newSentence.join(' ');
+        
+        // Validate the sentence
+        const isValid = await validateSentence(finalSentence);
+        if (!isValid) {
+          toast({
+            title: "Invalid Sentence",
+            description: "The sentence is not grammatically correct. Try again!",
+            variant: "destructive",
+          });
+          setSentence(sentence); // Revert to previous sentence
+          setIsAiThinking(false);
+          return;
+        }
+
         const guess = await guessWord(finalSentence);
         setAiGuess(guess);
         setGameState("showing-guess");
@@ -62,7 +76,22 @@ export const GameContainer = () => {
 
       // Check if AI ended the sentence
       if (aiWord.endsWith('.')) {
-        const guess = await guessWord(newSentenceWithAi.join(' '));
+        const finalSentence = newSentenceWithAi.join(' ');
+        
+        // Validate the sentence
+        const isValid = await validateSentence(finalSentence);
+        if (!isValid) {
+          toast({
+            title: "Invalid Sentence",
+            description: "The AI generated an invalid sentence. Trying again...",
+            variant: "destructive",
+          });
+          setSentence(newSentence); // Revert to previous sentence
+          setIsAiThinking(false);
+          return;
+        }
+
+        const guess = await guessWord(finalSentence);
         setAiGuess(guess);
         setGameState("showing-guess");
       }
@@ -148,6 +177,11 @@ export const GameContainer = () => {
             <h2 className="mb-4 text-2xl font-semibold text-gray-900">
               Build a Description
             </h2>
+            <div className="mb-4 rounded-lg bg-secondary/10 p-4">
+              <p className="text-2xl font-bold tracking-wider text-secondary">
+                {currentWord}
+              </p>
+            </div>
             <div className="mb-6 rounded-lg bg-gray-50 p-4">
               <p className="text-lg text-gray-800">
                 {sentence.length > 0 ? sentence.join(" ") : "Start your sentence..."}
@@ -157,7 +191,7 @@ export const GameContainer = () => {
               <Input
                 type="text"
                 value={playerInput}
-                onChange={(e) => setPlayerInput(e.target.value)}
+                onChange={(e) => setPlayerInput(e.target.value.replace(/\s/g, ''))}
                 placeholder="Enter your word (end with . to finish)..."
                 className="mb-4"
                 disabled={isAiThinking}
@@ -192,7 +226,7 @@ export const GameContainer = () => {
                 AI guessed: {aiGuess}
               </p>
               <p className="mt-4 text-lg">
-                {aiGuess === currentWord ? (
+                {aiGuess.toLowerCase() === currentWord.toLowerCase() ? (
                   <span className="text-green-600">Correct guess! 🎉</span>
                 ) : (
                   <span className="text-red-600">Wrong! The word was {currentWord}</span>
