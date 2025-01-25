@@ -174,7 +174,7 @@ export const GameContainer = () => {
               Build a Description
             </h2>
             <p className="mb-6 text-sm text-gray-600">
-              Take turns with AI to describe "{currentWord}" without using the word
+              Take turns with AI to describe your word without using the word
               itself!
             </p>
             <div className="mb-4 rounded-lg bg-secondary/10 p-4">
