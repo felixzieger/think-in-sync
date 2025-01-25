@@ -152,8 +152,10 @@ export const GameContainer = () => {
               </p>
             )}
             <p className="mb-8 text-gray-600">
-              You'll take turns with AI to create a sentence
-              that describes this word. Click the "Make AI Guess" button to see if another AI can guess it!
+              You'll take turns with AI to create a sentence that describes this word.
+            </p>
+            <p className="mb-8 text-gray-600">
+               Click the "Make AI Guess" button to see if another AI can guess it!
             </p>
             <Button
               onClick={handleContinue}
