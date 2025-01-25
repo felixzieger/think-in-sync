@@ -7,6 +7,9 @@ export const generateAIResponse = async (currentWord: string, currentSentence: s
 
   if (error) {
     console.error('Error generating AI response:', error);
+    if (error.message?.includes('rate limit')) {
+      throw new Error('The AI service is currently busy. Please try again in a few moments.');
+    }
     throw error;
   }
 
@@ -25,6 +28,9 @@ export const guessWord = async (sentence: string): Promise<string> => {
 
   if (error) {
     console.error('Error getting AI guess:', error);
+    if (error.message?.includes('rate limit')) {
+      throw new Error('The AI service is currently busy. Please try again in a few moments.');
+    }
     throw error;
   }
 
