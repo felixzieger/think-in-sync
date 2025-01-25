@@ -8,6 +8,12 @@ interface WordDisplayProps {
 }
 
 export const WordDisplay = ({ currentWord, successfulRounds, onContinue }: WordDisplayProps) => {
+  const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
+
+  // Function to check if image exists
+  const imageExists = new Image();
+  imageExists.src = imagePath;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -15,8 +21,15 @@ export const WordDisplay = ({ currentWord, successfulRounds, onContinue }: WordD
       className="text-center"
     >
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">Your Word</h2>
-      <div className="mb-4 rounded-lg bg-secondary/10 p-6">
-        <p className="text-4xl font-bold tracking-wider text-secondary">
+      <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
+        {imageExists.complete && (
+          <img
+            src={imagePath}
+            alt={currentWord}
+            className="mx-auto h-48 w-full object-cover"
+          />
+        )}
+        <p className="p-6 text-4xl font-bold tracking-wider text-secondary">
           {currentWord}
         </p>
       </div>

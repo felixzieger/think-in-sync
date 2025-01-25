@@ -25,6 +25,11 @@ export const SentenceBuilder = ({
   onMakeGuess,
 }: SentenceBuilderProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
+
+  // Function to check if image exists
+  const imageExists = new Image();
+  imageExists.src = imagePath;
 
   useEffect(() => {
     setTimeout(() => {
@@ -53,8 +58,15 @@ export const SentenceBuilder = ({
       <p className="mb-6 text-sm text-gray-600">
         Take turns with AI to describe your word without using the word itself!
       </p>
-      <div className="mb-4 rounded-lg bg-secondary/10 p-4">
-        <p className="text-2xl font-bold tracking-wider text-secondary">
+      <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
+        {imageExists.complete && (
+          <img
+            src={imagePath}
+            alt={currentWord}
+            className="mx-auto h-48 w-full object-cover"
+          />
+        )}
+        <p className="p-4 text-2xl font-bold tracking-wider text-secondary">
           {currentWord}
         </p>
       </div>
