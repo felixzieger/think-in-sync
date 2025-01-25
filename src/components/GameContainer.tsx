@@ -1,4 +1,4 @@
-import { useState, useRef, KeyboardEvent } from "react";
+import { useState, useRef, KeyboardEvent, useEffect } from "react";
 import { getRandomWord } from "@/lib/words";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,23 @@ export const GameContainer = () => {
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  // Add event listener for Enter key when game is over
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && (gameState === 'game-over' || gameState === 'showing-guess')) {
+        const correct = isGuessCorrect();
+        if (correct) {
+          handleNextRound();
+        } else {
+          handlePlayAgain();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress as any);
+    return () => window.removeEventListener('keydown', handleKeyPress as any);
+  }, [gameState, aiGuess, currentWord]);
 
   const handleStart = () => {
     const word = getRandomWord();
@@ -255,11 +272,11 @@ export const GameContainer = () => {
               <p className="mt-4 text-lg">
                 {isGuessCorrect() ? (
                   <span className="text-green-600">
-                    Correct guess! 🎉 Ready for the next round?
+                    Correct guess! 🎉 Ready for the next round? Press Enter
                   </span>
                 ) : (
                   <span className="text-red-600">
-                    Game Over! You completed {successfulRounds} rounds successfully!
+                    Game Over! You completed {successfulRounds} rounds successfully! Press Enter to play again
                   </span>
                 )}
               </p>
@@ -275,7 +292,7 @@ export const GameContainer = () => {
               }}
               className="w-full bg-primary text-lg hover:bg-primary/90"
             >
-              {isGuessCorrect() ? "Next Round" : "Play Again"}
+              {isGuessCorrect() ? "Next Round ⏎" : "Play Again ⏎"}
             </Button>
           </motion.div>
         ) : gameState === "game-over" ? (
@@ -294,7 +311,7 @@ export const GameContainer = () => {
               onClick={handlePlayAgain}
               className="w-full bg-primary text-lg hover:bg-primary/90"
             >
-              Play Again
+              Play Again ⏎
             </Button>
           </motion.div>
         ) : null}
