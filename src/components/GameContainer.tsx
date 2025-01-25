@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, KeyboardEvent } from "react";
 import { getRandomWord } from "@/lib/words";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -113,6 +113,15 @@ export const GameContainer = () => {
     return false;
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.shiftKey && e.key === 'Enter') {
+      e.preventDefault();
+      if (sentence.length > 0 && !isAiThinking) {
+        handleMakeGuess();
+      }
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
       <motion.div
@@ -203,6 +212,7 @@ export const GameContainer = () => {
                 type="text"
                 value={playerInput}
                 onChange={(e) => setPlayerInput(e.target.value.replace(/\s/g, ''))}
+                onKeyDown={handleKeyDown}
                 placeholder="Enter your word..."
                 className="mb-4"
                 disabled={isAiThinking}
@@ -221,7 +231,7 @@ export const GameContainer = () => {
                   className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
                   disabled={sentence.length === 0 || isAiThinking}
                 >
-                  Make AI Guess
+                  {isAiThinking ? "AI is thinking..." : "Make AI Guess ⇧⏎"}
                 </Button>
               </div>
             </form>
