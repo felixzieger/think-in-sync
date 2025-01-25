@@ -16,6 +16,7 @@ interface SentenceBuilderProps {
 
 export const SentenceBuilder = ({
   currentWord,
+  successfulRounds,
   sentence,
   playerInput,
   isAiThinking,
