@@ -177,6 +177,10 @@ export const GameContainer = () => {
             <h2 className="mb-4 text-2xl font-semibold text-gray-900">
               Build a Description
             </h2>
+            <p className="text-sm text-gray-600">
+              Take turns with AI to describe "{currentWord}" without using the word
+              itself!
+            </p>
             <div className="mb-4 rounded-lg bg-secondary/10 p-4">
               <p className="text-2xl font-bold tracking-wider text-secondary">
                 {currentWord}
@@ -204,10 +208,6 @@ export const GameContainer = () => {
                 {isAiThinking ? "AI is thinking..." : "Add Word"}
               </Button>
             </form>
-            <p className="text-sm text-gray-600">
-              Take turns with AI to describe "{currentWord}" without using the word
-              itself!
-            </p>
           </motion.div>
         ) : gameState === "game-over" ? (
           <motion.div
