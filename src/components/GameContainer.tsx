@@ -42,6 +42,13 @@ export const GameContainer = () => {
     return () => window.removeEventListener('keydown', handleKeyPress as any);
   }, [gameState, aiGuess, currentWord]);
 
+  // Focus input when entering building-sentence state
+  useEffect(() => {
+    if (gameState === 'building-sentence') {
+      inputRef.current?.focus();
+    }
+  }, [gameState]);
+
   const handleStart = () => {
     const word = getRandomWord();
     setCurrentWord(word);
