@@ -87,9 +87,9 @@ export const GameContainer = () => {
     } catch (error) {
       console.error('Error in AI turn:', error);
       toast({
-        title: "Error",
-        description: "Failed to get AI's response. Please try again.",
-        variant: "destructive",
+        title: "AI Response Delayed",
+        description: "The AI is currently busy. Please try adding another word or wait a moment.",
+        variant: "default", // Changed from "destructive" to "default"
       });
     } finally {
       setIsAiThinking(false);
@@ -108,9 +108,9 @@ export const GameContainer = () => {
     } catch (error) {
       console.error('Error getting AI guess:', error);
       toast({
-        title: "Error",
-        description: "Failed to get AI's guess. Please try again.",
-        variant: "destructive",
+        title: "AI Response Delayed",
+        description: "The AI is currently busy. Please try again in a moment.",
+        variant: "default", // Changed from "destructive" to "default"
       });
     } finally {
       setIsAiThinking(false);
