@@ -9,7 +9,6 @@ pinned: false
 ---
 # Think in Sync
 
-This game is a variation of a classical childrens game.
 You will be given a secret word. Your goal is to describe this secret word so that an AI can guess it.
 However, you are only allowed to say one word at the time, taking turns with another AI.
 

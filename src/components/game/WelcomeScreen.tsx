@@ -47,7 +47,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         <div>
           <h1 className="mb-4 text-4xl font-bold text-gray-900">Think in Sync</h1>
           <p className="text-lg text-gray-600">
-            A modern twist on a classic children's game where you team up with AI to guess secret words!
+            In this game you team up with AI to guess secret words!
           </p>
         </div>
 
