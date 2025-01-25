@@ -17,3 +17,21 @@ export const generateAIResponse = async (currentWord: string, currentSentence: s
   console.log('AI generated word:', data.word);
   return data.word;
 };
+
+export const guessWord = async (sentence: string): Promise<string> => {
+  const { data, error } = await supabase.functions.invoke('guess-word', {
+    body: { sentence }
+  });
+
+  if (error) {
+    console.error('Error getting AI guess:', error);
+    throw error;
+  }
+
+  if (!data.guess) {
+    throw new Error('No guess generated');
+  }
+
+  console.log('AI guessed:', data.guess);
+  return data.guess;
+};
