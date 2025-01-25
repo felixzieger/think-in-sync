@@ -41,7 +41,7 @@ serve(async (req) => {
             }
           ],
           maxTokens: 10,
-          temperature: 0.2
+          temperature: 0.1
         });
 
         const guess = response.choices[0].message.content.trim().toUpperCase();

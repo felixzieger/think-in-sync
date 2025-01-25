@@ -41,7 +41,7 @@ serve(async (req) => {
             }
           ],
           maxTokens: 10,
-          temperature: 0.7
+          temperature: 0.5
         });
 
         const aiResponse = response.choices[0].message.content.trim();

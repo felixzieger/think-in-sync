@@ -15,7 +15,9 @@ However, you are only allowed to say one word at the time, taking turns with ano
 
 ## Develop locally
 
-Add a .env file with `VITE_MISTRAL_API_KEY=xxx`
+You need Node.js and npm installed on your system.
+
+Add a .env file with `VITE_MISTRAL_API_KEY=xxx` to query Mistral LLM from your local environment.
 
 ```
 npm i
