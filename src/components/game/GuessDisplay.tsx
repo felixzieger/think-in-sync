@@ -6,6 +6,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { HighScoreBoard } from "@/components/HighScoreBoard";
+import { useState } from "react";
 
 interface GuessDisplayProps {
   sentence: string[];
@@ -27,6 +28,7 @@ export const GuessDisplay = ({
   avgWordsPerRound,
 }: GuessDisplayProps) => {
   const isGuessCorrect = () => aiGuess.toLowerCase() === currentWord.toLowerCase();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
     <motion.div
@@ -62,7 +64,7 @@ export const GuessDisplay = ({
           </Button>
         ) : (
           <>
-            <Dialog>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button
                   className="w-full bg-secondary text-lg hover:bg-secondary/90"
@@ -74,8 +76,11 @@ export const GuessDisplay = ({
                 <HighScoreBoard
                   currentScore={currentScore}
                   avgWordsPerRound={avgWordsPerRound}
-                  onClose={() => {}}
-                  onPlayAgain={onPlayAgain}
+                  onClose={() => setIsDialogOpen(false)}
+                  onPlayAgain={() => {
+                    setIsDialogOpen(false);
+                    onPlayAgain();
+                  }}
                 />
               </DialogContent>
             </Dialog>
