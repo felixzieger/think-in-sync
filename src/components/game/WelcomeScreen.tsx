@@ -36,7 +36,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             variant="outline"
             className="w-full text-lg"
           >
-            View High Scores 🏆
+            View Leaderboard 🏆
           </Button>
         </div>
       </motion.div>

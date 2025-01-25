@@ -69,7 +69,7 @@ export const GuessDisplay = ({
                 <Button
                   className="w-full bg-secondary text-lg hover:bg-secondary/90"
                 >
-                  View High Scores
+                  View Leaderboard 🏆 
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-md bg-white">

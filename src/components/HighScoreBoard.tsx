@@ -141,7 +141,7 @@ export const HighScoreBoard = ({
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">High Scores</h2>
+        <h2 className="text-2xl font-bold mb-2">Leaderboard</h2>
         <p className="text-gray-600">
           Your score: {currentScore} rounds
           {currentScore > 0 && ` (${avgWordsPerRound.toFixed(1)} words/round)`}
