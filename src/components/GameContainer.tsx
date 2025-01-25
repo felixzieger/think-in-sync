@@ -62,6 +62,23 @@ export const GameContainer = () => {
     setSentence(newSentence);
     setPlayerInput("");
     setTotalWords(prev => prev + 1);
+
+    setIsAiThinking(true);
+    try {
+      const aiWord = await generateAIResponse(currentWord, newSentence);
+      const newSentenceWithAi = [...newSentence, aiWord];
+      setSentence(newSentenceWithAi);
+      setTotalWords(prev => prev + 1);
+    } catch (error) {
+      console.error('Error in AI turn:', error);
+      toast({
+        title: "AI Response Delayed",
+        description: "The AI is currently busy. Please try adding another word or wait a moment.",
+        variant: "default",
+      });
+    } finally {
+      setIsAiThinking(false);
+    }
   };
 
   const handleMakeGuess = async () => {

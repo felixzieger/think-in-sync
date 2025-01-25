@@ -44,7 +44,7 @@ export const SentenceBuilder = ({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
-      if (!isAiThinking) {
+      if (sentence.length > 0 && !isAiThinking) {
         onMakeGuess();
       }
     }
@@ -107,7 +107,7 @@ export const SentenceBuilder = ({
             type="button"
             onClick={onMakeGuess}
             className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
-            disabled={isAiThinking}
+            disabled={sentence.length === 0 || isAiThinking}
           >
             {isAiThinking ? "AI is thinking..." : "Make AI Guess ⇧⏎"}
           </Button>
