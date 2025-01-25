@@ -54,23 +54,14 @@ export const SentenceBuilder = ({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
-      handleMakeGuess();
-    }
-  };
-
-  const handleMakeGuess = () => {
-    if (playerInput.trim()) {
-      // Create a synthetic form event to add the current word
-      const syntheticEvent = {
-        preventDefault: () => {},
-      } as React.FormEvent;
-      onSubmitWord(syntheticEvent);
-      
-      // Wait a brief moment for the state to update before making the guess
-      setTimeout(() => {
-        onMakeGuess();
-      }, 100);
-    } else {
+      if (playerInput.trim()) {
+        // Create a synthetic form event to add the current word
+        const syntheticEvent = {
+          preventDefault: () => {},
+        } as React.FormEvent;
+        onSubmitWord(syntheticEvent);
+      }
+      // Make the guess immediately without waiting for AI response
       onMakeGuess();
     }
   };
@@ -99,11 +90,6 @@ export const SentenceBuilder = ({
           {currentWord}
         </p>
       </div>
-      {successfulRounds > 0 && (
-        <p className="mb-4 text-green-600">
-          Successful rounds: {successfulRounds}
-        </p>
-      )}
       <div className="mb-6 rounded-lg bg-gray-50 p-4">
         <p className="text-lg text-gray-800">
           {sentence.length > 0 ? sentence.join(" ") : "Start your sentence..."}
@@ -130,7 +116,7 @@ export const SentenceBuilder = ({
           </Button>
           <Button
             type="button"
-            onClick={handleMakeGuess}
+            onClick={onMakeGuess}
             className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
             disabled={(!sentence.length && !playerInput.trim()) || isAiThinking}
           >
