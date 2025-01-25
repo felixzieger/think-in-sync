@@ -3,13 +3,11 @@ import { motion } from "framer-motion";
 
 interface GameOverProps {
   successfulRounds: number;
-  onViewHighScores: () => void;
   onPlayAgain: () => void;
 }
 
 export const GameOver = ({
   successfulRounds,
-  onViewHighScores,
   onPlayAgain,
 }: GameOverProps) => {
   return (
@@ -23,12 +21,6 @@ export const GameOver = ({
         You completed {successfulRounds} rounds successfully!
       </p>
       <div className="flex gap-4">
-        <Button
-          onClick={onViewHighScores}
-          className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
-        >
-          View High Scores
-        </Button>
         <Button
           onClick={onPlayAgain}
           className="flex-1 bg-primary text-lg hover:bg-primary/90"
