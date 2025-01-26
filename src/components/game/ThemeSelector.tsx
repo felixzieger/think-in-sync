@@ -1,8 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 
 type Theme = "standard" | "sports" | "food" | "custom";
@@ -14,10 +12,38 @@ interface ThemeSelectorProps {
 export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
   const [selectedTheme, setSelectedTheme] = useState<Theme>("standard");
   const [customTheme, setCustomTheme] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement) return; // Ignore when typing in input
+      
+      switch(e.key.toLowerCase()) {
+        case 'a':
+          setSelectedTheme("standard");
+          break;
+        case 'b':
+          setSelectedTheme("sports");
+          break;
+        case 'c':
+          setSelectedTheme("food");
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, []);
+
+  const handleSubmit = async () => {
     if (selectedTheme === "custom" && !customTheme.trim()) return;
-    onThemeSelect(selectedTheme === "custom" ? customTheme : selectedTheme);
+    
+    setIsGenerating(true);
+    try {
+      await onThemeSelect(selectedTheme === "custom" ? customTheme : selectedTheme);
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -31,45 +57,52 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
         <p className="text-gray-600">Select a theme for your word-guessing adventure</p>
       </div>
 
-      <RadioGroup
-        defaultValue="standard"
-        onValueChange={(value) => setSelectedTheme(value as Theme)}
-        className="space-y-4"
-      >
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="standard" id="standard" />
-          <Label htmlFor="standard">Standard</Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="sports" id="sports" />
-          <Label htmlFor="sports">Sports</Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="food" id="food" />
-          <Label htmlFor="food">Food</Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="custom" id="custom" />
-          <Label htmlFor="custom">Custom Theme</Label>
-        </div>
-      </RadioGroup>
+      <div className="space-y-4">
+        <Button
+          variant={selectedTheme === "standard" ? "default" : "outline"}
+          className="w-full justify-between"
+          onClick={() => setSelectedTheme("standard")}
+        >
+          Standard <span className="text-sm opacity-50">Press A</span>
+        </Button>
+        
+        <Button
+          variant={selectedTheme === "sports" ? "default" : "outline"}
+          className="w-full justify-between"
+          onClick={() => setSelectedTheme("sports")}
+        >
+          Sports <span className="text-sm opacity-50">Press B</span>
+        </Button>
+        
+        <Button
+          variant={selectedTheme === "food" ? "default" : "outline"}
+          className="w-full justify-between"
+          onClick={() => setSelectedTheme("food")}
+        >
+          Food <span className="text-sm opacity-50">Press C</span>
+        </Button>
 
-      {selectedTheme === "custom" && (
-        <Input
-          type="text"
-          placeholder="Enter your theme (e.g., Animals, Movies)"
-          value={customTheme}
-          onChange={(e) => setCustomTheme(e.target.value)}
-          className="mt-2"
-        />
-      )}
+        <div className="pt-2">
+          <p className="text-sm text-gray-600 mb-2">Choose your own theme:</p>
+          <Input
+            type="text"
+            placeholder="Enter a theme (e.g., Animals, Movies)"
+            value={customTheme}
+            onChange={(e) => {
+              setCustomTheme(e.target.value);
+              setSelectedTheme("custom");
+            }}
+            className="mb-2"
+          />
+        </div>
+      </div>
 
       <Button
         onClick={handleSubmit}
         className="w-full"
-        disabled={selectedTheme === "custom" && !customTheme.trim()}
+        disabled={selectedTheme === "custom" && !customTheme.trim() || isGenerating}
       >
-        Continue ⏎
+        {isGenerating ? "Generating themed words..." : "Continue ⏎"}
       </Button>
     </motion.div>
   );
