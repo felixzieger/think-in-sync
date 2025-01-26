@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 interface GameOverProps {
   successfulRounds: number;
@@ -10,6 +11,17 @@ export const GameOver = ({
   successfulRounds,
   onPlayAgain,
 }: GameOverProps) => {
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === 'enter') {
+        onPlayAgain();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [onPlayAgain]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
