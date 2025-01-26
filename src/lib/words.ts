@@ -69,7 +69,7 @@ export const words = [
   "QUIETUDE",
   "RADIANCE",
   "SANCTUARY",
-  "TRanquility",
+  "TRANQUILITY",
   "UNIVERSE",
   "VELVET",
   "WONDERLAND",
