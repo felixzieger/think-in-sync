@@ -2,18 +2,21 @@ import { useState, KeyboardEvent, useEffect } from "react";
 import { getRandomWord } from "@/lib/words";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
+import { getThemedWord } from "@/services/themeService";
 import { useToast } from "@/components/ui/use-toast";
 import { WelcomeScreen } from "./game/WelcomeScreen";
+import { ThemeSelector } from "./game/ThemeSelector";
 import { WordDisplay } from "./game/WordDisplay";
 import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
 import { GameOver } from "./game/GameOver";
 
-type GameState = "welcome" | "showing-word" | "building-sentence" | "showing-guess" | "game-over";
+type GameState = "welcome" | "theme-selection" | "showing-word" | "building-sentence" | "showing-guess" | "game-over";
 
 export const GameContainer = () => {
   const [gameState, setGameState] = useState<GameState>("welcome");
   const [currentWord, setCurrentWord] = useState<string>("");
+  const [currentTheme, setCurrentTheme] = useState<string>("standard");
   const [sentence, setSentence] = useState<string[]>([]);
   const [playerInput, setPlayerInput] = useState<string>("");
   const [isAiThinking, setIsAiThinking] = useState(false);
@@ -45,12 +48,26 @@ export const GameContainer = () => {
   }, [gameState, aiGuess, currentWord]);
 
   const handleStart = () => {
-    const word = getRandomWord();
-    setCurrentWord(word);
-    setGameState("showing-word");
-    setSuccessfulRounds(0);
-    setTotalWords(0);
-    console.log("Game started with word:", word);
+    setGameState("theme-selection");
+  };
+
+  const handleThemeSelect = async (theme: string) => {
+    setCurrentTheme(theme);
+    try {
+      const word = theme === "standard" ? getRandomWord() : await getThemedWord(theme);
+      setCurrentWord(word);
+      setGameState("showing-word");
+      setSuccessfulRounds(0);
+      setTotalWords(0);
+      console.log("Game started with word:", word, "theme:", theme);
+    } catch (error) {
+      console.error('Error getting themed word:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get a word for the selected theme. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handlePlayerWord = async (e: React.FormEvent) => {
@@ -164,6 +181,8 @@ export const GameContainer = () => {
       >
         {gameState === "welcome" ? (
           <WelcomeScreen onStart={handleStart} />
+        ) : gameState === "theme-selection" ? (
+          <ThemeSelector onThemeSelect={handleThemeSelect} />
         ) : gameState === "showing-word" ? (
           <WordDisplay
             currentWord={currentWord}
