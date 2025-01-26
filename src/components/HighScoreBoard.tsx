@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
@@ -152,6 +152,21 @@ export const HighScoreBoard = ({
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        onPlayAgain();
+      } else if (e.key === 'ArrowLeft') {
+        handlePreviousPage();
+      } else if (e.key === 'ArrowRight') {
+        handleNextPage();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onPlayAgain, currentPage, totalPages]);
+
   return (
     <div className="space-y-6">
       <div className="text-center">
@@ -223,7 +238,10 @@ export const HighScoreBoard = ({
               <PaginationPrevious 
                 onClick={handlePreviousPage}
                 className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
-              />
+              >
+                <span className="hidden sm:inline">Previous</span>
+                <span className="text-xs text-muted-foreground ml-1">←</span>
+              </PaginationPrevious>
             </PaginationItem>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
               <PaginationItem key={page}>
@@ -239,7 +257,10 @@ export const HighScoreBoard = ({
               <PaginationNext
                 onClick={handleNextPage}
                 className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
-              />
+              >
+                <span className="hidden sm:inline">Next</span>
+                <span className="text-xs text-muted-foreground ml-1">→</span>
+              </PaginationNext>
             </PaginationItem>
           </PaginationContent>
         </Pagination>
@@ -247,9 +268,11 @@ export const HighScoreBoard = ({
 
       <div className="flex justify-end gap-4">
         <Button variant="outline" onClick={onClose}>
-          Close
+          Close <span className="text-xs text-muted-foreground ml-1">Esc</span>
         </Button>
-        <Button onClick={onPlayAgain}>Play Again</Button>
+        <Button onClick={onPlayAgain}>
+          Play Again <span className="text-xs text-muted-foreground ml-1">⏎</span>
+        </Button>
       </div>
     </div>
   );
