@@ -127,12 +127,26 @@ export const GameContainer = () => {
 
   const handleNextRound = () => {
     if (handleGuessComplete()) {
-      const word = getRandomWord();
-      setCurrentWord(word);
-      setGameState("building-sentence");
-      setSentence([]);
-      setAiGuess("");
-      console.log("Next round started with word:", word);
+      const getNewWord = async () => {
+        try {
+          const word = currentTheme === "standard" ? 
+            getRandomWord() : 
+            await getThemedWord(currentTheme);
+          setCurrentWord(word);
+          setGameState("building-sentence");
+          setSentence([]);
+          setAiGuess("");
+          console.log("Next round started with word:", word, "theme:", currentTheme);
+        } catch (error) {
+          console.error('Error getting new word:', error);
+          toast({
+            title: "Error",
+            description: "Failed to get a new word. Please try again.",
+            variant: "destructive",
+          });
+        }
+      };
+      getNewWord();
     } else {
       setGameState("game-over");
     }
@@ -143,6 +157,7 @@ export const GameContainer = () => {
     setSentence([]);
     setAiGuess("");
     setCurrentWord("");
+    setCurrentTheme("standard"); // Reset theme when starting over
     setSuccessfulRounds(0);
     setTotalWords(0);
   };
