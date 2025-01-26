@@ -28,6 +28,9 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
         case 'c':
           setSelectedTheme("food");
           break;
+        case 'z':
+          setSelectedTheme("custom");
+          break;
       }
     };
 
@@ -82,19 +85,30 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
           Food <span className="text-sm opacity-50">Press C</span>
         </Button>
 
-        <div className="pt-2">
-          <p className="text-sm text-gray-600 mb-2">Choose your own theme:</p>
-          <Input
-            type="text"
-            placeholder="Enter a theme (e.g., Animals, Movies)"
-            value={customTheme}
-            onChange={(e) => {
-              setCustomTheme(e.target.value);
-              setSelectedTheme("custom");
-            }}
-            className="mb-2"
-          />
-        </div>
+        <Button
+          variant={selectedTheme === "custom" ? "default" : "outline"}
+          className="w-full justify-between"
+          onClick={() => setSelectedTheme("custom")}
+        >
+          Choose your theme <span className="text-sm opacity-50">Press Z</span>
+        </Button>
+
+        {selectedTheme === "custom" && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Input
+              type="text"
+              placeholder="Enter a theme (e.g., Animals, Movies)"
+              value={customTheme}
+              onChange={(e) => setCustomTheme(e.target.value)}
+              className="w-full"
+            />
+          </motion.div>
+        )}
       </div>
 
       <Button
