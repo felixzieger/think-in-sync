@@ -20,7 +20,7 @@ serve(async (req) => {
       apiKey: Deno.env.get('MISTRAL_API_KEY'),
     });
 
-    const response = await client.chatComplete({
+    const response = await client.chat.complete({
       model: "mistral-large-latest",
       messages: [
         {
