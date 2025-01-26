@@ -82,12 +82,21 @@ export const GameContainer = () => {
   };
 
   const handleMakeGuess = async () => {
-    if (sentence.length === 0) return;
+    // If there's input, add it to the sentence first
+    let finalSentence = sentence;
+    if (playerInput.trim()) {
+      finalSentence = [...sentence, playerInput.trim()];
+      setSentence(finalSentence);
+      setPlayerInput("");
+      setTotalWords(prev => prev + 1);
+    }
+
+    if (finalSentence.length === 0) return;
 
     setIsAiThinking(true);
     try {
-      const finalSentence = sentence.join(' ');
-      const guess = await guessWord(finalSentence);
+      const sentenceString = finalSentence.join(' ');
+      const guess = await guessWord(sentenceString);
       setAiGuess(guess);
       setGameState("showing-guess");
     } catch (error) {
@@ -143,7 +152,7 @@ export const GameContainer = () => {
 
   const getAverageWordsPerRound = () => {
     if (successfulRounds === 0) return 0;
-    return totalWords / (successfulRounds + 1); // The total words include the ones in the failed last round, so we also count it in the denominator
+    return totalWords / (successfulRounds + 1);
   };
 
   return (
