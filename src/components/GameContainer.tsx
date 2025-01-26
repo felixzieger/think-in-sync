@@ -96,19 +96,19 @@ export const GameContainer = () => {
   };
 
   const handleMakeGuess = async () => {
-    // If there's input, add it to the sentence first
-    let finalSentence = sentence;
-    if (playerInput.trim()) {
-      finalSentence = [...sentence, playerInput.trim()];
-      setSentence(finalSentence);
-      setPlayerInput("");
-      setTotalWords(prev => prev + 1);
-    }
-
-    if (finalSentence.length === 0) return;
-
     setIsAiThinking(true);
     try {
+      // Add the current input to the sentence if it exists
+      let finalSentence = sentence;
+      if (playerInput.trim()) {
+        finalSentence = [...sentence, playerInput.trim()];
+        setSentence(finalSentence);
+        setPlayerInput("");
+        setTotalWords(prev => prev + 1);
+      }
+
+      if (finalSentence.length === 0) return;
+
       const sentenceString = finalSentence.join(' ');
       const guess = await guessWord(sentenceString);
       setAiGuess(guess);
