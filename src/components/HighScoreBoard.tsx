@@ -36,7 +36,8 @@ interface HighScoreBoardProps {
   onPlayAgain: () => void;
 }
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 5;
+const MAX_PAGES = 4;
 
 const getRankMedal = (rank: number) => {
   switch (rank) {
@@ -135,7 +136,7 @@ export const HighScoreBoard = ({
     }
   };
 
-  const totalPages = highScores ? Math.ceil(highScores.length / ITEMS_PER_PAGE) : 0;
+  const totalPages = highScores ? Math.min(Math.ceil(highScores.length / ITEMS_PER_PAGE), MAX_PAGES) : 0;
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedScores = highScores?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
