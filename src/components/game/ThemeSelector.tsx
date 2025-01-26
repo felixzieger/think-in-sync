@@ -30,19 +30,26 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
           setSelectedTheme("food");
           break;
         case 'd':
+          e.preventDefault(); // Prevent 'd' from being entered in the input
           setSelectedTheme("custom");
-          inputRef.current?.focus();
+          break;
+        case 'enter':
+          if (selectedTheme !== "custom" || customTheme.trim()) {
+            handleSubmit();
+          }
           break;
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, []);
+  }, [selectedTheme, customTheme]);
 
   useEffect(() => {
     if (selectedTheme === "custom") {
-      inputRef.current?.focus();
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
     }
   }, [selectedTheme]);
 
