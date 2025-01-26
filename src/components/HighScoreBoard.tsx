@@ -56,7 +56,6 @@ export const HighScoreBoard = ({
   currentScore,
   avgWordsPerRound,
   onClose,
-  onPlayAgain,
 }: HighScoreBoardProps) => {
   const [playerName, setPlayerName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -136,6 +135,13 @@ export const HighScoreBoard = ({
     }
   };
 
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      await handleSubmitScore();
+    }
+  };
+
   const totalPages = highScores ? Math.min(Math.ceil(highScores.length / ITEMS_PER_PAGE), MAX_PAGES) : 0;
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedScores = highScores?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
@@ -154,9 +160,7 @@ export const HighScoreBoard = ({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        onPlayAgain();
-      } else if (e.key === 'ArrowLeft') {
+      if (e.key === 'ArrowLeft') {
         handlePreviousPage();
       } else if (e.key === 'ArrowRight') {
         handleNextPage();
@@ -165,7 +169,7 @@ export const HighScoreBoard = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onPlayAgain, currentPage, totalPages]);
+  }, [currentPage, totalPages]);
 
   return (
     <div className="space-y-6">
@@ -183,6 +187,7 @@ export const HighScoreBoard = ({
             placeholder="Enter your name"
             value={playerName}
             onChange={(e) => setPlayerName(e.target.value)}
+            onKeyDown={handleKeyDown}
             className="flex-1"
           />
           <Button
@@ -266,12 +271,9 @@ export const HighScoreBoard = ({
         </Pagination>
       )}
 
-      <div className="flex justify-end gap-4">
+      <div className="flex justify-end">
         <Button variant="outline" onClick={onClose}>
           Close <span className="text-xs text-muted-foreground ml-1">Esc</span>
-        </Button>
-        <Button onClick={onPlayAgain}>
-          Play Again <span className="text-xs text-muted-foreground ml-1">⏎</span>
         </Button>
       </div>
     </div>
