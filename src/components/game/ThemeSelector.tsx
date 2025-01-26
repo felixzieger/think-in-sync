@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
@@ -13,6 +13,7 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
   const [selectedTheme, setSelectedTheme] = useState<Theme>("standard");
   const [customTheme, setCustomTheme] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -28,8 +29,9 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
         case 'c':
           setSelectedTheme("food");
           break;
-        case 'z':
+        case 'd':
           setSelectedTheme("custom");
+          inputRef.current?.focus();
           break;
       }
     };
@@ -37,6 +39,12 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
+
+  useEffect(() => {
+    if (selectedTheme === "custom") {
+      inputRef.current?.focus();
+    }
+  }, [selectedTheme]);
 
   const handleSubmit = async () => {
     if (selectedTheme === "custom" && !customTheme.trim()) return;
@@ -46,6 +54,12 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
       await onThemeSelect(selectedTheme === "custom" ? customTheme : selectedTheme);
     } finally {
       setIsGenerating(false);
+    }
+  };
+
+  const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && customTheme.trim()) {
+      handleSubmit();
     }
   };
 
@@ -90,7 +104,7 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
           className="w-full justify-between"
           onClick={() => setSelectedTheme("custom")}
         >
-          Choose your theme <span className="text-sm opacity-50">Press Z</span>
+          Choose your theme <span className="text-sm opacity-50">Press D</span>
         </Button>
 
         {selectedTheme === "custom" && (
@@ -101,10 +115,12 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
             transition={{ duration: 0.2 }}
           >
             <Input
+              ref={inputRef}
               type="text"
               placeholder="Enter a theme (e.g., Animals, Movies)"
               value={customTheme}
               onChange={(e) => setCustomTheme(e.target.value)}
+              onKeyPress={handleInputKeyPress}
               className="w-full"
             />
           </motion.div>
