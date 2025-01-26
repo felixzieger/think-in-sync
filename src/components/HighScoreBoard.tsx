@@ -107,18 +107,55 @@ export const HighScoreBoard = ({
 
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from("high_scores").insert({
-        player_name: playerName.trim(),
-        score: currentScore,
-        avg_words_per_round: avgWordsPerRound,
-      });
+      // Check if player already exists
+      const { data: existingScores } = await supabase
+        .from("high_scores")
+        .select("*")
+        .eq("player_name", playerName.trim());
 
-      if (error) throw error;
+      const existingScore = existingScores?.[0];
 
-      toast({
-        title: "Success!",
-        description: "Your score has been recorded",
-      });
+      if (existingScore) {
+        // Only update if the new score is better
+        if (currentScore > existingScore.score) {
+          const { error } = await supabase
+            .from("high_scores")
+            .update({
+              score: currentScore,
+              avg_words_per_round: avgWordsPerRound,
+            })
+            .eq("id", existingScore.id);
+
+          if (error) throw error;
+
+          toast({
+            title: "New High Score!",
+            description: `You beat your previous record of ${existingScore.score} rounds!`,
+          });
+        } else {
+          toast({
+            title: "Score Not Updated",
+            description: `Your current score (${currentScore}) is not higher than your best score (${existingScore.score})`,
+            variant: "destructive",
+          });
+          setIsSubmitting(false);
+          return;
+        }
+      } else {
+        // Insert new score
+        const { error } = await supabase.from("high_scores").insert({
+          player_name: playerName.trim(),
+          score: currentScore,
+          avg_words_per_round: avgWordsPerRound,
+        });
+
+        if (error) throw error;
+
+        toast({
+          title: "Success!",
+          description: "Your score has been recorded",
+        });
+      }
       
       setHasSubmitted(true);
       await refetch();
