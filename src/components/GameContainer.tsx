@@ -22,6 +22,7 @@ export const GameContainer = () => {
   const [aiGuess, setAiGuess] = useState<string>("");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
   const [totalWords, setTotalWords] = useState<number>(0);
+  const [usedWords, setUsedWords] = useState<string[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -51,11 +52,12 @@ export const GameContainer = () => {
   const handleThemeSelect = async (theme: string) => {
     setCurrentTheme(theme);
     try {
-      const word = theme === "standard" ? getRandomWord() : await getThemedWord(theme);
+      const word = theme === "standard" ? getRandomWord() : await getThemedWord(theme, usedWords);
       setCurrentWord(word);
       setGameState("building-sentence");
       setSuccessfulRounds(0);
       setTotalWords(0);
+      setUsedWords([word]); // Initialize used words with the first word
       console.log("Game started with word:", word, "theme:", theme);
     } catch (error) {
       console.error('Error getting themed word:', error);
@@ -131,11 +133,12 @@ export const GameContainer = () => {
         try {
           const word = currentTheme === "standard" ? 
             getRandomWord() : 
-            await getThemedWord(currentTheme);
+            await getThemedWord(currentTheme, usedWords);
           setCurrentWord(word);
           setGameState("building-sentence");
           setSentence([]);
           setAiGuess("");
+          setUsedWords(prev => [...prev, word]); // Add new word to used words
           console.log("Next round started with word:", word, "theme:", currentTheme);
         } catch (error) {
           console.error('Error getting new word:', error);
@@ -157,9 +160,10 @@ export const GameContainer = () => {
     setSentence([]);
     setAiGuess("");
     setCurrentWord("");
-    setCurrentTheme("standard"); // Reset theme when starting over
+    setCurrentTheme("standard");
     setSuccessfulRounds(0);
     setTotalWords(0);
+    setUsedWords([]); // Reset used words when starting over
   };
 
   const isGuessCorrect = () => {

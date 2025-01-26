@@ -13,8 +13,8 @@ serve(async (req) => {
   }
 
   try {
-    const { theme } = await req.json();
-    console.log('Generating word for theme:', theme);
+    const { theme, usedWords = [] } = await req.json();
+    console.log('Generating word for theme:', theme, 'excluding:', usedWords);
 
     const client = new Mistral({
       apiKey: Deno.env.get('MISTRAL_API_KEY'),
@@ -33,6 +33,7 @@ serve(async (req) => {
           - Related to the theme "${theme}"
           - Between 4 and 12 letters
           - A noun
+          - NOT be any of these previously used words: ${usedWords.join(', ')}
           
           Respond with just the word in UPPERCASE, nothing else.`
         }
