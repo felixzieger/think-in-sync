@@ -5,3 +5,5 @@ enabled = true
 enabled = false
 [realtime]
 enabled = false
+[functions.generate-themed-word]
+verify_jwt = false
