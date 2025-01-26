@@ -6,12 +6,11 @@ import { getThemedWord } from "@/services/themeService";
 import { useToast } from "@/components/ui/use-toast";
 import { WelcomeScreen } from "./game/WelcomeScreen";
 import { ThemeSelector } from "./game/ThemeSelector";
-import { WordDisplay } from "./game/WordDisplay";
 import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
 import { GameOver } from "./game/GameOver";
 
-type GameState = "welcome" | "theme-selection" | "showing-word" | "building-sentence" | "showing-guess" | "game-over";
+type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-over";
 
 export const GameContainer = () => {
   const [gameState, setGameState] = useState<GameState>("welcome");
@@ -30,8 +29,6 @@ export const GameContainer = () => {
       if (e.key === 'Enter') {
         if (gameState === 'welcome') {
           handleStart();
-        } else if (gameState === 'showing-word') {
-          handleContinue();
         } else if (gameState === 'game-over' || gameState === 'showing-guess') {
           const correct = isGuessCorrect();
           if (correct) {
@@ -56,7 +53,7 @@ export const GameContainer = () => {
     try {
       const word = theme === "standard" ? getRandomWord() : await getThemedWord(theme);
       setCurrentWord(word);
-      setGameState("showing-word");
+      setGameState("building-sentence");
       setSuccessfulRounds(0);
       setTotalWords(0);
       console.log("Game started with word:", word, "theme:", theme);
@@ -132,7 +129,7 @@ export const GameContainer = () => {
     if (handleGuessComplete()) {
       const word = getRandomWord();
       setCurrentWord(word);
-      setGameState("showing-word");
+      setGameState("building-sentence");
       setSentence([]);
       setAiGuess("");
       console.log("Next round started with word:", word);
@@ -148,11 +145,6 @@ export const GameContainer = () => {
     setCurrentWord("");
     setSuccessfulRounds(0);
     setTotalWords(0);
-  };
-
-  const handleContinue = () => {
-    setGameState("building-sentence");
-    setSentence([]);
   };
 
   const isGuessCorrect = () => {
@@ -183,12 +175,6 @@ export const GameContainer = () => {
           <WelcomeScreen onStart={handleStart} />
         ) : gameState === "theme-selection" ? (
           <ThemeSelector onThemeSelect={handleThemeSelect} />
-        ) : gameState === "showing-word" ? (
-          <WordDisplay
-            currentWord={currentWord}
-            successfulRounds={successfulRounds}
-            onContinue={handleContinue}
-          />
         ) : gameState === "building-sentence" ? (
           <SentenceBuilder
             currentWord={currentWord}
