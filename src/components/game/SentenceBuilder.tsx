@@ -68,7 +68,8 @@ export const SentenceBuilder = ({
     const input = playerInput.trim().toLowerCase();
     const target = currentWord.toLowerCase();
 
-    if (!/^[a-zA-Z]+$/.test(input)) {
+    // Updated regex to allow letters with diacritics and special characters
+    if (!/^[\p{L}]+$/u.test(input)) {
       toast({
         title: t.game.invalidWord,
         description: t.game.lettersOnly,
@@ -124,7 +125,8 @@ export const SentenceBuilder = ({
           type="text"
           value={playerInput}
           onChange={(e) => {
-            const value = e.target.value.replace(/[^a-zA-Z]/g, '');
+            // Allow all letters including those with diacritics
+            const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ]/g, '');
             onInputChange(value);
           }}
           onKeyDown={handleKeyDown}
