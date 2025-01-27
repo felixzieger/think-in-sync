@@ -3,7 +3,7 @@ export const fr = {
       round: "Tour",
       buildDescription: "Construisez une phrase ensemble",
       startSentence: "Commencez à construire votre phrase...",
-      inputPlaceholder: "Entrez un mot...",
+      inputPlaceholder: "Entrez UN mot...",
       addWord: "Ajouter un mot",
       makeGuess: "Deviner",
       aiThinking: "L'IA réfléchit...",

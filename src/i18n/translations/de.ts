@@ -4,7 +4,7 @@ export const de = {
       buildDescription: "Baut gemeinsam einen Satz",
       buildSubtitle: "Fügt abwechselnd Wörter hinzu, um einen Satz zu bilden",
       startSentence: "Beginne deinen Satz...",
-      inputPlaceholder: "Gib ein Wort ein...",
+      inputPlaceholder: "Gib EIN Wort ein...",
       addWord: "Wort hinzufügen",
       makeGuess: "Raten",
       aiThinking: "KI denkt nach...",

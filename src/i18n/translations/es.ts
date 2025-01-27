@@ -4,7 +4,7 @@ export const es = {
       buildDescription: "Construyan una frase juntos",
       buildSubtitle: "Añadan palabras por turnos para crear una frase",
       startSentence: "Empieza a construir tu frase...",
-      inputPlaceholder: "Ingresa una palabra...",
+      inputPlaceholder: "Ingresa UNA palabra...",
       addWord: "Añadir palabra",
       makeGuess: "Adivinar",
       aiThinking: "La IA está pensando...",
