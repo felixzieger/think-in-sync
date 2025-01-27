@@ -117,6 +117,12 @@ export const SentenceBuilder = ({
       animate={{ opacity: 1 }}
       className="text-center relative"
     >
+      <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg">
+        <span className="text-sm font-medium text-primary">
+          Round {successfulRounds + 1}
+        </span>
+      </div>
+
       <Button
         variant="ghost"
         size="icon"

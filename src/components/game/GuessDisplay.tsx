@@ -36,8 +36,14 @@ export const GuessDisplay = ({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="text-center"
+      className="text-center relative"
     >
+      <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg">
+        <span className="text-sm font-medium text-primary">
+          Round {currentScore + 1}
+        </span>
+      </div>
+
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">{t.guess.title}</h2>
       <div className="mb-6 rounded-lg bg-gray-50 p-4">
         <p className="mb-4 text-lg text-gray-800">
