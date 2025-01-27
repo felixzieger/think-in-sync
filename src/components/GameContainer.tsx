@@ -139,7 +139,7 @@ export const GameContainer = () => {
         try {
           const word = currentTheme === "standard" ? 
             getRandomWord() : 
-            await getThemedWord(currentTheme, usedWords);
+            await getThemedWord(currentTheme, usedWords, language);
           setCurrentWord(word);
           setGameState("building-sentence");
           setSentence([]);
