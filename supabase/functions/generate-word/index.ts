@@ -10,17 +10,17 @@ const languagePrompts = {
   en: {
     systemPrompt: "You are helping in a word game. The secret word is",
     task: "Your task is to find a sentence to describe this word without using it directly.",
-    instruction: "Answer with a complete, grammatically correct sentence that starts with"
+    instruction: "Answer with a description for this word. Start your answer with"
   },
   fr: {
     systemPrompt: "Vous aidez dans un jeu de mots. Le mot secret est",
     task: "Votre tâche est de trouver une phrase pour décrire ce mot sans l'utiliser directement.",
-    instruction: "Répondez avec une phrase complète et grammaticalement correcte qui commence par"
+    instruction: "Répondez avec une phrase qui commence par"
   },
   de: {
     systemPrompt: "Sie helfen bei einem Wortspiel. Das geheime Wort ist",
-    task: "Ihre Aufgabe ist es, einen Satz zu finden, der dieses Wort beschreibt, ohne es direkt zu verwenden.",
-    instruction: "Antworten Sie mit einem vollständigen, grammatikalisch korrekten Satz, der beginnt mit"
+    task: "Ihre Aufgabe ist es, eine Beschreibung zu finden, der dieses Wort beschreibt, ohne es direkt zu verwenden.",
+    instruction: "Beginnen sie ihre Antwort mit"
   },
   it: {
     systemPrompt: "Stai aiutando in un gioco di parole. La parola segreta è",
