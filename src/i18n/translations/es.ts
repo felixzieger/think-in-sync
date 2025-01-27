@@ -1,5 +1,6 @@
 export const es = {
   game: {
+    round: "Ronda",
     buildDescription: "Construyan una frase juntos",
     buildSubtitle: "Añadan palabras por turnos para crear una frase",
     startSentence: "Empieza a construir tu frase...",
@@ -43,10 +44,11 @@ export const es = {
   },
   guess: {
     title: "Suposición de la IA",
-    sentence: "Tu frase",
-    aiGuessed: "La IA adivinó",
-    correct: "¡Correcto! ¡La IA adivinó la palabra!",
-    incorrect: "Incorrecto. ¡Inténtalo de nuevo!",
+    goalDescription: "Tu objetivo era describir la palabra",
+    providedDescription: "Proporcionaste la descripción",
+    aiGuessedDescription: "Basado en tu descripción, la IA adivinó",
+    correct: "¡Esto es correcto!",
+    incorrect: "Esto es incorrecto.",
     nextRound: "Siguiente Ronda",
     playAgain: "Jugar de Nuevo",
     viewLeaderboard: "Ver Clasificación"

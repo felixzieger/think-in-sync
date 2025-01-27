@@ -1,5 +1,6 @@
 export const it = {
   game: {
+    round: "Turno",
     buildDescription: "Costruite una frase insieme",
     buildSubtitle: "Aggiungete parole a turno per creare una frase",
     startSentence: "Inizia a costruire la tua frase...",
@@ -45,6 +46,9 @@ export const it = {
     title: "Ipotesi dell'IA",
     sentence: "La tua frase",
     aiGuessed: "L'IA ha indovinato",
+    goalDescription: "Il tuo obiettivo era descrivere la parola",
+    providedDescription: "Hai fornito la descrizione",
+    aiGuessedDescription: "Basandosi sulla tua descrizione, l'IA ha indovinato",
     correct: "Corretto! L'IA ha indovinato la parola!",
     incorrect: "Sbagliato. Riprova!",
     nextRound: "Prossimo Turno",

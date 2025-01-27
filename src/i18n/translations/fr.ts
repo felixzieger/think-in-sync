@@ -1,7 +1,7 @@
 export const fr = {
   game: {
+    round: "Tour",
     buildDescription: "Construisez une phrase ensemble",
-    buildSubtitle: "Ajoutez des mots à tour de rôle pour créer une phrase",
     startSentence: "Commencez à construire votre phrase...",
     inputPlaceholder: "Entrez un mot...",
     addWord: "Ajouter un mot",
@@ -43,10 +43,11 @@ export const fr = {
   },
   guess: {
     title: "Devinette de l'IA",
-    sentence: "Votre phrase",
-    aiGuessed: "L'IA a deviné",
-    correct: "Correct ! L'IA a deviné le mot !",
-    incorrect: "Incorrect. Essayez encore !",
+    goalDescription: "Votre objectif était de décrire le mot",
+    providedDescription: "Vous avez fourni la description",
+    aiGuessedDescription: "Basé sur votre description, l'IA a deviné",
+    correct: "C'est correct !",
+    incorrect: "C'est incorrect.",
     nextRound: "Tour Suivant",
     playAgain: "Rejouer",
     viewLeaderboard: "Voir les Scores"

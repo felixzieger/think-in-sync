@@ -1,5 +1,6 @@
 export const de = {
   game: {
+    round: "Runde",
     buildDescription: "Baut gemeinsam einen Satz",
     buildSubtitle: "Fügt abwechselnd Wörter hinzu, um einen Satz zu bilden",
     startSentence: "Beginne deinen Satz...",
@@ -43,10 +44,11 @@ export const de = {
   },
   guess: {
     title: "KI-Vermutung",
-    sentence: "Dein Satz",
-    aiGuessed: "KI hat geraten",
-    correct: "Richtig! Die KI hat das Wort erraten!",
-    incorrect: "Falsch. Versuche es noch einmal!",
+    goalDescription: "Dein Ziel war es, das Wort zu beschreiben",
+    providedDescription: "Du hast folgende Beschreibung gegeben",
+    aiGuessedDescription: "Basierend auf deiner Beschreibung hat die KI geraten",
+    correct: "Das ist richtig!",
+    incorrect: "Das ist falsch.",
     nextRound: "Nächste Runde",
     playAgain: "Erneut spielen",
     viewLeaderboard: "Bestenliste anzeigen"
