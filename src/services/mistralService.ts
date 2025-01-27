@@ -29,6 +29,30 @@ export const generateAIResponse = async (currentWord: string, currentSentence: s
 };
 
 export const guessWord = async (sentence: string, language: string): Promise<string> => {
+  console.log('Processing guess for sentence:', sentence);
+  
+  // Check for potential fraud if the sentence has less than 3 words
+  const words = sentence.trim().split(/\s+/);
+  if (words.length < 3) {
+    console.log('Short description detected, checking for fraud...');
+    
+    try {
+      const { data: fraudData, error: fraudError } = await supabase.functions.invoke('detect-fraud', {
+        body: { sentence, targetWord: words[0] } // First word is usually the target in cheating attempts
+      });
+
+      if (fraudError) throw fraudError;
+      
+      if (fraudData?.verdict === 'cheating') {
+        console.log('Fraud detected!');
+        return 'CHEATING';
+      }
+    } catch (error) {
+      console.error('Error in fraud detection:', error);
+      // Continue with normal guessing if fraud detection fails
+    }
+  }
+
   console.log('Calling guess-word function with sentence:', sentence, 'language:', language);
   
   const { data, error } = await supabase.functions.invoke('guess-word', {

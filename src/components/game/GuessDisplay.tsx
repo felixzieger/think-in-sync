@@ -30,6 +30,7 @@ export const GuessDisplay = ({
   avgWordsPerRound,
 }: GuessDisplayProps) => {
   const isGuessCorrect = () => aiGuess.toLowerCase() === currentWord.toLowerCase();
+  const isCheating = () => aiGuess === 'CHEATING';
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const t = useTranslation();
 
@@ -56,7 +57,7 @@ export const GuessDisplay = ({
     };
 
     saveGameResult();
-  }, []); // Run once when component mounts
+  }, []); 
 
   return (
     <motion.div
@@ -93,7 +94,9 @@ export const GuessDisplay = ({
       </div>
 
       <div className="space-y-2">
-        <p className="text-sm text-gray-600">{t.guess.aiGuessedDescription}</p>
+        <p className="text-sm text-gray-600">
+          {isCheating() ? "Cheating detected!" : t.guess.aiGuessedDescription}
+        </p>
         <div className={`rounded-lg ${isGuessCorrect() ? 'bg-green-50' : 'bg-red-50'}`}>
           <p className={`p-4 text-2xl font-bold tracking-wider ${isGuessCorrect() ? 'text-green-600' : 'text-red-600'}`}>
             {aiGuess}
