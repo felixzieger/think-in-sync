@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { HighScoreBoard } from "../HighScoreBoard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Card, CardContent } from "@/components/ui/card";
+import { LanguageSelector } from "./LanguageSelector";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -12,6 +13,7 @@ interface WelcomeScreenProps {
 export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
   const [showHighScores, setShowHighScores] = useState(false);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
+  const t = useTranslation();
 
   const HowToPlayContent = () => (
     <div className="space-y-6">
@@ -44,10 +46,12 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         animate={{ opacity: 1 }}
         className="max-w-2xl mx-auto text-center space-y-8"
       >
+        <LanguageSelector />
+        
         <div>
-          <h1 className="mb-4 text-4xl font-bold text-gray-900">Think in Sync</h1>
+          <h1 className="mb-4 text-4xl font-bold text-gray-900">{t.welcome.title}</h1>
           <p className="text-lg text-gray-600">
-            In this game you team up with AI to guess secret words!
+            {t.welcome.subtitle}
           </p>
         </div>
 
@@ -56,7 +60,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             onClick={onStart}
             className="w-full bg-primary text-lg hover:bg-primary/90"
           >
-            Start Game ⏎
+            {t.welcome.startButton} ⏎
           </Button>
           <div className="grid grid-cols-2 gap-4">
             <Button
@@ -64,14 +68,14 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
               variant="outline"
               className="text-lg"
             >
-              How to Play 📖
+              {t.welcome.howToPlay} 📖
             </Button>
             <Button
               onClick={() => setShowHighScores(true)}
               variant="outline"
               className="text-lg"
             >
-              Leaderboard 🏆
+              {t.welcome.leaderboard} 🏆
             </Button>
           </div>
         </div>
@@ -91,7 +95,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
       <Dialog open={showHowToPlay} onOpenChange={setShowHowToPlay}>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle className="text-xl font-semibold text-primary">How to Play</DialogTitle>
+            <DialogTitle className="text-xl font-semibold text-primary">{t.welcome.howToPlay}</DialogTitle>
           </DialogHeader>
           <HowToPlayContent />
         </DialogContent>
