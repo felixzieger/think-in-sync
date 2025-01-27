@@ -16,7 +16,7 @@ export const de = {
       leaveGameDescription: "Dein aktueller Fortschritt geht verloren. Bist du sicher, dass du das Spiel verlassen möchtest?",
       cancel: "Abbrechen",
       confirm: "Bestätigen",
-      describeWord: "Dein Ziel ist es, das Wort zu beschreiben"
+      describeWord: "Dein Ziel ist es folgendes Wort zu beschreiben"
     },
   leaderboard: {
     title: "Bestenliste",
