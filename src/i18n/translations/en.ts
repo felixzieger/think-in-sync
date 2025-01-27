@@ -6,6 +6,25 @@ export const en = {
     howToPlay: "How to Play",
     leaderboard: "Leaderboard"
   },
+  howToPlay: {
+    setup: {
+      title: "The Setup",
+      description: "You'll work with two AIs: one as your partner giving clues, and another trying to guess the word."
+    },
+    goal: {
+      title: "Your Goal",
+      description: "Help the AI guess the secret word using one-word clues. Each correct guess earns you a point!"
+    },
+    rules: {
+      title: "The Rules",
+      items: [
+        "One word per clue only",
+        "No parts of the secret word or translations",
+        "Clues must relate to the word (be creative!)",
+        "No spelling out the answer"
+      ]
+    }
+  },
   game: {
     buildDescription: "Build a Description",
     buildSubtitle: "Take turns with AI to describe your word without using the word itself!",
@@ -38,6 +57,7 @@ export const en = {
     title: "Choose a Theme",
     subtitle: "Select a theme for your word-guessing adventure",
     standard: "Standard",
+    technology: "Technology",
     sports: "Sports",
     food: "Food",
     custom: "Choose your theme",

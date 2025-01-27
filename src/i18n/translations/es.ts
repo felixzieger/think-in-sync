@@ -6,6 +6,25 @@ export const es = {
     howToPlay: "Cómo Jugar",
     leaderboard: "Tabla de Posiciones"
   },
+  howToPlay: {
+    setup: {
+      title: "La Configuración",
+      description: "Trabajarás con dos IAs: una como compañera dando pistas y otra intentando adivinar la palabra."
+    },
+    goal: {
+      title: "Tu Objetivo",
+      description: "Ayuda a la IA a adivinar la palabra secreta usando pistas de una sola palabra. ¡Cada adivinanza correcta te da un punto!"
+    },
+    rules: {
+      title: "Las Reglas",
+      items: [
+        "Solo una palabra por pista",
+        "No usar partes de la palabra secreta ni traducciones",
+        "Las pistas deben relacionarse con la palabra (¡sé creativo!)",
+        "No deletrear la respuesta"
+      ]
+    }
+  },
   game: {
     buildDescription: "Construye una Descripción",
     buildSubtitle: "¡Alterna con la IA para describir tu palabra sin usar la palabra misma!",
@@ -37,7 +56,8 @@ export const es = {
   themes: {
     title: "Elegir un Tema",
     subtitle: "Selecciona un tema para tu aventura de adivinanzas",
-    standard: "", // Empty string but included for type consistency
+    standard: "",
+    technology: "Tecnología",
     sports: "Deportes",
     food: "Comida",
     custom: "Elige tu tema",

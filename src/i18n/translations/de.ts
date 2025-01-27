@@ -6,6 +6,25 @@ export const de = {
     howToPlay: "Spielanleitung",
     leaderboard: "Bestenliste"
   },
+  howToPlay: {
+    setup: {
+      title: "Der Aufbau",
+      description: "Sie arbeiten mit zwei KIs: eine als Partner, der Hinweise gibt, und eine andere, die versucht, das Wort zu erraten."
+    },
+    goal: {
+      title: "Ihr Ziel",
+      description: "Helfen Sie der KI, das geheime Wort mit Einwort-Hinweisen zu erraten. Jede richtige Vermutung bringt Ihnen einen Punkt!"
+    },
+    rules: {
+      title: "Die Regeln",
+      items: [
+        "Nur ein Wort pro Hinweis",
+        "Keine Teile des geheimen Wortes oder Übersetzungen",
+        "Hinweise müssen sich auf das Wort beziehen (seien Sie kreativ!)",
+        "Keine Buchstabierung der Antwort"
+      ]
+    }
+  },
   game: {
     buildDescription: "Beschreibung Erstellen",
     buildSubtitle: "Wechseln Sie sich mit der KI ab, um Ihr Wort zu beschreiben, ohne das Wort selbst zu verwenden!",
@@ -37,7 +56,8 @@ export const de = {
   themes: {
     title: "Thema Wählen",
     subtitle: "Wählen Sie ein Thema für Ihr Wörter-Rate-Abenteuer",
-    standard: "", // Empty string but included for type consistency
+    standard: "",
+    technology: "Technologie",
     sports: "Sport",
     food: "Essen",
     custom: "Wählen Sie Ihr Thema",

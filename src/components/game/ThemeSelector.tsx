@@ -6,7 +6,7 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
 
-type Theme = "standard" | "sports" | "food" | "custom";
+type Theme = "standard" | "technology" | "sports" | "food" | "custom";
 
 interface ThemeSelectorProps {
   onThemeSelect: (theme: string) => void;
@@ -21,12 +21,22 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
   const { language } = useContext(LanguageContext);
 
   useEffect(() => {
+    if (language !== 'en') {
+      setSelectedTheme("technology");
+    }
+  }, [language]);
+
+  useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement) return;
       
       switch(e.key.toLowerCase()) {
         case 'a':
-          if (language === 'en') setSelectedTheme("standard");
+          if (language === 'en') {
+            setSelectedTheme("standard");
+          } else {
+            setSelectedTheme("technology");
+          }
           break;
         case 'b':
           setSelectedTheme("sports");
@@ -87,13 +97,21 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
       </div>
 
       <div className="space-y-4">
-        {language === 'en' && (
+        {language === 'en' ? (
           <Button
             variant={selectedTheme === "standard" ? "default" : "outline"}
             className="w-full justify-between"
             onClick={() => setSelectedTheme("standard")}
           >
             {t.themes.standard} <span className="text-sm opacity-50">{t.themes.pressKey} A</span>
+          </Button>
+        ) : (
+          <Button
+            variant={selectedTheme === "technology" ? "default" : "outline"}
+            className="w-full justify-between"
+            onClick={() => setSelectedTheme("technology")}
+          >
+            {t.themes.technology} <span className="text-sm opacity-50">{t.themes.pressKey} A</span>
           </Button>
         )}
         

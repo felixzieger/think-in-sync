@@ -6,6 +6,25 @@ export const it = {
     howToPlay: "Come Giocare",
     leaderboard: "Classifica"
   },
+  howToPlay: {
+    setup: {
+      title: "La Configurazione",
+      description: "Lavorerai con due IA: una come partner che fornisce indizi e un'altra che cerca di indovinare la parola."
+    },
+    goal: {
+      title: "Il tuo Obiettivo",
+      description: "Aiuta l'IA a indovinare la parola segreta usando indizi di una sola parola. Ogni risposta corretta ti fa guadagnare un punto!"
+    },
+    rules: {
+      title: "Le Regole",
+      items: [
+        "Solo una parola per indizio",
+        "Niente parti della parola segreta o traduzioni",
+        "Gli indizi devono essere correlati alla parola (sii creativo!)",
+        "Non si può sillabare la risposta"
+      ]
+    }
+  },
   game: {
     buildDescription: "Costruisci una Descrizione",
     buildSubtitle: "Alternati con l'IA per descrivere la tua parola senza usare la parola stessa!",
@@ -37,7 +56,8 @@ export const it = {
   themes: {
     title: "Scegli un Tema",
     subtitle: "Seleziona un tema per la tua avventura di indovinelli",
-    standard: "", // Empty string but included for type consistency
+    standard: "",
+    technology: "Tecnologia",
     sports: "Sport",
     food: "Cibo",
     custom: "Scegli il tuo tema",

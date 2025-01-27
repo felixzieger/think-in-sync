@@ -5,6 +5,8 @@ import { HighScoreBoard } from "../HighScoreBoard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { LanguageSelector } from "./LanguageSelector";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useContext } from "react";
+import { LanguageContext } from "@/contexts/LanguageContext";
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -14,30 +16,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
   const [showHighScores, setShowHighScores] = useState(false);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const t = useTranslation();
-
-  const HowToPlayContent = () => (
-    <div className="space-y-6">
-      <div className="grid gap-4 text-gray-600">
-        <div>
-          <h3 className="font-medium text-gray-800">The Setup</h3>
-          <p>You'll work with two AIs: one as your partner giving clues, and another trying to guess the word.</p>
-        </div>
-        <div>
-          <h3 className="font-medium text-gray-800">Your Goal</h3>
-          <p>Help the AI guess the secret word using one-word clues. Each correct guess earns you a point!</p>
-        </div>
-        <div>
-          <h3 className="font-medium text-gray-800">The Rules</h3>
-          <ul className="list-disc list-inside space-y-1">
-            <li>One word per clue only</li>
-            <li>No parts of the secret word or translations</li>
-            <li>Clues must relate to the word (be creative!)</li>
-            <li>No spelling out the answer</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
+  const { language } = useContext(LanguageContext);
 
   return (
     <>
@@ -97,7 +76,26 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold text-primary">{t.welcome.howToPlay}</DialogTitle>
           </DialogHeader>
-          <HowToPlayContent />
+          <div className="space-y-6">
+            <div className="grid gap-4 text-gray-600">
+              <div>
+                <h3 className="font-medium text-gray-800">{t.howToPlay.setup.title}</h3>
+                <p>{t.howToPlay.setup.description}</p>
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-800">{t.howToPlay.goal.title}</h3>
+                <p>{t.howToPlay.goal.description}</p>
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-800">{t.howToPlay.rules.title}</h3>
+                <ul className="list-disc list-inside space-y-1">
+                  {t.howToPlay.rules.items.map((rule, index) => (
+                    <li key={index}>{rule}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </>

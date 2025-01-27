@@ -6,6 +6,25 @@ export const fr = {
     howToPlay: "Comment Jouer",
     leaderboard: "Classement"
   },
+  howToPlay: {
+    setup: {
+      title: "La Configuration",
+      description: "Vous travaillerez avec deux IA : une comme partenaire donnant des indices, et une autre essayant de deviner le mot."
+    },
+    goal: {
+      title: "Votre Objectif",
+      description: "Aidez l'IA à deviner le mot secret en utilisant des indices d'un seul mot. Chaque devinette correcte vous rapporte un point !"
+    },
+    rules: {
+      title: "Les Règles",
+      items: [
+        "Un seul mot par indice",
+        "Pas de parties du mot secret ni de traductions",
+        "Les indices doivent être liés au mot (soyez créatif !)",
+        "Ne pas épeler la réponse"
+      ]
+    }
+  },
   game: {
     buildDescription: "Construire une Description",
     buildSubtitle: "Alternez avec l'IA pour décrire votre mot sans utiliser le mot lui-même !",
@@ -37,7 +56,8 @@ export const fr = {
   themes: {
     title: "Choisir un Thème",
     subtitle: "Sélectionnez un thème pour votre aventure de devinettes",
-    standard: "", // Empty string but included for type consistency
+    standard: "",
+    technology: "Technologie",
     sports: "Sports",
     food: "Nourriture",
     custom: "Choisissez votre thème",
