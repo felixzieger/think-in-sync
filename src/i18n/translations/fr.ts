@@ -70,7 +70,7 @@ export const fr = {
   },
   welcome: {
     title: "Think in Sync",
-    subtitle: "Faites équipe avec une IA pour créer un indice et laissez une autre IA deviner votre mot secret&nbsp;!",
+    subtitle: "Faites équipe avec une IA pour créer un indice et laissez une autre IA deviner votre mot secret",
     startButton: "Commencer",
     howToPlay: "Comment Jouer",
     leaderboard: "Classement",
