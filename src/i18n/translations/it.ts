@@ -12,6 +12,7 @@ export const it = {
       invalidWord: "Parola non valida",
       cantUseTargetWord: "Non puoi usare la parola obiettivo",
       lettersOnly: "Usa solo lettere",
+      singleWordOnly: "Inserisci una sola parola",
       leaveGameTitle: "Lasciare il gioco?",
       leaveGameDescription: "I tuoi progressi attuali andranno persi. Sei sicuro di voler uscire?",
       cancel: "Annulla",
