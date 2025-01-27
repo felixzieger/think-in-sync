@@ -135,20 +135,22 @@ export const SentenceBuilder = ({
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">
         Think in Sync
       </h2>
-      <p className="mb-6 text-sm text-gray-600">
-        {t.game.describeWord}
-      </p>
-      <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
-        {imageLoaded && (
-          <img
-            src={imagePath}
-            alt={currentWord}
-            className="mx-auto h-48 w-full object-cover"
-          />
-        )}
-        <p className="p-4 text-2xl font-bold tracking-wider text-secondary">
-          {currentWord}
+      <div className="space-y-4">
+        <p className="text-sm text-gray-600">
+          {t.game.describeWord}
         </p>
+        <div className="mb-6 overflow-hidden rounded-lg bg-secondary/10">
+          {imageLoaded && (
+            <img
+              src={imagePath}
+              alt={currentWord}
+              className="mx-auto h-48 w-full object-cover"
+            />
+          )}
+          <p className="p-4 text-2xl font-bold tracking-wider text-secondary">
+            {currentWord}
+          </p>
+        </div>
       </div>
       <form onSubmit={handleSubmit} className="mb-4">
         {sentence.length > 0 && (
