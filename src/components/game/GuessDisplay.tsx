@@ -44,23 +44,41 @@ export const GuessDisplay = ({
         </span>
       </div>
 
-      <h2 className="mb-4 text-2xl font-semibold text-gray-900">{t.guess.title}</h2>
-      <div className="mb-6 rounded-lg bg-gray-50 p-4">
-        <p className="mb-4 text-lg text-gray-800">
-          {t.guess.sentence}: {sentence.join(" ")}
-        </p>
-        <p className="text-xl font-bold text-primary">
-          {t.guess.aiGuessed}: {aiGuess}
-        </p>
-        <p className="mt-4 text-lg">
-          {isGuessCorrect() ? (
-            <span className="text-green-600">{t.guess.correct}</span>
-          ) : (
-            <span className="text-red-600">{t.guess.incorrect}</span>
-          )}
+      <h2 className="mb-4 text-2xl font-semibold text-gray-900">Think in Sync</h2>
+      <p className="mb-6 text-sm text-gray-600">
+        Your goal was to describe the word
+      </p>
+
+      <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
+        <p className="p-4 text-2xl font-bold tracking-wider text-secondary">
+          {currentWord}
         </p>
       </div>
-      <div className="flex flex-col gap-4">
+
+      <div className="space-y-6">
+        <div className="rounded-lg bg-gray-50 p-4">
+          <p className="text-sm text-gray-600 mb-2">You provided the description</p>
+          <p className="text-lg text-gray-800">
+            {sentence.join(" ")}
+          </p>
+        </div>
+
+        <div className="rounded-lg bg-gray-50 p-4">
+          <p className="text-sm text-gray-600 mb-2">Based on your description, the AI guessed</p>
+          <p className="text-xl font-bold text-primary">
+            {aiGuess}
+          </p>
+          <p className="mt-4 text-lg font-medium">
+            {isGuessCorrect() ? (
+              <span className="text-green-600">This is right!</span>
+            ) : (
+              <span className="text-red-600">This is wrong.</span>
+            )}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-8 flex flex-col gap-4">
         {isGuessCorrect() ? (
           <Button
             onClick={onNextRound}
