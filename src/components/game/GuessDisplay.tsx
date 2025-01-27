@@ -47,6 +47,7 @@ export const GuessDisplay = ({
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">Think in Sync</h2>
 
       <div className="mb-6 overflow-hidden rounded-lg bg-secondary/10">
+        <p className="text-sm text-gray-600 mb-1">{t.guess.goalDescription}</p>
         <p className="p-4 text-2xl font-bold tracking-wider text-secondary">
           {currentWord}
         </p>

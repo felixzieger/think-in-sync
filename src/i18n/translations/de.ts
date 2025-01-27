@@ -45,7 +45,7 @@ export const de = {
   },
   guess: {
     title: "KI-Vermutung",
-    goalDescription: "Dein Ziel war es, das Wort zu beschreiben",
+    goalDescription: "Dein Ziel war es folgendes Wort zu beschreiben",
     providedDescription: "Du hast folgende Beschreibung gegeben",
     aiGuessedDescription: "Basierend auf deiner Beschreibung hat die KI geraten",
     correct: "Das ist richtig!",
