@@ -4,7 +4,7 @@ export const en = {
       buildDescription: "Build a sentence together",
       buildSubtitle: "Take turns adding words to create a sentence",
       startSentence: "Start building your sentence...",
-      inputPlaceholder: "Enter a word...",
+      inputPlaceholder: "Enter a SINGLE word...",
       addWord: "Add Word",
       makeGuess: "Make Guess",
       aiThinking: "AI is thinking...",
