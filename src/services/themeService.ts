@@ -1,14 +1,15 @@
 import { supabase } from "@/integrations/supabase/client";
+import { Language } from "@/i18n/translations";
 
-export const getThemedWord = async (theme: string, usedWords: string[] = []): Promise<string> => {
+export const getThemedWord = async (theme: string, usedWords: string[] = [], language: Language = 'en'): Promise<string> => {
   if (theme === "standard") {
     throw new Error("Standard theme should use the words list");
   }
 
-  console.log('Getting themed word for:', theme, 'excluding:', usedWords);
+  console.log('Getting themed word for:', theme, 'language:', language, 'excluding:', usedWords);
   
   const { data, error } = await supabase.functions.invoke('generate-themed-word', {
-    body: { theme, usedWords }
+    body: { theme, usedWords, language }
   });
 
   if (error) {

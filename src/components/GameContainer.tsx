@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, useEffect } from "react";
+import { useState, KeyboardEvent, useEffect, useContext } from "react";
 import { getRandomWord } from "@/lib/words";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
@@ -10,6 +10,7 @@ import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
 import { GameOver } from "./game/GameOver";
 import { useTranslation } from "@/hooks/useTranslation";
+import { LanguageContext } from "@/contexts/LanguageContext";
 
 type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-over";
 
@@ -26,6 +27,7 @@ export const GameContainer = () => {
   const [usedWords, setUsedWords] = useState<string[]>([]);
   const { toast } = useToast();
   const t = useTranslation();
+  const { language } = useContext(LanguageContext);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -54,13 +56,15 @@ export const GameContainer = () => {
   const handleThemeSelect = async (theme: string) => {
     setCurrentTheme(theme);
     try {
-      const word = theme === "standard" ? getRandomWord() : await getThemedWord(theme, usedWords);
+      const word = theme === "standard" ? 
+        getRandomWord() : 
+        await getThemedWord(theme, usedWords, language);
       setCurrentWord(word);
       setGameState("building-sentence");
       setSuccessfulRounds(0);
       setTotalWords(0);
-      setUsedWords([word]); // Initialize used words with the first word
-      console.log("Game started with word:", word, "theme:", theme);
+      setUsedWords([word]);
+      console.log("Game started with word:", word, "theme:", theme, "language:", language);
     } catch (error) {
       console.error('Error getting themed word:', error);
       toast({
