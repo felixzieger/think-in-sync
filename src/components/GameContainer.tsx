@@ -55,6 +55,13 @@ export const GameContainer = () => {
 
   const handleBack = () => {
     setGameState("welcome");
+    setSentence([]);
+    setAiGuess("");
+    setCurrentWord("");
+    setCurrentTheme("standard");
+    setSuccessfulRounds(0);
+    setTotalWords(0);
+    setUsedWords([]);
   };
 
   const handleThemeSelect = async (theme: string) => {
@@ -110,7 +117,6 @@ export const GameContainer = () => {
   const handleMakeGuess = async () => {
     setIsAiThinking(true);
     try {
-      // Add the current input to the sentence if it exists
       let finalSentence = sentence;
       if (playerInput.trim()) {
         finalSentence = [...sentence, playerInput.trim()];
@@ -148,7 +154,7 @@ export const GameContainer = () => {
           setGameState("building-sentence");
           setSentence([]);
           setAiGuess("");
-          setUsedWords(prev => [...prev, word]); // Add new word to used words
+          setUsedWords(prev => [...prev, word]);
           console.log("Next round started with word:", word, "theme:", currentTheme);
         } catch (error) {
           console.error('Error getting new word:', error);
@@ -173,7 +179,7 @@ export const GameContainer = () => {
     setCurrentTheme("standard");
     setSuccessfulRounds(0);
     setTotalWords(0);
-    setUsedWords([]); // Reset used words when starting over
+    setUsedWords([]);
   };
 
   const isGuessCorrect = () => {
@@ -214,6 +220,7 @@ export const GameContainer = () => {
             onInputChange={setPlayerInput}
             onSubmitWord={handlePlayerWord}
             onMakeGuess={handleMakeGuess}
+            onBack={handleBack}
           />
         ) : gameState === "showing-guess" ? (
           <GuessDisplay

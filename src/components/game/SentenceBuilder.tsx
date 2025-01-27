@@ -4,6 +4,17 @@ import { motion } from "framer-motion";
 import { KeyboardEvent, useRef, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/useTranslation";
+import { House } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -14,6 +25,7 @@ interface SentenceBuilderProps {
   onInputChange: (value: string) => void;
   onSubmitWord: (e: React.FormEvent) => void;
   onMakeGuess: () => void;
+  onBack?: () => void;
 }
 
 export const SentenceBuilder = ({
@@ -25,9 +37,11 @@ export const SentenceBuilder = ({
   onInputChange,
   onSubmitWord,
   onMakeGuess,
+  onBack,
 }: SentenceBuilderProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
   const { toast } = useToast();
   const t = useTranslation();
@@ -68,7 +82,6 @@ export const SentenceBuilder = ({
     const input = playerInput.trim().toLowerCase();
     const target = currentWord.toLowerCase();
 
-    // Updated regex to allow letters with diacritics and special characters
     if (!/^[\p{L}]+$/u.test(input)) {
       toast({
         title: t.game.invalidWord,
@@ -90,12 +103,29 @@ export const SentenceBuilder = ({
     onSubmitWord(e);
   };
 
+  const handleHomeClick = () => {
+    if (successfulRounds > 0) {
+      setShowConfirmDialog(true);
+    } else {
+      onBack?.();
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="text-center"
+      className="text-center relative"
     >
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute left-0 top-0 text-gray-600 hover:text-primary"
+        onClick={handleHomeClick}
+      >
+        <House className="h-5 w-5" />
+      </Button>
+
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">
         {t.game.buildDescription}
       </h2>
@@ -125,7 +155,6 @@ export const SentenceBuilder = ({
           type="text"
           value={playerInput}
           onChange={(e) => {
-            // Allow all letters including those with diacritics
             const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ]/g, '');
             onInputChange(value);
           }}
@@ -152,6 +181,23 @@ export const SentenceBuilder = ({
           </Button>
         </div>
       </form>
+
+      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t.game.leaveGameDescription}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogAction onClick={() => onBack?.()}>
+              {t.game.confirm}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </motion.div>
   );
 };
