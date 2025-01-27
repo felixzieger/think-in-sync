@@ -87,7 +87,7 @@ export const GameContainer = () => {
 
     setIsAiThinking(true);
     try {
-      const aiWord = await generateAIResponse(currentWord, newSentence);
+      const aiWord = await generateAIResponse(currentWord, newSentence, language);
       const newSentenceWithAi = [...newSentence, aiWord];
       setSentence(newSentenceWithAi);
       setTotalWords(prev => prev + 1);

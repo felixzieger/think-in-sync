@@ -1,12 +1,13 @@
 import { supabase } from "@/integrations/supabase/client";
 
-export const generateAIResponse = async (currentWord: string, currentSentence: string[]): Promise<string> => {
-  console.log('Calling generate-word function with:', { currentWord, currentSentence });
+export const generateAIResponse = async (currentWord: string, currentSentence: string[], language: string = 'en'): Promise<string> => {
+  console.log('Calling generate-word function with:', { currentWord, currentSentence, language });
   
   const { data, error } = await supabase.functions.invoke('generate-word', {
     body: { 
       currentWord, 
-      currentSentence: currentSentence.join(' ') 
+      currentSentence: currentSentence.join(' '),
+      language 
     }
   });
 
