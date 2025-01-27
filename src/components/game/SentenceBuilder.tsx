@@ -3,8 +3,6 @@ import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { KeyboardEvent, useRef, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import en from 'dictionary-en';
-import nspell from 'nspell';
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -29,23 +27,8 @@ export const SentenceBuilder = ({
 }: SentenceBuilderProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [spellChecker, setSpellChecker] = useState<ReturnType<typeof nspell> | null>(null);
   const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
   const { toast } = useToast();
-
-  useEffect(() => {
-    // Initialize spell checker
-    const initSpellChecker = async () => {
-      try {
-        setSpellChecker(nspell(en));
-        console.log('Spell checker initialized');
-      } catch (error) {
-        console.error('Error initializing spell checker:', error);
-      }
-    };
-    
-    initSpellChecker();
-  }, []);
 
   useEffect(() => {
     const img = new Image();
@@ -82,8 +65,8 @@ export const SentenceBuilder = ({
   };
 
   const isValidWord = (word: string): boolean => {
-    if (!spellChecker) return false;
-    return spellChecker.correct(word.toLowerCase());
+    // Basic validation: word must be at least 2 characters long and contain only letters
+    return word.length >= 2 && /^[a-zA-Z]+$/.test(word);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -103,7 +86,7 @@ export const SentenceBuilder = ({
     if (!isValidWord(input)) {
       toast({
         title: "Invalid Word",
-        description: `"${input}" is not a valid English word`,
+        description: `Please enter a valid word (at least 2 letters, no numbers or special characters)`,
         variant: "destructive",
       });
       return;
