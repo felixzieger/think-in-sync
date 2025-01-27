@@ -136,7 +136,7 @@ export const SentenceBuilder = ({
         Think in Sync
       </h2>
       <p className="mb-6 text-sm text-gray-600">
-        Your goal is to describe the word
+        {t.game.describeWord}
       </p>
       <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
         {imageLoaded && (

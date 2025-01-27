@@ -45,20 +45,17 @@ export const GuessDisplay = ({
       </div>
 
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">Think in Sync</h2>
-      <p className="mb-6 text-sm text-gray-600">
-        {t.guess.goalDescription}
-      </p>
 
-      <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
+      <div className="mb-6 overflow-hidden rounded-lg bg-secondary/10">
         <p className="p-4 text-2xl font-bold tracking-wider text-secondary">
           {currentWord}
         </p>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         <div>
-          <p className="text-sm text-gray-600 mb-2">{t.guess.providedDescription}</p>
-          <div className="rounded-lg bg-gray-50 p-4">
+          <p className="text-sm text-gray-600 mb-1">{t.guess.providedDescription}</p>
+          <div className="rounded-lg bg-gray-50 p-3">
             <p className="text-lg text-gray-800">
               {sentence.join(" ")}
             </p>
@@ -66,23 +63,16 @@ export const GuessDisplay = ({
         </div>
 
         <div>
-          <p className="text-sm text-gray-600 mb-2">{t.guess.aiGuessedDescription}</p>
-          <div className="rounded-lg bg-gray-50 p-4">
-            <p className="text-xl font-bold text-primary">
+          <p className="text-sm text-gray-600 mb-1">{t.guess.aiGuessedDescription}</p>
+          <div className={`rounded-lg p-3 ${isGuessCorrect() ? 'bg-green-50' : 'bg-red-50'}`}>
+            <p className={`text-2xl font-bold tracking-wider ${isGuessCorrect() ? 'text-green-600' : 'text-red-600'}`}>
               {aiGuess}
             </p>
           </div>
-          <p className="mt-4 text-lg font-medium">
-            {isGuessCorrect() ? (
-              <span className="text-green-600">{t.guess.correct}</span>
-            ) : (
-              <span className="text-red-600">{t.guess.incorrect}</span>
-            )}
-          </p>
         </div>
       </div>
 
-      <div className="mt-8 flex flex-col gap-4">
+      <div className="mt-6 flex flex-col gap-4">
         {isGuessCorrect() ? (
           <Button
             onClick={onNextRound}
