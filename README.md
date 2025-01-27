@@ -1,6 +1,6 @@
 ---
-title: M1X Think in Sync
-emoji: 🐢
+title: Think in Sync
+emoji: 🧠
 colorFrom: blue
 colorTo: pink
 sdk: docker
@@ -9,8 +9,8 @@ pinned: false
 ---
 # Think in Sync
 
-You will be given a secret word. Your goal is to describe this secret word so that an AI can guess it.
-However, you are only allowed to say one word at the time, taking turns with another AI.
+You will be given a secret word. You aim to describe this secret word so an AI can guess it.
+However, you can only say one word at a time, taking turns with another AI.
 
 ## Develop locally
 
@@ -25,10 +25,11 @@ npm run dev
 
 ## What technologies are used for this project?
 
-This project is built with .
+This project is built with
 
 - Vite
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
+- Supabase
