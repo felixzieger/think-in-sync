@@ -64,11 +64,6 @@ export const SentenceBuilder = ({
     }
   };
 
-  const isValidWord = (word: string): boolean => {
-    // Basic validation: word must be at least 2 characters long and contain only letters
-    return word.length >= 2 && /^[a-zA-Z]+$/.test(word);
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const input = playerInput.trim().toLowerCase();
@@ -78,15 +73,6 @@ export const SentenceBuilder = ({
       toast({
         title: "Invalid Word",
         description: `You cannot use words that contain "${currentWord}"`,
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!isValidWord(input)) {
-      toast({
-        title: "Invalid Word",
-        description: `Please enter a valid word (at least 2 letters, no numbers or special characters)`,
         variant: "destructive",
       });
       return;
