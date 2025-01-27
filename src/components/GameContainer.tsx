@@ -172,7 +172,7 @@ export const GameContainer = () => {
   };
 
   const handlePlayAgain = () => {
-    setGameState("welcome");
+    setGameState("theme-selection");
     setSentence([]);
     setAiGuess("");
     setCurrentWord("");
