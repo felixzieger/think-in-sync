@@ -6,6 +6,29 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const languagePrompts = {
+  en: {
+    systemPrompt: "You are helping in a word guessing game. Given a description, guess what single word is being described.",
+    instruction: "Based on this description"
+  },
+  fr: {
+    systemPrompt: "Vous aidez dans un jeu de devinettes. À partir d'une description, devinez le mot unique qui est décrit.",
+    instruction: "D'après cette description"
+  },
+  de: {
+    systemPrompt: "Sie helfen bei einem Worträtsel. Erraten Sie anhand einer Beschreibung, welches einzelne Wort beschrieben wird.",
+    instruction: "Basierend auf dieser Beschreibung"
+  },
+  it: {
+    systemPrompt: "Stai aiutando in un gioco di indovinelli. Data una descrizione, indovina quale singola parola viene descritta.",
+    instruction: "Basandoti su questa descrizione"
+  },
+  es: {
+    systemPrompt: "Estás ayudando en un juego de adivinanzas. Dada una descripción, adivina qué palabra única se está describiendo.",
+    instruction: "Basándote en esta descripción"
+  }
+};
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
