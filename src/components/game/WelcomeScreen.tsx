@@ -79,7 +79,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 text-sm text-primary hover:text-primary/90 transition-colors"
             >
-              <Heart className="w-4 h-4" /> our project on huggingface
+              Help us win a price by <Heart className="w-4 h-4" /> our project on huggingface
             </a>
           </div>
         </div>
