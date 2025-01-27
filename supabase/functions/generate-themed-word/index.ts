@@ -53,7 +53,7 @@ serve(async (req) => {
           content: `${prompts.systemPrompt} "${theme}".\n${prompts.requirements} ${usedWords.join(', ')}\n\nRespond with just the word in UPPERCASE, nothing else.`
         }
       ],
-      maxTokens: 10,
+      maxTokens: 15,
       temperature: 0.99
     });
 
