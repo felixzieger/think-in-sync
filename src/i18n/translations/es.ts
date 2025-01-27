@@ -4,7 +4,7 @@ export const es = {
     subtitle: "¡En este juego te unes a la IA para adivinar palabras secretas!",
     startButton: "Comenzar Juego",
     howToPlay: "Cómo Jugar",
-    leaderboard: "Tabla de Posiciones"
+    leaderboard: "Clasificación"
   },
   howToPlay: {
     setup: {
@@ -46,7 +46,7 @@ export const es = {
     incorrect: "¡Juego terminado! Presiona Enter para jugar de nuevo",
     nextRound: "Siguiente Ronda",
     playAgain: "Jugar de Nuevo",
-    viewLeaderboard: "Ver Tabla de Posiciones"
+    viewLeaderboard: "Ver Clasificación"
   },
   gameOver: {
     title: "¡Juego Terminado!",
@@ -67,7 +67,7 @@ export const es = {
     pressKey: "Presiona"
   },
   leaderboard: {
-    title: "Tabla de Posiciones",
+    title: "Clasificación",
     yourScore: "Tu puntaje",
     roundCount: "rondas",
     wordsPerRound: "palabras/ronda",
