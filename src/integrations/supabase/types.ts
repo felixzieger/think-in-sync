@@ -9,6 +9,33 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      game_results: {
+        Row: {
+          ai_guess: string
+          created_at: string
+          description: string
+          id: string
+          is_correct: boolean
+          target_word: string
+        }
+        Insert: {
+          ai_guess: string
+          created_at?: string
+          description: string
+          id?: string
+          is_correct: boolean
+          target_word: string
+        }
+        Update: {
+          ai_guess?: string
+          created_at?: string
+          description?: string
+          id?: string
+          is_correct?: boolean
+          target_word?: string
+        }
+        Relationships: []
+      }
       high_scores: {
         Row: {
           avg_words_per_round: number
