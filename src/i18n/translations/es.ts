@@ -4,7 +4,10 @@ export const es = {
     subtitle: "¡En este juego te unes a la IA para adivinar palabras secretas!",
     startButton: "Comenzar Juego",
     howToPlay: "Cómo Jugar",
-    leaderboard: "Clasificación"
+    leaderboard: "Clasificación",
+    credits: "Creado por Sandro, Alessandro, Mattia, Michael, Emiliano y Felix en el",
+    helpWin: "Ayúdanos a ganar un premio",
+    onHuggingface: "nuestro proyecto en huggingface"
   },
   howToPlay: {
     setup: {

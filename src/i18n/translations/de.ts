@@ -4,7 +4,10 @@ export const de = {
     subtitle: "In diesem Spiel arbeiten Sie mit KI zusammen, um geheime Wörter zu erraten!",
     startButton: "Spiel Starten",
     howToPlay: "Spielanleitung",
-    leaderboard: "Bestenliste"
+    leaderboard: "Bestenliste",
+    credits: "Erstellt von Sandro, Alessandro, Mattia, Michael, Emiliano und Felix beim",
+    helpWin: "Helfen Sie uns einen Preis zu gewinnen",
+    onHuggingface: "unser Projekt auf huggingface"
   },
   howToPlay: {
     setup: {

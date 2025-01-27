@@ -62,7 +62,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
 
         <div className="mt-12 text-sm text-gray-500 space-y-2">
           <p>
-            Made by Sandro, Alessandro, Mattia, Michael, Emiliano, and Felix at{" "}
+            {t.welcome.credits}{" "}
             <a 
               href="https://blog.felixzieger.de/gaming-hackathon-paris/" 
               target="_blank" 
@@ -77,9 +77,9 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
               href="https://huggingface.co/spaces/Mistral-AI-Game-Jam/description-improv/tree/main" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm text-primary hover:text-primary/90 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm text-primary hover:text-primary/90 transition-colors border border-primary/20 rounded-md hover:border-primary/40"
             >
-              Help us win a price by <Heart className="w-4 h-4" /> our project on huggingface
+              {t.welcome.helpWin} <Heart className="w-4 h-4" /> {t.welcome.onHuggingface}
             </a>
           </div>
         </div>

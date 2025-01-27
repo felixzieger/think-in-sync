@@ -4,7 +4,10 @@ export const en = {
     subtitle: "In this game you team up with AI to guess secret words!",
     startButton: "Start Game",
     howToPlay: "How to Play",
-    leaderboard: "Leaderboard"
+    leaderboard: "Leaderboard",
+    credits: "Made by Sandro, Alessandro, Mattia, Michael, Emiliano, and Felix at",
+    helpWin: "Help us win a price by",
+    onHuggingface: "our project on huggingface"
   },
   howToPlay: {
     setup: {
