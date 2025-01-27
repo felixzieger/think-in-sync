@@ -6,30 +6,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const languagePrompts = {
-  en: {
-    systemPrompt: "You are playing a word guessing game in English. Given a descriptive sentence, your task is to guess the single word being described.",
-    instruction: "Based on this description, what single word is being described:"
-  },
-  fr: {
-    systemPrompt: "Vous jouez à un jeu de devinettes de mots en français. À partir d'une phrase descriptive, votre tâche est de deviner le mot unique décrit.",
-    instruction: "D'après cette description, quel mot unique est décrit :"
-  },
-  de: {
-    systemPrompt: "Sie spielen ein Worträtselspiel auf Deutsch. Anhand eines beschreibenden Satzes ist es Ihre Aufgabe, das beschriebene einzelne Wort zu erraten.",
-    instruction: "Welches einzelne Wort wird basierend auf dieser Beschreibung beschrieben:"
-  },
-  it: {
-    systemPrompt: "Stai giocando a un gioco di indovinelli in italiano. Data una frase descrittiva, il tuo compito è indovinare la singola parola descritta.",
-    instruction: "In base a questa descrizione, quale singola parola viene descritta:"
-  },
-  es: {
-    systemPrompt: "Estás jugando a un juego de adivinanzas de palabras en español. Dada una frase descriptiva, tu tarea es adivinar la única palabra que se describe.",
-    instruction: "Según esta descripción, ¿qué palabra única se está describiendo:"
-  }
-};
-
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
