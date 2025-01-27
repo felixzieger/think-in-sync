@@ -76,7 +76,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             className="text-primary hover:underline"
           >
             AI Gaming Hackathon
-          </a>
+          </a>.
         </p>
         <div className="flex flex-col items-center gap-2">
           <p className="text-sm text-gray-600">{t.welcome.helpWin}</p>
