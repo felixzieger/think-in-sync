@@ -76,8 +76,8 @@ export const SentenceBuilder = ({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
-      // Only trigger if buttons are not disabled
-      if (!hasMultipleWords && playerInput.trim() && !isAiThinking) {
+      // Only trigger if buttons are not disabled and either we have a sentence or valid input
+      if (!hasMultipleWords && !isAiThinking && (sentence.length > 0 || playerInput.trim())) {
         onMakeGuess();
       }
     }
