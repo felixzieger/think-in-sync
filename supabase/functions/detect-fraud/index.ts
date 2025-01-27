@@ -42,22 +42,29 @@ serve(async (req) => {
                 Target word: hand
                 Player's description: hnd
                 Language: en
+                CORRECT ANSWER: cheating
               
                 Target word: barfuß
                 Player's description: germanwordforbarefoot
                 Language: de
+                CORRECT ANSWER: cheating
 
               Synonyms and names of instances of a class are legitimate descriptions.
-
-              Examples for legitimate description:
                 
                 Target word: laptop
                 Player's description: notebook
                 Language: en
+                CORRECT ANSWER: legitimate
+
+                Target word: play
+                Player's description: children often
+                Language: en
+                CORRECT ANSWER: legitimate
               
                 Target word: Pfankuchen
                 Player's description: Berliner
                 Language: de
+                CORRECT ANSWER: legitimate
               
               Respond with ONLY "cheating" or "legitimate" (no punctuation or explanation).`
             },
@@ -70,7 +77,7 @@ serve(async (req) => {
               Is this a legitimate description or an attempt to cheat?`
             }
           ],
-          maxTokens: 10,
+          maxTokens: 20,
           temperature: 0.1
         });
 
