@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { KeyboardEvent, useRef, useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -27,6 +28,7 @@ export const SentenceBuilder = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
+  const { toast } = useToast();
 
   useEffect(() => {
     const img = new Image();
@@ -55,15 +57,28 @@ export const SentenceBuilder = ({
     if (e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
       if (playerInput.trim()) {
-        // Create a synthetic form event to add the current word
-        const syntheticEvent = {
-          preventDefault: () => {},
-        } as React.FormEvent;
-        onSubmitWord(syntheticEvent);
+        handleSubmit(e as any);
       }
       // Make the guess immediately without waiting for AI response
       onMakeGuess();
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const input = playerInput.trim().toLowerCase();
+    const target = currentWord.toLowerCase();
+
+    if (input.includes(target)) {
+      toast({
+        title: "Invalid Word",
+        description: `You cannot use words that contain "${currentWord}"`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    onSubmitWord(e);
   };
 
   return (
@@ -95,7 +110,7 @@ export const SentenceBuilder = ({
           {sentence.length > 0 ? sentence.join(" ") : "Start your sentence..."}
         </p>
       </div>
-      <form onSubmit={onSubmitWord} className="mb-4">
+      <form onSubmit={handleSubmit} className="mb-4">
         <Input
           ref={inputRef}
           type="text"
