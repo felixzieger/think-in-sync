@@ -76,7 +76,7 @@ export const de = {
     howToPlay: "Spielanleitung",
     leaderboard: "Bestenliste",
     credits: "Erstellt während des",
-    helpWin: "Hilf uns gewinnen",
+    helpWin: "Hilf uns zu gewinnen",
     onHuggingface: "mit einem Like auf Huggingface"
   },
   howToPlay: {
