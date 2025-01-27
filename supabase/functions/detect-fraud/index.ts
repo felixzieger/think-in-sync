@@ -47,6 +47,8 @@ serve(async (req) => {
                 Player's description: germanwordforbarefoot
                 Language: de
 
+              Synonyms and names of instances of a class are legitimate descriptions.
+
               Examples for legitimate description:
                 
                 Target word: laptop
