@@ -127,10 +127,10 @@ export const SentenceBuilder = ({
       </Button>
 
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-        {t.game.buildDescription}
+        Describe your word
       </h2>
       <p className="mb-6 text-sm text-gray-600">
-        {t.game.buildSubtitle}
+        Your goal is to describe the word
       </p>
       <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
         {imageLoaded && (
@@ -144,25 +144,27 @@ export const SentenceBuilder = ({
           {currentWord}
         </p>
       </div>
-      <div className="mb-6 rounded-lg bg-gray-50 p-4">
-        <p className="text-lg text-gray-800">
-          {sentence.length > 0 ? sentence.join(" ") : t.game.startSentence}
-        </p>
-      </div>
       <form onSubmit={handleSubmit} className="mb-4">
-        <Input
-          ref={inputRef}
-          type="text"
-          value={playerInput}
-          onChange={(e) => {
-            const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ]/g, '');
-            onInputChange(value);
-          }}
-          onKeyDown={handleKeyDown}
-          placeholder={t.game.inputPlaceholder}
-          className="mb-4"
-          disabled={isAiThinking}
-        />
+        <div className="relative mb-4">
+          {sentence.length > 0 && (
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 max-w-[60%] truncate">
+              {sentence.join(" ")}
+            </div>
+          )}
+          <Input
+            ref={inputRef}
+            type="text"
+            value={playerInput}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ]/g, '');
+              onInputChange(value);
+            }}
+            onKeyDown={handleKeyDown}
+            placeholder={sentence.length === 0 ? t.game.inputPlaceholder : "..."}
+            className={`pl-${sentence.length > 0 ? '32' : '3'}`}
+            disabled={isAiThinking}
+          />
+        </div>
         <div className="flex gap-4">
           <Button
             type="submit"
