@@ -52,7 +52,7 @@ export const de = {
     incorrect: "Das ist falsch.",
     nextRound: "Nächste Runde",
     playAgain: "Erneut spielen",
-    viewLeaderboard: "Bestenliste anzeigen"
+    viewLeaderboard: "In Bestenliste eintragen"
   },
   themes: {
     title: "Wähle ein Thema",
