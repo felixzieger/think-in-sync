@@ -53,6 +53,10 @@ export const GameContainer = () => {
     setGameState("theme-selection");
   };
 
+  const handleBack = () => {
+    setGameState("welcome");
+  };
+
   const handleThemeSelect = async (theme: string) => {
     setCurrentTheme(theme);
     try {
@@ -199,7 +203,7 @@ export const GameContainer = () => {
         {gameState === "welcome" ? (
           <WelcomeScreen onStart={handleStart} />
         ) : gameState === "theme-selection" ? (
-          <ThemeSelector onThemeSelect={handleThemeSelect} />
+          <ThemeSelector onThemeSelect={handleThemeSelect} onBack={handleBack} />
         ) : gameState === "building-sentence" ? (
           <SentenceBuilder
             currentWord={currentWord}

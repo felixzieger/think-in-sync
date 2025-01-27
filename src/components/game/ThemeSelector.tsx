@@ -5,14 +5,16 @@ import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
+import { ArrowLeft } from "lucide-react";
 
 type Theme = "standard" | "technology" | "sports" | "food" | "custom";
 
 interface ThemeSelectorProps {
   onThemeSelect: (theme: string) => void;
+  onBack: () => void;
 }
 
-export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
+export const ThemeSelector = ({ onThemeSelect, onBack }: ThemeSelectorProps) => {
   const [selectedTheme, setSelectedTheme] = useState<Theme>("standard");
   const [customTheme, setCustomTheme] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -53,12 +55,16 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
             handleSubmit();
           }
           break;
+        case 'backspace':
+          e.preventDefault();
+          onBack();
+          break;
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [selectedTheme, customTheme, language]);
+  }, [selectedTheme, customTheme, language, onBack]);
 
   useEffect(() => {
     if (selectedTheme === "custom") {
@@ -91,10 +97,20 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
-      <div className="text-center space-y-2">
+      <div className="flex items-center justify-between mb-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onBack}
+          className="hover:bg-gray-100"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </Button>
         <h2 className="text-2xl font-bold text-gray-900">{t.themes.title}</h2>
-        <p className="text-gray-600">{t.themes.subtitle}</p>
+        <div className="w-8" /> {/* Spacer for centering */}
       </div>
+
+      <p className="text-gray-600 text-center">{t.themes.subtitle}</p>
 
       <div className="space-y-4">
         {language === 'en' ? (
