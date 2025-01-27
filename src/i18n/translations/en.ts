@@ -52,7 +52,7 @@ export const en = {
     incorrect: "This is wrong.",
     nextRound: "Next Round",
     playAgain: "Play Again",
-    viewLeaderboard: "Safe your score",
+    viewLeaderboard: "Save your score",
     cheatingDetected: "Cheating detected!"
   },
   themes: {
