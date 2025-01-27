@@ -54,7 +54,7 @@ serve(async (req) => {
         }
       ],
       maxTokens: 10,
-      temperature: 0.9
+      temperature: 0.99
     });
 
     const word = response.choices[0].message.content.trim();
