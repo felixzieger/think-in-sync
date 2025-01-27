@@ -12,8 +12,8 @@ serve(async (req) => {
   }
 
   try {
-    const { sentence, targetWord } = await req.json();
-    console.log('Checking for fraud:', { sentence, targetWord });
+    const { sentence, targetWord, language } = await req.json();
+    console.log('Checking for fraud:', { sentence, targetWord, language });
 
     const client = new Mistral({
       apiKey: Deno.env.get('MISTRAL_API_KEY'),
@@ -25,10 +25,11 @@ serve(async (req) => {
         {
           role: "system",
           content: `You are a fraud detection system for a word guessing game. 
+          The game is being played in ${language}.
           Your task is to detect if a player is trying to cheat by:
           1. Using a misspelling of the target word
           2. Writing a sentence without spaces to bypass word count checks
-          3. Using variations or close synonyms of the target word
+          3. Using variations or close synonyms of the target word in ${language}
           
           Respond with ONLY "cheating" or "legitimate" (no punctuation or explanation).`
         },
@@ -36,6 +37,7 @@ serve(async (req) => {
           role: "user",
           content: `Target word: "${targetWord}"
           Player's description: "${sentence}"
+          Language: ${language}
           
           Is this a legitimate description or an attempt to cheat?`
         }

@@ -54,7 +54,8 @@ export const it = {
     incorrect: "Sbagliato. Riprova!",
     nextRound: "Prossimo Turno",
     playAgain: "Gioca Ancora",
-    viewLeaderboard: "Vedi Classifica"
+    viewLeaderboard: "Vedi Classifica",
+    cheatingDetected: "Tentativo di imbroglio rilevato!"
   },
   themes: {
     title: "Scegli un Tema",

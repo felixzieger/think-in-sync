@@ -52,7 +52,8 @@ export const de = {
     incorrect: "Das ist falsch.",
     nextRound: "Nächste Runde",
     playAgain: "Erneut spielen",
-    viewLeaderboard: "In Bestenliste eintragen"
+    viewLeaderboard: "In Bestenliste eintragen",
+    cheatingDetected: "Betrugsversuch erkannt!"
   },
   themes: {
     title: "Wähle ein Thema",
@@ -97,4 +98,3 @@ export const de = {
     }
   }
 };
-

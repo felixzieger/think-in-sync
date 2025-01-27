@@ -38,7 +38,11 @@ export const guessWord = async (sentence: string, language: string): Promise<str
     
     try {
       const { data: fraudData, error: fraudError } = await supabase.functions.invoke('detect-fraud', {
-        body: { sentence, targetWord: words[0] } // First word is usually the target in cheating attempts
+        body: { 
+          sentence, 
+          targetWord: words[0], // First word is usually the target in cheating attempts
+          language 
+        }
       });
 
       if (fraudError) throw fraudError;
