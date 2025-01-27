@@ -127,7 +127,7 @@ export const SentenceBuilder = ({
       </Button>
 
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-        Describe your word
+        Think in Sync
       </h2>
       <p className="mb-6 text-sm text-gray-600">
         Your goal is to describe the word
@@ -145,12 +145,18 @@ export const SentenceBuilder = ({
         </p>
       </div>
       <form onSubmit={handleSubmit} className="mb-4">
-        <div className="relative mb-4">
-          {sentence.length > 0 && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 max-w-[60%] truncate">
+        {sentence.length > 0 && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 text-left p-3 rounded-lg bg-gray-50"
+          >
+            <p className="text-gray-700">
               {sentence.join(" ")}
-            </div>
-          )}
+            </p>
+          </motion.div>
+        )}
+        <div className="relative mb-4">
           <Input
             ref={inputRef}
             type="text"
@@ -160,8 +166,8 @@ export const SentenceBuilder = ({
               onInputChange(value);
             }}
             onKeyDown={handleKeyDown}
-            placeholder={sentence.length === 0 ? t.game.inputPlaceholder : "..."}
-            className={`pl-${sentence.length > 0 ? '32' : '3'}`}
+            placeholder={t.game.inputPlaceholder}
+            className="w-full"
             disabled={isAiThinking}
           />
         </div>
