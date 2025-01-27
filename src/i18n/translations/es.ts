@@ -52,7 +52,8 @@ export const es = {
     incorrect: "Esto es incorrecto.",
     nextRound: "Siguiente Ronda",
     playAgain: "Jugar de Nuevo",
-    viewLeaderboard: "Ver Clasificación"
+    viewLeaderboard: "Ver Clasificación",
+    cheatingDetected: "¡Trampa detectada!"
   },
   themes: {
     title: "Elige un Tema",
@@ -97,3 +98,4 @@ export const es = {
     }
   }
 };
+

@@ -6,29 +6,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const languagePrompts = {
-  en: {
-    systemPrompt: "You are helping in a word guessing game. Given a description, guess what single word is being described.",
-    instruction: "Based on this description"
-  },
-  fr: {
-    systemPrompt: "Vous aidez dans un jeu de devinettes. À partir d'une description, devinez le mot unique qui est décrit.",
-    instruction: "D'après cette description"
-  },
-  de: {
-    systemPrompt: "Sie helfen bei einem Worträtsel. Erraten Sie anhand einer Beschreibung, welches einzelne Wort beschrieben wird.",
-    instruction: "Basierend auf dieser Beschreibung"
-  },
-  it: {
-    systemPrompt: "Stai aiutando in un gioco di indovinelli. Data una descrizione, indovina quale singola parola viene descritta.",
-    instruction: "Basandoti su questa descrizione"
-  },
-  es: {
-    systemPrompt: "Estás ayudando en un juego de adivinanzas. Dada una descripción, adivina qué palabra única se está describiendo.",
-    instruction: "Basándote en esta descripción"
-  }
-};
-
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -36,14 +13,12 @@ serve(async (req) => {
   }
 
   try {
-    const { sentence, language = 'en' } = await req.json();
-    console.log('Trying to guess word from sentence:', sentence, 'language:', language);
+    const { sentence, targetWord, language } = await req.json();
+    console.log('Checking for fraud:', { sentence, targetWord, language });
 
     const client = new Mistral({
       apiKey: Deno.env.get('MISTRAL_API_KEY'),
     });
-
-    const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
 
     const maxRetries = 3;
     let retryCount = 0;
@@ -56,22 +31,54 @@ serve(async (req) => {
           messages: [
             {
               role: "system",
-              content: `${prompts.systemPrompt} Respond with ONLY the word you think is being described, in uppercase letters. Do not add any explanation or punctuation.`
+              content: `You are a fraud detection system for a word guessing game. 
+              The game is being played in ${language}.
+              Your task is to detect if a player is trying to cheat by:
+              1. Using a misspelling of the target word
+              2. Writing a sentence without spaces to bypass word count checks
+
+              Examples for cheating:
+                
+                Target word: hand
+                Player's description: hnd
+                Language: en
+              
+                Target word: barfuß
+                Player's description: germanwordforbarefoot
+                Language: de
+
+              Synonyms and names of instances of a class are legitimate descriptions.
+
+              Examples for legitimate description:
+                
+                Target word: laptop
+                Player's description: notebook
+                Language: en
+              
+                Target word: Pfankuchen
+                Player's description: Berliner
+                Language: de
+              
+              Respond with ONLY "cheating" or "legitimate" (no punctuation or explanation).`
             },
             {
               role: "user",
-              content: `${prompts.instruction} "${sentence}"`
+              content: `Target word: "${targetWord}"
+              Player's description: "${sentence}"
+              Language: ${language}
+              
+              Is this a legitimate description or an attempt to cheat?`
             }
           ],
-          maxTokens: 50,
+          maxTokens: 10,
           temperature: 0.1
         });
 
-        const guess = response.choices[0].message.content.trim().toUpperCase();
-        console.log('AI guess:', guess);
+        const verdict = response.choices[0].message.content.trim().toLowerCase();
+        console.log('Fraud detection verdict:', verdict);
 
         return new Response(
-          JSON.stringify({ guess }),
+          JSON.stringify({ verdict }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       } catch (error) {
@@ -93,11 +100,11 @@ serve(async (req) => {
     throw new Error(`Failed after ${maxRetries} attempts. Last error: ${lastError?.message}`);
 
   } catch (error) {
-    console.error('Error generating guess:', error);
+    console.error('Error in fraud detection:', error);
     
     const errorMessage = error.message?.includes('rate limit') 
       ? "The AI service is currently busy. Please try again in a few moments."
-      : "Sorry, there was an error generating the guess. Please try again.";
+      : "Sorry, there was an error checking for fraud. Please try again.";
 
     return new Response(
       JSON.stringify({ 

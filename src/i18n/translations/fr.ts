@@ -51,7 +51,8 @@ export const fr = {
     incorrect: "C'est incorrect.",
     nextRound: "Tour Suivant",
     playAgain: "Rejouer",
-    viewLeaderboard: "Voir les Scores"
+    viewLeaderboard: "Voir les Scores",
+    cheatingDetected: "Tentative de triche détectée !"
   },
   themes: {
     title: "Choisissez un Thème",
