@@ -14,6 +14,7 @@ export const de = {
     addWord: "Wort Hinzufügen",
     makeGuess: "KI Raten Lassen",
     aiThinking: "KI denkt nach...",
+    aiDelayed: "Die KI ist derzeit beschäftigt. Bitte versuchen Sie es in einem Moment erneut.",
     invalidWord: "Ungültiges Wort",
     cantUseTargetWord: "Sie können keine Wörter verwenden, die enthalten",
     lettersOnly: "Bitte verwenden Sie nur Buchstaben (keine Zahlen oder Sonderzeichen)"

@@ -14,6 +14,7 @@ export const it = {
     addWord: "Aggiungi Parola",
     makeGuess: "Fai Indovinare l'IA",
     aiThinking: "L'IA sta pensando...",
+    aiDelayed: "L'IA è attualmente occupata. Riprova tra un momento.",
     invalidWord: "Parola Non Valida",
     cantUseTargetWord: "Non puoi usare parole che contengono",
     lettersOnly: "Per favore usa solo lettere (no numeri o caratteri speciali)"

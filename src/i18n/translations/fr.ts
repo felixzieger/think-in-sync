@@ -14,6 +14,7 @@ export const fr = {
     addWord: "Ajouter un Mot",
     makeGuess: "Faire Deviner l'IA",
     aiThinking: "L'IA réfléchit...",
+    aiDelayed: "L'IA est actuellement occupée. Veuillez réessayer dans un moment.",
     invalidWord: "Mot Invalide",
     cantUseTargetWord: "Vous ne pouvez pas utiliser des mots qui contiennent",
     lettersOnly: "Veuillez utiliser uniquement des lettres (pas de chiffres ni de caractères spéciaux)"

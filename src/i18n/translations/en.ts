@@ -14,6 +14,7 @@ export const en = {
     addWord: "Add Word",
     makeGuess: "Make AI Guess",
     aiThinking: "AI is thinking...",
+    aiDelayed: "The AI is currently busy. Please try again in a moment.",
     invalidWord: "Invalid Word",
     cantUseTargetWord: "You cannot use words that contain",
     lettersOnly: "Please use only letters (no numbers or special characters)"
