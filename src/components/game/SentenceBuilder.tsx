@@ -119,7 +119,7 @@ export const SentenceBuilder = ({
     >
       <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg">
         <span className="text-sm font-medium text-primary">
-          {t.game.round} {currentScore + 1}
+          {t.game.round} {successfulRounds + 1}
         </span>
       </div>
 
