@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { KeyboardEvent, useRef, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import dictionaryEn from 'dictionary-en';
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -27,8 +28,23 @@ export const SentenceBuilder = ({
 }: SentenceBuilderProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [dictionary, setDictionary] = useState<Set<string>>(new Set());
   const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Load dictionary on component mount
+    dictionaryEn((err: Error | null, dict: { aff: string, dic: string }) => {
+      if (err) {
+        console.error('Error loading dictionary:', err);
+        return;
+      }
+      // Create a Set from the dictionary words for faster lookups
+      const words = new Set(dict.dic.split('\n'));
+      setDictionary(words);
+      console.log('Dictionary loaded with', words.size, 'words');
+    });
+  }, []);
 
   useEffect(() => {
     const img = new Image();
@@ -64,6 +80,10 @@ export const SentenceBuilder = ({
     }
   };
 
+  const isValidWord = (word: string): boolean => {
+    return dictionary.has(word.toLowerCase());
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const input = playerInput.trim().toLowerCase();
@@ -73,6 +93,15 @@ export const SentenceBuilder = ({
       toast({
         title: "Invalid Word",
         description: `You cannot use words that contain "${currentWord}"`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!isValidWord(input)) {
+      toast({
+        title: "Invalid Word",
+        description: `"${input}" is not a valid English word`,
         variant: "destructive",
       });
       return;
