@@ -28,6 +28,7 @@ interface HighScore {
   score: number;
   avg_words_per_round: number;
   created_at: string;
+  session_id: string;
 }
 
 interface HighScoreBoardProps {
@@ -35,6 +36,7 @@ interface HighScoreBoardProps {
   avgWordsPerRound: number;
   onClose: () => void;
   onPlayAgain: () => void;
+  sessionId: string;
 }
 
 const ITEMS_PER_PAGE = 5;
@@ -57,6 +59,7 @@ export const HighScoreBoard = ({
   currentScore,
   avgWordsPerRound,
   onClose,
+  sessionId,
 }: HighScoreBoardProps) => {
   const [playerName, setPlayerName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -86,7 +89,6 @@ export const HighScoreBoard = ({
   });
 
   const handleSubmitScore = async () => {
-    // Updated regex to allow letters with diacritics and special characters
     if (!playerName.trim() || !/^[\p{L}0-9]+$/u.test(playerName.trim())) {
       toast({
         title: t.leaderboard.error.invalidName,
@@ -138,6 +140,7 @@ export const HighScoreBoard = ({
             .update({
               score: currentScore,
               avg_words_per_round: avgWordsPerRound,
+              session_id: sessionId
             })
             .eq("id", existingScore.id);
 
@@ -172,6 +175,7 @@ export const HighScoreBoard = ({
           player_name: playerName.trim(),
           score: currentScore,
           avg_words_per_round: avgWordsPerRound,
+          session_id: sessionId
         });
 
         if (insertError) {
@@ -250,7 +254,6 @@ export const HighScoreBoard = ({
             placeholder={t.leaderboard.enterName}
             value={playerName}
             onChange={(e) => {
-              // Allow letters with diacritics and numbers
               const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9]/g, "");
               setPlayerName(value);
             }}

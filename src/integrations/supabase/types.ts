@@ -16,6 +16,7 @@ export type Database = {
           description: string
           id: string
           is_correct: boolean
+          session_id: string
           target_word: string
         }
         Insert: {
@@ -24,6 +25,7 @@ export type Database = {
           description: string
           id?: string
           is_correct: boolean
+          session_id?: string
           target_word: string
         }
         Update: {
@@ -32,6 +34,7 @@ export type Database = {
           description?: string
           id?: string
           is_correct?: boolean
+          session_id?: string
           target_word?: string
         }
         Relationships: []
@@ -43,6 +46,7 @@ export type Database = {
           id: string
           player_name: string
           score: number
+          session_id: string
         }
         Insert: {
           avg_words_per_round: number
@@ -50,6 +54,7 @@ export type Database = {
           id?: string
           player_name: string
           score: number
+          session_id: string
         }
         Update: {
           avg_words_per_round?: number
@@ -57,6 +62,7 @@ export type Database = {
           id?: string
           player_name?: string
           score?: number
+          session_id?: string
         }
         Relationships: []
       }

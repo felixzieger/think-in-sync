@@ -11,6 +11,7 @@ import { GuessDisplay } from "./game/GuessDisplay";
 import { GameOver } from "./game/GameOver";
 import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageContext } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
 
 type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-over";
 
@@ -25,9 +26,17 @@ export const GameContainer = () => {
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
   const [totalWords, setTotalWords] = useState<number>(0);
   const [usedWords, setUsedWords] = useState<string[]>([]);
+  const [sessionId, setSessionId] = useState<string>("");
   const { toast } = useToast();
   const t = useTranslation();
   const { language } = useContext(LanguageContext);
+
+  useEffect(() => {
+    // Generate a new session ID when starting a new game
+    if (gameState === "theme-selection") {
+      setSessionId(crypto.randomUUID());
+    }
+  }, [gameState]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -62,6 +71,7 @@ export const GameContainer = () => {
     setSuccessfulRounds(0);
     setTotalWords(0);
     setUsedWords([]);
+    setSessionId("");
   };
 
   const handleThemeSelect = async (theme: string) => {
@@ -130,6 +140,32 @@ export const GameContainer = () => {
       const sentenceString = finalSentence.join(' ');
       const guess = await guessWord(sentenceString, language);
       setAiGuess(guess);
+      
+      // Save game result with session ID
+      try {
+        const { error } = await supabase
+          .from('game_results')
+          .insert({
+            target_word: currentWord,
+            description: sentenceString,
+            ai_guess: guess,
+            is_correct: guess.toLowerCase() === currentWord.toLowerCase(),
+            session_id: sessionId
+          });
+
+        if (error) {
+          console.error('Error saving game result:', error);
+          throw error;
+        }
+      } catch (error) {
+        console.error('Error in database operation:', error);
+        toast({
+          title: "Error",
+          description: "Failed to save game result. Please try again.",
+          variant: "destructive",
+        });
+      }
+
       setGameState("showing-guess");
     } catch (error) {
       console.error('Error getting AI guess:', error);
@@ -231,6 +267,7 @@ export const GameContainer = () => {
             onPlayAgain={handlePlayAgain}
             currentScore={successfulRounds}
             avgWordsPerRound={getAverageWordsPerRound()}
+            sessionId={sessionId}
           />
         ) : gameState === "game-over" ? (
           <GameOver

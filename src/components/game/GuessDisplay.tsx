@@ -20,6 +20,7 @@ interface GuessDisplayProps {
   onBack?: () => void;
   currentScore: number;
   avgWordsPerRound: number;
+  sessionId: string;
 }
 
 export const GuessDisplay = ({
@@ -31,6 +32,7 @@ export const GuessDisplay = ({
   onBack,
   currentScore,
   avgWordsPerRound,
+  sessionId,
 }: GuessDisplayProps) => {
   const isGuessCorrect = () => aiGuess.toLowerCase() === currentWord.toLowerCase();
   const isCheating = () => aiGuess === 'CHEATING';
@@ -145,6 +147,7 @@ export const GuessDisplay = ({
                     setIsDialogOpen(false);
                     onPlayAgain();
                   }}
+                  sessionId={sessionId}
                 />
               </DialogContent>
             </Dialog>
