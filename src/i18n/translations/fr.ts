@@ -33,5 +33,41 @@ export const fr = {
     title: "Partie Terminée !",
     completedRounds: "Vous avez complété {count} tours avec succès !",
     playAgain: "Rejouer"
+  },
+  themes: {
+    title: "Choisir un Thème",
+    subtitle: "Sélectionnez un thème pour votre aventure de devinettes",
+    sports: "Sports",
+    food: "Nourriture",
+    custom: "Choisissez votre thème",
+    customPlaceholder: "Entrez un thème (ex: Animaux, Films)",
+    continue: "Continuer",
+    generating: "Génération des mots thématiques...",
+    pressKey: "Appuyez sur"
+  },
+  leaderboard: {
+    title: "Classement",
+    yourScore: "Votre score",
+    rounds: "tours",
+    wordsPerRound: "mots/tour",
+    enterName: "Entrez votre nom (lettres et chiffres uniquement)",
+    submit: "Soumettre le Score",
+    submitting: "Soumission...",
+    rank: "Rang",
+    player: "Joueur",
+    rounds: "Tours",
+    avgWords: "Moy. Mots/Tour",
+    noScores: "Pas encore de scores. Soyez le premier !",
+    previous: "Précédent",
+    next: "Suivant",
+    error: {
+      invalidName: "Veuillez entrer un nom valide (uniquement lettres et chiffres)",
+      noRounds: "Vous devez compléter au moins un tour pour soumettre un score",
+      alreadySubmitted: "Vous avez déjà soumis votre score pour cette partie",
+      newHighScore: "Nouveau Record !",
+      beatRecord: "Vous avez battu votre record précédent de {score} tours !",
+      notHigher: "Votre score actuel ({current}) n'est pas supérieur à votre meilleur score ({best})",
+      submitError: "Échec de la soumission du score. Veuillez réessayer."
+    }
   }
 };

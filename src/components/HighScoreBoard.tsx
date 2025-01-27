@@ -20,6 +20,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface HighScore {
   id: string;
@@ -62,6 +63,7 @@ export const HighScoreBoard = ({
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const { toast } = useToast();
+  const t = useTranslation();
 
   const { data: highScores, refetch } = useQuery({
     queryKey: ["highScores"],
@@ -78,11 +80,10 @@ export const HighScoreBoard = ({
   });
 
   const handleSubmitScore = async () => {
-    // Validate player name (only alphanumeric characters allowed)
     if (!playerName.trim() || !/^[a-zA-Z0-9]+$/.test(playerName.trim())) {
       toast({
-        title: "Error",
-        description: "Please enter a valid name (only letters and numbers allowed)",
+        title: t.leaderboard.error.invalidName,
+        description: t.leaderboard.error.invalidName,
         variant: "destructive",
       });
       return;
@@ -90,8 +91,8 @@ export const HighScoreBoard = ({
 
     if (currentScore < 1) {
       toast({
-        title: "Error",
-        description: "You need to complete at least one round to submit a score",
+        title: t.leaderboard.error.noRounds,
+        description: t.leaderboard.error.noRounds,
         variant: "destructive",
       });
       return;
@@ -99,8 +100,8 @@ export const HighScoreBoard = ({
 
     if (hasSubmitted) {
       toast({
-        title: "Error",
-        description: "You have already submitted your score for this game",
+        title: t.leaderboard.error.alreadySubmitted,
+        description: t.leaderboard.error.alreadySubmitted,
         variant: "destructive",
       });
       return;
@@ -108,7 +109,6 @@ export const HighScoreBoard = ({
 
     setIsSubmitting(true);
     try {
-      // Check if player already exists
       const { data: existingScores } = await supabase
         .from("high_scores")
         .select("*")
@@ -117,7 +117,6 @@ export const HighScoreBoard = ({
       const existingScore = existingScores?.[0];
 
       if (existingScore) {
-        // Only update if the new score is better
         if (currentScore > existingScore.score) {
           const { error } = await supabase
             .from("high_scores")
@@ -130,20 +129,20 @@ export const HighScoreBoard = ({
           if (error) throw error;
 
           toast({
-            title: "New High Score!",
-            description: `You beat your previous record of ${existingScore.score} rounds!`,
+            title: t.leaderboard.error.newHighScore,
+            description: t.leaderboard.error.beatRecord.replace("{score}", String(existingScore.score)),
           });
         } else {
           toast({
-            title: "Score Not Updated",
-            description: `Your current score (${currentScore}) is not higher than your best score (${existingScore.score})`,
+            title: t.leaderboard.error.notHigher
+              .replace("{current}", String(currentScore))
+              .replace("{best}", String(existingScore.score)),
             variant: "destructive",
           });
           setIsSubmitting(false);
           return;
         }
       } else {
-        // Insert new score
         const { error } = await supabase.from("high_scores").insert({
           player_name: playerName.trim(),
           score: currentScore,
@@ -151,11 +150,6 @@ export const HighScoreBoard = ({
         });
 
         if (error) throw error;
-
-        toast({
-          title: "Success!",
-          description: "Your score has been recorded",
-        });
       }
       
       setHasSubmitted(true);
@@ -164,8 +158,8 @@ export const HighScoreBoard = ({
     } catch (error) {
       console.error("Error submitting score:", error);
       toast({
-        title: "Error",
-        description: "Failed to submit score. Please try again.",
+        title: t.leaderboard.error.submitError,
+        description: t.leaderboard.error.submitError,
         variant: "destructive",
       });
     } finally {
@@ -212,20 +206,19 @@ export const HighScoreBoard = ({
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">Leaderboard</h2>
+        <h2 className="text-2xl font-bold mb-2">{t.leaderboard.title}</h2>
         <p className="text-gray-600">
-          Your score: {currentScore} rounds
-          {currentScore > 0 && ` (${avgWordsPerRound.toFixed(1)} words/round)`}
+          {t.leaderboard.yourScore}: {currentScore} {t.leaderboard.rounds}
+          {currentScore > 0 && ` (${avgWordsPerRound.toFixed(1)} ${t.leaderboard.wordsPerRound})`}
         </p>
       </div>
 
       {!hasSubmitted && currentScore > 0 && (
         <div className="flex gap-4 mb-6">
           <Input
-            placeholder="Enter your name (letters and numbers only)"
+            placeholder={t.leaderboard.enterName}
             value={playerName}
             onChange={(e) => {
-              // Only allow alphanumeric input
               const value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
               setPlayerName(value);
             }}
@@ -237,7 +230,7 @@ export const HighScoreBoard = ({
             onClick={handleSubmitScore}
             disabled={isSubmitting || !playerName.trim() || hasSubmitted}
           >
-            {isSubmitting ? "Submitting..." : "Submit Score"}
+            {isSubmitting ? t.leaderboard.submitting : t.leaderboard.submit}
           </Button>
         </div>
       )}
@@ -246,10 +239,10 @@ export const HighScoreBoard = ({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Rank</TableHead>
-              <TableHead>Player</TableHead>
-              <TableHead>Rounds</TableHead>
-              <TableHead>Avg Words/Round</TableHead>
+              <TableHead>{t.leaderboard.rank}</TableHead>
+              <TableHead>{t.leaderboard.player}</TableHead>
+              <TableHead>{t.leaderboard.rounds}</TableHead>
+              <TableHead>{t.leaderboard.avgWords}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -271,7 +264,7 @@ export const HighScoreBoard = ({
             {!paginatedScores?.length && (
               <TableRow>
                 <TableCell colSpan={4} className="text-center">
-                  No high scores yet. Be the first!
+                  {t.leaderboard.noScores}
                 </TableCell>
               </TableRow>
             )}
@@ -287,7 +280,7 @@ export const HighScoreBoard = ({
                 onClick={handlePreviousPage}
                 className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
               >
-                <span className="hidden sm:inline">Previous</span>
+                <span className="hidden sm:inline">{t.leaderboard.previous}</span>
                 <span className="text-xs text-muted-foreground ml-1">←</span>
               </PaginationPrevious>
             </PaginationItem>
@@ -306,7 +299,7 @@ export const HighScoreBoard = ({
                 onClick={handleNextPage}
                 className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
               >
-                <span className="hidden sm:inline">Next</span>
+                <span className="hidden sm:inline">{t.leaderboard.next}</span>
                 <span className="text-xs text-muted-foreground ml-1">→</span>
               </PaginationNext>
             </PaginationItem>

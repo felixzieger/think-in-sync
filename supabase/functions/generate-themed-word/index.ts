@@ -13,19 +13,27 @@ serve(async (req) => {
   }
 
   try {
-    const { theme, usedWords = [] } = await req.json();
-    console.log('Generating word for theme:', theme, 'excluding:', usedWords);
+    const { theme, usedWords = [], language = 'en' } = await req.json();
+    console.log('Generating word for theme:', theme, 'language:', language, 'excluding:', usedWords);
 
     const client = new Mistral({
       apiKey: Deno.env.get('MISTRAL_API_KEY'),
     });
+
+    const languageInstructions = {
+      en: "Generate a single word in English",
+      fr: "Générez un seul mot en français",
+      de: "Generieren Sie ein einzelnes Wort auf Deutsch",
+      it: "Genera una singola parola in italiano",
+      es: "Genera una sola palabra en español"
+    };
 
     const response = await client.chat.complete({
       model: "mistral-large-latest",
       messages: [
         {
           role: "system",
-          content: `You are helping generate words for a word-guessing game. Generate a single word related to the theme "${theme}". 
+          content: `You are helping generate words for a word-guessing game. ${languageInstructions[language]} related to the theme "${theme}". 
           The word should be:
           - A single word (no spaces or hyphens)
           - Common enough that people would know it

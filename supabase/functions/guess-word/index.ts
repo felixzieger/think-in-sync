@@ -12,14 +12,21 @@ serve(async (req) => {
   }
 
   try {
-    const { sentence } = await req.json();
-    console.log('Trying to guess word from sentence:', sentence);
+    const { sentence, language = 'en' } = await req.json();
+    console.log('Trying to guess word from sentence:', sentence, 'language:', language);
 
     const client = new Mistral({
       apiKey: Deno.env.get('MISTRAL_API_KEY'),
     });
 
-    // Add retry logic with exponential backoff
+    const languageInstructions = {
+      en: "You are playing a word guessing game in English",
+      fr: "Vous jouez à un jeu de devinettes de mots en français",
+      de: "Sie spielen ein Worträtselspiel auf Deutsch",
+      it: "Stai giocando a un gioco di indovinelli in italiano",
+      es: "Estás jugando a un juego de adivinanzas de palabras en español"
+    };
+
     const maxRetries = 3;
     let retryCount = 0;
     let lastError = null;
@@ -31,7 +38,7 @@ serve(async (req) => {
           messages: [
             {
               role: "system",
-              content: `You are playing a word guessing game. Given a descriptive sentence, your task is to guess the single word being described.
+              content: `${languageInstructions[language]}. Given a descriptive sentence, your task is to guess the single word being described.
                     Respond with ONLY the word you think is being described, in uppercase letters.
                     Do not add any explanation or punctuation.`
             },
@@ -55,27 +62,23 @@ serve(async (req) => {
         console.error(`Attempt ${retryCount + 1} failed:`, error);
         lastError = error;
         
-        // If it's a rate limit error, wait before retrying
         if (error.message?.includes('rate limit') || error.status === 429) {
-          const waitTime = Math.pow(2, retryCount) * 1000; // Exponential backoff: 1s, 2s, 4s
+          const waitTime = Math.pow(2, retryCount) * 1000;
           console.log(`Rate limit hit, waiting ${waitTime}ms before retry`);
           await new Promise(resolve => setTimeout(resolve, waitTime));
           retryCount++;
           continue;
         }
         
-        // If it's not a rate limit error, throw immediately
         throw error;
       }
     }
 
-    // If we've exhausted all retries
     throw new Error(`Failed after ${maxRetries} attempts. Last error: ${lastError?.message}`);
 
   } catch (error) {
     console.error('Error generating guess:', error);
     
-    // Provide a more user-friendly error message
     const errorMessage = error.message?.includes('rate limit') 
       ? "The AI service is currently busy. Please try again in a few moments."
       : "Sorry, there was an error generating the guess. Please try again.";

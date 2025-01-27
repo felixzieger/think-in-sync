@@ -33,5 +33,42 @@ export const en = {
     title: "Game Over!",
     completedRounds: "You completed {count} rounds successfully!",
     playAgain: "Play Again"
+  },
+  themes: {
+    title: "Choose a Theme",
+    subtitle: "Select a theme for your word-guessing adventure",
+    standard: "Standard",
+    sports: "Sports",
+    food: "Food",
+    custom: "Choose your theme",
+    customPlaceholder: "Enter a theme (e.g., Animals, Movies)",
+    continue: "Continue",
+    generating: "Generating themed words...",
+    pressKey: "Press"
+  },
+  leaderboard: {
+    title: "Leaderboard",
+    yourScore: "Your score",
+    rounds: "rounds",
+    wordsPerRound: "words/round",
+    enterName: "Enter your name (letters and numbers only)",
+    submit: "Submit Score",
+    submitting: "Submitting...",
+    rank: "Rank",
+    player: "Player",
+    rounds: "Rounds",
+    avgWords: "Avg Words/Round",
+    noScores: "No high scores yet. Be the first!",
+    previous: "Previous",
+    next: "Next",
+    error: {
+      invalidName: "Please enter a valid name (only letters and numbers allowed)",
+      noRounds: "You need to complete at least one round to submit a score",
+      alreadySubmitted: "You have already submitted your score for this game",
+      newHighScore: "New High Score!",
+      beatRecord: "You beat your previous record of {score} rounds!",
+      notHigher: "Your current score ({current}) is not higher than your best score ({best})",
+      submitError: "Failed to submit score. Please try again."
+    }
   }
 };

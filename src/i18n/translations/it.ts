@@ -33,5 +33,41 @@ export const it = {
     title: "Game Over!",
     completedRounds: "Hai completato {count} round con successo!",
     playAgain: "Gioca Ancora"
+  },
+  themes: {
+    title: "Scegli un Tema",
+    subtitle: "Seleziona un tema per la tua avventura di indovinelli",
+    sports: "Sport",
+    food: "Cibo",
+    custom: "Scegli il tuo tema",
+    customPlaceholder: "Inserisci un tema (es: Animali, Film)",
+    continue: "Continua",
+    generating: "Generazione parole tematiche...",
+    pressKey: "Premi"
+  },
+  leaderboard: {
+    title: "Classifica",
+    yourScore: "Il tuo punteggio",
+    rounds: "round",
+    wordsPerRound: "parole/round",
+    enterName: "Inserisci il tuo nome (solo lettere e numeri)",
+    submit: "Invia Punteggio",
+    submitting: "Invio in corso...",
+    rank: "Posizione",
+    player: "Giocatore",
+    rounds: "Round",
+    avgWords: "Media Parole/Round",
+    noScores: "Ancora nessun punteggio. Sii il primo!",
+    previous: "Precedente",
+    next: "Successivo",
+    error: {
+      invalidName: "Inserisci un nome valido (solo lettere e numeri)",
+      noRounds: "Devi completare almeno un round per inviare un punteggio",
+      alreadySubmitted: "Hai già inviato il tuo punteggio per questa partita",
+      newHighScore: "Nuovo Record!",
+      beatRecord: "Hai battuto il tuo record precedente di {score} round!",
+      notHigher: "Il tuo punteggio attuale ({current}) non è superiore al tuo miglior punteggio ({best})",
+      submitError: "Errore nell'invio del punteggio. Riprova."
+    }
   }
 };

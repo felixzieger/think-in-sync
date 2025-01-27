@@ -33,5 +33,41 @@ export const es = {
     title: "¡Juego Terminado!",
     completedRounds: "¡Completaste {count} rondas exitosamente!",
     playAgain: "Jugar de Nuevo"
+  },
+  themes: {
+    title: "Elegir un Tema",
+    subtitle: "Selecciona un tema para tu aventura de adivinanzas",
+    sports: "Deportes",
+    food: "Comida",
+    custom: "Elige tu tema",
+    customPlaceholder: "Ingresa un tema (ej: Animales, Películas)",
+    continue: "Continuar",
+    generating: "Generando palabras temáticas...",
+    pressKey: "Presiona"
+  },
+  leaderboard: {
+    title: "Tabla de Posiciones",
+    yourScore: "Tu puntaje",
+    rounds: "rondas",
+    wordsPerRound: "palabras/ronda",
+    enterName: "Ingresa tu nombre (solo letras y números)",
+    submit: "Enviar Puntaje",
+    submitting: "Enviando...",
+    rank: "Posición",
+    player: "Jugador",
+    rounds: "Rondas",
+    avgWords: "Prom. Palabras/Ronda",
+    noScores: "Aún no hay puntajes altos. ¡Sé el primero!",
+    previous: "Anterior",
+    next: "Siguiente",
+    error: {
+      invalidName: "Por favor ingresa un nombre válido (solo letras y números)",
+      noRounds: "Necesitas completar al menos una ronda para enviar un puntaje",
+      alreadySubmitted: "Ya has enviado tu puntaje para este juego",
+      newHighScore: "¡Nuevo Récord!",
+      beatRecord: "¡Superaste tu récord anterior de {score} rondas!",
+      notHigher: "Tu puntaje actual ({current}) no es mayor que tu mejor puntaje ({best})",
+      submitError: "Error al enviar el puntaje. Por favor intenta de nuevo."
+    }
   }
 };

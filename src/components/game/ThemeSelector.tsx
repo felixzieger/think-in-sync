@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
+import { useTranslation } from "@/hooks/useTranslation";
+import { useContext } from "react";
+import { LanguageContext } from "@/contexts/LanguageContext";
 
 type Theme = "standard" | "sports" | "food" | "custom";
 
@@ -14,14 +17,16 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
   const [customTheme, setCustomTheme] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const t = useTranslation();
+  const { language } = useContext(LanguageContext);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement) return; // Ignore when typing in input
+      if (e.target instanceof HTMLInputElement) return;
       
       switch(e.key.toLowerCase()) {
         case 'a':
-          setSelectedTheme("standard");
+          if (language === 'en') setSelectedTheme("standard");
           break;
         case 'b':
           setSelectedTheme("sports");
@@ -30,7 +35,7 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
           setSelectedTheme("food");
           break;
         case 'd':
-          e.preventDefault(); // Prevent 'd' from being entered in the input
+          e.preventDefault();
           setSelectedTheme("custom");
           break;
         case 'enter':
@@ -43,7 +48,7 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [selectedTheme, customTheme]);
+  }, [selectedTheme, customTheme, language]);
 
   useEffect(() => {
     if (selectedTheme === "custom") {
@@ -77,25 +82,27 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
       className="space-y-6"
     >
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold text-gray-900">Choose a Theme</h2>
-        <p className="text-gray-600">Select a theme for your word-guessing adventure</p>
+        <h2 className="text-2xl font-bold text-gray-900">{t.themes.title}</h2>
+        <p className="text-gray-600">{t.themes.subtitle}</p>
       </div>
 
       <div className="space-y-4">
-        <Button
-          variant={selectedTheme === "standard" ? "default" : "outline"}
-          className="w-full justify-between"
-          onClick={() => setSelectedTheme("standard")}
-        >
-          Standard <span className="text-sm opacity-50">Press A</span>
-        </Button>
+        {language === 'en' && (
+          <Button
+            variant={selectedTheme === "standard" ? "default" : "outline"}
+            className="w-full justify-between"
+            onClick={() => setSelectedTheme("standard")}
+          >
+            {t.themes.standard} <span className="text-sm opacity-50">{t.themes.pressKey} A</span>
+          </Button>
+        )}
         
         <Button
           variant={selectedTheme === "sports" ? "default" : "outline"}
           className="w-full justify-between"
           onClick={() => setSelectedTheme("sports")}
         >
-          Sports <span className="text-sm opacity-50">Press B</span>
+          {t.themes.sports} <span className="text-sm opacity-50">{t.themes.pressKey} B</span>
         </Button>
         
         <Button
@@ -103,7 +110,7 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
           className="w-full justify-between"
           onClick={() => setSelectedTheme("food")}
         >
-          Food <span className="text-sm opacity-50">Press C</span>
+          {t.themes.food} <span className="text-sm opacity-50">{t.themes.pressKey} C</span>
         </Button>
 
         <Button
@@ -111,7 +118,7 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
           className="w-full justify-between"
           onClick={() => setSelectedTheme("custom")}
         >
-          Choose your theme <span className="text-sm opacity-50">Press D</span>
+          {t.themes.custom} <span className="text-sm opacity-50">{t.themes.pressKey} D</span>
         </Button>
 
         {selectedTheme === "custom" && (
@@ -124,7 +131,7 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
             <Input
               ref={inputRef}
               type="text"
-              placeholder="Enter a theme (e.g., Animals, Movies)"
+              placeholder={t.themes.customPlaceholder}
               value={customTheme}
               onChange={(e) => setCustomTheme(e.target.value)}
               onKeyPress={handleInputKeyPress}
@@ -139,7 +146,7 @@ export const ThemeSelector = ({ onThemeSelect }: ThemeSelectorProps) => {
         className="w-full"
         disabled={selectedTheme === "custom" && !customTheme.trim() || isGenerating}
       >
-        {isGenerating ? "Generating themed words..." : "Continue ⏎"}
+        {isGenerating ? t.themes.generating : `${t.themes.continue} ⏎`}
       </Button>
     </motion.div>
   );
