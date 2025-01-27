@@ -36,7 +36,26 @@ serve(async (req) => {
               Your task is to detect if a player is trying to cheat by:
               1. Using a misspelling of the target word
               2. Writing a sentence without spaces to bypass word count checks
-              3. Using variations or close synonyms of the target word in ${language}
+
+              Examples for cheating:
+                
+                Target word: hand
+                Player's description: hnd
+                Language: en
+              
+                Target word: barfuß
+                Player's description: germanwordforbarefoot
+                Language: de
+
+              Examples for legitimate description:
+                
+                Target word: laptop
+                Player's description: notebook
+                Language: en
+              
+                Target word: Pfankuchen
+                Player's description: Berliner
+                Language: de
               
               Respond with ONLY "cheating" or "legitimate" (no punctuation or explanation).`
             },
