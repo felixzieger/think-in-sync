@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { KeyboardEvent, useRef, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -29,6 +30,7 @@ export const SentenceBuilder = ({
   const [imageLoaded, setImageLoaded] = useState(false);
   const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
   const { toast } = useToast();
+  const t = useTranslation();
 
   useEffect(() => {
     const img = new Image();
@@ -37,14 +39,12 @@ export const SentenceBuilder = ({
     console.log("Attempting to load image:", imagePath);
   }, [imagePath]);
 
-  // Focus input on initial render
   useEffect(() => {
     setTimeout(() => {
       inputRef.current?.focus();
     }, 100);
   }, []);
 
-  // Focus input after AI finishes thinking
   useEffect(() => {
     if (!isAiThinking && sentence.length > 0 && sentence.length % 2 === 0) {
       setTimeout(() => {
@@ -59,7 +59,6 @@ export const SentenceBuilder = ({
       if (playerInput.trim()) {
         handleSubmit(e as any);
       }
-      // Make the guess immediately without waiting for AI response
       onMakeGuess();
     }
   };
@@ -69,11 +68,10 @@ export const SentenceBuilder = ({
     const input = playerInput.trim().toLowerCase();
     const target = currentWord.toLowerCase();
 
-    // Check if the input contains only letters
     if (!/^[a-zA-Z]+$/.test(input)) {
       toast({
-        title: "Invalid Word",
-        description: "Please use only letters (no numbers or special characters)",
+        title: t.game.invalidWord,
+        description: t.game.lettersOnly,
         variant: "destructive",
       });
       return;
@@ -81,8 +79,8 @@ export const SentenceBuilder = ({
 
     if (input.includes(target)) {
       toast({
-        title: "Invalid Word",
-        description: `You cannot use words that contain "${currentWord}"`,
+        title: t.game.invalidWord,
+        description: `${t.game.cantUseTargetWord} "${currentWord}"`,
         variant: "destructive",
       });
       return;
@@ -98,10 +96,10 @@ export const SentenceBuilder = ({
       className="text-center"
     >
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-        Build a Description
+        {t.game.buildDescription}
       </h2>
       <p className="mb-6 text-sm text-gray-600">
-        Take turns with AI to describe your word without using the word itself!
+        {t.game.buildSubtitle}
       </p>
       <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
         {imageLoaded && (
@@ -117,7 +115,7 @@ export const SentenceBuilder = ({
       </div>
       <div className="mb-6 rounded-lg bg-gray-50 p-4">
         <p className="text-lg text-gray-800">
-          {sentence.length > 0 ? sentence.join(" ") : "Start your sentence..."}
+          {sentence.length > 0 ? sentence.join(" ") : t.game.startSentence}
         </p>
       </div>
       <form onSubmit={handleSubmit} className="mb-4">
@@ -126,12 +124,11 @@ export const SentenceBuilder = ({
           type="text"
           value={playerInput}
           onChange={(e) => {
-            // Only allow letters in the input
             const value = e.target.value.replace(/[^a-zA-Z]/g, '');
             onInputChange(value);
           }}
           onKeyDown={handleKeyDown}
-          placeholder="Enter your word (letters only)..."
+          placeholder={t.game.inputPlaceholder}
           className="mb-4"
           disabled={isAiThinking}
         />
@@ -141,7 +138,7 @@ export const SentenceBuilder = ({
             className="flex-1 bg-primary text-lg hover:bg-primary/90"
             disabled={!playerInput.trim() || isAiThinking}
           >
-            {isAiThinking ? "AI is thinking..." : "Add Word ⏎"}
+            {isAiThinking ? t.game.aiThinking : t.game.addWord}
           </Button>
           <Button
             type="button"
@@ -149,7 +146,7 @@ export const SentenceBuilder = ({
             className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
             disabled={(!sentence.length && !playerInput.trim()) || isAiThinking}
           >
-            {isAiThinking ? "AI is thinking..." : "Make AI Guess ⇧⏎"}
+            {isAiThinking ? t.game.aiThinking : t.game.makeGuess}
           </Button>
         </div>
       </form>

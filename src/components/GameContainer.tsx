@@ -9,6 +9,7 @@ import { ThemeSelector } from "./game/ThemeSelector";
 import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
 import { GameOver } from "./game/GameOver";
+import { useTranslation } from "@/hooks/useTranslation";
 
 type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-over";
 
@@ -24,6 +25,7 @@ export const GameContainer = () => {
   const [totalWords, setTotalWords] = useState<number>(0);
   const [usedWords, setUsedWords] = useState<string[]>([]);
   const { toast } = useToast();
+  const t = useTranslation();
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -88,8 +90,8 @@ export const GameContainer = () => {
     } catch (error) {
       console.error('Error in AI turn:', error);
       toast({
-        title: "AI Response Delayed",
-        description: "The AI is currently busy. Please try adding another word or wait a moment.",
+        title: t.game.aiThinking,
+        description: t.game.aiDelayed,
         variant: "default",
       });
     } finally {
