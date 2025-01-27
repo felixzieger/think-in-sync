@@ -1,97 +1,99 @@
 export const fr = {
-  welcome: {
-    title: "Penser en Sync",
-    subtitle: "Dans ce jeu, vous faites équipe avec l'IA pour deviner des mots secrets !",
-    startButton: "Commencer",
-    howToPlay: "Comment Jouer",
-    leaderboard: "Classement",
-    credits: "Créé par Sandro, Alessandro, Mattia, Michael, Emiliano et Felix lors du",
-    helpWin: "Aidez-nous à gagner un prix en",
-    onHuggingface: "notre projet sur huggingface"
-  },
-  howToPlay: {
-    setup: {
-      title: "La Configuration",
-      description: "Vous travaillerez avec deux IA : une comme partenaire donnant des indices, et une autre essayant de deviner le mot."
+    game: {
+      round: "Tour",
+      buildDescription: "Construisez une phrase ensemble",
+      startSentence: "Commencez à construire votre phrase...",
+      inputPlaceholder: "Entrez un mot...",
+      addWord: "Ajouter un mot",
+      makeGuess: "Deviner",
+      aiThinking: "L'IA réfléchit...",
+      aiDelayed: "L'IA est actuellement occupée. Veuillez réessayer dans un moment.",
+      invalidWord: "Mot invalide",
+      cantUseTargetWord: "Vous ne pouvez pas utiliser le mot cible",
+      lettersOnly: "Veuillez utiliser uniquement des lettres",
+      leaveGameTitle: "Quitter le jeu ?",
+      leaveGameDescription: "Votre progression actuelle sera perdue. Êtes-vous sûr de vouloir quitter ?",
+      cancel: "Annuler",
+      confirm: "Confirmer",
+      describeWord: "Votre objectif est de décrire le mot"
     },
-    goal: {
-      title: "Votre Objectif",
-      description: "Aidez l'IA à deviner le mot secret en utilisant des indices d'un seul mot. Chaque devinette correcte vous rapporte un point !"
-    },
-    rules: {
-      title: "Les Règles",
-      items: [
-        "Un seul mot par indice",
-        "Pas de parties du mot secret ni de traductions",
-        "Les indices doivent être liés au mot (soyez créatif !)",
-        "Ne pas épeler la réponse"
-      ]
-    }
-  },
-  game: {
-    buildDescription: "Construire une Description",
-    buildSubtitle: "Alternez avec l'IA pour décrire votre mot sans utiliser le mot lui-même !",
-    startSentence: "Commencez votre phrase...",
-    inputPlaceholder: "Entrez votre mot (lettres uniquement)...",
-    addWord: "Ajouter un Mot",
-    makeGuess: "Faire Deviner l'IA",
-    aiThinking: "L'IA réfléchit...",
-    aiDelayed: "L'IA est actuellement occupée. Veuillez réessayer dans un moment.",
-    invalidWord: "Mot Invalide",
-    cantUseTargetWord: "Vous ne pouvez pas utiliser des mots qui contiennent",
-    lettersOnly: "Veuillez utiliser uniquement des lettres (pas de chiffres ni de caractères spéciaux)"
-  },
-  guess: {
-    title: "Devinette de l'IA",
-    sentence: "Votre phrase",
-    aiGuessed: "L'IA a deviné",
-    correct: "Devinette correcte ! 🎉 Prêt pour le prochain tour ? Appuyez sur Entrée",
-    incorrect: "Partie terminée ! Appuyez sur Entrée pour rejouer",
-    nextRound: "Tour Suivant",
-    playAgain: "Rejouer",
-    viewLeaderboard: "Voir le Classement"
-  },
-  gameOver: {
-    title: "Partie Terminée !",
-    completedRounds: "Vous avez complété {count} tours avec succès !",
-    playAgain: "Rejouer"
-  },
-  themes: {
-    title: "Choisir un Thème",
-    subtitle: "Sélectionnez un thème pour votre aventure de devinettes",
-    standard: "",
-    technology: "Technologie",
-    sports: "Sports",
-    food: "Nourriture",
-    custom: "Choisissez votre thème",
-    customPlaceholder: "Entrez un thème (ex: Animaux, Films)",
-    continue: "Continuer",
-    generating: "Génération des mots thématiques...",
-    pressKey: "Appuyez sur"
-  },
   leaderboard: {
-    title: "Classement",
-    yourScore: "Votre score",
+    title: "Meilleurs Scores",
+    yourScore: "Votre Score",
     roundCount: "tours",
-    wordsPerRound: "mots/tour",
-    enterName: "Entrez votre nom (lettres et chiffres uniquement)",
+    wordsPerRound: "mots par tour",
+    enterName: "Entrez votre nom",
+    submitting: "Envoi en cours...",
     submit: "Soumettre le Score",
-    submitting: "Soumission...",
     rank: "Rang",
     player: "Joueur",
     roundsColumn: "Tours",
-    avgWords: "Moy. Mots/Tour",
-    noScores: "Pas encore de scores. Soyez le premier !",
+    avgWords: "Moy. Mots",
+    noScores: "Pas encore de scores",
     previous: "Précédent",
     next: "Suivant",
     error: {
-      invalidName: "Veuillez entrer un nom valide (uniquement lettres et chiffres)",
-      noRounds: "Vous devez compléter au moins un tour pour soumettre un score",
-      alreadySubmitted: "Vous avez déjà soumis votre score pour cette partie",
+      invalidName: "Veuillez entrer un nom valide",
+      noRounds: "Vous devez compléter au moins un tour",
+      alreadySubmitted: "Score déjà soumis",
       newHighScore: "Nouveau Record !",
-      beatRecord: "Vous avez battu votre record précédent de {score} tours !",
-      notHigher: "Votre score actuel ({current}) n'est pas supérieur à votre meilleur score ({best})",
-      submitError: "Échec de la soumission du score. Veuillez réessayer."
+      beatRecord: "Vous avez battu votre record précédent de {score} !",
+      notHigher: "Score de {current} pas plus élevé que votre meilleur de {best}",
+      submitError: "Erreur lors de la soumission du score"
+    }
+  },
+  guess: {
+    title: "Devinette de l'IA",
+    goalDescription: "Votre objectif était de décrire le mot",
+    providedDescription: "Vous avez fourni la description",
+    aiGuessedDescription: "Basé sur votre description, l'IA a deviné",
+    correct: "C'est correct !",
+    incorrect: "C'est incorrect.",
+    nextRound: "Tour Suivant",
+    playAgain: "Rejouer",
+    viewLeaderboard: "Voir les Scores"
+  },
+  themes: {
+    title: "Choisissez un Thème",
+    subtitle: "Sélectionnez un thème pour le mot que l'IA essaiera de deviner",
+    standard: "Standard",
+    technology: "Technologie",
+    sports: "Sports",
+    food: "Nourriture",
+    custom: "Thème Personnalisé",
+    customPlaceholder: "Entrez votre thème personnalisé...",
+    continue: "Continuer",
+    generating: "Génération...",
+    pressKey: "Appuyez sur"
+  },
+  welcome: {
+    title: "Think in Sync",
+    subtitle: "Construisez des phrases ensemble et laissez l'IA deviner votre mot !",
+    startButton: "Commencer",
+    howToPlay: "Comment Jouer",
+    leaderboard: "Classement",
+    credits: "Créé pendant le",
+    helpWin: "Aidez-nous à gagner en",
+    onHuggingface: "Nous étoilant sur Huggingface"
+  },
+  howToPlay: {
+    setup: {
+      title: "Mise en place",
+      description: "Choisissez un thème et obtenez un mot secret que l'IA essaiera de deviner."
+    },
+    goal: {
+      title: "Objectif",
+      description: "Construisez des phrases avec l'IA qui décrivent votre mot sans l'utiliser directement."
+    },
+    rules: {
+      title: "Règles",
+      items: [
+        "Ajoutez des mots à tour de rôle pour construire des phrases descriptives",
+        "N'utilisez pas le mot secret ou ses variations",
+        "Soyez créatif et descriptif",
+        "L'IA essaiera de deviner votre mot après chaque phrase"
+      ]
     }
   }
 };
+

@@ -1,97 +1,99 @@
 export const de = {
-  welcome: {
-    title: "Denken im Einklang",
-    subtitle: "In diesem Spiel arbeiten Sie mit KI zusammen, um geheime Wörter zu erraten!",
-    startButton: "Spiel Starten",
-    howToPlay: "Spielanleitung",
-    leaderboard: "Bestenliste",
-    credits: "Erstellt von Sandro, Alessandro, Mattia, Michael, Emiliano und Felix beim",
-    helpWin: "Helfen Sie uns einen Preis zu gewinnen",
-    onHuggingface: "unser Projekt auf huggingface"
-  },
-  howToPlay: {
-    setup: {
-      title: "Der Aufbau",
-      description: "Sie arbeiten mit zwei KIs: eine als Partner, der Hinweise gibt, und eine andere, die versucht, das Wort zu erraten."
+    game: {
+      round: "Runde",
+      buildDescription: "Baut gemeinsam einen Satz",
+      buildSubtitle: "Fügt abwechselnd Wörter hinzu, um einen Satz zu bilden",
+      startSentence: "Beginne deinen Satz...",
+      inputPlaceholder: "Gib ein Wort ein...",
+      addWord: "Wort hinzufügen",
+      makeGuess: "Raten",
+      aiThinking: "KI denkt nach...",
+      aiDelayed: "Die KI ist derzeit beschäftigt. Bitte versuche es gleich noch einmal.",
+      invalidWord: "Ungültiges Wort",
+      cantUseTargetWord: "Du kannst das Zielwort nicht verwenden",
+      lettersOnly: "Bitte nur Buchstaben verwenden",
+      leaveGameTitle: "Spiel verlassen?",
+      leaveGameDescription: "Dein aktueller Fortschritt geht verloren. Bist du sicher, dass du das Spiel verlassen möchtest?",
+      cancel: "Abbrechen",
+      confirm: "Bestätigen",
+      describeWord: "Dein Ziel ist es folgendes Wort zu beschreiben"
     },
-    goal: {
-      title: "Ihr Ziel",
-      description: "Helfen Sie der KI, das geheime Wort mit Einwort-Hinweisen zu erraten. Jede richtige Vermutung bringt Ihnen einen Punkt!"
-    },
-    rules: {
-      title: "Die Regeln",
-      items: [
-        "Nur ein Wort pro Hinweis",
-        "Keine Teile des geheimen Wortes oder Übersetzungen",
-        "Hinweise müssen sich auf das Wort beziehen (seien Sie kreativ!)",
-        "Keine Buchstabierung der Antwort"
-      ]
-    }
-  },
-  game: {
-    buildDescription: "Beschreibung Erstellen",
-    buildSubtitle: "Wechseln Sie sich mit der KI ab, um Ihr Wort zu beschreiben, ohne das Wort selbst zu verwenden!",
-    startSentence: "Beginnen Sie Ihren Satz...",
-    inputPlaceholder: "Geben Sie Ihr Wort ein (nur Buchstaben)...",
-    addWord: "Wort Hinzufügen",
-    makeGuess: "KI Raten Lassen",
-    aiThinking: "KI denkt nach...",
-    aiDelayed: "Die KI ist derzeit beschäftigt. Bitte versuchen Sie es in einem Moment erneut.",
-    invalidWord: "Ungültiges Wort",
-    cantUseTargetWord: "Sie können keine Wörter verwenden, die enthalten",
-    lettersOnly: "Bitte verwenden Sie nur Buchstaben (keine Zahlen oder Sonderzeichen)"
-  },
-  guess: {
-    title: "KI-Vermutung",
-    sentence: "Ihr Satz",
-    aiGuessed: "KI hat geraten",
-    correct: "Richtig geraten! 🎉 Bereit für die nächste Runde? Drücken Sie Enter",
-    incorrect: "Spiel vorbei! Drücken Sie Enter zum Neustart",
-    nextRound: "Nächste Runde",
-    playAgain: "Erneut Spielen",
-    viewLeaderboard: "Bestenliste Anzeigen"
-  },
-  gameOver: {
-    title: "Spiel Vorbei!",
-    completedRounds: "Sie haben {count} Runden erfolgreich abgeschlossen!",
-    playAgain: "Erneut Spielen"
-  },
-  themes: {
-    title: "Thema Wählen",
-    subtitle: "Wählen Sie ein Thema für Ihr Wörter-Rate-Abenteuer",
-    standard: "",
-    technology: "Technologie",
-    sports: "Sport",
-    food: "Essen",
-    custom: "Wählen Sie Ihr Thema",
-    customPlaceholder: "Geben Sie ein Thema ein (z.B. Tiere, Filme)",
-    continue: "Weiter",
-    generating: "Generiere thematische Wörter...",
-    pressKey: "Drücken Sie"
-  },
   leaderboard: {
     title: "Bestenliste",
-    yourScore: "Ihre Punktzahl",
+    yourScore: "Deine Punktzahl",
     roundCount: "Runden",
-    wordsPerRound: "Wörter/Runde",
-    enterName: "Geben Sie Ihren Namen ein (nur Buchstaben und Zahlen)",
-    submit: "Punktzahl Einreichen",
-    submitting: "Wird eingereicht...",
+    wordsPerRound: "Wörter pro Runde",
+    enterName: "Gib deinen Namen ein",
+    submitting: "Wird übermittelt...",
+    submit: "Punktzahl einreichen",
     rank: "Rang",
     player: "Spieler",
     roundsColumn: "Runden",
-    avgWords: "Durchschn. Wörter/Runde",
-    noScores: "Noch keine Highscores. Seien Sie der Erste!",
-    previous: "Zurück",
-    next: "Weiter",
+    avgWords: "Durchschn. Wörter",
+    noScores: "Noch keine Punktzahlen",
+    previous: "Vorherige",
+    next: "Nächste",
     error: {
-      invalidName: "Bitte geben Sie einen gültigen Namen ein (nur Buchstaben und Zahlen)",
-      noRounds: "Sie müssen mindestens eine Runde abschließen, um eine Punktzahl einzureichen",
-      alreadySubmitted: "Sie haben Ihre Punktzahl für dieses Spiel bereits eingereicht",
+      invalidName: "Bitte gib einen gültigen Namen ein",
+      noRounds: "Du musst mindestens eine Runde abschließen",
+      alreadySubmitted: "Punktzahl bereits eingereicht",
       newHighScore: "Neuer Highscore!",
-      beatRecord: "Sie haben Ihren bisherigen Rekord von {score} Runden übertroffen!",
-      notHigher: "Ihre aktuelle Punktzahl ({current}) ist nicht höher als Ihre beste Punktzahl ({best})",
-      submitError: "Fehler beim Einreichen der Punktzahl. Bitte versuchen Sie es erneut."
+      beatRecord: "Du hast deinen bisherigen Rekord von {score} geschlagen!",
+      notHigher: "Punktzahl von {current} nicht höher als dein Bester von {best}",
+      submitError: "Fehler beim Einreichen der Punktzahl"
+    }
+  },
+  guess: {
+    title: "KI-Vermutung",
+    goalDescription: "Dein Ziel war es folgendes Wort zu beschreiben",
+    providedDescription: "Du hast folgende Beschreibung gegeben",
+    aiGuessedDescription: "Basierend auf deiner Beschreibung hat die KI geraten",
+    correct: "Das ist richtig!",
+    incorrect: "Das ist falsch.",
+    nextRound: "Nächste Runde",
+    playAgain: "Erneut spielen",
+    viewLeaderboard: "In Bestenliste eintragen"
+  },
+  themes: {
+    title: "Wähle ein Thema",
+    subtitle: "Wähle ein Thema für das Wort, das die KI erraten soll",
+    standard: "Standard",
+    technology: "Technologie",
+    sports: "Sport",
+    food: "Essen",
+    custom: "Benutzerdefiniertes Thema",
+    customPlaceholder: "Gib dein eigenes Thema ein...",
+    continue: "Weiter",
+    generating: "Wird generiert...",
+    pressKey: "Drücke"
+  },
+  welcome: {
+    title: "Think in Sync",
+    subtitle: "Baue Sätze zusammen und lass die KI dein Wort erraten!",
+    startButton: "Spiel starten",
+    howToPlay: "Spielanleitung",
+    leaderboard: "Bestenliste",
+    credits: "Erstellt während des",
+    helpWin: "Hilf uns gewinnen",
+    onHuggingface: " auf Huggingface"
+  },
+  howToPlay: {
+    setup: {
+      title: "Vorbereitung",
+      description: "Wähle ein Thema und erhalte ein geheimes Wort, das die KI erraten soll."
+    },
+    goal: {
+      title: "Ziel",
+      description: "Baue gemeinsam mit der KI Sätze, die dein Wort beschreiben, ohne es direkt zu verwenden."
+    },
+    rules: {
+      title: "Regeln",
+      items: [
+        "Füge abwechselnd Wörter hinzu, um beschreibende Sätze zu bilden",
+        "Verwende nicht das geheime Wort oder seine Variationen",
+        "Sei kreativ und beschreibend",
+        "Die KI wird nach jedem Satz versuchen, dein Wort zu erraten"
+      ]
     }
   }
 };
