@@ -42,6 +42,7 @@ export const SentenceBuilder = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [hasMultipleWords, setHasMultipleWords] = useState(false);
   const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
   const { toast } = useToast();
   const t = useTranslation();
@@ -67,10 +68,15 @@ export const SentenceBuilder = ({
     }
   }, [isAiThinking, sentence.length]);
 
+  useEffect(() => {
+    // Check if input contains multiple words
+    setHasMultipleWords(playerInput.trim().split(/\s+/).length > 1);
+  }, [playerInput]);
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
-      if (playerInput.trim()) {
+      if (!hasMultipleWords && playerInput.trim()) {
         handleSubmit(e as any);
       }
       onMakeGuess();
@@ -81,6 +87,15 @@ export const SentenceBuilder = ({
     e.preventDefault();
     const input = playerInput.trim().toLowerCase();
     const target = currentWord.toLowerCase();
+
+    if (hasMultipleWords) {
+      toast({
+        title: t.game.invalidWord,
+        description: t.game.singleWordOnly,
+        variant: "destructive",
+      });
+      return;
+    }
 
     if (!/^[\p{L}]+$/u.test(input)) {
       toast({
@@ -169,21 +184,23 @@ export const SentenceBuilder = ({
             ref={inputRef}
             type="text"
             value={playerInput}
-            onChange={(e) => {
-              const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ]/g, '');
-              onInputChange(value);
-            }}
+            onChange={(e) => onInputChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={t.game.inputPlaceholder}
-            className="w-full"
+            className={`w-full ${hasMultipleWords ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
             disabled={isAiThinking}
           />
+          {hasMultipleWords && (
+            <p className="text-sm text-red-500 mt-1">
+              {t.game.singleWordOnly}
+            </p>
+          )}
         </div>
         <div className="flex gap-4">
           <Button
             type="submit"
             className="flex-1 bg-primary text-lg hover:bg-primary/90"
-            disabled={!playerInput.trim() || isAiThinking}
+            disabled={!playerInput.trim() || isAiThinking || hasMultipleWords}
           >
             {isAiThinking ? t.game.aiThinking : `${t.game.addWord}  ⏎`}
           </Button>
@@ -191,7 +208,7 @@ export const SentenceBuilder = ({
             type="button"
             onClick={onMakeGuess}
             className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
-            disabled={(!sentence.length && !playerInput.trim()) || isAiThinking}
+            disabled={(!sentence.length && !playerInput.trim()) || isAiThinking || hasMultipleWords}
           >
             {isAiThinking ? t.game.aiThinking : `${t.game.makeGuess} ⇧⏎`}
           </Button>
