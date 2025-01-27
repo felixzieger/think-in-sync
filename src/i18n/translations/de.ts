@@ -65,14 +65,14 @@ export const de = {
     pressKey: "Drücke"
   },
   welcome: {
-    title: "Description Improv",
+    title: "Think in Sync",
     subtitle: "Baue Sätze zusammen und lass die KI dein Wort erraten!",
     startButton: "Spiel starten",
     howToPlay: "Spielanleitung",
     leaderboard: "Bestenliste",
     credits: "Erstellt während des",
-    helpWin: "Hilf uns zu gewinnen durch",
-    onHuggingface: "Sternen auf Huggingface"
+    helpWin: "Hilf uns gewinnen",
+    onHuggingface: " auf Huggingface"
   },
   howToPlay: {
     setup: {

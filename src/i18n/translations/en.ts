@@ -65,7 +65,7 @@ export const en = {
     pressKey: "Press"
   },
   welcome: {
-    title: "Description Improv",
+    title: "Think in Sync",
     subtitle: "Build sentences together and let AI guess your word!",
     startButton: "Start Game",
     howToPlay: "How to Play",

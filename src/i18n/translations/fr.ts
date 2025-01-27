@@ -65,7 +65,7 @@ export const fr = {
     pressKey: "Appuyez sur"
   },
   welcome: {
-    title: "Description Improv",
+    title: "Think in Sync",
     subtitle: "Construisez des phrases ensemble et laissez l'IA deviner votre mot !",
     startButton: "Commencer",
     howToPlay: "Comment Jouer",
