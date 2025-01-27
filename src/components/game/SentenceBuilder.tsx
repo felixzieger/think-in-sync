@@ -69,6 +69,16 @@ export const SentenceBuilder = ({
     const input = playerInput.trim().toLowerCase();
     const target = currentWord.toLowerCase();
 
+    // Check if the input contains only letters
+    if (!/^[a-zA-Z]+$/.test(input)) {
+      toast({
+        title: "Invalid Word",
+        description: "Please use only letters (no numbers or special characters)",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (input.includes(target)) {
       toast({
         title: "Invalid Word",
@@ -115,9 +125,13 @@ export const SentenceBuilder = ({
           ref={inputRef}
           type="text"
           value={playerInput}
-          onChange={(e) => onInputChange(e.target.value.replace(/\s/g, ''))}
+          onChange={(e) => {
+            // Only allow letters in the input
+            const value = e.target.value.replace(/[^a-zA-Z]/g, '');
+            onInputChange(value);
+          }}
           onKeyDown={handleKeyDown}
-          placeholder="Enter your word..."
+          placeholder="Enter your word (letters only)..."
           className="mb-4"
           disabled={isAiThinking}
         />
