@@ -40,13 +40,13 @@ export const GuessDisplay = ({
     >
       <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg">
         <span className="text-sm font-medium text-primary">
-          Round {currentScore + 1}
+          {t.game.round} {currentScore + 1}
         </span>
       </div>
 
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">Think in Sync</h2>
       <p className="mb-6 text-sm text-gray-600">
-        Your goal was to describe the word
+        {t.guess.goalDescription}
       </p>
 
       <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
@@ -56,23 +56,27 @@ export const GuessDisplay = ({
       </div>
 
       <div className="space-y-6">
-        <div className="rounded-lg bg-gray-50 p-4">
-          <p className="text-sm text-gray-600 mb-2">You provided the description</p>
-          <p className="text-lg text-gray-800">
-            {sentence.join(" ")}
-          </p>
+        <div>
+          <p className="text-sm text-gray-600 mb-2">{t.guess.providedDescription}</p>
+          <div className="rounded-lg bg-gray-50 p-4">
+            <p className="text-lg text-gray-800">
+              {sentence.join(" ")}
+            </p>
+          </div>
         </div>
 
-        <div className="rounded-lg bg-gray-50 p-4">
-          <p className="text-sm text-gray-600 mb-2">Based on your description, the AI guessed</p>
-          <p className="text-xl font-bold text-primary">
-            {aiGuess}
-          </p>
+        <div>
+          <p className="text-sm text-gray-600 mb-2">{t.guess.aiGuessedDescription}</p>
+          <div className="rounded-lg bg-gray-50 p-4">
+            <p className="text-xl font-bold text-primary">
+              {aiGuess}
+            </p>
+          </div>
           <p className="mt-4 text-lg font-medium">
             {isGuessCorrect() ? (
-              <span className="text-green-600">This is right!</span>
+              <span className="text-green-600">{t.guess.correct}</span>
             ) : (
-              <span className="text-red-600">This is wrong.</span>
+              <span className="text-red-600">{t.guess.incorrect}</span>
             )}
           </p>
         </div>

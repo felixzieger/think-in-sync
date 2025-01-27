@@ -43,10 +43,11 @@ export const en = {
   },
   guess: {
     title: "AI's Guess",
-    sentence: "Your sentence",
-    aiGuessed: "AI guessed",
-    correct: "Correct! The AI guessed the word!",
-    incorrect: "Incorrect. Try again!",
+    goalDescription: "Your goal was to describe the word",
+    providedDescription: "You provided the description",
+    aiGuessedDescription: "Based on your description, the AI guessed",
+    correct: "This is right!",
+    incorrect: "This is wrong.",
     nextRound: "Next Round",
     playAgain: "Play Again",
     viewLeaderboard: "View Leaderboard"
