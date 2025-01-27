@@ -313,12 +313,6 @@ export const HighScoreBoard = ({
           </PaginationContent>
         </Pagination>
       )}
-
-      <div className="flex justify-end">
-        <Button variant="outline" onClick={onClose}>
-          Close <span className="text-xs text-muted-foreground ml-1">Esc</span>
-        </Button>
-      </div>
     </div>
   );
 };
