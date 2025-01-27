@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
@@ -64,17 +64,23 @@ export const HighScoreBoard = ({
   const [currentPage, setCurrentPage] = useState(1);
   const { toast } = useToast();
   const t = useTranslation();
+  const queryClient = useQueryClient();
 
   const { data: highScores, refetch } = useQuery({
     queryKey: ["highScores"],
     queryFn: async () => {
+      console.log("Fetching high scores...");
       const { data, error } = await supabase
         .from("high_scores")
         .select("*")
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching high scores:", error);
+        throw error;
+      }
+      console.log("Fetched high scores:", data);
       return data as HighScore[];
     },
   });
@@ -109,16 +115,24 @@ export const HighScoreBoard = ({
 
     setIsSubmitting(true);
     try {
-      const { data: existingScores } = await supabase
+      console.log("Checking existing score for player:", playerName.trim());
+      const { data: existingScores, error: fetchError } = await supabase
         .from("high_scores")
         .select("*")
         .eq("player_name", playerName.trim());
 
+      if (fetchError) {
+        console.error("Error fetching existing scores:", fetchError);
+        throw fetchError;
+      }
+
       const existingScore = existingScores?.[0];
+      console.log("Existing score found:", existingScore);
 
       if (existingScore) {
         if (currentScore > existingScore.score) {
-          const { error } = await supabase
+          console.log("Updating existing score...");
+          const { error: updateError } = await supabase
             .from("high_scores")
             .update({
               score: currentScore,
@@ -126,12 +140,21 @@ export const HighScoreBoard = ({
             })
             .eq("id", existingScore.id);
 
-          if (error) throw error;
+          if (updateError) {
+            console.error("Error updating score:", updateError);
+            throw updateError;
+          }
 
           toast({
             title: t.leaderboard.error.newHighScore,
-            description: t.leaderboard.error.beatRecord.replace("{score}", String(existingScore.score)),
+            description: t.leaderboard.error.beatRecord.replace(
+              "{score}",
+              String(existingScore.score)
+            ),
           });
+          
+          console.log("Score updated successfully");
+          await queryClient.invalidateQueries({ queryKey: ["highScores"] });
         } else {
           toast({
             title: t.leaderboard.error.notHigher
@@ -143,17 +166,23 @@ export const HighScoreBoard = ({
           return;
         }
       } else {
-        const { error } = await supabase.from("high_scores").insert({
+        console.log("Inserting new score...");
+        const { error: insertError } = await supabase.from("high_scores").insert({
           player_name: playerName.trim(),
           score: currentScore,
           avg_words_per_round: avgWordsPerRound,
         });
 
-        if (error) throw error;
+        if (insertError) {
+          console.error("Error inserting score:", insertError);
+          throw insertError;
+        }
+        
+        console.log("New score inserted successfully");
+        await queryClient.invalidateQueries({ queryKey: ["highScores"] });
       }
-      
+
       setHasSubmitted(true);
-      await refetch();
       setPlayerName("");
     } catch (error) {
       console.error("Error submitting score:", error);
@@ -209,7 +238,8 @@ export const HighScoreBoard = ({
         <h2 className="text-2xl font-bold mb-2">{t.leaderboard.title}</h2>
         <p className="text-gray-600">
           {t.leaderboard.yourScore}: {currentScore} {t.leaderboard.roundCount}
-          {currentScore > 0 && ` (${avgWordsPerRound.toFixed(1)} ${t.leaderboard.wordsPerRound})`}
+          {currentScore > 0 &&
+            ` (${avgWordsPerRound.toFixed(1)} ${t.leaderboard.wordsPerRound})`}
         </p>
       </div>
 
@@ -219,7 +249,7 @@ export const HighScoreBoard = ({
             placeholder={t.leaderboard.enterName}
             value={playerName}
             onChange={(e) => {
-              const value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+              const value = e.target.value.replace(/[^a-zA-Z0-9]/g, "");
               setPlayerName(value);
             }}
             onKeyDown={handleKeyDown}
@@ -276,7 +306,7 @@ export const HighScoreBoard = ({
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious 
+              <PaginationPrevious
                 onClick={handlePreviousPage}
                 className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
               >
@@ -297,7 +327,9 @@ export const HighScoreBoard = ({
             <PaginationItem>
               <PaginationNext
                 onClick={handleNextPage}
-                className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                className={
+                  currentPage === totalPages ? "pointer-events-none opacity-50" : ""
+                }
               >
                 <span className="hidden sm:inline">{t.leaderboard.next}</span>
                 <span className="text-xs text-muted-foreground ml-1">→</span>
