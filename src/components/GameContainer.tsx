@@ -118,7 +118,7 @@ export const GameContainer = () => {
       if (finalSentence.length === 0) return;
 
       const sentenceString = finalSentence.join(' ');
-      const guess = await guessWord(sentenceString);
+      const guess = await guessWord(sentenceString, language);
       setAiGuess(guess);
       setGameState("showing-guess");
     } catch (error) {

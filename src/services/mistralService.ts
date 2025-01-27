@@ -27,11 +27,11 @@ export const generateAIResponse = async (currentWord: string, currentSentence: s
   return data.word;
 };
 
-export const guessWord = async (sentence: string): Promise<string> => {
-  console.log('Calling guess-word function with sentence:', sentence);
+export const guessWord = async (sentence: string, language: string): Promise<string> => {
+  console.log('Calling guess-word function with sentence:', sentence, 'language:', language);
   
   const { data, error } = await supabase.functions.invoke('guess-word', {
-    body: { sentence }
+    body: { sentence, language }
   });
 
   if (error) {
