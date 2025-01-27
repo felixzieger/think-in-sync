@@ -183,7 +183,7 @@ export const SentenceBuilder = ({
             className="flex-1 bg-primary text-lg hover:bg-primary/90"
             disabled={!playerInput.trim() || isAiThinking}
           >
-            {isAiThinking ? t.game.aiThinking : t.game.addWord}
+            {isAiThinking ? t.game.aiThinking : `${t.game.addWord}  ⏎`}
           </Button>
           <Button
             type="button"
@@ -191,7 +191,7 @@ export const SentenceBuilder = ({
             className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
             disabled={(!sentence.length && !playerInput.trim()) || isAiThinking}
           >
-            {isAiThinking ? t.game.aiThinking : t.game.makeGuess}
+            {isAiThinking ? t.game.aiThinking : `${t.game.makeGuess} ⇧⏎`}
           </Button>
         </div>
       </form>
