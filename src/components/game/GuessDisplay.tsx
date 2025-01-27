@@ -9,6 +9,7 @@ import { HighScoreBoard } from "@/components/HighScoreBoard";
 import { useState, useEffect } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { supabase } from "@/integrations/supabase/client";
+import { House } from "lucide-react";
 
 interface GuessDisplayProps {
   sentence: string[];
@@ -16,6 +17,7 @@ interface GuessDisplayProps {
   currentWord: string;
   onNextRound: () => void;
   onPlayAgain: () => void;
+  onBack?: () => void;
   currentScore: number;
   avgWordsPerRound: number;
 }
@@ -26,6 +28,7 @@ export const GuessDisplay = ({
   currentWord,
   onNextRound,
   onPlayAgain,
+  onBack,
   currentScore,
   avgWordsPerRound,
 }: GuessDisplayProps) => {
@@ -65,10 +68,21 @@ export const GuessDisplay = ({
       animate={{ opacity: 1 }}
       className="text-center relative space-y-6"
     >
-      <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg">
-        <span className="text-sm font-medium text-primary">
-          {t.game.round} {currentScore + 1}
-        </span>
+      <div className="flex items-center justify-between mb-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onBack}
+          className="text-gray-600 hover:text-primary"
+        >
+          <House className="h-5 w-5" />
+        </Button>
+        <div className="bg-primary/10 px-3 py-1 rounded-lg">
+          <span className="text-sm font-medium text-primary">
+            {t.game.round} {currentScore + 1}
+          </span>
+        </div>
+        <div className="w-8" /> {/* Spacer for centering */}
       </div>
 
       <div>
