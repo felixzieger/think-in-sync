@@ -71,7 +71,7 @@ export const en = {
     },
     welcome: {
       title: "Think in Sync",
-      subtitle: "Build sentences together and let AI guess your word!",
+      subtitle: "Team up with AI to craft a clue and have a different AI guess your secret word!",
       startButton: "Start Game",
       howToPlay: "How to Play",
       leaderboard: "Leaderboard",

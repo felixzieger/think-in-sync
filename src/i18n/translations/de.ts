@@ -71,7 +71,7 @@ export const de = {
   },
   welcome: {
     title: "Think in Sync",
-    subtitle: "Baue Sätze zusammen und lass die KI dein Wort erraten!",
+    subtitle: "Arbeite mit einer KI zusammen, um einen Hinweis zu erstellen, und lass eine andere KI dein geheimes Wort erraten!",
     startButton: "Spiel starten",
     howToPlay: "Spielanleitung",
     leaderboard: "Bestenliste",

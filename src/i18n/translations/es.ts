@@ -71,7 +71,7 @@ export const es = {
     },
     welcome: {
       title: "Think in Sync",
-      subtitle: "¡Construye frases juntos y deja que la IA adivine tu palabra!",
+      subtitle: "¡Haz equipo con una IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
       startButton: "Comenzar Juego",
       howToPlay: "Cómo Jugar",
       leaderboard: "Clasificación",
