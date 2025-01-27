@@ -53,6 +53,10 @@ export const GameContainer = () => {
     setGameState("theme-selection");
   };
 
+  const handleBack = () => {
+    setGameState("welcome");
+  };
+
   const handleThemeSelect = async (theme: string) => {
     setCurrentTheme(theme);
     try {
@@ -87,7 +91,7 @@ export const GameContainer = () => {
 
     setIsAiThinking(true);
     try {
-      const aiWord = await generateAIResponse(currentWord, newSentence);
+      const aiWord = await generateAIResponse(currentWord, newSentence, language);
       const newSentenceWithAi = [...newSentence, aiWord];
       setSentence(newSentenceWithAi);
       setTotalWords(prev => prev + 1);
@@ -139,7 +143,7 @@ export const GameContainer = () => {
         try {
           const word = currentTheme === "standard" ? 
             getRandomWord() : 
-            await getThemedWord(currentTheme, usedWords);
+            await getThemedWord(currentTheme, usedWords, language);
           setCurrentWord(word);
           setGameState("building-sentence");
           setSentence([]);
@@ -199,7 +203,7 @@ export const GameContainer = () => {
         {gameState === "welcome" ? (
           <WelcomeScreen onStart={handleStart} />
         ) : gameState === "theme-selection" ? (
-          <ThemeSelector onThemeSelect={handleThemeSelect} />
+          <ThemeSelector onThemeSelect={handleThemeSelect} onBack={handleBack} />
         ) : gameState === "building-sentence" ? (
           <SentenceBuilder
             currentWord={currentWord}
