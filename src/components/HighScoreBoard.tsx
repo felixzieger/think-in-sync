@@ -78,10 +78,11 @@ export const HighScoreBoard = ({
   });
 
   const handleSubmitScore = async () => {
-    if (!playerName.trim()) {
+    // Validate player name (only alphanumeric characters allowed)
+    if (!playerName.trim() || !/^[a-zA-Z0-9]+$/.test(playerName.trim())) {
       toast({
         title: "Error",
-        description: "Please enter your name",
+        description: "Please enter a valid name (only letters and numbers allowed)",
         variant: "destructive",
       });
       return;
@@ -221,11 +222,16 @@ export const HighScoreBoard = ({
       {!hasSubmitted && currentScore > 0 && (
         <div className="flex gap-4 mb-6">
           <Input
-            placeholder="Enter your name"
+            placeholder="Enter your name (letters and numbers only)"
             value={playerName}
-            onChange={(e) => setPlayerName(e.target.value)}
+            onChange={(e) => {
+              // Only allow alphanumeric input
+              const value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+              setPlayerName(value);
+            }}
             onKeyDown={handleKeyDown}
             className="flex-1"
+            maxLength={20}
           />
           <Button
             onClick={handleSubmitScore}
