@@ -6,23 +6,50 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const languagePrompts = {
+  en: {
+    systemPrompt: "You are helping in a word game. The secret word is",
+    task: "Your task is to find a sentence to describe this word without using it directly.",
+    instruction: "Answer with a complete, grammatically correct sentence that starts with"
+  },
+  fr: {
+    systemPrompt: "Vous aidez dans un jeu de mots. Le mot secret est",
+    task: "Votre tâche est de trouver une phrase pour décrire ce mot sans l'utiliser directement.",
+    instruction: "Répondez avec une phrase complète et grammaticalement correcte qui commence par"
+  },
+  de: {
+    systemPrompt: "Sie helfen bei einem Wortspiel. Das geheime Wort ist",
+    task: "Ihre Aufgabe ist es, einen Satz zu finden, der dieses Wort beschreibt, ohne es direkt zu verwenden.",
+    instruction: "Antworten Sie mit einem vollständigen, grammatikalisch korrekten Satz, der beginnt mit"
+  },
+  it: {
+    systemPrompt: "Stai aiutando in un gioco di parole. La parola segreta è",
+    task: "Il tuo compito è trovare una frase per descrivere questa parola senza usarla direttamente.",
+    instruction: "Rispondi con una frase completa e grammaticalmente corretta che inizia con"
+  },
+  es: {
+    systemPrompt: "Estás ayudando en un juego de palabras. La palabra secreta es",
+    task: "Tu tarea es encontrar una frase para describir esta palabra sin usarla directamente.",
+    instruction: "Responde con una frase completa y gramaticalmente correcta que comience con"
+  }
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { currentWord, currentSentence } = await req.json();
-    console.log('Generating word for:', { currentWord, currentSentence });
+    const { currentWord, currentSentence, language = 'en' } = await req.json();
+    console.log('Generating word for:', { currentWord, currentSentence, language });
 
-    // currentSentence is already a string from the client
     const existingSentence = currentSentence || '';
+    const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
 
     const client = new Mistral({
       apiKey: Deno.env.get('MISTRAL_API_KEY'),
     });
 
-    // Add retry logic with exponential backoff
     const maxRetries = 3;
     let retryCount = 0;
     let lastError = null;
@@ -34,10 +61,7 @@ serve(async (req) => {
           messages: [
             {
               role: "system",
-              content: `You are helping in a word game. The secret word is "${currentWord}". 
-                    Your task is to find a sentence to describe this word without using it directly. 
-                    Answer with a complete, grammatically correct sentence that starts with "${existingSentence}".
-                    Do not add quotes or backticks. Just answer with the sentence.`
+              content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". Do not add quotes or backticks. Just answer with the sentence.`
             }
           ],
           maxTokens: 10,
@@ -47,12 +71,11 @@ serve(async (req) => {
         const aiResponse = response.choices[0].message.content.trim();
         console.log('AI full response:', aiResponse);
         
-        // Extract the new word by comparing with the existing sentence
         const newWord = aiResponse
           .slice(existingSentence.length)
           .trim()
           .split(' ')[0]
-          .replace(/[.,!?]$/, ''); // Remove any punctuation at the end
+          .replace(/[.,!?]$/, '');
         
         console.log('Extracted new word:', newWord);
 
@@ -64,27 +87,23 @@ serve(async (req) => {
         console.error(`Attempt ${retryCount + 1} failed:`, error);
         lastError = error;
         
-        // If it's a rate limit error, wait before retrying
         if (error.message?.includes('rate limit') || error.status === 429) {
-          const waitTime = Math.pow(2, retryCount) * 1000; // Exponential backoff: 1s, 2s, 4s
+          const waitTime = Math.pow(2, retryCount) * 1000;
           console.log(`Rate limit hit, waiting ${waitTime}ms before retry`);
           await new Promise(resolve => setTimeout(resolve, waitTime));
           retryCount++;
           continue;
         }
         
-        // If it's not a rate limit error, throw immediately
         throw error;
       }
     }
 
-    // If we've exhausted all retries
     throw new Error(`Failed after ${maxRetries} attempts. Last error: ${lastError?.message}`);
 
   } catch (error) {
     console.error('Error generating word:', error);
     
-    // Provide a more user-friendly error message
     const errorMessage = error.message?.includes('rate limit') 
       ? "The AI service is currently busy. Please try again in a few moments."
       : "Sorry, there was an error generating the word. Please try again.";

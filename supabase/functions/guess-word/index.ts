@@ -6,6 +6,29 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const languagePrompts = {
+  en: {
+    systemPrompt: "You are playing a word guessing game in English. Given a descriptive sentence, your task is to guess the single word being described.",
+    instruction: "Based on this description, what single word is being described:"
+  },
+  fr: {
+    systemPrompt: "Vous jouez à un jeu de devinettes de mots en français. À partir d'une phrase descriptive, votre tâche est de deviner le mot unique décrit.",
+    instruction: "D'après cette description, quel mot unique est décrit :"
+  },
+  de: {
+    systemPrompt: "Sie spielen ein Worträtselspiel auf Deutsch. Anhand eines beschreibenden Satzes ist es Ihre Aufgabe, das beschriebene einzelne Wort zu erraten.",
+    instruction: "Welches einzelne Wort wird basierend auf dieser Beschreibung beschrieben:"
+  },
+  it: {
+    systemPrompt: "Stai giocando a un gioco di indovinelli in italiano. Data una frase descrittiva, il tuo compito è indovinare la singola parola descritta.",
+    instruction: "In base a questa descrizione, quale singola parola viene descritta:"
+  },
+  es: {
+    systemPrompt: "Estás jugando a un juego de adivinanzas de palabras en español. Dada una frase descriptiva, tu tarea es adivinar la única palabra que se describe.",
+    instruction: "Según esta descripción, ¿qué palabra única se está describiendo:"
+  }
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -19,13 +42,7 @@ serve(async (req) => {
       apiKey: Deno.env.get('MISTRAL_API_KEY'),
     });
 
-    const languageInstructions = {
-      en: "You are playing a word guessing game in English",
-      fr: "Vous jouez à un jeu de devinettes de mots en français",
-      de: "Sie spielen ein Worträtselspiel auf Deutsch",
-      it: "Stai giocando a un gioco di indovinelli in italiano",
-      es: "Estás jugando a un juego de adivinanzas de palabras en español"
-    };
+    const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
 
     const maxRetries = 3;
     let retryCount = 0;
@@ -38,13 +55,11 @@ serve(async (req) => {
           messages: [
             {
               role: "system",
-              content: `${languageInstructions[language]}. Given a descriptive sentence, your task is to guess the single word being described.
-                    Respond with ONLY the word you think is being described, in uppercase letters.
-                    Do not add any explanation or punctuation.`
+              content: `${prompts.systemPrompt} Respond with ONLY the word you think is being described, in uppercase letters. Do not add any explanation or punctuation.`
             },
             {
               role: "user",
-              content: `Based on this description, what single word is being described: "${sentence}"`
+              content: `${prompts.instruction} "${sentence}"`
             }
           ],
           maxTokens: 10,
