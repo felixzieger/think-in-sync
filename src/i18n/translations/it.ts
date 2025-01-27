@@ -77,7 +77,7 @@ export const it = {
     leaderboard: "Classifica",
     credits: "Creato durante il",
     helpWin: "Aiutaci a vincere",
-    onHuggingface: "Mettendo una stella su Huggingface"
+    onHuggingface: "Mettendo mi piace su Huggingface"
   },
   howToPlay: {
     setup: {

@@ -75,7 +75,7 @@ export const en = {
     leaderboard: "Leaderboard",
     credits: "Created during the",
     helpWin: "Help us win by",
-    onHuggingface: "Starring on Huggingface"
+    onHuggingface: "Liking on Huggingface"
   },
   howToPlay: {
     setup: {
@@ -97,3 +97,4 @@ export const en = {
     }
   }
 };
+

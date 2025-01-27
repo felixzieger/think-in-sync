@@ -75,7 +75,7 @@ export const es = {
     leaderboard: "Clasificación",
     credits: "Creado durante el",
     helpWin: "Ayúdanos a ganar",
-    onHuggingface: "Dando una estrella en Huggingface"
+    onHuggingface: "Dando me gusta en Huggingface"
   },
   howToPlay: {
     setup: {
