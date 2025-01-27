@@ -3,7 +3,8 @@ import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { KeyboardEvent, useRef, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import dictionary from 'dictionary-en/index.js';
+import en from 'dictionary-en';
+import nspell from 'nspell';
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -28,22 +29,22 @@ export const SentenceBuilder = ({
 }: SentenceBuilderProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [wordList, setWordList] = useState<Set<string>>(new Set());
+  const [spellChecker, setSpellChecker] = useState<ReturnType<typeof nspell> | null>(null);
   const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
   const { toast } = useToast();
 
   useEffect(() => {
-    // Load dictionary on component mount
-    dictionary((err: Error | null, dict: { dic: string }) => {
-      if (err) {
-        console.error('Error loading dictionary:', err);
-        return;
+    // Initialize spell checker
+    const initSpellChecker = async () => {
+      try {
+        setSpellChecker(nspell(en));
+        console.log('Spell checker initialized');
+      } catch (error) {
+        console.error('Error initializing spell checker:', error);
       }
-      // Create a Set from the dictionary words for faster lookups
-      const words = new Set(dict.dic.split('\n'));
-      setWordList(words);
-      console.log('Dictionary loaded with', words.size, 'words');
-    });
+    };
+    
+    initSpellChecker();
   }, []);
 
   useEffect(() => {
@@ -81,7 +82,8 @@ export const SentenceBuilder = ({
   };
 
   const isValidWord = (word: string): boolean => {
-    return wordList.has(word.toLowerCase());
+    if (!spellChecker) return false;
+    return spellChecker.correct(word.toLowerCase());
   };
 
   const handleSubmit = (e: React.FormEvent) => {
