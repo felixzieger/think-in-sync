@@ -59,7 +59,7 @@ export const GuessDisplay = ({
         <div>
           <p className="text-sm text-gray-600 mb-1">{t.guess.providedDescription}</p>
           <div className="rounded-lg bg-gray-50">
-            <p className="p-4 text-2xl font-bold tracking-wider text-gray-800">
+            <p className="p-4 text-2xl tracking-wider text-gray-800">
               {sentence.join(" ")}
             </p>
           </div>
