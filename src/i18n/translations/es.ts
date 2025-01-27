@@ -37,6 +37,7 @@ export const es = {
   themes: {
     title: "Elegir un Tema",
     subtitle: "Selecciona un tema para tu aventura de adivinanzas",
+    standard: "", // Empty string but included for type consistency
     sports: "Deportes",
     food: "Comida",
     custom: "Elige tu tema",

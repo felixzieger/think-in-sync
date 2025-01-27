@@ -37,6 +37,7 @@ export const de = {
   themes: {
     title: "Thema Wählen",
     subtitle: "Wählen Sie ein Thema für Ihr Wörter-Rate-Abenteuer",
+    standard: "", // Empty string but included for type consistency
     sports: "Sport",
     food: "Essen",
     custom: "Wählen Sie Ihr Thema",

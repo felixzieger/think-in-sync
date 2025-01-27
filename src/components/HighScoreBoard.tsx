@@ -208,7 +208,7 @@ export const HighScoreBoard = ({
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-2">{t.leaderboard.title}</h2>
         <p className="text-gray-600">
-          {t.leaderboard.yourScore}: {currentScore} {t.leaderboard.rounds}
+          {t.leaderboard.yourScore}: {currentScore} {t.leaderboard.roundCount}
           {currentScore > 0 && ` (${avgWordsPerRound.toFixed(1)} ${t.leaderboard.wordsPerRound})`}
         </p>
       </div>
@@ -241,7 +241,7 @@ export const HighScoreBoard = ({
             <TableRow>
               <TableHead>{t.leaderboard.rank}</TableHead>
               <TableHead>{t.leaderboard.player}</TableHead>
-              <TableHead>{t.leaderboard.rounds}</TableHead>
+              <TableHead>{t.leaderboard.roundsColumn}</TableHead>
               <TableHead>{t.leaderboard.avgWords}</TableHead>
             </TableRow>
           </TableHeader>

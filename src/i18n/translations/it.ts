@@ -37,6 +37,7 @@ export const it = {
   themes: {
     title: "Scegli un Tema",
     subtitle: "Seleziona un tema per la tua avventura di indovinelli",
+    standard: "", // Empty string but included for type consistency
     sports: "Sport",
     food: "Cibo",
     custom: "Scegli il tuo tema",

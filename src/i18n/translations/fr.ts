@@ -37,6 +37,7 @@ export const fr = {
   themes: {
     title: "Choisir un Thème",
     subtitle: "Sélectionnez un thème pour votre aventure de devinettes",
+    standard: "", // Empty string but included for type consistency
     sports: "Sports",
     food: "Nourriture",
     custom: "Choisissez votre thème",
