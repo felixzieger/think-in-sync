@@ -86,7 +86,8 @@ export const HighScoreBoard = ({
   });
 
   const handleSubmitScore = async () => {
-    if (!playerName.trim() || !/^[a-zA-Z0-9]+$/.test(playerName.trim())) {
+    // Updated regex to allow letters with diacritics and special characters
+    if (!playerName.trim() || !/^[\p{L}0-9]+$/u.test(playerName.trim())) {
       toast({
         title: t.leaderboard.error.invalidName,
         description: t.leaderboard.error.invalidName,
@@ -249,7 +250,8 @@ export const HighScoreBoard = ({
             placeholder={t.leaderboard.enterName}
             value={playerName}
             onChange={(e) => {
-              const value = e.target.value.replace(/[^a-zA-Z0-9]/g, "");
+              // Allow letters with diacritics and numbers
+              const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9]/g, "");
               setPlayerName(value);
             }}
             onKeyDown={handleKeyDown}
