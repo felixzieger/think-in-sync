@@ -83,9 +83,12 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             href="https://huggingface.co/spaces/Mistral-AI-Game-Jam/description-improv/tree/main" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm text-primary hover:text-primary/90 transition-colors border border-primary/20 rounded-md hover:border-primary/40"
+            className="inline-flex flex-col items-center gap-2 px-4 py-2 text-sm text-primary hover:text-primary/90 transition-colors border border-primary/20 rounded-md hover:border-primary/40"
           >
-            {t.welcome.helpWin} <Heart className="w-4 h-4" /> {t.welcome.onHuggingface}
+            <span>{t.welcome.helpWin}</span>
+            <span className="inline-flex items-center gap-2">
+              <Heart className="w-4 h-4" /> {t.welcome.onHuggingface}
+            </span>
           </a>
         </div>
       </motion.div>
