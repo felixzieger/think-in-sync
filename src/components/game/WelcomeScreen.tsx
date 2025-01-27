@@ -7,6 +7,7 @@ import { LanguageSelector } from "./LanguageSelector";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
+import { Heart } from "lucide-react";
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -56,6 +57,30 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             >
               {t.welcome.leaderboard} 🏆
             </Button>
+          </div>
+        </div>
+
+        <div className="mt-12 text-sm text-gray-500 space-y-2">
+          <p>
+            Made by Sandro, Alessandro, Mattia, Michael, Emiliano, and Felix at{" "}
+            <a 
+              href="https://blog.felixzieger.de/gaming-hackathon-paris/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              AI Gaming Hackathon
+            </a>
+          </p>
+          <div className="flex justify-center">
+            <a 
+              href="https://huggingface.co/spaces/Mistral-AI-Game-Jam/description-improv/tree/main" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm text-primary hover:text-primary/90 transition-colors"
+            >
+              <Heart className="w-4 h-4" /> our project on huggingface
+            </a>
           </div>
         </div>
       </motion.div>
