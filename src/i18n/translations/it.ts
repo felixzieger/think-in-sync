@@ -4,7 +4,10 @@ export const it = {
     subtitle: "In questo gioco fai squadra con l'IA per indovinare parole segrete!",
     startButton: "Inizia Gioco",
     howToPlay: "Come Giocare",
-    leaderboard: "Classifica"
+    leaderboard: "Classifica",
+    credits: "Creato da Sandro, Alessandro, Mattia, Michael, Emiliano e Felix all'",
+    helpWin: "Aiutaci a vincere un premio",
+    onHuggingface: "il nostro progetto su huggingface"
   },
   howToPlay: {
     setup: {
@@ -87,7 +90,7 @@ export const it = {
       alreadySubmitted: "Hai già inviato il tuo punteggio per questa partita",
       newHighScore: "Nuovo Record!",
       beatRecord: "Hai battuto il tuo record precedente di {score} round!",
-      notHigher: "Il tuo punteggio attuale ({current}) non è superiore al tuo miglior punteggio ({best})",
+      notHigher: "Il tuo punteggio attuale ({current}) non è superiore al miglior punteggio ({best})",
       submitError: "Errore nell'invio del punteggio. Riprova."
     }
   }

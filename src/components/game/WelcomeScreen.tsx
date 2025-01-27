@@ -7,6 +7,7 @@ import { LanguageSelector } from "./LanguageSelector";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
+import { Heart } from "lucide-react";
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -57,6 +58,35 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
               {t.welcome.leaderboard} 🏆
             </Button>
           </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="max-w-2xl mx-auto text-center mt-12 space-y-4"
+      >
+        <p className="text-sm text-gray-500">
+          {t.welcome.credits}{" "}
+          <a 
+            href="https://blog.felixzieger.de/gaming-hackathon-paris/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary hover:underline"
+          >
+            AI Gaming Hackathon
+          </a>
+        </p>
+        <div className="flex justify-center">
+          <a 
+            href="https://huggingface.co/spaces/Mistral-AI-Game-Jam/description-improv/tree/main" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm text-primary hover:text-primary/90 transition-colors border border-primary/20 rounded-md hover:border-primary/40"
+          >
+            {t.welcome.helpWin} <Heart className="w-4 h-4" /> {t.welcome.onHuggingface}
+          </a>
         </div>
       </motion.div>
 

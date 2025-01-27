@@ -4,7 +4,10 @@ export const fr = {
     subtitle: "Dans ce jeu, vous faites équipe avec l'IA pour deviner des mots secrets !",
     startButton: "Commencer",
     howToPlay: "Comment Jouer",
-    leaderboard: "Classement"
+    leaderboard: "Classement",
+    credits: "Créé par Sandro, Alessandro, Mattia, Michael, Emiliano et Felix lors du",
+    helpWin: "Aidez-nous à gagner un prix en",
+    onHuggingface: "notre projet sur huggingface"
   },
   howToPlay: {
     setup: {
