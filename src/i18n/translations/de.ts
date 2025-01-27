@@ -75,7 +75,7 @@ export const de = {
     leaderboard: "Bestenliste",
     credits: "Erstellt während des",
     helpWin: "Hilf uns gewinnen",
-    onHuggingface: " auf Huggingface"
+    onHuggingface: "mit einem Like auf Huggingface"
   },
   howToPlay: {
     setup: {
@@ -97,3 +97,4 @@ export const de = {
     }
   }
 };
+

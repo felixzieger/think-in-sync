@@ -74,7 +74,7 @@ export const fr = {
     leaderboard: "Classement",
     credits: "Créé pendant le",
     helpWin: "Aidez-nous à gagner en",
-    onHuggingface: "Nous étoilant sur Huggingface"
+    onHuggingface: "Nous aimant sur Huggingface"
   },
   howToPlay: {
     setup: {
@@ -96,4 +96,3 @@ export const fr = {
     }
   }
 };
-
