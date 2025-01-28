@@ -57,7 +57,7 @@ export const SentenceBuilder = ({
     onInputChange(value);
   };
 
-  const isValidInput = !playerInput || /^[\p{L}]+$/u.test(playerInput);
+  const isValidInput = !playerInput || /^[\p{L} ]+$/u.test(playerInput);
 
   return (
     <motion.div
