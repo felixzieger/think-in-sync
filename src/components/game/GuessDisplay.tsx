@@ -48,6 +48,7 @@ export const GuessDisplay = ({
   const isCheating = () => aiGuess === 'CHEATING';
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [hasSubmittedScore, setHasSubmittedScore] = useState(false);
   const t = useTranslation();
 
   useEffect(() => {
@@ -77,11 +78,15 @@ export const GuessDisplay = ({
   }, []); 
 
   const handleHomeClick = () => {
-    if (currentScore > 0) {
+    if (currentScore > 0 && !hasSubmittedScore) {
       setShowConfirmDialog(true);
     } else {
       onBack?.();
     }
+  };
+
+  const handleScoreSubmitted = () => {
+    setHasSubmittedScore(true);
   };
 
   return (
@@ -164,6 +169,7 @@ export const GuessDisplay = ({
                     onPlayAgain();
                   }}
                   sessionId={sessionId}
+                  onScoreSubmitted={handleScoreSubmitted}
                 />
               </DialogContent>
             </Dialog>
