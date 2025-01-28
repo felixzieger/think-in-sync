@@ -64,7 +64,7 @@ serve(async (req) => {
               content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". Do not add quotes or backticks. Just answer with the sentence.`
             }
           ],
-          maxTokens: 200,
+          maxTokens: 300,
           temperature: 0.5
         });
 

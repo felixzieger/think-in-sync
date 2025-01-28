@@ -63,7 +63,7 @@ serve(async (req) => {
               content: `${prompts.instruction} "${sentence}"`
             }
           ],
-          maxTokens: 10,
+          maxTokens: 50,
           temperature: 0.1
         });
 
