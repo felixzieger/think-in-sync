@@ -31,16 +31,23 @@ const languagePrompts = {
 };
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    const apiKey = Deno.env.get('MISTRAL_API_KEY');
+    if (!apiKey) {
+      console.error('MISTRAL_API_KEY is not set');
+      throw new Error('MISTRAL_API_KEY is not configured');
+    }
+
     const { theme, usedWords = [], language = 'en' } = await req.json();
     console.log('Generating word for theme:', theme, 'language:', language, 'excluding:', usedWords);
 
     const client = new Mistral({
-      apiKey: Deno.env.get('MISTRAL_API_KEY'),
+      apiKey: apiKey,
     });
 
     const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
@@ -70,9 +77,14 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    console.error('Error generating themed word:', error);
+    console.error('Error in generate-themed-word function:', error);
+    
+    // Return a more detailed error response
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: `API error occurred: ${error.message}`,
+        details: error.stack
+      }),
       { 
         status: 500,
         headers: { 
