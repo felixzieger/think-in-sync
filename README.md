@@ -5,7 +5,7 @@ colorFrom: blue
 colorTo: pink
 sdk: docker
 app_port: 8080
-pinned: true
+pinned: false
 ---
 # Think in Sync
 

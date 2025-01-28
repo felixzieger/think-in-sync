@@ -12,6 +12,7 @@ interface InputFormProps {
   hasMultipleWords: boolean;
   containsTargetWord: boolean;
   isValidInput: boolean;
+  sentence: string[];
 }
 
 export const InputForm = ({
@@ -22,16 +23,20 @@ export const InputForm = ({
   isAiThinking,
   hasMultipleWords,
   containsTargetWord,
-  isValidInput
+  isValidInput,
+  sentence
 }: InputFormProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const t = useTranslation();
 
+  // Focus input on mount and after AI response
   useEffect(() => {
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
-  }, []);
+    if (!isAiThinking) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [isAiThinking]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'Enter') {
@@ -50,6 +55,10 @@ export const InputForm = ({
   };
 
   const error = getInputError();
+
+  // Check if there's either something in the sentence or in the input box
+  const canMakeGuess = (sentence.length > 0 || playerInput.trim().length > 0) && 
+    !hasMultipleWords && !containsTargetWord && isValidInput && !isAiThinking;
 
   return (
     <form onSubmit={onSubmitWord} className="mb-4">
@@ -82,7 +91,7 @@ export const InputForm = ({
           type="button"
           onClick={onMakeGuess}
           className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
-          disabled={(!playerInput.trim() && !playerInput.trim()) || isAiThinking || hasMultipleWords || containsTargetWord || !isValidInput}
+          disabled={!canMakeGuess}
         >
           {isAiThinking ? t.game.aiThinking : `${t.game.makeGuess} ⇧⏎`}
         </Button>

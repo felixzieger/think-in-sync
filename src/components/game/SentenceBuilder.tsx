@@ -67,7 +67,7 @@ export const SentenceBuilder = ({
     >
       <RoundHeader
         successfulRounds={successfulRounds}
-        onBack={onBack}
+        goToWelcomeScreen={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={setShowConfirmDialog}
       />
@@ -85,6 +85,7 @@ export const SentenceBuilder = ({
         hasMultipleWords={hasMultipleWords}
         containsTargetWord={containsTargetWord}
         isValidInput={isValidInput}
+        sentence={sentence}
       />
 
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>

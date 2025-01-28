@@ -4,14 +4,14 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 interface RoundHeaderProps {
   successfulRounds: number;
-  onBack?: () => void;
+  goToWelcomeScreen?: () => void;
   showConfirmDialog: boolean;
   setShowConfirmDialog: (show: boolean) => void;
 }
 
 export const RoundHeader = ({ 
   successfulRounds, 
-  onBack,
+  goToWelcomeScreen,
   showConfirmDialog,
   setShowConfirmDialog
 }: RoundHeaderProps) => {
@@ -21,7 +21,7 @@ export const RoundHeader = ({
     if (successfulRounds > 0) {
       setShowConfirmDialog(true);
     } else {
-      onBack?.();
+      goToWelcomeScreen?.();
     }
   };
 
