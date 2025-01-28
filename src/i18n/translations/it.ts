@@ -30,7 +30,7 @@ export const it = {
     rank: "Posizione",
     player: "Giocatore",
     roundsColumn: "Turni",
-    avgWords: "Media Parole",
+    avgWords: "Ø Parole",
     noScores: "Ancora nessun punteggio",
     previous: "Precedente",
     next: "Successivo",

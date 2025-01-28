@@ -40,7 +40,7 @@ interface HighScoreBoardProps {
 }
 
 const ITEMS_PER_PAGE = 5;
-const MAX_PAGES = 4;
+const MAX_PAGES = 5;
 
 const getRankMedal = (rank: number) => {
   switch (rank) {

@@ -29,7 +29,7 @@ export const fr = {
     rank: "Rang",
     player: "Joueur",
     roundsColumn: "Tours",
-    avgWords: "Moy. Mots",
+    avgWords: "Ø Mots",
     noScores: "Pas encore de scores",
     previous: "Précédent",
     next: "Suivant",
