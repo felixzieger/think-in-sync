@@ -44,7 +44,6 @@ export const SentenceBuilder = ({
   const [containsTargetWord, setContainsTargetWord] = useState(false);
   const t = useTranslation();
 
-  // Input validation
   const validateInput = (input: string) => {
     setHasMultipleWords(input.trim().split(/\s+/).length > 1);
     setContainsTargetWord(
@@ -67,7 +66,7 @@ export const SentenceBuilder = ({
     >
       <RoundHeader
         successfulRounds={successfulRounds}
-        goToWelcomeScreen={onBack}
+        onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={setShowConfirmDialog}
       />

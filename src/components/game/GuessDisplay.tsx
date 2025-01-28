@@ -55,7 +55,7 @@ export const GuessDisplay = ({
     >
       <RoundHeader 
         successfulRounds={currentScore} 
-        goToWelcomeScreen={onBack}
+        onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={setShowConfirmDialog}
       />

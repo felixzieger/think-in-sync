@@ -4,24 +4,26 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 interface RoundHeaderProps {
   successfulRounds: number;
-  goToWelcomeScreen?: () => void;
+  onBack?: () => void;  // Changed from goToWelcomeScreen to onBack for consistency
   showConfirmDialog: boolean;
   setShowConfirmDialog: (show: boolean) => void;
 }
 
 export const RoundHeader = ({ 
   successfulRounds, 
-  goToWelcomeScreen,
+  onBack,
   showConfirmDialog,
   setShowConfirmDialog
 }: RoundHeaderProps) => {
   const t = useTranslation();
 
   const handleHomeClick = () => {
+    console.log("Home button clicked, successful rounds:", successfulRounds);
     if (successfulRounds > 0) {
       setShowConfirmDialog(true);
     } else {
-      goToWelcomeScreen?.();
+      console.log("No successful rounds, navigating directly");
+      onBack?.();
     }
   };
 
