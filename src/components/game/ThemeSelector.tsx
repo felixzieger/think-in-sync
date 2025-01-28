@@ -23,12 +23,6 @@ export const ThemeSelector = ({ onThemeSelect, onBack }: ThemeSelectorProps) => 
   const { language } = useContext(LanguageContext);
 
   useEffect(() => {
-    if (language !== 'en') {
-      setSelectedTheme("technology");
-    }
-  }, [language]);
-
-  useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement) return;
       
@@ -108,24 +102,14 @@ export const ThemeSelector = ({ onThemeSelect, onBack }: ThemeSelectorProps) => 
 
       <p className="text-gray-600 text-center">{t.themes.subtitle}</p>
 
-      <div className="space-y-4">
-        {language === 'en' ? (
-          <Button
-            variant={selectedTheme === "standard" ? "default" : "outline"}
-            className="w-full justify-between"
-            onClick={() => setSelectedTheme("standard")}
-          >
-            {t.themes.standard} <span className="text-sm opacity-50">{t.themes.pressKey} A</span>
-          </Button>
-        ) : (
-          <Button
-            variant={selectedTheme === "technology" ? "default" : "outline"}
-            className="w-full justify-between"
-            onClick={() => setSelectedTheme("technology")}
-          >
-            {t.themes.technology} <span className="text-sm opacity-50">{t.themes.pressKey} A</span>
-          </Button>
-        )}
+      <div className="space-y-4">      
+        <Button
+          variant={selectedTheme === "standard" ? "default" : "outline"}
+          className="w-full justify-between"
+          onClick={() => setSelectedTheme("standard")}
+        >
+          {t.themes.standard} <span className="text-sm opacity-50">{t.themes.pressKey} A</span>
+        </Button>      
         
         <Button
           variant={selectedTheme === "sports" ? "default" : "outline"}
