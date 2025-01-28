@@ -67,7 +67,7 @@ export const SentenceBuilder = ({
     >
       <RoundHeader
         successfulRounds={successfulRounds}
-        onBack={onBack}
+        goToWelcomeScreen={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={setShowConfirmDialog}
       />
