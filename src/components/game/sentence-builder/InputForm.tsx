@@ -27,11 +27,14 @@ export const InputForm = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const t = useTranslation();
 
+  // Focus input on mount and after AI response
   useEffect(() => {
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
-  }, []);
+    if (!isAiThinking) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [isAiThinking]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'Enter') {
@@ -82,7 +85,7 @@ export const InputForm = ({
           type="button"
           onClick={onMakeGuess}
           className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
-          disabled={(!playerInput.trim() && !playerInput.trim()) || isAiThinking || hasMultipleWords || containsTargetWord || !isValidInput}
+          disabled={isAiThinking || hasMultipleWords || containsTargetWord || !isValidInput}
         >
           {isAiThinking ? t.game.aiThinking : `${t.game.makeGuess} ⇧⏎`}
         </Button>
