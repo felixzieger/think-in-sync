@@ -59,7 +59,8 @@ export const GuessDisplay = ({
             target_word: currentWord,
             description: sentence.join(' '),
             ai_guess: aiGuess,
-            is_correct: isGuessCorrect()
+            is_correct: isGuessCorrect(),
+            session_id: sessionId
           });
 
         if (error) {
@@ -89,7 +90,7 @@ export const GuessDisplay = ({
       animate={{ opacity: 1 }}
       className="text-center relative space-y-6"
     >
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between">
         <Button
           variant="ghost"
           size="icon"
@@ -98,24 +99,20 @@ export const GuessDisplay = ({
         >
           <House className="h-5 w-5" />
         </Button>
+        <h2 className="text-2xl font-semibold text-gray-900">Think in Sync</h2>
         <div className="bg-primary/10 px-3 py-1 rounded-lg">
           <span className="text-sm font-medium text-primary">
             {t.game.round} {currentScore + 1}
           </span>
         </div>
-        <div className="w-8" /> {/* Spacer for centering */}
       </div>
 
-      <div>
-        <h2 className="mb-4 text-2xl font-semibold text-gray-900">Think in Sync</h2>
-
-        <div className="space-y-2">
-          <p className="text-sm text-gray-600">{t.guess.goalDescription}</p>
-          <div className="overflow-hidden rounded-lg bg-secondary/10">
-            <p className="p-4 text-2xl font-bold tracking-wider text-secondary">
-              {currentWord}
-            </p>
-          </div>
+      <div className="space-y-2">
+        <p className="text-sm text-gray-600">{t.guess.goalDescription}</p>
+        <div className="overflow-hidden rounded-lg bg-secondary/10">
+          <p className="p-4 text-2xl font-bold tracking-wider text-secondary">
+            {currentWord}
+          </p>
         </div>
       </div>
 
