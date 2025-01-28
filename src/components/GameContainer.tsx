@@ -140,32 +140,6 @@ export const GameContainer = () => {
       const sentenceString = finalSentence.join(' ');
       const guess = await guessWord(sentenceString, language);
       setAiGuess(guess);
-      
-      // Save game result with session ID
-      try {
-        const { error } = await supabase
-          .from('game_results')
-          .insert({
-            target_word: currentWord,
-            description: sentenceString,
-            ai_guess: guess,
-            is_correct: guess.toLowerCase() === currentWord.toLowerCase(),
-            session_id: sessionId
-          });
-
-        if (error) {
-          console.error('Error saving game result:', error);
-          throw error;
-        }
-      } catch (error) {
-        console.error('Error in database operation:', error);
-        toast({
-          title: "Error",
-          description: "Failed to save game result. Please try again.",
-          variant: "destructive",
-        });
-      }
-
       setGameState("showing-guess");
     } catch (error) {
       console.error('Error getting AI guess:', error);
