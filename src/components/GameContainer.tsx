@@ -10,6 +10,7 @@ import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
 import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageContext } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
 
 type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess";
 
@@ -119,6 +120,28 @@ export const GameContainer = () => {
     }
   };
 
+  const saveGameResult = async (sentence: string[], aiGuess: string, isCorrect: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('game_results')
+        .insert({
+          target_word: currentWord,
+          description: sentence.join(' '),
+          ai_guess: aiGuess,
+          is_correct: isCorrect,
+          session_id: sessionId
+        });
+
+      if (error) {
+        console.error('Error saving game result:', error);
+      } else {
+        console.log('Game result saved successfully');
+      }
+    } catch (error) {
+      console.error('Error saving game result:', error);
+    }
+  };
+
   const handleMakeGuess = async () => {
     setIsAiThinking(true);
     try {
@@ -135,6 +158,11 @@ export const GameContainer = () => {
       const sentenceString = finalSentence.join(' ');
       const guess = await guessWord(sentenceString, language);
       setAiGuess(guess);
+      
+      // Save game result in the background
+      saveGameResult(finalSentence, guess, guess.toLowerCase() === currentWord.toLowerCase())
+        .catch(error => console.error('Background save failed:', error));
+      
       setGameState("showing-guess");
     } catch (error) {
       console.error('Error getting AI guess:', error);
@@ -232,10 +260,10 @@ export const GameContainer = () => {
             currentWord={currentWord}
             onNextRound={handleNextRound}
             onPlayAgain={handlePlayAgain}
+            onBack={handleBack}
             currentScore={successfulRounds}
             avgWordsPerRound={getAverageWordsPerRound()}
             sessionId={sessionId}
-            onBack={handleBack}
           />
         )}
       </motion.div>
