@@ -56,7 +56,7 @@ async function tryMistral(currentWord: string, existingSentence: string, languag
         content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". Do not add quotes or backticks. Just answer with the sentence.`
       }
     ],
-    maxTokens: 300,
+    maxTokens: 50,
     temperature: 0.5
   });
 

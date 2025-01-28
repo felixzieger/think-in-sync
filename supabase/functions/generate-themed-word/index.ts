@@ -57,7 +57,7 @@ async function tryMistral(theme: string, usedWords: string[], language: string) 
         content: `${prompts.systemPrompt} "${theme}".\n${prompts.requirements} ${usedWords.join(', ')}\n\nRespond with just the word in UPPERCASE, nothing else.`
       }
     ],
-    maxTokens: 300,
+    maxTokens: 50,
     temperature: 0.99
   });
 
