@@ -85,6 +85,7 @@ export const SentenceBuilder = ({
         hasMultipleWords={hasMultipleWords}
         containsTargetWord={containsTargetWord}
         isValidInput={isValidInput}
+        sentence={sentence}
       />
 
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
