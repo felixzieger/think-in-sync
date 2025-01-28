@@ -30,7 +30,7 @@ export const en = {
       rank: "Rank",
       player: "Player",
       roundsColumn: "Rounds",
-      avgWords: "Avg. Words",
+      avgWords: "Ø Words",
       noScores: "No scores yet",
       previous: "Previous",
       next: "Next",
