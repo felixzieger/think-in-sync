@@ -34,6 +34,82 @@ const languagePrompts = {
   }
 };
 
+const openRouterModels = [
+  'sophosympatheia/rogue-rose-103b-v0.2:free',
+  'google/gemini-2.0-flash-exp:free',
+  'meta-llama/llama-3.1-70b-instruct:free',
+  'microsoft/phi-3-medium-128k-instruct:free'
+];
+
+async function tryMistral(currentWord: string, existingSentence: string, language: string) {
+  const client = new Mistral({
+    apiKey: Deno.env.get('MISTRAL_API_KEY'),
+  });
+
+  const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
+
+  const response = await client.chat.complete({
+    model: "mistral-medium-latest",
+    messages: [
+      {
+        role: "system",
+        content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". Do not add quotes or backticks. Just answer with the sentence.`
+      }
+    ],
+    maxTokens: 300,
+    temperature: 0.5
+  });
+
+  const aiResponse = response.choices[0].message.content.trim();
+  console.log('Mistral full response:', aiResponse);
+  
+  return aiResponse
+    .slice(existingSentence.length)
+    .trim()
+    .split(' ')[0]
+    .replace(/[.,!?]$/, '');
+}
+
+async function tryOpenRouter(currentWord: string, existingSentence: string, language: string) {
+  const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
+  const randomModel = openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
+
+  console.log('Trying OpenRouter with model:', randomModel);
+
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${Deno.env.get('OPENROUTER_API_KEY')}`,
+      "HTTP-Referer": "https://think-in-sync.com",
+      "X-Title": "Think in Sync",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: randomModel,
+      messages: [
+        {
+          role: "system",
+          content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". Do not add quotes or backticks. Just answer with the sentence.`
+        }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenRouter API error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  const aiResponse = data.choices[0].message.content.trim();
+  console.log('OpenRouter full response:', aiResponse);
+  
+  return aiResponse
+    .slice(existingSentence.length)
+    .trim()
+    .split(' ')[0]
+    .replace(/[.,!?]$/, '');
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -44,77 +120,32 @@ serve(async (req) => {
     console.log('Generating word for:', { currentWord, currentSentence, language });
 
     const existingSentence = currentSentence || '';
-    const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
 
-    const client = new Mistral({
-      apiKey: Deno.env.get('MISTRAL_API_KEY'),
-    });
-
-    const maxRetries = 3;
-    let retryCount = 0;
-    let lastError = null;
-
-    while (retryCount < maxRetries) {
-      try {
-        const response = await client.chat.complete({
-          model: "mistral-medium-latest",
-          messages: [
-            {
-              role: "system",
-              content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". Do not add quotes or backticks. Just answer with the sentence.`
-            }
-          ],
-          maxTokens: 300,
-          temperature: 0.5
-        });
-
-        const aiResponse = response.choices[0].message.content.trim();
-        console.log('AI full response:', aiResponse);
-        
-        const newWord = aiResponse
-          .slice(existingSentence.length)
-          .trim()
-          .split(' ')[0]
-          .replace(/[.,!?]$/, '');
-        
-        console.log('Extracted new word:', newWord);
-
-        return new Response(
-          JSON.stringify({ word: newWord }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      } catch (error) {
-        console.error(`Attempt ${retryCount + 1} failed:`, error);
-        lastError = error;
-        
-        if (error.message?.includes('rate limit') || error.status === 429) {
-          const waitTime = Math.pow(2, retryCount) * 1000;
-          console.log(`Rate limit hit, waiting ${waitTime}ms before retry`);
-          await new Promise(resolve => setTimeout(resolve, waitTime));
-          retryCount++;
-          continue;
-        }
-        
-        throw error;
-      }
+    try {
+      console.log('Attempting with Mistral...');
+      const word = await tryMistral(currentWord, existingSentence, language);
+      console.log('Successfully generated word with Mistral:', word);
+      return new Response(
+        JSON.stringify({ word }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    } catch (mistralError) {
+      console.error('Mistral error:', mistralError);
+      console.log('Falling back to OpenRouter...');
+      
+      const word = await tryOpenRouter(currentWord, existingSentence, language);
+      console.log('Successfully generated word with OpenRouter:', word);
+      return new Response(
+        JSON.stringify({ word }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
-
-    throw new Error(`Failed after ${maxRetries} attempts. Last error: ${lastError?.message}`);
-
   } catch (error) {
     console.error('Error generating word:', error);
-    
-    const errorMessage = error.message?.includes('rate limit') 
-      ? "The AI service is currently busy. Please try again in a few moments."
-      : "Sorry, there was an error generating the word. Please try again.";
-
     return new Response(
-      JSON.stringify({ 
-        error: errorMessage,
-        details: error.message 
-      }),
+      JSON.stringify({ error: error.message }),
       { 
-        status: error.message?.includes('rate limit') ? 429 : 500,
+        status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
     );
