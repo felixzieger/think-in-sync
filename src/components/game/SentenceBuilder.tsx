@@ -43,6 +43,7 @@ export const SentenceBuilder = ({
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasMultipleWords, setHasMultipleWords] = useState(false);
+  const [containsTargetWord, setContainsTargetWord] = useState(false);
   const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
   const { toast } = useToast();
   const t = useTranslation();
@@ -71,13 +72,16 @@ export const SentenceBuilder = ({
   useEffect(() => {
     // Check if input contains multiple words
     setHasMultipleWords(playerInput.trim().split(/\s+/).length > 1);
-  }, [playerInput]);
+    // Check if input contains the target word
+    setContainsTargetWord(
+      playerInput.toLowerCase().includes(currentWord.toLowerCase())
+    );
+  }, [playerInput, currentWord]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
-      // Only trigger if buttons are not disabled and either we have a sentence or valid input
-      if (!hasMultipleWords && !isAiThinking && (sentence.length > 0 || playerInput.trim())) {
+      if (!hasMultipleWords && !containsTargetWord && !isAiThinking && (sentence.length > 0 || playerInput.trim())) {
         onMakeGuess();
       }
     }
@@ -97,19 +101,19 @@ export const SentenceBuilder = ({
       return;
     }
 
-    if (!/^[\p{L}]+$/u.test(input)) {
+    if (containsTargetWord) {
       toast({
         title: t.game.invalidWord,
-        description: t.game.lettersOnly,
+        description: t.game.cantUseTargetWord,
         variant: "destructive",
       });
       return;
     }
 
-    if (input.includes(target)) {
+    if (!/^[\p{L}]+$/u.test(input)) {
       toast({
         title: t.game.invalidWord,
-        description: `${t.game.cantUseTargetWord} "${currentWord}"`,
+        description: t.game.lettersOnly,
         variant: "destructive",
       });
       return;
@@ -187,7 +191,7 @@ export const SentenceBuilder = ({
             onChange={(e) => onInputChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={t.game.inputPlaceholder}
-            className={`w-full ${hasMultipleWords ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+            className={`w-full ${(hasMultipleWords || containsTargetWord) ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
             disabled={isAiThinking}
           />
           {hasMultipleWords && (
@@ -195,12 +199,17 @@ export const SentenceBuilder = ({
               {t.game.singleWordOnly}
             </p>
           )}
+          {containsTargetWord && (
+            <p className="text-sm text-red-500 mt-1">
+              {t.game.cantUseTargetWord}
+            </p>
+          )}
         </div>
         <div className="flex gap-4">
           <Button
             type="submit"
             className="flex-1 bg-primary text-lg hover:bg-primary/90"
-            disabled={!playerInput.trim() || isAiThinking || hasMultipleWords}
+            disabled={!playerInput.trim() || isAiThinking || hasMultipleWords || containsTargetWord}
           >
             {isAiThinking ? t.game.aiThinking : `${t.game.addWord}  ⏎`}
           </Button>
@@ -208,7 +217,7 @@ export const SentenceBuilder = ({
             type="button"
             onClick={onMakeGuess}
             className="flex-1 bg-secondary text-lg hover:bg-secondary/90"
-            disabled={(!sentence.length && !playerInput.trim()) || isAiThinking || hasMultipleWords}
+            disabled={(!sentence.length && !playerInput.trim()) || isAiThinking || hasMultipleWords || containsTargetWord}
           >
             {isAiThinking ? t.game.aiThinking : `${t.game.makeGuess} ⇧⏎`}
           </Button>

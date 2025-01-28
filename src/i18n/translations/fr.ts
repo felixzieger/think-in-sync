@@ -9,7 +9,7 @@ export const fr = {
       aiThinking: "L'IA réfléchit...",
       aiDelayed: "L'IA est actuellement occupée. Veuillez réessayer dans un moment.",
       invalidWord: "Mot invalide",
-      cantUseTargetWord: "Vous ne pouvez pas utiliser le mot cible",
+      cantUseTargetWord: "N'utilisez pas le mot secret",
       lettersOnly: "Veuillez utiliser uniquement des lettres",
       singleWordOnly: "Veuillez entrer un seul mot",
       leaveGameTitle: "Quitter le jeu ?",
