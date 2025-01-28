@@ -235,6 +235,7 @@ export const GameContainer = () => {
             currentScore={successfulRounds}
             avgWordsPerRound={getAverageWordsPerRound()}
             sessionId={sessionId}
+            onBack={handleBack}
           />
         )}
       </motion.div>

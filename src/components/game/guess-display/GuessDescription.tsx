@@ -7,7 +7,6 @@ interface GuessDescriptionProps {
 
 export const GuessDescription = ({ sentence, aiGuess }: GuessDescriptionProps) => {
   const t = useTranslation();
-  const isCheating = () => aiGuess === 'CHEATING';
 
   return (
     <div className="space-y-2">
@@ -17,10 +16,6 @@ export const GuessDescription = ({ sentence, aiGuess }: GuessDescriptionProps) =
           {sentence.join(" ")}
         </p>
       </div>
-
-      <p className="text-sm text-gray-600">
-        {isCheating() ? t.guess.cheatingDetected : t.guess.aiGuessedDescription}
-      </p>
     </div>
   );
 };
