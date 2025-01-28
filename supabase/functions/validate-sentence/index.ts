@@ -20,7 +20,7 @@ serve(async (req) => {
     });
 
     const response = await client.chat.complete({
-      model: "mistral-medium-latest",
+      model: "mistral-large-latest",
       messages: [
         {
           role: "system",

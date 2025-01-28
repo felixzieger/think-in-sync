@@ -38,28 +38,42 @@ const openRouterModels = [
 ];
 
 async function tryMistral(theme: string, usedWords: string[], language: string) {
+  const mistralKey = Deno.env.get('MISTRAL_API_KEY');
+  if (!mistralKey) {
+    throw new Error('Mistral API key not configured');
+  }
+
   const client = new Mistral({
-    apiKey: Deno.env.get('MISTRAL_API_KEY'),
+    apiKey: mistralKey,
   });
 
   const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
 
   const response = await client.chat.complete({
-    model: "mistral-medium-latest",
+    model: "mistral-large-latest",
     messages: [
       {
         role: "system",
         content: `${prompts.systemPrompt} "${theme}".\n${prompts.requirements} ${usedWords.join(', ')}\n\nRespond with just the word in UPPERCASE, nothing else.`
       }
     ],
-    maxTokens: 300,
+    maxTokens: 50,
     temperature: 0.99
   });
+
+  if (!response?.choices?.[0]?.message?.content) {
+    throw new Error('Invalid response from Mistral API');
+  }
 
   return response.choices[0].message.content.trim();
 }
 
 async function tryOpenRouter(theme: string, usedWords: string[], language: string) {
+  const openRouterKey = Deno.env.get('OPENROUTER_API_KEY');
+  if (!openRouterKey) {
+    throw new Error('OpenRouter API key not configured');
+  }
+
   const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
   const randomModel = openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
 
@@ -68,7 +82,7 @@ async function tryOpenRouter(theme: string, usedWords: string[], language: strin
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${Deno.env.get('OPENROUTER_API_KEY')}`,
+      "Authorization": `Bearer ${openRouterKey}`,
       "HTTP-Referer": "https://think-in-sync.com",
       "X-Title": "Think in Sync",
       "Content-Type": "application/json"
@@ -85,10 +99,16 @@ async function tryOpenRouter(theme: string, usedWords: string[], language: strin
   });
 
   if (!response.ok) {
-    throw new Error(`OpenRouter API error: ${response.status}`);
+    const errorText = await response.text();
+    throw new Error(`OpenRouter API error: ${response.status} - ${errorText}`);
   }
 
   const data = await response.json();
+  
+  if (!data?.choices?.[0]?.message?.content) {
+    throw new Error('Invalid response from OpenRouter API');
+  }
+
   return data.choices[0].message.content.trim();
 }
 
@@ -101,29 +121,50 @@ serve(async (req) => {
     const { theme, usedWords = [], language = 'en' } = await req.json();
     console.log('Generating word for theme:', theme, 'language:', language, 'excluding:', usedWords);
 
+    let word;
+    let error;
+
     try {
       console.log('Attempting with Mistral...');
-      const word = await tryMistral(theme, usedWords, language);
+      word = await tryMistral(theme, usedWords, language);
       console.log('Successfully generated word with Mistral:', word);
-      return new Response(
-        JSON.stringify({ word }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
     } catch (mistralError) {
       console.error('Mistral error:', mistralError);
       console.log('Falling back to OpenRouter...');
       
-      const word = await tryOpenRouter(theme, usedWords, language);
-      console.log('Successfully generated word with OpenRouter:', word);
+      try {
+        word = await tryOpenRouter(theme, usedWords, language);
+        console.log('Successfully generated word with OpenRouter:', word);
+      } catch (openRouterError) {
+        console.error('OpenRouter error:', openRouterError);
+        error = openRouterError;
+      }
+    }
+
+    if (!word) {
       return new Response(
-        JSON.stringify({ word }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        JSON.stringify({ 
+          error: 'Failed to generate word with both Mistral and OpenRouter',
+          details: error?.message || 'Unknown error'
+        }),
+        { 
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
       );
     }
+
+    return new Response(
+      JSON.stringify({ word }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
   } catch (error) {
     console.error('Error generating themed word:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: 'Error generating themed word',
+        details: error.message 
+      }),
       { 
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }

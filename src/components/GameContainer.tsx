@@ -78,7 +78,7 @@ export const GameContainer = () => {
     setCurrentTheme(theme);
     try {
       const word = theme === "standard" ? 
-        getRandomWord() : 
+        getRandomWord(language) : 
         await getThemedWord(theme, usedWords, language);
       setCurrentWord(word);
       setGameState("building-sentence");
@@ -158,7 +158,7 @@ export const GameContainer = () => {
       const getNewWord = async () => {
         try {
           const word = currentTheme === "standard" ? 
-            getRandomWord() : 
+            getRandomWord(language) : 
             await getThemedWord(currentTheme, usedWords, language);
           setCurrentWord(word);
           setGameState("building-sentence");

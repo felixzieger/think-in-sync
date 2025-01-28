@@ -10,6 +10,16 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { supabase } from "@/integrations/supabase/client";
 import { House } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface GuessDisplayProps {
   sentence: string[];
@@ -37,6 +47,8 @@ export const GuessDisplay = ({
   const isGuessCorrect = () => aiGuess.toLowerCase() === currentWord.toLowerCase();
   const isCheating = () => aiGuess === 'CHEATING';
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [hasSubmittedScore, setHasSubmittedScore] = useState(false);
   const t = useTranslation();
 
   useEffect(() => {
@@ -48,7 +60,8 @@ export const GuessDisplay = ({
             target_word: currentWord,
             description: sentence.join(' '),
             ai_guess: aiGuess,
-            is_correct: isGuessCorrect()
+            is_correct: isGuessCorrect(),
+            session_id: sessionId
           });
 
         if (error) {
@@ -64,39 +77,60 @@ export const GuessDisplay = ({
     saveGameResult();
   }, []); 
 
+  const handleHomeClick = () => {
+    console.log('Home button clicked', { currentScore, hasSubmittedScore });
+    if (currentScore > 0 && !hasSubmittedScore) {
+      setShowConfirmDialog(true);
+    } else {
+      if (onBack) {
+        console.log('Navigating back to welcome screen');
+        onBack();
+      }
+    }
+  };
+
+  const handleScoreSubmitted = () => {
+    console.log('Score submitted, updating state');
+    setHasSubmittedScore(true);
+  };
+
+  const handleConfirmHome = () => {
+    console.log('Confirmed navigation to home');
+    setShowConfirmDialog(false);
+    if (onBack) {
+      onBack();
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="text-center relative space-y-6"
     >
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between">
         <Button
           variant="ghost"
           size="icon"
-          onClick={onBack}
+          onClick={handleHomeClick}
           className="text-gray-600 hover:text-primary"
         >
           <House className="h-5 w-5" />
         </Button>
+        <h2 className="text-2xl font-semibold text-gray-900">Think in Sync</h2>
         <div className="bg-primary/10 px-3 py-1 rounded-lg">
           <span className="text-sm font-medium text-primary">
             {t.game.round} {currentScore + 1}
           </span>
         </div>
-        <div className="w-8" /> {/* Spacer for centering */}
       </div>
 
-      <div>
-        <h2 className="mb-4 text-2xl font-semibold text-gray-900">Think in Sync</h2>
-
-        <div className="space-y-2">
-          <p className="text-sm text-gray-600">{t.guess.goalDescription}</p>
-          <div className="overflow-hidden rounded-lg bg-secondary/10">
-            <p className="p-4 text-2xl font-bold tracking-wider text-secondary">
-              {currentWord}
-            </p>
-          </div>
+      <div className="space-y-2">
+        <p className="text-sm text-gray-600">{t.guess.goalDescription}</p>
+        <div className="overflow-hidden rounded-lg bg-secondary/10">
+          <p className="p-4 text-2xl font-bold tracking-wider text-secondary">
+            {currentWord}
+          </p>
         </div>
       </div>
 
@@ -148,6 +182,7 @@ export const GuessDisplay = ({
                     onPlayAgain();
                   }}
                   sessionId={sessionId}
+                  onScoreSubmitted={handleScoreSubmitted}
                 />
               </DialogContent>
             </Dialog>
@@ -160,6 +195,23 @@ export const GuessDisplay = ({
           </>
         )}
       </div>
+
+      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t.game.leaveGameDescription}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmHome}>
+              {t.game.confirm}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </motion.div>
   );
 };

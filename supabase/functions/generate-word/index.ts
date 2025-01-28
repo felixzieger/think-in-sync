@@ -49,14 +49,14 @@ async function tryMistral(currentWord: string, existingSentence: string, languag
   const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
 
   const response = await client.chat.complete({
-    model: "mistral-medium-latest",
+    model: "mistral-large-latest",
     messages: [
       {
         role: "system",
         content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". Do not add quotes or backticks. Just answer with the sentence.`
       }
     ],
-    maxTokens: 300,
+    maxTokens: 50,
     temperature: 0.5
   });
 

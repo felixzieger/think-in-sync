@@ -37,6 +37,7 @@ interface HighScoreBoardProps {
   onClose: () => void;
   onPlayAgain: () => void;
   sessionId: string;
+  onScoreSubmitted?: () => void;
 }
 
 const ITEMS_PER_PAGE = 5;
@@ -60,6 +61,7 @@ export const HighScoreBoard = ({
   avgWordsPerRound,
   onClose,
   sessionId,
+  onScoreSubmitted,
 }: HighScoreBoardProps) => {
   const [playerName, setPlayerName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -188,6 +190,7 @@ export const HighScoreBoard = ({
       }
 
       setHasSubmitted(true);
+      onScoreSubmitted?.();
       setPlayerName("");
     } catch (error) {
       console.error("Error submitting score:", error);
