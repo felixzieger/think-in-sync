@@ -10,6 +10,16 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { supabase } from "@/integrations/supabase/client";
 import { House } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface GuessDisplayProps {
   sentence: string[];
@@ -37,6 +47,7 @@ export const GuessDisplay = ({
   const isGuessCorrect = () => aiGuess.toLowerCase() === currentWord.toLowerCase();
   const isCheating = () => aiGuess === 'CHEATING';
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const t = useTranslation();
 
   useEffect(() => {
@@ -61,16 +72,16 @@ export const GuessDisplay = ({
       }
     };
 
-    const handleHomeClick = () => {
-      if (successfulRounds > 0) {
-        setShowConfirmDialog(true);
-      } else {
-        onBack?.();
-      }
-    };
-
     saveGameResult();
   }, []); 
+
+  const handleHomeClick = () => {
+    if (currentScore > 0) {
+      setShowConfirmDialog(true);
+    } else {
+      onBack?.();
+    }
+  };
 
   return (
     <motion.div
@@ -168,6 +179,23 @@ export const GuessDisplay = ({
           </>
         )}
       </div>
+
+      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t.game.leaveGameDescription}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogAction onClick={() => onBack?.()}>
+              {t.game.confirm}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </motion.div>
   );
 };
