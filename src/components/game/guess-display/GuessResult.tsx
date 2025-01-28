@@ -1,9 +1,13 @@
+import { useTranslation } from "@/hooks/useTranslation";
+
 interface GuessResultProps {
   aiGuess: string;
   isCorrect: boolean;
 }
 
 export const GuessResult = ({ aiGuess, isCorrect }: GuessResultProps) => {
+  const t = useTranslation();
+  
   return (
     <div className="space-y-2">
       <p className="text-sm text-gray-600">
