@@ -31,7 +31,7 @@ serve(async (req) => {
         console.log(`Attempt ${retryCount + 1} to check for fraud`);
         
         const response = await client.chat.complete({
-          model: "mistral-medium-latest",
+          model: "mistral-large-latest",
           messages: [
             {
               role: "system",

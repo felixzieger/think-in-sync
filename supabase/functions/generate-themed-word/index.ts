@@ -50,7 +50,7 @@ async function tryMistral(theme: string, usedWords: string[], language: string) 
   const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
 
   const response = await client.chat.complete({
-    model: "mistral-medium-latest",
+    model: "mistral-large-latest",
     messages: [
       {
         role: "system",
