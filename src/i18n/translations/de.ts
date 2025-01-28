@@ -10,7 +10,7 @@ export const de = {
       aiThinking: "KI denkt nach...",
       aiDelayed: "Die KI ist derzeit beschäftigt. Bitte versuche es gleich noch einmal.",
       invalidWord: "Ungültiges Wort",
-      cantUseTargetWord: "Du kannst das Zielwort nicht verwenden",
+      cantUseTargetWord: "Verwende nicht das geheime Wort",
       lettersOnly: "Bitte nur Buchstaben verwenden",
       singleWordOnly: "Bitte nur ein Wort eingeben",
       leaveGameTitle: "Spiel verlassen?",

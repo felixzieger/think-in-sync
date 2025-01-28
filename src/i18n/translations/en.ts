@@ -10,7 +10,7 @@ export const en = {
       aiThinking: "AI is thinking...",
       aiDelayed: "The AI is currently busy. Please try again in a moment.",
       invalidWord: "Invalid Word",
-      cantUseTargetWord: "You can't use the target word",
+      cantUseTargetWord: "Do not use the secret word",
       lettersOnly: "Please use letters only",
       singleWordOnly: "Please enter only one word",
       leaveGameTitle: "Leave Game?",
