@@ -46,7 +46,7 @@ serve(async (req) => {
     const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
 
     const response = await client.chat.complete({
-      model: "mistral-large-latest",
+      model: "mistral-medium-latest",
       messages: [
         {
           role: "system",

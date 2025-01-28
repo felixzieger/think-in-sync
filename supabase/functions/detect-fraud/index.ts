@@ -27,7 +27,7 @@ serve(async (req) => {
     while (retryCount < maxRetries) {
       try {
         const response = await client.chat.complete({
-          model: "mistral-large-latest",
+          model: "mistral-medium-latest",
           messages: [
             {
               role: "system",
