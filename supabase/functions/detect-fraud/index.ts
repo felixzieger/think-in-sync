@@ -33,39 +33,44 @@ serve(async (req) => {
               role: "system",
               content: `You are a fraud detection system for a word guessing game. 
               The game is being played in ${language}.
-              Your task is to detect if a player is trying to cheat by:
-              1. Using a misspelling of the target word
-              2. Writing a sentence without spaces to bypass word count checks
+              Your task is to detect if a player is trying to cheat by one of two methods:
+              1. The Player's description is a misspelling of the target word
+              2. The Player's description is a sentence without spaces
 
               Examples for cheating:
                 
-                Target word: hand
-                Player's description: hnd
-                Language: en
-                CORRECT ANSWER: cheating
-              
-                Target word: barfuß
-                Player's description: germanwordforbarefoot
-                Language: de
-                CORRECT ANSWER: cheating
+              Target word: hand
+              Player's description: hnd
+              Language: en
+              CORRECT ANSWER: cheating
+            
+              Target word: barfuß
+              Player's description: germanwordforbarefoot
+              Language: de
+              CORRECT ANSWER: cheating
 
               Synonyms and names of instances of a class are legitimate descriptions.
                 
-                Target word: laptop
-                Player's description: notebook
-                Language: en
-                CORRECT ANSWER: legitimate
+              Target word: laptop
+              Player's description: notebook
+              Language: en
+              CORRECT ANSWER: legitimate
 
-                Target word: play
-                Player's description: children often
-                Language: en
-                CORRECT ANSWER: legitimate
-              
-                Target word: Pfankuchen
-                Player's description: Berliner
-                Language: de
-                CORRECT ANSWER: legitimate
-              
+              Target word: play
+              Player's description: children often
+              Language: en
+              CORRECT ANSWER: legitimate
+            
+              Target word: Pfankuchen
+              Player's description: Berliner
+              Language: de
+              CORRECT ANSWER: legitimate
+
+              Target word: Burrito
+              Player's description: Wrap
+              Language: es
+              CORRECT ANSWER: legitimate
+            
               Respond with ONLY "cheating" or "legitimate" (no punctuation or explanation).`
             },
             {
