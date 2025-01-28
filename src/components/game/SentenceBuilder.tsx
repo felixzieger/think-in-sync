@@ -44,6 +44,8 @@ export const SentenceBuilder = ({
   const [containsTargetWord, setContainsTargetWord] = useState(false);
   const t = useTranslation();
 
+  console.log("SentenceBuilder - Rendering with showConfirmDialog:", showConfirmDialog);
+
   const validateInput = (input: string) => {
     setHasMultipleWords(input.trim().split(/\s+/).length > 1);
     setContainsTargetWord(
@@ -54,6 +56,11 @@ export const SentenceBuilder = ({
   const handleInputChange = (value: string) => {
     validateInput(value);
     onInputChange(value);
+  };
+
+  const handleSetShowConfirmDialog = (show: boolean) => {
+    console.log("SentenceBuilder - Setting showConfirmDialog to:", show);
+    setShowConfirmDialog(show);
   };
 
   const isValidInput = !playerInput || /^[\p{L} ]+$/u.test(playerInput);
@@ -68,7 +75,7 @@ export const SentenceBuilder = ({
         successfulRounds={successfulRounds}
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
-        setShowConfirmDialog={setShowConfirmDialog}
+        setShowConfirmDialog={handleSetShowConfirmDialog}
       />
 
       <WordDisplay currentWord={currentWord} />
@@ -87,7 +94,7 @@ export const SentenceBuilder = ({
         sentence={sentence}
       />
 
-      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+      <AlertDialog open={showConfirmDialog} onOpenChange={handleSetShowConfirmDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>

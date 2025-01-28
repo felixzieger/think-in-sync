@@ -1,6 +1,16 @@
 import { House } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/hooks/useTranslation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface RoundHeaderProps {
   successfulRounds: number;
@@ -16,14 +26,14 @@ export const RoundHeader = ({
   setShowConfirmDialog
 }: RoundHeaderProps) => {
   const t = useTranslation();
-  console.log("RoundHeader rendering with successfulRounds:", successfulRounds);
-
+  
   const handleHomeClick = () => {
-    console.log("Home button clicked, successful rounds:", successfulRounds);
+    console.log("RoundHeader - Home button clicked, successful rounds:", successfulRounds);
     if (successfulRounds > 0) {
+      console.log("RoundHeader - Setting showConfirmDialog to true");
       setShowConfirmDialog(true);
     } else {
-      console.log("No successful rounds, navigating directly");
+      console.log("RoundHeader - No successful rounds, navigating directly");
       onBack?.();
     }
   };
@@ -48,6 +58,23 @@ export const RoundHeader = ({
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">
         {t.game.title}
       </h2>
+
+      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t.game.leaveGameDescription}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogAction onClick={() => onBack?.()}>
+              {t.game.confirm}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

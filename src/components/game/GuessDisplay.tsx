@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,6 +40,18 @@ export const GuessDisplay = ({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasSubmittedScore, setHasSubmittedScore] = useState(false);
   const t = useTranslation();
+
+  console.log("GuessDisplay - Rendering with showConfirmDialog:", showConfirmDialog);
+
+  const handleSetShowConfirmDialog = (show: boolean) => {
+    console.log("GuessDisplay - Setting showConfirmDialog to:", show);
+    setShowConfirmDialog(show);
+  };
+
+  useEffect(() => {
+    console.log("GuessDisplay - showConfirmDialog changed to:", showConfirmDialog);
+  }, [showConfirmDialog]);
+
   const isGuessCorrect = () => aiGuess.toLowerCase() === currentWord.toLowerCase();
 
   const handleScoreSubmitted = () => {
@@ -57,7 +69,7 @@ export const GuessDisplay = ({
         successfulRounds={currentScore} 
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
-        setShowConfirmDialog={setShowConfirmDialog}
+        setShowConfirmDialog={handleSetShowConfirmDialog}
       />
 
       <WordDisplay currentWord={currentWord} />
