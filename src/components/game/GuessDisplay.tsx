@@ -61,6 +61,14 @@ export const GuessDisplay = ({
       }
     };
 
+    const handleHomeClick = () => {
+      if (successfulRounds > 0) {
+        setShowConfirmDialog(true);
+      } else {
+        onBack?.();
+      }
+    };
+
     saveGameResult();
   }, []); 
 
@@ -74,7 +82,7 @@ export const GuessDisplay = ({
         <Button
           variant="ghost"
           size="icon"
-          onClick={onBack}
+          onClick={handleHomeClick}
           className="text-gray-600 hover:text-primary"
         >
           <House className="h-5 w-5" />
