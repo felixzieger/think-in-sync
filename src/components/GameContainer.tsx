@@ -8,12 +8,10 @@ import { WelcomeScreen } from "./game/WelcomeScreen";
 import { ThemeSelector } from "./game/ThemeSelector";
 import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
-import { GameOver } from "./game/GameOver";
 import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageContext } from "@/contexts/LanguageContext";
-import { supabase } from "@/integrations/supabase/client";
 
-type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-over";
+type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess";
 
 export const GameContainer = () => {
   const [gameState, setGameState] = useState<GameState>("welcome");
@@ -32,7 +30,6 @@ export const GameContainer = () => {
   const { language } = useContext(LanguageContext);
 
   useEffect(() => {
-    // Generate a new session ID when starting a new game
     if (gameState === "theme-selection") {
       setSessionId(crypto.randomUUID());
     }
@@ -43,12 +40,10 @@ export const GameContainer = () => {
       if (e.key === 'Enter') {
         if (gameState === 'welcome') {
           handleStart();
-        } else if (gameState === 'game-over' || gameState === 'showing-guess') {
+        } else if (gameState === 'showing-guess') {
           const correct = isGuessCorrect();
           if (correct) {
             handleNextRound();
-          } else {
-            setGameState("game-over");
           }
         }
       }
@@ -176,8 +171,6 @@ export const GameContainer = () => {
         }
       };
       getNewWord();
-    } else {
-      setGameState("game-over");
     }
   };
 
@@ -232,7 +225,7 @@ export const GameContainer = () => {
             onMakeGuess={handleMakeGuess}
             onBack={handleBack}
           />
-        ) : gameState === "showing-guess" ? (
+        ) : (
           <GuessDisplay
             sentence={sentence}
             aiGuess={aiGuess}
@@ -243,12 +236,7 @@ export const GameContainer = () => {
             avgWordsPerRound={getAverageWordsPerRound()}
             sessionId={sessionId}
           />
-        ) : gameState === "game-over" ? (
-          <GameOver
-            successfulRounds={successfulRounds}
-            onPlayAgain={handlePlayAgain}
-          />
-        ) : null}
+        )}
       </motion.div>
     </div>
   );
