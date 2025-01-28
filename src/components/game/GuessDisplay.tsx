@@ -78,15 +78,28 @@ export const GuessDisplay = ({
   }, []); 
 
   const handleHomeClick = () => {
+    console.log('Home button clicked', { currentScore, hasSubmittedScore });
     if (currentScore > 0 && !hasSubmittedScore) {
       setShowConfirmDialog(true);
     } else {
-      onBack?.();
+      if (onBack) {
+        console.log('Navigating back to welcome screen');
+        onBack();
+      }
     }
   };
 
   const handleScoreSubmitted = () => {
+    console.log('Score submitted, updating state');
     setHasSubmittedScore(true);
+  };
+
+  const handleConfirmHome = () => {
+    console.log('Confirmed navigation to home');
+    setShowConfirmDialog(false);
+    if (onBack) {
+      onBack();
+    }
   };
 
   return (
@@ -193,7 +206,7 @@ export const GuessDisplay = ({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
-            <AlertDialogAction onClick={() => onBack?.()}>
+            <AlertDialogAction onClick={handleConfirmHome}>
               {t.game.confirm}
             </AlertDialogAction>
           </AlertDialogFooter>
