@@ -4,7 +4,7 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 interface RoundHeaderProps {
   successfulRounds: number;
-  onBack?: () => void;  // Changed from goToWelcomeScreen to onBack for consistency
+  onBack?: () => void;
   showConfirmDialog: boolean;
   setShowConfirmDialog: (show: boolean) => void;
 }
@@ -16,6 +16,7 @@ export const RoundHeader = ({
   setShowConfirmDialog
 }: RoundHeaderProps) => {
   const t = useTranslation();
+  console.log("RoundHeader rendering with successfulRounds:", successfulRounds);
 
   const handleHomeClick = () => {
     console.log("Home button clicked, successful rounds:", successfulRounds);
@@ -45,7 +46,7 @@ export const RoundHeader = ({
       </Button>
 
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">
-        Think in Sync
+        {t.game.title}
       </h2>
     </div>
   );
