@@ -1,5 +1,6 @@
 export const de = {
     game: {
+      title: "Think in Sync",
       round: "Runde",
       buildDescription: "Baut gemeinsam einen Satz",
       buildSubtitle: "Fügt abwechselnd Wörter hinzu, um einen Satz zu bilden",

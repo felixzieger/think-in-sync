@@ -1,5 +1,6 @@
 export const fr = {
     game: {
+      title: "Think in Sync",
       round: "Tour",
       buildDescription: "Construisez une phrase ensemble",
       startSentence: "Commencez à construire votre phrase...",
