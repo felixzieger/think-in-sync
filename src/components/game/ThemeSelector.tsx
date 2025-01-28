@@ -34,11 +34,7 @@ export const ThemeSelector = ({ onThemeSelect, onBack }: ThemeSelectorProps) => 
       
       switch(e.key.toLowerCase()) {
         case 'a':
-          if (language === 'en') {
-            setSelectedTheme("standard");
-          } else {
-            setSelectedTheme("technology");
-          }
+          setSelectedTheme("standard");
           break;
         case 'b':
           setSelectedTheme("sports");
