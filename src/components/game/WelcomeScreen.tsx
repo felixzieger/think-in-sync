@@ -100,6 +100,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             avgWordsPerRound={0}
             onClose={() => setShowHighScores(false)}
             onPlayAgain={onStart}
+            sessionId=""
           />
         </DialogContent>
       </Dialog>
