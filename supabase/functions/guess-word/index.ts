@@ -29,8 +29,77 @@ const languagePrompts = {
   }
 };
 
+const openRouterModels = [
+  'sophosympatheia/rogue-rose-103b-v0.2:free',
+  'google/gemini-2.0-flash-exp:free',
+  'meta-llama/llama-3.1-70b-instruct:free',
+  'microsoft/phi-3-medium-128k-instruct:free'
+];
+
+async function tryMistral(sentence: string, language: string) {
+  const client = new Mistral({
+    apiKey: Deno.env.get('MISTRAL_API_KEY'),
+  });
+
+  const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
+
+  const response = await client.chat.complete({
+    model: "mistral-medium-latest",
+    messages: [
+      {
+        role: "system",
+        content: `${prompts.systemPrompt} Respond with ONLY the word you think is being described, in uppercase letters. Do not add any explanation or punctuation.`
+      },
+      {
+        role: "user",
+        content: `${prompts.instruction} "${sentence}"`
+      }
+    ],
+    maxTokens: 50,
+    temperature: 0.1
+  });
+
+  return response.choices[0].message.content.trim().toUpperCase();
+}
+
+async function tryOpenRouter(sentence: string, language: string) {
+  const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
+  const randomModel = openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
+
+  console.log('Trying OpenRouter with model:', randomModel);
+
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${Deno.env.get('OPENROUTER_API_KEY')}`,
+      "HTTP-Referer": "https://think-in-sync.com",
+      "X-Title": "Think in Sync",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: randomModel,
+      messages: [
+        {
+          role: "system",
+          content: `${prompts.systemPrompt} Respond with ONLY the word you think is being described, in uppercase letters. Do not add any explanation or punctuation.`
+        },
+        {
+          role: "user",
+          content: `${prompts.instruction} "${sentence}"`
+        }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenRouter API error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.choices[0].message.content.trim().toUpperCase();
+}
+
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -39,73 +108,31 @@ serve(async (req) => {
     const { sentence, language = 'en' } = await req.json();
     console.log('Trying to guess word from sentence:', sentence, 'language:', language);
 
-    const client = new Mistral({
-      apiKey: Deno.env.get('MISTRAL_API_KEY'),
-    });
-
-    const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
-
-    const maxRetries = 3;
-    let retryCount = 0;
-    let lastError = null;
-
-    while (retryCount < maxRetries) {
-      try {
-        const response = await client.chat.complete({
-          model: "mistral-medium-latest",
-          messages: [
-            {
-              role: "system",
-              content: `${prompts.systemPrompt} Respond with ONLY the word you think is being described, in uppercase letters. Do not add any explanation or punctuation.`
-            },
-            {
-              role: "user",
-              content: `${prompts.instruction} "${sentence}"`
-            }
-          ],
-          maxTokens: 50,
-          temperature: 0.1
-        });
-
-        const guess = response.choices[0].message.content.trim().toUpperCase();
-        console.log('AI guess:', guess);
-
-        return new Response(
-          JSON.stringify({ guess }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      } catch (error) {
-        console.error(`Attempt ${retryCount + 1} failed:`, error);
-        lastError = error;
-        
-        if (error.message?.includes('rate limit') || error.status === 429) {
-          const waitTime = Math.pow(2, retryCount) * 1000;
-          console.log(`Rate limit hit, waiting ${waitTime}ms before retry`);
-          await new Promise(resolve => setTimeout(resolve, waitTime));
-          retryCount++;
-          continue;
-        }
-        
-        throw error;
-      }
+    try {
+      console.log('Attempting with Mistral...');
+      const guess = await tryMistral(sentence, language);
+      console.log('Successfully generated guess with Mistral:', guess);
+      return new Response(
+        JSON.stringify({ guess }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    } catch (mistralError) {
+      console.error('Mistral error:', mistralError);
+      console.log('Falling back to OpenRouter...');
+      
+      const guess = await tryOpenRouter(sentence, language);
+      console.log('Successfully generated guess with OpenRouter:', guess);
+      return new Response(
+        JSON.stringify({ guess }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
-
-    throw new Error(`Failed after ${maxRetries} attempts. Last error: ${lastError?.message}`);
-
   } catch (error) {
     console.error('Error generating guess:', error);
-    
-    const errorMessage = error.message?.includes('rate limit') 
-      ? "The AI service is currently busy. Please try again in a few moments."
-      : "Sorry, there was an error generating the guess. Please try again.";
-
     return new Response(
-      JSON.stringify({ 
-        error: errorMessage,
-        details: error.message 
-      }),
+      JSON.stringify({ error: error.message }),
       { 
-        status: error.message?.includes('rate limit') ? 429 : 500,
+        status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
     );
