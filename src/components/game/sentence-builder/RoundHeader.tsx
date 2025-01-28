@@ -38,6 +38,15 @@ export const RoundHeader = ({
     }
   };
 
+  const handleDialogChange = (open: boolean) => {
+    console.log("RoundHeader - Dialog state changing to:", open);
+    setShowConfirmDialog(open);
+    if (!open) {  // Dialog is closing
+      console.log("RoundHeader - Dialog closing, triggering navigation");
+      onBack?.();
+    }
+  };
+
   return (
     <div className="relative">
       <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg">
@@ -59,7 +68,7 @@ export const RoundHeader = ({
         {t.game.title}
       </h2>
 
-      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+      <AlertDialog open={showConfirmDialog} onOpenChange={handleDialogChange}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
@@ -69,9 +78,7 @@ export const RoundHeader = ({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
-            <AlertDialogAction onClick={() => onBack?.()}>
-              {t.game.confirm}
-            </AlertDialogAction>
+            <AlertDialogAction>{t.game.confirm}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
