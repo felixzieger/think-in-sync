@@ -65,10 +65,10 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="max-w-2xl mx-auto text-center mt-12 space-y-4"
+        className="max-w-2xl mx-auto text-center mt-12"
       >
         <div className="flex flex-col items-center gap-4">
-          <div className="space-y-2">
+          <div className="space-y-2 max-w-md mx-auto px-4">
             <p className="text-sm text-gray-600">{t.welcome.helpWin}</p>
             <ul className="text-sm text-gray-600 list-disc list-inside text-left">
               {t.welcome.conditions.map((condition, index) => (
