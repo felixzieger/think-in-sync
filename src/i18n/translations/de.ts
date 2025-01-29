@@ -70,22 +70,26 @@ export const de = {
     generating: "Wird generiert...",
     pressKey: "Drücke"
   },
-  welcome: {
-    title: "Think in Sync",
-    subtitle: "Arbeite mit einer KI zusammen, um einen Hinweis zu erstellen, und lass eine andere KI dein geheimes Wort erraten!",
-    startButton: "Spiel starten",
-    howToPlay: "Spielanleitung",
-    leaderboard: "Bestenliste",
-    credits: "Erstellt während des",
-    helpWin: "Spiele und speichere deinen Score für die Chance auf 50€! So kannst du teilnehmen:",
-    conditions: [
-      "Verwende deinen Huggingface-Benutzernamen in der Bestenliste",
-      "Kein Betrug",
-      "Like das Spiel auf Huggingface"
-    ],
-    drawDetails: "Der Gewinner wird am 4. Februar um 10:00 Uhr MEZ zufällig aus den Top 10 Spielern der Bestenliste ausgelost, die die drei Bedingungen erfüllen",
-    onHuggingface: "Auf Huggingface liken"
-  },
+    welcome: {
+      title: "Think in Sync",
+      subtitle: "Arbeite mit einer KI zusammen, um einen Hinweis zu erstellen, und lass eine andere KI dein geheimes Wort erraten!",
+      startButton: "Spiel starten",
+      howToPlay: "Spielanleitung",
+      leaderboard: "Bestenliste",
+      credits: "Erstellt während des",
+      contest: {
+        prize: "Spiele und speichere deinen Score für die Chance auf 50€!",
+        howTo: "So kannst du teilnehmen:",
+        conditions: [
+          "Verwende deinen Huggingface-Benutzernamen in der Bestenliste",
+          "Kein Betrug",
+          "Like das Spiel auf Huggingface"
+        ],
+        terms: "Teilnahmebedingungen",
+        termsDetails: "Der Gewinner wird am 4. Februar um 10:00 Uhr MEZ zufällig aus den Top 10 Spielern der Bestenliste ausgelost, die die drei Bedingungen erfüllen"
+      },
+      likeOnHuggingface: "Auf Huggingface liken"
+    },
   howToPlay: {
     setup: {
       title: "Vorbereitung",

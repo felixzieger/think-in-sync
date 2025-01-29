@@ -76,14 +76,18 @@ export const fr = {
       howToPlay: "Comment Jouer",
       leaderboard: "Classement",
       credits: "Créé pendant le",
-      helpWin: "Jouez et enregistrez votre score pour tenter de gagner 50€ ! Comment participer :",
-      conditions: [
-        "Utilisez votre nom d'utilisateur Huggingface dans le classement",
-        "Pas de triche",
-        "Aimez le jeu sur Huggingface"
-      ],
-      drawDetails: "Le gagnant sera tiré au sort parmi les 10 meilleurs joueurs du classement qui remplissent les trois conditions le 4 février à 10h00 CET",
-      onHuggingface: "Aimer sur Huggingface"
+      contest: {
+        prize: "Jouez et enregistrez votre score pour tenter de gagner 50€ !",
+        howTo: "Comment participer :",
+        conditions: [
+          "Utilisez votre nom d'utilisateur Huggingface dans le classement",
+          "Pas de triche",
+          "Aimez le jeu sur Huggingface"
+        ],
+        terms: "Conditions",
+        termsDetails: "Le gagnant sera tiré au sort parmi les 10 meilleurs joueurs du classement qui remplissent les trois conditions le 4 février à 10h00 CET"
+      },
+      likeOnHuggingface: "Aimer sur Huggingface"
     },
   howToPlay: {
     setup: {

@@ -77,14 +77,18 @@ export const en = {
       howToPlay: "How to Play",
       leaderboard: "Leaderboard",
       credits: "Created during the",
-      helpWin: "Play and save your score for a chance to win 50€! How to participate:",
-      conditions: [
-        "Use your huggingface username in the leaderboard",
-        "No cheating",
-        "Like the game on Huggingface"
-      ],
-      drawDetails: "The Winner will be drawn randomly from the top 10 players in the leaderboard that fullfil the three conditions by 4th of February 10:00 CET",
-      onHuggingface: "Like on Huggingface"
+      contest: {
+        prize: "Play and save your score for a chance to win 50€!",
+        howTo: "How to participate:",
+        conditions: [
+          "Use your huggingface username in the leaderboard",
+          "No cheating",
+          "Like the game on Huggingface"
+        ],
+        terms: "Terms",
+        termsDetails: "The Winner will be drawn randomly from the top 10 players in the leaderboard that fulfill the three conditions by 4th of February 10:00 CET"
+      },
+      likeOnHuggingface: "Like on Huggingface"
     },
     howToPlay: {
       setup: {
