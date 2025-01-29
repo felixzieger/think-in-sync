@@ -1,16 +1,6 @@
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { useToast } from "@/components/ui/use-toast";
 import {
   Pagination,
@@ -22,6 +12,9 @@ import {
 } from "@/components/ui/pagination";
 import { useTranslation } from "@/hooks/useTranslation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ThemeFilter } from "./game/leaderboard/ThemeFilter";
+import { ScoreSubmissionForm } from "./game/leaderboard/ScoreSubmissionForm";
+import { ScoresTable } from "./game/leaderboard/ScoresTable";
 
 interface HighScore {
   id: string;
@@ -30,6 +23,7 @@ interface HighScore {
   avg_words_per_round: number;
   created_at: string;
   session_id: string;
+  theme: string;
 }
 
 interface HighScoreBoardProps {
@@ -43,19 +37,6 @@ interface HighScoreBoardProps {
 
 const ITEMS_PER_PAGE = 5;
 
-const getRankMedal = (rank: number) => {
-  switch (rank) {
-    case 1:
-      return "🥇";
-    case 2:
-      return "🥈";
-    case 3:
-      return "🥉";
-    default:
-      return rank;
-  }
-};
-
 export const HighScoreBoard = ({
   currentScore,
   avgWordsPerRound,
@@ -67,19 +48,21 @@ export const HighScoreBoard = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedTheme, setSelectedTheme] = useState<'standard' | 'sports' | 'food' | 'custom'>('standard');
   const { toast } = useToast();
   const t = useTranslation();
   const queryClient = useQueryClient();
 
   const showScoreInfo = sessionId !== "" && currentScore >= 0;
 
-  const { data: highScores, refetch } = useQuery({
-    queryKey: ["highScores"],
+  const { data: highScores } = useQuery({
+    queryKey: ["highScores", selectedTheme],
     queryFn: async () => {
-      console.log("Fetching high scores...");
+      console.log("Fetching high scores for theme:", selectedTheme);
       const { data, error } = await supabase
         .from("high_scores")
         .select("*")
+        .eq('theme', selectedTheme)
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
@@ -128,7 +111,8 @@ export const HighScoreBoard = ({
           playerName: playerName.trim(),
           score: currentScore,
           avgWordsPerRound,
-          sessionId
+          sessionId,
+          theme: selectedTheme
         }
       });
 
@@ -185,29 +169,6 @@ export const HighScoreBoard = ({
     }
   };
 
-  const renderPaginationItems = () => {
-    return [
-      <PaginationItem key="current">
-        <PaginationLink isActive={true}>
-          {currentPage}
-        </PaginationLink>
-      </PaginationItem>
-    ];
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') {
-        handlePreviousPage();
-      } else if (e.key === 'ArrowRight') {
-        handleNextPage();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentPage, totalPages]);
-
   return (
     <div className="space-y-6">
       <div className="text-center">
@@ -221,62 +182,26 @@ export const HighScoreBoard = ({
         )}
       </div>
 
+      <ThemeFilter
+        selectedTheme={selectedTheme}
+        onThemeChange={setSelectedTheme}
+      />
+
       {!hasSubmitted && currentScore > 0 && (
-        <div className="flex gap-4 mb-6">
-          <Input
-            placeholder={t.leaderboard.enterName}
-            value={playerName}
-            onChange={(e) => {
-              const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9]/g, "");
-              setPlayerName(value);
-            }}
-            onKeyDown={handleKeyDown}
-            className="flex-1"
-            maxLength={20}
-            autoComplete="words"
-          />
-          <Button
-            onClick={handleSubmitScore}
-            disabled={isSubmitting || !playerName.trim() || hasSubmitted}
-          >
-            {isSubmitting ? t.leaderboard.submitting : t.leaderboard.submit}
-          </Button>
-        </div>
+        <ScoreSubmissionForm
+          playerName={playerName}
+          setPlayerName={setPlayerName}
+          isSubmitting={isSubmitting}
+          hasSubmitted={hasSubmitted}
+          onSubmit={handleSubmitScore}
+          onKeyDown={handleKeyDown}
+        />
       )}
 
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>{t.leaderboard.rank}</TableHead>
-              <TableHead>{t.leaderboard.player}</TableHead>
-              <TableHead>{t.leaderboard.roundsColumn}</TableHead>
-              <TableHead>{t.leaderboard.avgWords}</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {paginatedScores?.map((score, index) => {
-              const absoluteRank = startIndex + index + 1;
-              const medal = getRankMedal(absoluteRank);
-              return (
-                <TableRow key={score.id}>
-                  <TableCell>{medal}</TableCell>
-                  <TableCell>{score.player_name}</TableCell>
-                  <TableCell>{score.score}</TableCell>
-                  <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
-                </TableRow>
-              );
-            })}
-            {!paginatedScores?.length && (
-              <TableRow>
-                <TableCell colSpan={4} className="text-center">
-                  {t.leaderboard.noScores}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+      <ScoresTable
+        scores={paginatedScores || []}
+        startIndex={startIndex}
+      />
 
       {totalPages > 1 && (
         <Pagination>
@@ -290,7 +215,11 @@ export const HighScoreBoard = ({
                 <span className="sr-only">{t.leaderboard.previous}</span>
               </PaginationPrevious>
             </PaginationItem>
-            {renderPaginationItems()}
+            <PaginationItem>
+              <PaginationLink isActive={true}>
+                {currentPage}
+              </PaginationLink>
+            </PaginationItem>
             <PaginationItem>
               <PaginationNext
                 onClick={handleNextPage}

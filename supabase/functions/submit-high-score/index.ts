@@ -11,31 +11,35 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { playerName, score, avgWordsPerRound, sessionId } = await req.json()
-    
-    console.log('Received submission request:', { playerName, score, avgWordsPerRound, sessionId })
+    const { playerName, score, avgWordsPerRound, sessionId, theme } = await req.json()
+
+    if (!playerName || !score || !avgWordsPerRound || !sessionId || !theme) {
+      throw new Error('Missing required fields')
+    }
 
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
-    )
-
-    const { data, error } = await supabaseClient.rpc(
-      'check_and_update_high_score',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       {
-        p_player_name: playerName,
-        p_score: score,
-        p_avg_words_per_round: avgWordsPerRound,
-        p_session_id: sessionId
+        auth: {
+          persistSession: false,
+        },
       }
     )
 
+    console.log('Submitting score:', { playerName, score, avgWordsPerRound, sessionId, theme })
+
+    const { data, error } = await supabaseClient.rpc('check_and_update_high_score', {
+      p_player_name: playerName,
+      p_score: score,
+      p_avg_words_per_round: avgWordsPerRound,
+      p_session_id: sessionId,
+      p_theme: theme
+    })
+
     if (error) {
-      console.error('Error submitting score:', error)
       throw error
     }
-
-    console.log('Score submitted successfully:', data)
 
     return new Response(
       JSON.stringify({ success: true, data }),
@@ -45,7 +49,7 @@ Deno.serve(async (req) => {
       },
     )
   } catch (error) {
-    console.error('Error:', error)
+    console.error('Error:', error.message)
     return new Response(
       JSON.stringify({ error: error.message }),
       {

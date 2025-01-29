@@ -47,6 +47,7 @@ export type Database = {
           player_name: string
           score: number
           session_id: string
+          theme: string
         }
         Insert: {
           avg_words_per_round: number
@@ -55,6 +56,7 @@ export type Database = {
           player_name: string
           score: number
           session_id: string
+          theme?: string
         }
         Update: {
           avg_words_per_round?: number
@@ -63,6 +65,7 @@ export type Database = {
           player_name?: string
           score?: number
           session_id?: string
+          theme?: string
         }
         Relationships: []
       }
