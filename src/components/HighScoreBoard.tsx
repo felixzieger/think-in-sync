@@ -21,6 +21,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useTranslation } from "@/hooks/useTranslation";
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
 interface HighScore {
   id: string;
@@ -41,7 +42,6 @@ interface HighScoreBoardProps {
 }
 
 const ITEMS_PER_PAGE = 5;
-const MAX_PAGES = 5;
 
 const getRankMedal = (rank: number) => {
   switch (rank) {
@@ -211,7 +211,7 @@ export const HighScoreBoard = ({
     }
   };
 
-  const totalPages = highScores ? Math.min(Math.ceil(highScores.length / ITEMS_PER_PAGE), MAX_PAGES) : 0;
+  const totalPages = highScores ? Math.ceil(highScores.length / ITEMS_PER_PAGE) : 0;
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedScores = highScores?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
@@ -225,6 +225,78 @@ export const HighScoreBoard = ({
     if (currentPage < totalPages) {
       setCurrentPage(p => p + 1);
     }
+  };
+
+  const renderPaginationItems = () => {
+    const items = [];
+    const maxVisiblePages = 5;
+    let startPage = 1;
+    let endPage = totalPages;
+
+    if (totalPages > maxVisiblePages) {
+      const leftOffset = Math.floor(maxVisiblePages / 2);
+      const rightOffset = maxVisiblePages - leftOffset - 1;
+
+      if (currentPage <= leftOffset) {
+        endPage = maxVisiblePages;
+      } else if (currentPage > totalPages - rightOffset) {
+        startPage = totalPages - maxVisiblePages + 1;
+      } else {
+        startPage = currentPage - leftOffset;
+        endPage = currentPage + rightOffset;
+      }
+    }
+
+    if (startPage > 1) {
+      items.push(
+        <PaginationItem key="start">
+          <PaginationLink onClick={() => setCurrentPage(1)}>1</PaginationLink>
+        </PaginationItem>
+      );
+      if (startPage > 2) {
+        items.push(
+          <PaginationItem key="start-ellipsis">
+            <span className="flex h-9 w-9 items-center justify-center">
+              <MoreHorizontal className="h-4 w-4" />
+            </span>
+          </PaginationItem>
+        );
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      items.push(
+        <PaginationItem key={i}>
+          <PaginationLink
+            onClick={() => setCurrentPage(i)}
+            isActive={currentPage === i}
+          >
+            {i}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        items.push(
+          <PaginationItem key="end-ellipsis">
+            <span className="flex h-9 w-9 items-center justify-center">
+              <MoreHorizontal className="h-4 w-4" />
+            </span>
+          </PaginationItem>
+        );
+      }
+      items.push(
+        <PaginationItem key="end">
+          <PaginationLink onClick={() => setCurrentPage(totalPages)}>
+            {totalPages}
+          </PaginationLink>
+        </PaginationItem>
+      );
+    }
+
+    return items;
   };
 
   useEffect(() => {
@@ -263,6 +335,7 @@ export const HighScoreBoard = ({
             onKeyDown={handleKeyDown}
             className="flex-1"
             maxLength={20}
+            autoComplete="words"
           />
           <Button
             onClick={handleSubmitScore}
@@ -318,20 +391,11 @@ export const HighScoreBoard = ({
                 onClick={handlePreviousPage}
                 className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
               >
-                <span className="hidden sm:inline">{t.leaderboard.previous}</span>
-                <span className="text-xs text-muted-foreground ml-1">←</span>
+                <ChevronLeft className="h-4 w-4" />
+                <span className="sr-only">{t.leaderboard.previous}</span>
               </PaginationPrevious>
             </PaginationItem>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <PaginationItem key={page}>
-                <PaginationLink
-                  onClick={() => setCurrentPage(page)}
-                  isActive={currentPage === page}
-                >
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
+            {renderPaginationItems()}
             <PaginationItem>
               <PaginationNext
                 onClick={handleNextPage}
@@ -339,8 +403,8 @@ export const HighScoreBoard = ({
                   currentPage === totalPages ? "pointer-events-none opacity-50" : ""
                 }
               >
-                <span className="hidden sm:inline">{t.leaderboard.next}</span>
-                <span className="text-xs text-muted-foreground ml-1">→</span>
+                <span className="sr-only">{t.leaderboard.next}</span>
+                <ChevronRight className="h-4 w-4" />
               </PaginationNext>
             </PaginationItem>
           </PaginationContent>
