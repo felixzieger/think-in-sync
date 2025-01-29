@@ -62,11 +62,9 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
       <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
           <HighScoreBoard
-            currentScore={0}
-            avgWordsPerRound={0}
+            showThemeFilter={true}
             onClose={() => setShowHighScores(false)}
             onPlayAgain={onStart}
-            sessionId=""
           />
         </DialogContent>
       </Dialog>

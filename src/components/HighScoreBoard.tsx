@@ -2,19 +2,12 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { useTranslation } from "@/hooks/useTranslation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ThemeFilter } from "./game/leaderboard/ThemeFilter";
 import { ScoreSubmissionForm } from "./game/leaderboard/ScoreSubmissionForm";
 import { ScoresTable } from "./game/leaderboard/ScoresTable";
+import { LeaderboardHeader } from "./game/leaderboard/LeaderboardHeader";
+import { LeaderboardPagination } from "./game/leaderboard/LeaderboardPagination";
 
 interface HighScore {
   id: string;
@@ -27,33 +20,39 @@ interface HighScore {
 }
 
 interface HighScoreBoardProps {
-  currentScore: number;
-  avgWordsPerRound: number;
-  onClose: () => void;
-  onPlayAgain: () => void;
-  sessionId: string;
+  currentScore?: number;
+  avgWordsPerRound?: number;
+  onClose?: () => void;
+  onPlayAgain?: () => void;
+  sessionId?: string;
   onScoreSubmitted?: () => void;
+  showThemeFilter?: boolean;
+  initialTheme?: string;
 }
 
 const ITEMS_PER_PAGE = 5;
 
 export const HighScoreBoard = ({
-  currentScore,
-  avgWordsPerRound,
+  currentScore = 0,
+  avgWordsPerRound = 0,
   onClose,
-  sessionId,
+  sessionId = "",
   onScoreSubmitted,
+  showThemeFilter = true,
+  initialTheme = "standard",
 }: HighScoreBoardProps) => {
   const [playerName, setPlayerName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedTheme, setSelectedTheme] = useState<'standard' | 'sports' | 'food' | 'custom'>('standard');
+  const [selectedTheme, setSelectedTheme] = useState<'standard' | 'sports' | 'food' | 'custom'>(
+    initialTheme as 'standard' | 'sports' | 'food' | 'custom'
+  );
   const { toast } = useToast();
   const t = useTranslation();
   const queryClient = useQueryClient();
 
-  const showScoreInfo = sessionId !== "" && currentScore >= 0;
+  const showScoreInfo = sessionId !== "" && currentScore > 0;
 
   const { data: highScores } = useQuery({
     queryKey: ["highScores", selectedTheme],
@@ -157,35 +156,20 @@ export const HighScoreBoard = ({
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedScores = highScores?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(p => p - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(p => p + 1);
-    }
-  };
-
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">{t.leaderboard.title}</h2>
-        {showScoreInfo && (
-          <p className="text-gray-600">
-            {t.leaderboard.yourScore}: {currentScore} {t.leaderboard.roundCount}
-            {currentScore > 0 &&
-              ` (${avgWordsPerRound.toFixed(1)} ${t.leaderboard.wordsPerRound})`}
-          </p>
-        )}
-      </div>
-
-      <ThemeFilter
-        selectedTheme={selectedTheme}
-        onThemeChange={setSelectedTheme}
+      <LeaderboardHeader
+        currentScore={currentScore}
+        avgWordsPerRound={avgWordsPerRound}
+        showScoreInfo={showScoreInfo}
       />
+
+      {showThemeFilter && (
+        <ThemeFilter
+          selectedTheme={selectedTheme}
+          onThemeChange={setSelectedTheme}
+        />
+      )}
 
       {!hasSubmitted && currentScore > 0 && (
         <ScoreSubmissionForm
@@ -203,37 +187,12 @@ export const HighScoreBoard = ({
         startIndex={startIndex}
       />
 
-      {totalPages > 1 && (
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                onClick={handlePreviousPage}
-                className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
-              >
-                <ChevronLeft className="h-4 w-4" />
-                <span className="sr-only">{t.leaderboard.previous}</span>
-              </PaginationPrevious>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink isActive={true}>
-                {currentPage}
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext
-                onClick={handleNextPage}
-                className={
-                  currentPage === totalPages ? "pointer-events-none opacity-50" : ""
-                }
-              >
-                <span className="sr-only">{t.leaderboard.next}</span>
-                <ChevronRight className="h-4 w-4" />
-              </PaginationNext>
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
+      <LeaderboardPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPreviousPage={() => setCurrentPage(p => Math.max(1, p - 1))}
+        onNextPage={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+      />
     </div>
   );
 };

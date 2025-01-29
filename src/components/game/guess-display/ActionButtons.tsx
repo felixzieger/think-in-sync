@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { HighScoreBoard } from "@/components/HighScoreBoard";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
+import { HighScoreBoard } from "../../HighScoreBoard";
 
 interface ActionButtonsProps {
   isCorrect: boolean;
@@ -11,7 +11,8 @@ interface ActionButtonsProps {
   currentScore: number;
   avgWordsPerRound: number;
   sessionId: string;
-  onScoreSubmitted: () => void;
+  currentTheme: string;
+  onScoreSubmitted?: () => void;
 }
 
 export const ActionButtons = ({
@@ -21,52 +22,43 @@ export const ActionButtons = ({
   currentScore,
   avgWordsPerRound,
   sessionId,
+  currentTheme,
   onScoreSubmitted,
 }: ActionButtonsProps) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showHighScores, setShowHighScores] = useState(false);
   const t = useTranslation();
 
   return (
-    <div className="flex flex-col gap-4">
-      {isCorrect ? (
-        <Button
-          onClick={onNextRound}
-          className="w-full bg-primary text-lg hover:bg-primary/90"
-        >
-          {t.guess.nextRound} ⏎
-        </Button>
-      ) : (
-        <>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button
-                className="w-full bg-secondary text-lg hover:bg-secondary/90"
-              >
-                {t.guess.viewLeaderboard} 🏆
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-md bg-white">
-              <HighScoreBoard
-                currentScore={currentScore}
-                avgWordsPerRound={avgWordsPerRound}
-                onClose={() => setIsDialogOpen(false)}
-                onPlayAgain={() => {
-                  setIsDialogOpen(false);
-                  onPlayAgain();
-                }}
-                sessionId={sessionId}
-                onScoreSubmitted={onScoreSubmitted}
-              />
-            </DialogContent>
-          </Dialog>
-          <Button
-            onClick={onPlayAgain}
-            className="w-full bg-primary text-lg hover:bg-primary/90"
-          >
-            {t.guess.playAgain} ⏎
-          </Button>
-        </>
-      )}
-    </div>
+    <>
+      <div className="flex justify-center gap-4">
+        {isCorrect ? (
+          <Button onClick={onNextRound}>{t.game.nextRound}</Button>
+        ) : (
+          <>
+            <Button onClick={onPlayAgain} variant="secondary">
+              {t.game.playAgain}
+            </Button>
+            <Button onClick={() => setShowHighScores(true)}>
+              {t.game.saveScore}
+            </Button>
+          </>
+        )}
+      </div>
+
+      <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
+          <HighScoreBoard
+            currentScore={currentScore}
+            avgWordsPerRound={avgWordsPerRound}
+            onClose={() => setShowHighScores(false)}
+            onPlayAgain={onPlayAgain}
+            sessionId={sessionId}
+            showThemeFilter={false}
+            initialTheme={currentTheme}
+            onScoreSubmitted={onScoreSubmitted}
+          />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
