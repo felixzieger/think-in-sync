@@ -27,7 +27,7 @@ export const ScoreSubmissionForm = ({
         placeholder={t.leaderboard.enterName}
         value={playerName}
         onChange={(e) => {
-          const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9]/g, "");
+          const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ0-9-]/g, "");
           setPlayerName(value);
         }}
         onKeyDown={onKeyDown}

@@ -60,6 +60,10 @@ export const GuessDisplay = ({
     setHasSubmittedScore(true);
   };
 
+  const handleShowHighScores = () => {
+    setShowHighScores(true);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -88,7 +92,7 @@ export const GuessDisplay = ({
         sessionId={sessionId}
         currentTheme={currentTheme}
         onScoreSubmitted={handleScoreSubmitted}
-        onHighScoreDialogChange={setShowHighScores}
+        onShowHighScores={handleShowHighScores}
       />
 
       <Dialog open={showHighScores} onOpenChange={setShowHighScores}>

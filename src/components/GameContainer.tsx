@@ -16,6 +16,13 @@ import { supabase } from "@/integrations/supabase/client";
 
 type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess";
 
+const normalizeWord = (word: string): string => {
+  return word.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+};
+
 export const GameContainer = () => {
   const [gameState, setGameState] = useState<GameState>("welcome");
   const [currentWord, setCurrentWord] = useState<string>("");
@@ -240,7 +247,7 @@ export const GameContainer = () => {
   };
 
   const isGuessCorrect = () => {
-    return aiGuess.toLowerCase() === currentWord.toLowerCase();
+    return normalizeWord(aiGuess) === normalizeWord(currentWord);
   };
 
   const handleGuessComplete = () => {
