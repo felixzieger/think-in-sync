@@ -29,7 +29,6 @@ export const InputForm = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const t = useTranslation();
 
-  // Focus input on mount and after AI response
   useEffect(() => {
     if (!isAiThinking) {
       setTimeout(() => {
@@ -56,7 +55,6 @@ export const InputForm = ({
 
   const error = getInputError();
 
-  // Check if there's either something in the sentence or in the input box
   const canMakeGuess = (sentence.length > 0 || playerInput.trim().length > 0) && 
     !hasMultipleWords && !containsTargetWord && isValidInput && !isAiThinking;
 
@@ -72,6 +70,7 @@ export const InputForm = ({
           placeholder={t.game.inputPlaceholder}
           className={`w-full ${error ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
           disabled={isAiThinking}
+          autoComplete="words"
         />
         {error && (
           <p className="text-sm text-red-500 mt-1">
