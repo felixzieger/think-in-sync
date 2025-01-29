@@ -83,7 +83,7 @@ export const en = {
         terms: "See Terms",
         howTo: "How to participate:",
         conditions: [
-          "Play Think in Sync",
+          "Play Think in Sync using the standard wordlist",
           "Like our project on Hugging Face",
           "Set your leaderboard name to match your Hugging Face username"
         ],

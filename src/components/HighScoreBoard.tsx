@@ -71,6 +71,8 @@ export const HighScoreBoard = ({
   const t = useTranslation();
   const queryClient = useQueryClient();
 
+  const showScoreInfo = sessionId !== "" && currentScore >= 0;
+
   const { data: highScores, refetch } = useQuery({
     queryKey: ["highScores"],
     queryFn: async () => {
@@ -210,11 +212,13 @@ export const HighScoreBoard = ({
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-2">{t.leaderboard.title}</h2>
-        <p className="text-gray-600">
-          {t.leaderboard.yourScore}: {currentScore} {t.leaderboard.roundCount}
-          {currentScore > 0 &&
-            ` (${avgWordsPerRound.toFixed(1)} ${t.leaderboard.wordsPerRound})`}
-        </p>
+        {showScoreInfo && (
+          <p className="text-gray-600">
+            {t.leaderboard.yourScore}: {currentScore} {t.leaderboard.roundCount}
+            {currentScore > 0 &&
+              ` (${avgWordsPerRound.toFixed(1)} ${t.leaderboard.wordsPerRound})`}
+          </p>
+        )}
       </div>
 
       {!hasSubmitted && currentScore > 0 && (
