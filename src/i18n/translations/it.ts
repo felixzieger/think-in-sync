@@ -35,6 +35,7 @@ export const it = {
       noScores: "Ancora nessun punteggio",
       previous: "Precedente",
       next: "Successivo",
+      success: "Punteggio inviato con successo!",
       error: {
         invalidName: "Inserisci un nome valido",
         noRounds: "Devi completare almeno un turno",

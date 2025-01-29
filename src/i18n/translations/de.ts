@@ -35,6 +35,7 @@ export const de = {
       noScores: "Noch keine Punktzahlen",
       previous: "Vorherige",
       next: "Nächste",
+      success: "Punktzahl erfolgreich übermittelt!",
       error: {
         invalidName: "Bitte gib einen gültigen Namen ein",
         noRounds: "Du musst mindestens eine Runde abschließen",

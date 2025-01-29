@@ -34,6 +34,7 @@ export const fr = {
       noScores: "Pas encore de scores",
       previous: "Précédent",
       next: "Suivant",
+      success: "Score soumis avec succès !",
       error: {
         invalidName: "Veuillez entrer un nom valide",
         noRounds: "Vous devez compléter au moins un tour",
