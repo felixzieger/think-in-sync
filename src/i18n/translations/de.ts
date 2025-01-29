@@ -82,6 +82,7 @@ export const de = {
       howToPlay: "Spielanleitung",
       leaderboard: "Bestenliste",
       credits: "Erstellt während des",
+      likeGameText: "Wenn dir das Spiel gefällt, dann",
       contest: {
         prize: "Spiele und gewinne bis zu 50€!",
         terms: "Bedingungen ansehen",

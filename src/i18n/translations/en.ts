@@ -82,6 +82,7 @@ export const en = {
       howToPlay: "How to Play",
       leaderboard: "Leaderboard",
       credits: "Created during the",
+      likeGameText: "If you want to show you like this game, please",
       contest: {
         prize: "Play to win up to 50€!",
         terms: "See Terms",

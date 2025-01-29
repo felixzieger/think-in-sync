@@ -6,6 +6,7 @@ export const HuggingFaceLink = () => {
   
   return (
     <div className="flex flex-col items-center gap-2">
+      <p className="text-muted-foreground">{t.welcome.likeGameText}</p>
       <a 
         href="https://huggingface.co/spaces/Mistral-AI-Game-Jam/description-improv/tree/main" 
         target="_blank" 
