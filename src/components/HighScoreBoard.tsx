@@ -21,7 +21,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useTranslation } from "@/hooks/useTranslation";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface HighScore {
   id: string;
@@ -120,78 +120,34 @@ export const HighScoreBoard = ({
 
     setIsSubmitting(true);
     try {
-      console.log("Checking existing score for player:", playerName.trim());
-      const { data: existingScores, error: fetchError } = await supabase
-        .from("high_scores")
-        .select("*")
-        .eq("player_name", playerName.trim());
+      console.log("Submitting score via Edge Function...");
+      const { data, error } = await supabase.functions.invoke('submit-high-score', {
+        body: {
+          playerName: playerName.trim(),
+          score: currentScore,
+          avgWordsPerRound,
+          sessionId
+        }
+      });
 
-      if (fetchError) {
-        console.error("Error fetching existing scores:", fetchError);
-        throw fetchError;
+      if (error) {
+        console.error("Error submitting score:", error);
+        throw error;
       }
 
-      const existingScore = existingScores?.[0];
-      console.log("Existing score found:", existingScore);
-
-      if (existingScore) {
-        if (currentScore > existingScore.score) {
-          console.log("Updating existing score...");
-          const { error: updateError } = await supabase
-            .from("high_scores")
-            .update({
-              score: currentScore,
-              avg_words_per_round: avgWordsPerRound,
-              session_id: sessionId
-            })
-            .eq("id", existingScore.id);
-
-          if (updateError) {
-            console.error("Error updating score:", updateError);
-            throw updateError;
-          }
-
-          toast({
-            title: t.leaderboard.error.newHighScore,
-            description: t.leaderboard.error.beatRecord.replace(
-              "{score}",
-              String(existingScore.score)
-            ),
-          });
-          
-          console.log("Score updated successfully");
-          await queryClient.invalidateQueries({ queryKey: ["highScores"] });
-        } else {
-          toast({
-            title: t.leaderboard.error.notHigher
-              .replace("{current}", String(currentScore))
-              .replace("{best}", String(existingScore.score)),
-            variant: "destructive",
-          });
-          setIsSubmitting(false);
-          return;
-        }
-      } else {
-        console.log("Inserting new score...");
-        const { error: insertError } = await supabase.from("high_scores").insert({
-          player_name: playerName.trim(),
-          score: currentScore,
-          avg_words_per_round: avgWordsPerRound,
-          session_id: sessionId
+      console.log("Score submitted successfully:", data);
+      
+      if (data.success) {
+        toast({
+          title: t.leaderboard.success,
+          description: t.leaderboard.success,
         });
-
-        if (insertError) {
-          console.error("Error inserting score:", insertError);
-          throw insertError;
-        }
         
-        console.log("New score inserted successfully");
+        setHasSubmitted(true);
+        onScoreSubmitted?.();
+        setPlayerName("");
         await queryClient.invalidateQueries({ queryKey: ["highScores"] });
       }
-
-      setHasSubmitted(true);
-      onScoreSubmitted?.();
-      setPlayerName("");
     } catch (error) {
       console.error("Error submitting score:", error);
       toast({
@@ -300,9 +256,7 @@ export const HighScoreBoard = ({
               const medal = getRankMedal(absoluteRank);
               return (
                 <TableRow key={score.id}>
-                  <TableCell>
-                    {medal}
-                  </TableCell>
+                  <TableCell>{medal}</TableCell>
                   <TableCell>{score.player_name}</TableCell>
                   <TableCell>{score.score}</TableCell>
                   <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
