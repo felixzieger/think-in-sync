@@ -75,7 +75,7 @@ export const HighScoreBoard = ({
   });
 
   const handleSubmitScore = async () => {
-    if (!playerName.trim() || !/^[\p{L}0-9]+$/u.test(playerName.trim())) {
+    if (!playerName.trim() || !/^[a-zA-ZÀ-ÿ0-9-]+$/u.test(playerName.trim())) {
       toast({
         title: t.leaderboard.error.invalidName,
         description: t.leaderboard.error.invalidName,
