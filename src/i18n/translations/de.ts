@@ -78,7 +78,7 @@ export const de = {
       leaderboard: "Bestenliste",
       credits: "Erstellt während des",
       contest: {
-        prize: "Spiele und gewinne mit etwas Glück 50€!",
+        prize: "Gewinne mit etwas Glück 50€!",
         terms: "Bedingungen",
         howTo: "So kannst du teilnehmen:",
         conditions: [
