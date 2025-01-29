@@ -65,7 +65,7 @@ export const de = {
       technology: "Technologie",
       sports: "Sport",
       food: "Essen",
-      custom: "Benutzerdefiniertes Thema",
+      custom: "Eigenes Thema",
       customPlaceholder: "Gib dein eigenes Thema ein...",
       continue: "Weiter",
       generating: "Wird generiert...",
