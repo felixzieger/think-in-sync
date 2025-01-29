@@ -1,3 +1,4 @@
+// ... keep existing code
 export const de = {
     game: {
       title: "Think in Sync",
@@ -36,6 +37,9 @@ export const de = {
       previous: "Vorherige",
       next: "Nächste",
       success: "Punktzahl erfolgreich übermittelt!",
+      newHighScore: "Neuer Highscore!",
+      newPersonalBest: "Du hast deinen bisherigen Rekord geschlagen!",
+      notSaved: "Punktzahl nicht gespeichert. Dein bester Punktestand ist:",
       error: {
         invalidName: "Bitte gib einen gültigen Namen ein",
         noRounds: "Du musst mindestens eine Runde abschließen",
