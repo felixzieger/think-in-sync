@@ -36,7 +36,7 @@ export const ActionButtons = ({
         ) : (
           <>
             <Button onClick={onPlayAgain} variant="secondary">
-              {t.game.playAgain}
+              {t.game.playAgain} ⏎
             </Button>
             <Button onClick={() => setShowHighScores(true)}>
               {t.game.saveScore}
