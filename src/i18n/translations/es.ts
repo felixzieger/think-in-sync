@@ -31,7 +31,7 @@ export const es = {
       rank: "Posición",
       player: "Jugador",
       roundsColumn: "Rondas",
-      avgWords: "Ø Palabras",
+      avgWords: "Prom. Palabras",
       noScores: "Aún no hay puntuaciones",
       previous: "Anterior",
       next: "Siguiente",
