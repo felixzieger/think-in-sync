@@ -77,8 +77,14 @@ export const es = {
       howToPlay: "Cómo Jugar",
       leaderboard: "Clasificación",
       credits: "Creado durante el",
-      helpWin: "Ayúdanos a ganar",
-      onHuggingface: "Dando me gusta en Huggingface"
+      helpWin: "¡Juega y guarda tu puntuación para tener la oportunidad de ganar 50€! Cómo participar:",
+      conditions: [
+        "Usa tu nombre de usuario de Huggingface en la clasificación",
+        "Sin trampas",
+        "Dale me gusta al juego en Huggingface"
+      ],
+      drawDetails: "El ganador será sorteado al azar entre los 10 mejores jugadores de la clasificación que cumplan las tres condiciones el 4 de febrero a las 10:00 CET",
+      onHuggingface: "Me gusta en Huggingface"
     },
     howToPlay: {
       setup: {

@@ -69,16 +69,22 @@ export const fr = {
     generating: "Génération...",
     pressKey: "Appuyez sur"
   },
-  welcome: {
-    title: "Think in Sync",
-    subtitle: "Faites équipe avec une IA pour créer un indice et laissez une autre IA deviner votre mot secret",
-    startButton: "Commencer",
-    howToPlay: "Comment Jouer",
-    leaderboard: "Classement",
-    credits: "Créé pendant le",
-    helpWin: "Aidez-nous à gagner en",
-    onHuggingface: "Nous aimant sur Huggingface"
-  },
+    welcome: {
+      title: "Think in Sync",
+      subtitle: "Faites équipe avec une IA pour créer un indice et laissez une autre IA deviner votre mot secret",
+      startButton: "Commencer",
+      howToPlay: "Comment Jouer",
+      leaderboard: "Classement",
+      credits: "Créé pendant le",
+      helpWin: "Jouez et enregistrez votre score pour tenter de gagner 50€ ! Comment participer :",
+      conditions: [
+        "Utilisez votre nom d'utilisateur Huggingface dans le classement",
+        "Pas de triche",
+        "Aimez le jeu sur Huggingface"
+      ],
+      drawDetails: "Le gagnant sera tiré au sort parmi les 10 meilleurs joueurs du classement qui remplissent les trois conditions le 4 février à 10h00 CET",
+      onHuggingface: "Aimer sur Huggingface"
+    },
   howToPlay: {
     setup: {
       title: "Mise en place",

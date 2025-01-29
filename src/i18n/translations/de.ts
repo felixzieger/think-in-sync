@@ -77,8 +77,14 @@ export const de = {
     howToPlay: "Spielanleitung",
     leaderboard: "Bestenliste",
     credits: "Erstellt während des",
-    helpWin: "Play and save your score for a chance to win 50€! Conditions: Use your huggingface username in the leaderboard. No cheating. Like the game on Huggingface.",
-    onHuggingface: "mit einem Like auf Huggingface"
+    helpWin: "Spiele und speichere deinen Score für die Chance auf 50€! So kannst du teilnehmen:",
+    conditions: [
+      "Verwende deinen Huggingface-Benutzernamen in der Bestenliste",
+      "Kein Betrug",
+      "Like das Spiel auf Huggingface"
+    ],
+    drawDetails: "Der Gewinner wird am 4. Februar um 10:00 Uhr MEZ zufällig aus den Top 10 Spielern der Bestenliste ausgelost, die die drei Bedingungen erfüllen",
+    onHuggingface: "Auf Huggingface liken"
   },
   howToPlay: {
     setup: {

@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { HighScoreBoard } from "../HighScoreBoard";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { LanguageSelector } from "./LanguageSelector";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
-import { Heart } from "lucide-react";
+import { Heart, Info } from "lucide-react";
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -67,8 +67,28 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         transition={{ delay: 0.2 }}
         className="max-w-2xl mx-auto text-center mt-12 space-y-4"
       >
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-sm text-gray-600">{t.welcome.helpWin}</p>
+        <div className="flex flex-col items-center gap-4">
+          <div className="space-y-2">
+            <p className="text-sm text-gray-600">{t.welcome.helpWin}</p>
+            <ul className="text-sm text-gray-600 list-disc list-inside text-left">
+              {t.welcome.conditions.map((condition, index) => (
+                <li key={index}>{condition}</li>
+              ))}
+            </ul>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="ghost" size="sm" className="mt-2">
+                  <Info className="h-4 w-4 mr-2" />
+                  {t.welcome.drawDetails}
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>{t.welcome.drawDetails}</DialogTitle>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+          </div>
           <a 
             href="https://huggingface.co/spaces/Mistral-AI-Game-Jam/description-improv/tree/main" 
             target="_blank" 

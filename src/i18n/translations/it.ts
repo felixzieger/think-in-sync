@@ -72,16 +72,22 @@ export const it = {
     generating: "Generazione...",
     pressKey: "Premi"
   },
-  welcome: {
-    title: "Think in Sync",
-    subtitle: "Collabora con un'IA per creare un indizio e lascia che un'altra IA indovini la tua parola segreta!",
-    startButton: "Inizia Gioco",
-    howToPlay: "Come Giocare",
-    leaderboard: "Classifica",
-    credits: "Creato durante il",
-    helpWin: "Aiutaci a vincere",
-    onHuggingface: "Mettendo mi piace su Huggingface"
-  },
+    welcome: {
+      title: "Think in Sync",
+      subtitle: "Collabora con un'IA per creare un indizio e lascia che un'altra IA indovini la tua parola segreta!",
+      startButton: "Inizia Gioco",
+      howToPlay: "Come Giocare",
+      leaderboard: "Classifica",
+      credits: "Creato durante il",
+      helpWin: "Gioca e salva il tuo punteggio per avere la possibilità di vincere 50€! Come partecipare:",
+      conditions: [
+        "Usa il tuo nome utente Huggingface nella classifica",
+        "Niente imbrogli",
+        "Metti mi piace al gioco su Huggingface"
+      ],
+      drawDetails: "Il vincitore sarà estratto a sorte tra i primi 10 giocatori della classifica che soddisfano le tre condizioni il 4 febbraio alle 10:00 CET",
+      onHuggingface: "Mi piace su Huggingface"
+    },
   howToPlay: {
     setup: {
       title: "Preparazione",
