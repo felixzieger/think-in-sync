@@ -99,7 +99,7 @@ export const es = {
         },
         fairPlay: "🚨 El juego limpio está monitoreado. ¡Cualquier trampa resultará en descalificación!"
       },
-      likeOnHuggingface: "Me gusta en Huggingface"
+      likeOnHuggingface: "Me gusta en Hugging Face"
     },
     howToPlay: {
       setup: {

@@ -101,7 +101,7 @@ export const it = {
         },
         fairPlay: "🚨 Il fair play è monitorato. Qualsiasi imbroglio porterà alla squalifica!"
       },
-      likeOnHuggingface: "Mi piace su Huggingface"
+      likeOnHuggingface: "Mi piace su Hugging Face"
     },
     howToPlay: {
       setup: {

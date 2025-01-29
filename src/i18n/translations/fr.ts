@@ -98,7 +98,7 @@ export const fr = {
         },
         fairPlay: "🚨 Le fair-play est surveillé. Toute triche entraînera une disqualification !"
       },
-      likeOnHuggingface: "Aimer sur Huggingface"
+      likeOnHuggingface: "Aimer sur Hugging Face"
     },
     howToPlay: {
       setup: {

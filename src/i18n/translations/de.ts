@@ -99,7 +99,7 @@ export const de = {
         },
         fairPlay: "🚨 Faires Spielen wird überwacht. Betrug führt zur Disqualifikation!"
       },
-      likeOnHuggingface: "Auf Huggingface liken"
+      likeOnHuggingface: "Auf Hugging Face liken"
     },
     howToPlay: {
       setup: {

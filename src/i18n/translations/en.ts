@@ -99,7 +99,7 @@ export const en = {
         },
         fairPlay: "🚨 Fair play is monitored. Any cheating will result in disqualification!"
       },
-      likeOnHuggingface: "Like on Huggingface"
+      likeOnHuggingface: "Like on Hugging Face"
     },
     howToPlay: {
       setup: {
