@@ -13,6 +13,7 @@ interface ActionButtonsProps {
   sessionId: string;
   currentTheme: string;
   onScoreSubmitted?: () => void;
+  onHighScoreDialogChange?: (isOpen: boolean) => void;
 }
 
 export const ActionButtons = ({
@@ -24,9 +25,20 @@ export const ActionButtons = ({
   sessionId,
   currentTheme,
   onScoreSubmitted,
+  onHighScoreDialogChange,
 }: ActionButtonsProps) => {
   const [showHighScores, setShowHighScores] = useState(false);
   const t = useTranslation();
+
+  const handleShowHighScores = () => {
+    setShowHighScores(true);
+    onHighScoreDialogChange?.(true);
+  };
+
+  const handleCloseHighScores = () => {
+    setShowHighScores(false);
+    onHighScoreDialogChange?.(false);
+  };
 
   return (
     <>
@@ -38,19 +50,19 @@ export const ActionButtons = ({
             <Button onClick={onPlayAgain} className="text-white">
               {t.game.playAgain} ⏎
             </Button>
-            <Button onClick={() => setShowHighScores(true)} variant="secondary" className="text-white">
+            <Button onClick={handleShowHighScores} variant="secondary" className="text-white">
               {t.game.saveScore}
             </Button>
           </>
         )}
       </div>
 
-      <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
+      <Dialog open={showHighScores} onOpenChange={handleCloseHighScores}>
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
           <HighScoreBoard
             currentScore={currentScore}
             avgWordsPerRound={avgWordsPerRound}
-            onClose={() => setShowHighScores(false)}
+            onClose={handleCloseHighScores}
             onPlayAgain={onPlayAgain}
             sessionId={sessionId}
             showThemeFilter={false}

@@ -28,6 +28,7 @@ export const GameContainer = () => {
   const [totalWords, setTotalWords] = useState<number>(0);
   const [usedWords, setUsedWords] = useState<string[]>([]);
   const [sessionId, setSessionId] = useState<string>("");
+  const [isHighScoreDialogOpen, setIsHighScoreDialogOpen] = useState(false);
   const { toast } = useToast();
   const t = useTranslation();
   const { language } = useContext(LanguageContext);
@@ -40,7 +41,7 @@ export const GameContainer = () => {
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
+      if (e.key === 'Enter' && !isHighScoreDialogOpen) {
         if (gameState === 'welcome') {
           handleStart();
         } else if (gameState === 'showing-guess') {
@@ -55,7 +56,7 @@ export const GameContainer = () => {
 
     window.addEventListener('keydown', handleKeyPress as any);
     return () => window.removeEventListener('keydown', handleKeyPress as any);
-  }, [gameState, aiGuess, currentWord]);
+  }, [gameState, aiGuess, currentWord, isHighScoreDialogOpen]);
 
   const handleStart = () => {
     setGameState("theme-selection");
@@ -290,6 +291,7 @@ export const GameContainer = () => {
             avgWordsPerRound={getAverageWordsPerRound()}
             sessionId={sessionId}
             currentTheme={currentTheme}
+            onHighScoreDialogChange={setIsHighScoreDialogOpen}
           />
         )}
       </motion.div>
