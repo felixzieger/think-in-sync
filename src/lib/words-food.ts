@@ -18,7 +18,26 @@ export const englishFoodWords = [
   "CAKE",
   "COOKIE",
   "CHOCOLATE",
-  "HONEY"
+  "HONEY",
+  "GRAPES",
+  "LEMON",
+  "PEPPER",
+  "ONION",
+  "GARLIC",
+  "CABBAGE",
+  "BROCCOLI",
+  "SPINACH",
+  "MUSHROOM",
+  "PUMPKIN",
+  "ZUCCHINI",
+  "BELL PEPPER",
+  "CORN",
+  "AVOCADO",
+  "YOGURT",
+  "NUTS",
+  "CEREAL",
+  "PUDDING",
+  "JAM"
 ];
 
 export const germanFoodWords = [
@@ -41,7 +60,26 @@ export const germanFoodWords = [
   "KUCHEN",
   "KEKS",
   "SCHOKOLADE",
-  "HONIG"
+  "HONIG",
+  "TRAUBE",
+  "ZITRONE",
+  "PFEFFER",
+  "ZWIEBEL",
+  "KNOBLAUCH",
+  "KOHLSALAT",
+  "BROKKOLI",
+  "SPINAT",
+  "PILZ",
+  "KÜRBIS",
+  "ZUCCHINI",
+  "BELL-PAPRIKA",
+  "MAIS",
+  "AVOCADO",
+  "JOGHURT",
+  "NÜSSE",
+  "MÜSLI",
+  "PUDDING",
+  "MARMELADE"
 ];
 
 export const frenchFoodWords = [
@@ -64,7 +102,26 @@ export const frenchFoodWords = [
   "GÂTEAU",
   "BISCUIT",
   "CHOCOLAT",
-  "MIEL"
+  "MIEL",
+  "RAISIN",
+  "CITRON",
+  "POIVRON",
+  "OIGNON",
+  "AIL",
+  "CHOU",
+  "BROCOLI",
+  "ÉPINARD",
+  "CHAMPIGNON",
+  "COURGE",
+  "COURGETTE",
+  "POIVRON DOUX",
+  "MAÏS",
+  "AVOCAT",
+  "YAOURT",
+  "NOIX",
+  "CÉRÉALES",
+  "CRÈME",
+  "CONFITURE"
 ];
 
 export const italianFoodWords = [
@@ -87,7 +144,26 @@ export const italianFoodWords = [
   "TORTA",
   "BISCOTTO",
   "CIOCCOLATO",
-  "MIELE"
+  "MIELE",
+  "UVA",
+  "LIMONE",
+  "PEPERONE",
+  "CIPOLLA",
+  "AGLIO",
+  "CAVOLO",
+  "BROCCOLI",
+  "SPINACI",
+  "FUNGHI",
+  "ZUCCA",
+  "ZUCCHINI",
+  "PEPERONE DOLCE",
+  "MAIS",
+  "AVOCADO",
+  "YOGURT",
+  "NOCI",
+  "CEREALI",
+  "CREMA",
+  "MARMELLATA"
 ];
 
 export const spanishFoodWords = [
@@ -110,7 +186,26 @@ export const spanishFoodWords = [
   "PASTEL",
   "GALLETA",
   "CHOCOLATE",
-  "MIEL"
+  "MIEL",
+  "UVAS",
+  "LIMÓN",
+  "PIMIENTA",
+  "CEBOLLA",
+  "AJO",
+  "COL",
+  "BRÓCOLI",
+  "ESPINACA",
+  "CHAMPIÑÓN",
+  "CALABAZA",
+  "CALABACÍN",
+  "PIMIENTO",
+  "MAÍZ",
+  "AGUACATE",
+  "YOGUR",
+  "NUECES",
+  "CEREALES",
+  "CREMA",
+  "MERMELADA"
 ];
 
 export const getRandomFoodWord = (language: string = 'en') => {

@@ -18,7 +18,41 @@ export const englishSportsWords = [
   "CLIMBING",
   "DIVING",
   "SAILING",
-  "WRESTLING"
+  "WRESTLING",
+  "LACROSSE",
+  "BADMINTON",
+  "FENCING",
+  "ARCHERY",
+  "MMA",
+  "KARATE",
+  "JUDO",
+  "PADDLEBOARDING",
+  "SNOWBOARDING",
+  "BILLIARDS",
+  "DARTS",
+  "GYMNASTICS",
+  "PILATES",
+  "YOGA",
+  "CROSSFIT",
+  "TRIATHLON",
+  "MARATHON",
+  "ULTRAMARATHON",
+  "POLO",
+  "SQUASH",
+  "BOWLING",
+  "CURLING",
+  "SKATEBOARDING",
+  "FLOORBALL",
+  "KITESURFING",
+  "BMX",
+  "TRAMPOLINE",
+  "SOFTBALL",
+  "RINGETTE",
+  "BANDY",
+  "SNOWSHOEING",
+  "PARAGLIDING",
+  "CANYONING",
+  "CAVING"
 ];
 
 export const germanSportsWords = [
@@ -41,7 +75,27 @@ export const germanSportsWords = [
   "KLETTERN",
   "TAUCHEN",
   "SEGELN",
-  "RINGEN"
+  "RINGEN",
+  "TURNEN",
+  "BOGENSCHIESSEN",
+  "FECHTEN",
+  "MOTORSPORT",
+  "SCHIESSEN",
+  "REITEN",
+  "HANDBALL",
+  "SNOWBOARDEN",
+  "WASSERBALL",
+  "TRIATHLON",
+  "GEWICHTHEBEN",
+  "JUDO",
+  "TAEKWONDO",
+  "SKATEBOARDEN",
+  "WINDSURFEN",
+  "BADMINTON",
+  "TISCHTENNIS",
+  "SYNCHRONSCHWIMMEN",
+  "RUDERN",
+  "LACROSSE"
 ];
 
 export const frenchSportsWords = [
@@ -64,7 +118,27 @@ export const frenchSportsWords = [
   "ESCALADE",
   "PLONGÉE",
   "VOILE",
-  "LUTTE"
+  "LUTTE",
+  "GYMNASTIQUE",
+  "TIR À L'ARC",
+  "ESCRIME",
+  "MOTOCYCLISME",
+  "TIR",
+  "ÉQUITATION",
+  "HANDBALL",
+  "SNOWBOARD",
+  "WATER-POLO",
+  "TRIATHLON",
+  "HALTÉROPHILIE",
+  "JUDO",
+  "TAEKWONDO",
+  "SKATEBOARD",
+  "WINDSURF",
+  "BADMINTON",
+  "TENNIS DE TABLE",
+  "NATATION SYNCHRONISÉE",
+  "AVIRON",
+  "LACROSSE"
 ];
 
 export const italianSportsWords = [
@@ -87,7 +161,27 @@ export const italianSportsWords = [
   "ARRAMPICATA",
   "IMMERSIONE",
   "VELA",
-  "LOTTA"
+  "LOTTA",
+  "GINNASTICA",
+  "TIRO CON L'ARCO",
+  "SCHERMA",
+  "MOTOCICLISMO",
+  "TIRO A SEGNO",
+  "EQUITAZIONE",
+  "PALLAMANO",
+  "SNOWBOARD",
+  "PALLANUOTO",
+  "TRIATHLON",
+  "SOLLEVAMENTO PESI",
+  "JUDO",
+  "TAEKWONDO",
+  "SKATEBOARD",
+  "WINDSURF",
+  "BADMINTON",
+  "PING-PONG",
+  "NUOTO SINCRONIZZATO",
+  "CANOTTAGGIO",
+  "LACROSSE"
 ];
 
 export const spanishSportsWords = [
@@ -110,8 +204,29 @@ export const spanishSportsWords = [
   "ESCALADA",
   "BUCEO",
   "VELA",
-  "LUCHA"
+  "LUCHA",
+  "GIMNASIA",
+  "TIRO CON ARCO",
+  "ESGRIMA",
+  "MOTOCICLISMO",
+  "TIRO",
+  "EQUITACIÓN",
+  "BALONMANO",
+  "SNOWBOARD",
+  "WATERPOLO",
+  "TRIATLÓN",
+  "HALTEROFILIA",
+  "JUDO",
+  "TAEKWONDO",
+  "SKATEBOARD",
+  "WINDSURF",
+  "BÁDMINTON",
+  "TENIS DE MESA",
+  "NATACIÓN SINCRONIZADA",
+  "REMO",
+  "LACROSSE"
 ];
+
 
 export const getRandomSportsWord = (language: string = 'en') => {
   let wordList;
