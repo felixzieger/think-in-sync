@@ -52,7 +52,7 @@ const getRankMedal = (rank: number) => {
     case 3:
       return "🥉";
     default:
-      return null;
+      return rank;
   }
 };
 
@@ -363,8 +363,7 @@ export const HighScoreBoard = ({
               return (
                 <TableRow key={score.id}>
                   <TableCell>
-                    {absoluteRank}
-                    {medal && <span className="ml-2">{medal}</span>}
+                    {medal}
                   </TableCell>
                   <TableCell>{score.player_name}</TableCell>
                   <TableCell>{score.score}</TableCell>
