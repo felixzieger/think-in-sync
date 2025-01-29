@@ -1,5 +1,7 @@
 import { useState, KeyboardEvent, useEffect, useContext } from "react";
-import { getRandomWord } from "@/lib/words";
+import { getRandomWord } from "@/lib/words-standard";
+import { getRandomSportsWord } from "@/lib/words-sports";
+import { getRandomFoodWord } from "@/lib/words-food";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
 import { getThemedWord } from "@/services/themeService";
@@ -73,9 +75,20 @@ export const GameContainer = () => {
   const handleThemeSelect = async (theme: string) => {
     setCurrentTheme(theme);
     try {
-      const word = theme === "standard" ? 
-        getRandomWord(language) : 
-        await getThemedWord(theme, usedWords, language);
+      let word;
+      switch (theme) {
+        case "sports":
+          word = getRandomSportsWord(language);
+          break;
+        case "food":
+          word = getRandomFoodWord(language);
+          break;
+        case "standard":
+          word = getRandomWord(language);
+          break;
+        default:
+          word = await getThemedWord(theme, usedWords, language);
+      }
       setCurrentWord(word);
       setGameState("building-sentence");
       setSuccessfulRounds(0);
@@ -180,9 +193,20 @@ export const GameContainer = () => {
     if (handleGuessComplete()) {
       const getNewWord = async () => {
         try {
-          const word = currentTheme === "standard" ? 
-            getRandomWord(language) : 
-            await getThemedWord(currentTheme, usedWords, language);
+          let word;
+          switch (currentTheme) {
+            case "sports":
+              word = getRandomSportsWord(language);
+              break;
+            case "food":
+              word = getRandomFoodWord(language);
+              break;
+            case "standard":
+              word = getRandomWord(language);
+              break;
+            default:
+              word = await getThemedWord(currentTheme, usedWords, language);
+          }
           setCurrentWord(word);
           setGameState("building-sentence");
           setSentence([]);
