@@ -86,8 +86,8 @@ export const it = {
         howTo: "Come partecipare:",
         conditions: [
           "Gioca a Think in Sync usando la lista di parole standard",
+          "Usa il tuo nome utente Hugging Face nella classifica",
           "Metti mi piace al nostro progetto su Hugging Face",
-          "Usa il tuo nome utente Hugging Face nella classifica"
         ],
         deadline: "Termine: 5 febbraio, ore 10:00",
         prizes: {

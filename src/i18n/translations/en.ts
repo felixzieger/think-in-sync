@@ -83,9 +83,9 @@ export const en = {
         terms: "See Terms",
         howTo: "How to participate:",
         conditions: [
-          "Play Think in Sync using the standard wordlist",
-          "Like our project on Hugging Face",
-          "Set your leaderboard name to match your Hugging Face username"
+          "Play Think in Sync using the Standard wordlist",
+          "Set your leaderboard name to match your Hugging Face username",
+          "Like our project on Hugging Face"
         ],
         deadline: "Ends: February 5, 10:00 AM",
         prizes: {
