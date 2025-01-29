@@ -74,37 +74,8 @@ export const it = {
       customPlaceholder: "Inserisci il tuo tema personalizzato...",
       continue: "Continua",
       generating: "Generazione...",
-      pressKey: "Premi"
-    },
-    welcome: {
-      title: "Think in Sync",
-      subtitle: "Collabora con un'IA per creare un indizio e lascia che un'altra IA indovini la tua parola segreta!",
-      startButton: "Inizia Gioco",
-      howToPlay: "Come Giocare",
-      leaderboard: "Classifica",
-      credits: "Creato durante il",
-      contest: {
-        prize: "Gioca per vincere fino a 50€!",
-        terms: "Vedi termini",
-        howTo: "Come partecipare:",
-        conditions: [
-          "Gioca a Think in Sync usando la lista di parole standard",
-          "Usa il tuo nome utente Hugging Face nella classifica",
-          "Metti mi piace al nostro progetto su Hugging Face",
-        ],
-        deadline: "Termine: 5 febbraio, ore 10:00",
-        prizes: {
-          title: "Competi per i primi 5 posti e vinci:",
-          list: [
-            "🥇 1°: 50€",
-            "🥈 2°: 20€",
-            "🥉 3°: 10€",
-            "🎖️ 4° & 5°: 10€ ciascuno"
-          ]
-        },
-        fairPlay: "🚨 Il fair play è monitorato. Qualsiasi imbroglio porterà alla squalifica!"
-      },
-      likeOnHuggingface: "Mi piace su Hugging Face"
+      pressKey: "Premi",
+      playing: "Tema"
     },
     howToPlay: {
       setup: {

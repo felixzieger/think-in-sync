@@ -61,6 +61,19 @@ export const GuessDisplay = ({
     setHasSubmittedScore(true);
   };
 
+  const getThemeDisplay = () => {
+    switch (currentTheme) {
+      case 'standard':
+        return t.themes.standard;
+      case 'sports':
+        return t.themes.sports;
+      case 'food':
+        return t.themes.food;
+      default:
+        return currentTheme;
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -79,6 +92,10 @@ export const GuessDisplay = ({
       <GuessDescription sentence={sentence} aiGuess={aiGuess} />
       
       <GuessResult aiGuess={aiGuess} isCorrect={isGuessCorrect()} />
+
+      <div className="text-gray-600 text-sm">
+        {t.leaderboard.roundCount}: {currentScore} | {t.themes.playing}: {getThemeDisplay()}
+      </div>
 
       <ActionButtons
         isCorrect={isGuessCorrect()}

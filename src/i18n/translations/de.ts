@@ -72,37 +72,8 @@ export const de = {
       customPlaceholder: "Gib dein eigenes Thema ein...",
       continue: "Weiter",
       generating: "Wird generiert...",
-      pressKey: "Drücke"
-    },
-    welcome: {
-      title: "Think in Sync",
-      subtitle: "Arbeite mit einer KI zusammen, um einen Hinweis zu erstellen, und lass eine andere KI dein geheimes Wort erraten!",
-      startButton: "Spiel starten",
-      howToPlay: "Spielanleitung",
-      leaderboard: "Bestenliste",
-      credits: "Erstellt während des",
-      contest: {
-        prize: "Spiele und gewinne bis zu 50€!",
-        terms: "Bedingungen",
-        howTo: "So kannst du teilnehmen:",
-        conditions: [
-          "Spiele Think in Sync mit der Standard-Wortliste",
-          "Verwende deinen Hugging Face Benutzernamen in der Bestenliste",
-          "Like unser Projekt auf Hugging Face"
-        ],
-        deadline: "Ende: 5. Februar, 10:00 Uhr",
-        prizes: {
-          title: "Kämpfe um die Top 5 Plätze und gewinne:",
-          list: [
-            "🥇 1. Platz: 50€",
-            "🥈 2. Platz: 20€",
-            "🥉 3. Platz: 10€",
-            "🎖️ 4. & 5. Platz: je 10€"
-          ]
-        },
-        fairPlay: "🚨 Faires Spielen wird überwacht. Betrug führt zur Disqualifikation!"
-      },
-      likeOnHuggingface: "Auf Hugging Face liken"
+      pressKey: "Drücke",
+      playing: "Thema"
     },
     howToPlay: {
       setup: {

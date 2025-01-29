@@ -63,7 +63,7 @@ export const en = {
     },
     themes: {
       title: "Choose a Theme",
-      subtitle: "Select a theme for the word the AI will try to guess",
+      subtitle: "Select a theme for the word that the AI will try to guess",
       standard: "Standard",
       technology: "Technology",
       sports: "Sports",
@@ -72,7 +72,8 @@ export const en = {
       customPlaceholder: "Enter your custom theme...",
       continue: "Continue",
       generating: "Generating...",
-      pressKey: "Press"
+      pressKey: "Press",
+      playing: "Theme"
     },
     welcome: {
       title: "Think in Sync",

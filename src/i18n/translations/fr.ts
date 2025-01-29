@@ -71,7 +71,8 @@ export const fr = {
       customPlaceholder: "Entrez votre thème personnalisé...",
       continue: "Continuer",
       generating: "Génération...",
-      pressKey: "Appuyez sur"
+      pressKey: "Appuyez sur",
+      playing: "Thème"
     },
     welcome: {
       title: "Think in Sync",
