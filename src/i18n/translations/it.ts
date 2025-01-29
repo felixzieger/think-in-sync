@@ -80,15 +80,25 @@ export const it = {
       leaderboard: "Classifica",
       credits: "Creato durante il",
       contest: {
-        prize: "Gioca per vincere 50€!",
+        prize: "Gioca per vincere fino a 50€!",
         terms: "Vedi termini",
         howTo: "Come partecipare:",
         conditions: [
-          "Usa il tuo nome utente Huggingface nella classifica",
-          "Niente imbrogli",
-          "Metti mi piace al gioco su Huggingface"
+          "Gioca a Think in Sync",
+          "Metti mi piace al nostro progetto su Hugging Face",
+          "Usa il tuo nome utente Hugging Face nella classifica"
         ],
-        termsDetails: "Il vincitore sarà estratto a sorte tra i primi 10 giocatori della classifica che soddisfano le tre condizioni il 4 febbraio alle 10:00 CET"
+        deadline: "Termine: 5 febbraio, ore 10:00",
+        prizes: {
+          title: "Competi per i primi 5 posti e vinci:",
+          list: [
+            "🥇 1°: 50€",
+            "🥈 2°: 20€",
+            "🥉 3°: 10€",
+            "🎖️ 4° & 5°: 10€ ciascuno"
+          ]
+        },
+        fairPlay: "🚨 Il fair play è monitorato. Qualsiasi imbroglio porterà alla squalifica!"
       },
       likeOnHuggingface: "Mi piace su Huggingface"
     },

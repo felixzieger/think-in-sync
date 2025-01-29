@@ -78,15 +78,25 @@ export const en = {
       leaderboard: "Leaderboard",
       credits: "Created during the",
       contest: {
-        prize: "Play for a chance to win 50€!",
+        prize: "Play to win up to 50€!",
         terms: "See Terms",
         howTo: "How to participate:",
         conditions: [
-          "Use your huggingface username in the leaderboard",
-          "No cheating",
-          "Like the game on Huggingface"
+          "Play Think in Sync",
+          "Like our project on Hugging Face",
+          "Set your leaderboard name to match your Hugging Face username"
         ],
-        termsDetails: "The Winner will be drawn randomly from the top 10 players in the leaderboard that fulfill the three conditions by 4th of February 10:00 CET"
+        deadline: "Ends: February 5, 10:00 AM",
+        prizes: {
+          title: "Compete for the top 5 spots and win:",
+          list: [
+            "🥇 1st: 50€",
+            "🥈 2nd: 20€",
+            "🥉 3rd: 10€",
+            "🎖️ 4th & 5th: 10€ each"
+          ]
+        },
+        fairPlay: "🚨 Fair play is monitored. Any cheating will result in disqualification!"
       },
       likeOnHuggingface: "Like on Huggingface"
     },

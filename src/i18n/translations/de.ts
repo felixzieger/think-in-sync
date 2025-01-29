@@ -78,15 +78,25 @@ export const de = {
       leaderboard: "Bestenliste",
       credits: "Erstellt während des",
       contest: {
-        prize: "Gewinne mit etwas Glück 50€!",
+        prize: "Spiele und gewinne bis zu 50€!",
         terms: "Bedingungen",
         howTo: "So kannst du teilnehmen:",
         conditions: [
-          "Verwende deinen Huggingface-Benutzernamen in der Bestenliste",
-          "Kein Betrug",
-          "Like das Spiel auf Huggingface"
+          "Spiele Think in Sync",
+          "Like unser Projekt auf Hugging Face",
+          "Verwende deinen Hugging Face Benutzernamen in der Bestenliste"
         ],
-        termsDetails: "Der Gewinner wird am 4. Februar um 10:00 Uhr MEZ zufällig aus den Top 10 Spielern der Bestenliste ausgelost, die die drei Bedingungen erfüllen"
+        deadline: "Ende: 5. Februar, 10:00 Uhr",
+        prizes: {
+          title: "Kämpfe um die Top 5 Plätze und gewinne:",
+          list: [
+            "🥇 1. Platz: 50€",
+            "🥈 2. Platz: 20€",
+            "🥉 3. Platz: 10€",
+            "🎖️ 4. & 5. Platz: je 10€"
+          ]
+        },
+        fairPlay: "🚨 Faires Spielen wird überwacht. Betrug führt zur Disqualifikation!"
       },
       likeOnHuggingface: "Auf Huggingface liken"
     },
