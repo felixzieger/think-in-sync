@@ -67,17 +67,6 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         transition={{ delay: 0.2 }}
         className="max-w-2xl mx-auto text-center mt-12 space-y-4"
       >
-        <p className="text-sm text-gray-500">
-          {t.welcome.credits}{" "}
-          <a 
-            href="https://blog.felixzieger.de/gaming-hackathon-paris/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary hover:underline"
-          >
-            AI Gaming Hackathon
-          </a>.
-        </p>
         <div className="flex flex-col items-center gap-2">
           <p className="text-sm text-gray-600">{t.welcome.helpWin}</p>
           <a 

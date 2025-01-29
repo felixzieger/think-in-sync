@@ -77,7 +77,7 @@ export const de = {
     howToPlay: "Spielanleitung",
     leaderboard: "Bestenliste",
     credits: "Erstellt während des",
-    helpWin: "Hilf uns zu gewinnen",
+    helpWin: "Play and save your score for a chance to win 50€! Conditions: Use your huggingface username in the leaderboard. No cheating. Like the game on Huggingface.",
     onHuggingface: "mit einem Like auf Huggingface"
   },
   howToPlay: {
