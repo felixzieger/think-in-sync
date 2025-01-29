@@ -32,13 +32,13 @@ export const ActionButtons = ({
     <>
       <div className="flex justify-center gap-4">
         {isCorrect ? (
-          <Button onClick={onNextRound} className="text-white">{t.game.nextRound}</Button>
+          <Button onClick={onNextRound} className="text-white">{t.game.nextRound} ⏎</Button>
         ) : (
           <>
-            <Button onClick={onPlayAgain} variant="secondary">
+            <Button onClick={onPlayAgain} className="text-white">
               {t.game.playAgain} ⏎
             </Button>
-            <Button onClick={() => setShowHighScores(true)} className="text-white">
+            <Button onClick={() => setShowHighScores(true)} variant="secondary" className="text-white">
               {t.game.saveScore}
             </Button>
           </>
