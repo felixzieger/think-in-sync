@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/pagination";
 import { useTranslation } from "@/hooks/useTranslation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ThemeFilter } from "./game/leaderboard/ThemeFilter";
 import { ScoreSubmissionForm } from "./game/leaderboard/ScoreSubmissionForm";
 import { ScoresTable } from "./game/leaderboard/ScoresTable";
 
@@ -32,7 +33,6 @@ interface HighScoreBoardProps {
   onPlayAgain: () => void;
   sessionId: string;
   onScoreSubmitted?: () => void;
-  currentTheme?: string;
 }
 
 const ITEMS_PER_PAGE = 5;
@@ -43,12 +43,12 @@ export const HighScoreBoard = ({
   onClose,
   sessionId,
   onScoreSubmitted,
-  currentTheme = 'standard',
 }: HighScoreBoardProps) => {
   const [playerName, setPlayerName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedTheme, setSelectedTheme] = useState<'standard' | 'sports' | 'food' | 'custom'>('standard');
   const { toast } = useToast();
   const t = useTranslation();
   const queryClient = useQueryClient();
@@ -56,13 +56,13 @@ export const HighScoreBoard = ({
   const showScoreInfo = sessionId !== "" && currentScore >= 0;
 
   const { data: highScores } = useQuery({
-    queryKey: ["highScores", currentTheme],
+    queryKey: ["highScores", selectedTheme],
     queryFn: async () => {
-      console.log("Fetching high scores for theme:", currentTheme);
+      console.log("Fetching high scores for theme:", selectedTheme);
       const { data, error } = await supabase
         .from("high_scores")
         .select("*")
-        .eq('theme', currentTheme)
+        .eq('theme', selectedTheme)
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
@@ -112,7 +112,7 @@ export const HighScoreBoard = ({
           score: currentScore,
           avgWordsPerRound,
           sessionId,
-          theme: currentTheme
+          theme: selectedTheme
         }
       });
 
@@ -121,35 +121,18 @@ export const HighScoreBoard = ({
         throw error;
       }
 
-      console.log("Score submission response:", data);
+      console.log("Score submitted successfully:", data);
       
       if (data.success) {
-        let toastMessage;
-        switch (data.data.status) {
-          case 'inserted':
-            toastMessage = t.leaderboard.newHighScore;
-            break;
-          case 'updated':
-            toastMessage = t.leaderboard.newPersonalBest;
-            break;
-          case 'not_updated':
-            toastMessage = `${t.leaderboard.notSaved} ${data.data.previous_score}`;
-            break;
-          default:
-            toastMessage = t.leaderboard.success;
-        }
-        
         toast({
-          title: toastMessage,
-          description: toastMessage,
+          title: t.leaderboard.success,
+          description: t.leaderboard.success,
         });
         
-        if (data.data.status !== 'not_updated') {
-          setHasSubmitted(true);
-          onScoreSubmitted?.();
-          setPlayerName("");
-          await queryClient.invalidateQueries({ queryKey: ["highScores"] });
-        }
+        setHasSubmitted(true);
+        onScoreSubmitted?.();
+        setPlayerName("");
+        await queryClient.invalidateQueries({ queryKey: ["highScores"] });
       }
     } catch (error) {
       console.error("Error submitting score:", error);
@@ -198,6 +181,11 @@ export const HighScoreBoard = ({
           </p>
         )}
       </div>
+
+      <ThemeFilter
+        selectedTheme={selectedTheme}
+        onThemeChange={setSelectedTheme}
+      />
 
       {!hasSubmitted && currentScore > 0 && (
         <ScoreSubmissionForm

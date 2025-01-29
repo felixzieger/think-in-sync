@@ -35,13 +35,13 @@ export const fr = {
       previous: "Précédent",
       next: "Suivant",
       success: "Score soumis avec succès !",
-      newHighScore: "Nouveau Record !",
-      newPersonalBest: "Vous avez battu votre record précédent !",
-      notSaved: "Score non sauvegardé. Votre meilleur score est :",
       error: {
         invalidName: "Veuillez entrer un nom valide",
         noRounds: "Vous devez compléter au moins un tour",
         alreadySubmitted: "Score déjà soumis",
+        newHighScore: "Nouveau Record !",
+        beatRecord: "Vous avez battu votre record précédent de {score} !",
+        notHigher: "Score de {current} pas plus élevé que votre meilleur de {best}",
         submitError: "Erreur lors de la soumission du score"
       }
     },

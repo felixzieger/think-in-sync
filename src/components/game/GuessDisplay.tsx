@@ -24,7 +24,6 @@ interface GuessDisplayProps {
   currentScore: number;
   avgWordsPerRound: number;
   sessionId: string;
-  currentTheme?: string;
 }
 
 export const GuessDisplay = ({
@@ -37,7 +36,6 @@ export const GuessDisplay = ({
   currentScore,
   avgWordsPerRound,
   sessionId,
-  currentTheme = 'standard',
 }: GuessDisplayProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasSubmittedScore, setHasSubmittedScore] = useState(false);
@@ -87,7 +85,6 @@ export const GuessDisplay = ({
         currentScore={currentScore}
         avgWordsPerRound={avgWordsPerRound}
         sessionId={sessionId}
-        currentTheme={currentTheme}
         onScoreSubmitted={handleScoreSubmitted}
       />
     </motion.div>
