@@ -64,7 +64,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
+        transition={{ delay: 0.1 }}
         className="max-w-2xl mx-auto text-center mt-8"
       >
         <div className="flex flex-col items-center gap-2">
@@ -90,6 +90,16 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
               </div>
             </DialogContent>
           </Dialog>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="max-w-2xl mx-auto text-center mt-8"
+      >
+        <div className="flex flex-col items-center gap-2">
           <a 
             href="https://huggingface.co/spaces/Mistral-AI-Game-Jam/description-improv/tree/main" 
             target="_blank" 
