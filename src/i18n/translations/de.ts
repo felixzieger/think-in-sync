@@ -18,7 +18,10 @@ export const de = {
       leaveGameDescription: "Dein aktueller Fortschritt geht verloren. Bist du sicher, dass du das Spiel verlassen möchtest?",
       cancel: "Abbrechen",
       confirm: "Bestätigen",
-      describeWord: "Dein Ziel ist es folgendes Wort zu beschreiben"
+      describeWord: "Dein Ziel ist es folgendes Wort zu beschreiben",
+      nextRound: "Nächste Runde",
+      playAgain: "Erneut spielen",
+      saveScore: "Punktzahl speichern"
     },
     leaderboard: {
       title: "Bestenliste",

@@ -288,6 +288,7 @@ export const GameContainer = () => {
             currentScore={successfulRounds}
             avgWordsPerRound={getAverageWordsPerRound()}
             sessionId={sessionId}
+            currentTheme={currentTheme}
           />
         )}
       </motion.div>

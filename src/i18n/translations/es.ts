@@ -18,7 +18,10 @@ export const es = {
       leaveGameDescription: "Tu progreso actual se perderá. ¿Estás seguro de que quieres salir?",
       cancel: "Cancelar",
       confirm: "Confirmar",
-      describeWord: "Tu objetivo es describir la palabra"
+      describeWord: "Tu objetivo es describir la palabra",
+      nextRound: "Siguiente Ronda",
+      playAgain: "Jugar de Nuevo",
+      saveScore: "Guardar Puntuación"
     },
     leaderboard: {
       title: "Puntuaciones Más Altas",
