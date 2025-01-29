@@ -93,10 +93,6 @@ export const GuessDisplay = ({
       
       <GuessResult aiGuess={aiGuess} isCorrect={isGuessCorrect()} />
 
-      <div className="text-gray-600 text-sm">
-        {t.leaderboard.roundCount}: {currentScore} | {t.themes.playing}: {getThemeDisplay()}
-      </div>
-
       <ActionButtons
         isCorrect={isGuessCorrect()}
         onNextRound={onNextRound}
