@@ -1,4 +1,24 @@
 export const fr = {
+    game: {
+      title: "Think in Sync",
+      round: "Tour",
+      buildDescription: "Construisez une phrase ensemble",
+      startSentence: "Commencez à construire votre phrase...",
+      inputPlaceholder: "Entrez UN mot...",
+      addWord: "Ajouter un mot",
+      makeGuess: "Deviner",
+      aiThinking: "L'IA réfléchit...",
+      aiDelayed: "L'IA est actuellement occupée. Veuillez réessayer dans un moment.",
+      invalidWord: "Mot invalide",
+      cantUseTargetWord: "N'utilisez pas le mot secret",
+      lettersOnly: "Veuillez utiliser uniquement des lettres",
+      singleWordOnly: "Veuillez entrer un seul mot",
+      leaveGameTitle: "Quitter le jeu ?",
+      leaveGameDescription: "Votre progression actuelle sera perdue. Êtes-vous sûr de vouloir quitter ?",
+      cancel: "Annuler",
+      confirm: "Confirmer",
+      describeWord: "Votre objectif est de décrire le mot"
+    },
   leaderboard: {
     title: "Meilleurs Scores",
     yourScore: "Votre Score",
@@ -10,90 +30,82 @@ export const fr = {
     rank: "Rang",
     player: "Joueur",
     roundsColumn: "Tours",
-    avgWords: "Moy. Mots",
-    noScores: "Pas encore de meilleurs scores",
+    avgWords: "Ø Mots",
+    noScores: "Pas encore de scores",
     previous: "Précédent",
     next: "Suivant",
-    success: "Score soumis avec succès !",
     error: {
-      invalidName: "Veuillez entrer un nom valide (lettres et chiffres uniquement)",
+      invalidName: "Veuillez entrer un nom valide",
       noRounds: "Vous devez compléter au moins un tour",
-      alreadySubmitted: "Vous avez déjà soumis votre score",
+      alreadySubmitted: "Score déjà soumis",
+      newHighScore: "Nouveau Record !",
+      beatRecord: "Vous avez battu votre record précédent de {score} !",
+      notHigher: "Score de {current} pas plus élevé que votre meilleur de {best}",
       submitError: "Erreur lors de la soumission du score"
     }
   },
-  welcome: {
-    title: "Impro Description",
-    subtitle: "Un jeu de devinettes où vous collaborez avec l'IA",
-    startButton: "Commencer le Jeu",
-    howToPlay: "Comment Jouer",
-    leaderboard: "Classement",
-    likeOnHuggingface: "Aimer sur Huggingface",
-    contest: {
-      prize: "Gagnez jusqu'à 3 000 $ de prix !",
-      terms: "Conditions du Concours",
-      howTo: "Comment participer au concours :",
-      conditions: [
-        "Jouez et soumettez vos meilleurs scores",
-        "Aimez le projet sur Huggingface",
-        "Les gagnants seront sélectionnés selon les meilleurs scores"
-      ],
-      termsDetails: "Le concours se termine le 31 mars 2024. Les gagnants seront notifiés par email."
-    }
-  },
-  game: {
-    title: "Impro Description",
-    round: "Tour",
-    describeWord: "Décrivez ce mot sans l'utiliser :",
-    inputPlaceholder: "Entrez un mot...",
-    addWord: "Ajouter un Mot",
-    makeGuess: "Faire une Supposition",
-    aiThinking: "L'IA réfléchit...",
-    aiDelayed: "L'IA prend plus de temps que d'habitude. Veuillez patienter...",
-    singleWordOnly: "Veuillez entrer un seul mot",
-    cantUseTargetWord: "Vous ne pouvez pas utiliser le mot cible",
-    lettersOnly: "Veuillez utiliser uniquement des lettres",
-    leaveGameTitle: "Quitter le Jeu ?",
-    leaveGameDescription: "Votre progression sera perdue si vous quittez maintenant.",
-    cancel: "Annuler",
-    confirm: "Confirmer"
-  },
   guess: {
+    title: "Devinette de l'IA",
+    goalDescription: "Votre objectif était de décrire le mot",
+    providedDescription: "Vous avez fourni la description",
+    aiGuessedDescription: "Basé sur votre description, l'IA a deviné",
+    correct: "C'est correct !",
+    incorrect: "C'est incorrect.",
     nextRound: "Tour Suivant",
-    viewLeaderboard: "Voir le Classement",
     playAgain: "Rejouer",
-    providedDescription: "Votre description :",
-    aiGuessedDescription: "L'IA a deviné :"
+    viewLeaderboard: "Voir les Scores",
+    cheatingDetected: "Tentative de triche détectée !"
   },
   themes: {
     title: "Choisissez un Thème",
-    subtitle: "Sélectionnez un thème pour vos mots :",
-    standard: "Mots Standard",
+    subtitle: "Sélectionnez un thème pour le mot que l'IA essaiera de deviner",
+    standard: "Standard",
+    technology: "Technologie",
     sports: "Sports",
-    food: "Nourriture et Boissons",
+    food: "Nourriture",
     custom: "Thème Personnalisé",
-    customPlaceholder: "Entrez votre thème...",
-    pressKey: "Appuyez",
+    customPlaceholder: "Entrez votre thème personnalisé...",
     continue: "Continuer",
-    generating: "Génération..."
+    generating: "Génération...",
+    pressKey: "Appuyez sur"
   },
+    welcome: {
+      title: "Think in Sync",
+      subtitle: "Faites équipe avec une IA pour créer un indice et laissez une autre IA deviner votre mot secret",
+      startButton: "Commencer",
+      howToPlay: "Comment Jouer",
+      leaderboard: "Classement",
+      credits: "Créé pendant le",
+      contest: {
+        prize: "Jouez pour tenter de gagner 50€ !",
+        terms: "Voir conditions",
+        howTo: "Comment participer :",
+        conditions: [
+          "Utilisez votre nom d'utilisateur Huggingface dans le classement",
+          "Pas de triche",
+          "Aimez le jeu sur Huggingface"
+        ],
+        termsDetails: "Le gagnant sera tiré au sort parmi les 10 meilleurs joueurs du classement qui remplissent les trois conditions le 4 février à 10h00 CET"
+      },
+      likeOnHuggingface: "Aimer sur Huggingface"
+    },
   howToPlay: {
     setup: {
-      title: "Configuration",
-      description: "Choisissez un thème et obtenez un mot secret."
+      title: "Mise en place",
+      description: "Choisissez un thème et obtenez un mot secret que l'IA essaiera de deviner."
     },
     goal: {
       title: "Objectif",
-      description: "Aidez l'IA à deviner votre mot en fournissant des mots descriptifs."
+      description: "Construisez des phrases avec l'IA qui décrivent votre mot sans l'utiliser directement."
     },
     rules: {
       title: "Règles",
       items: [
-        "Ajoutez un mot à la fois",
-        "N'utilisez pas le mot secret",
-        "Soyez créatif avec vos descriptions",
-        "Essayez d'utiliser le moins de mots possible"
+        "Ajoutez des mots à tour de rôle pour construire des phrases descriptives",
+        "N'utilisez pas le mot secret ou ses variations",
+        "Soyez créatif et descriptif",
+        "L'IA essaiera de deviner votre mot après chaque phrase"
       ]
     }
   }
-} as const;
+};

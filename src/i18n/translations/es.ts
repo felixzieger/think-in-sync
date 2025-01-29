@@ -1,99 +1,112 @@
 export const es = {
-  leaderboard: {
-    title: "Puntuaciones Altas",
-    yourScore: "Tu Puntuación",
-    roundCount: "rondas",
-    wordsPerRound: "palabras por ronda",
-    enterName: "Ingresa tu nombre",
-    submitting: "Enviando...",
-    submit: "Enviar Puntuación",
-    rank: "Rango",
-    player: "Jugador",
-    roundsColumn: "Rondas",
-    avgWords: "Promedio Palabras",
-    noScores: "Aún no hay puntuaciones altas",
-    previous: "Anterior",
-    next: "Siguiente",
-    success: "¡Puntuación enviada con éxito!",
-    error: {
-      invalidName: "Por favor ingresa un nombre válido (solo letras y números)",
-      noRounds: "Debes completar al menos una ronda",
-      alreadySubmitted: "Ya has enviado tu puntuación",
-      submitError: "Error al enviar la puntuación"
-    }
-  },
-  welcome: {
-    title: "Improvisación Descriptiva",
-    subtitle: "Un juego de adivinanzas donde colaboras con la IA",
-    startButton: "Comenzar Juego",
-    howToPlay: "Cómo Jugar",
-    leaderboard: "Tabla de Posiciones",
-    likeOnHuggingface: "Me gusta en Huggingface",
-    contest: {
-      prize: "¡Gana hasta $3,000 en premios!",
-      terms: "Términos del Concurso",
-      howTo: "Cómo participar en el concurso:",
-      conditions: [
-        "Juega y envía tus puntuaciones altas",
-        "Dale me gusta al proyecto en Huggingface",
-        "Los ganadores serán seleccionados según las puntuaciones más altas"
-      ],
-      termsDetails: "El concurso dura hasta el 31 de marzo de 2024. Los ganadores serán notificados por correo electrónico."
-    }
-  },
-  game: {
-    title: "Improvisación Descriptiva",
-    round: "Ronda",
-    describeWord: "Describe esta palabra sin usarla:",
-    inputPlaceholder: "Ingresa una palabra...",
-    addWord: "Agregar Palabra",
-    makeGuess: "Hacer Adivinanza",
-    aiThinking: "La IA está pensando...",
-    aiDelayed: "La IA está tardando más de lo usual. Por favor espera...",
-    singleWordOnly: "Por favor ingresa solo una palabra",
-    cantUseTargetWord: "No puedes usar la palabra objetivo",
-    lettersOnly: "Por favor usa solo letras",
-    leaveGameTitle: "¿Salir del Juego?",
-    leaveGameDescription: "Tu progreso se perderá si sales ahora.",
-    cancel: "Cancelar",
-    confirm: "Confirmar"
-  },
-  guess: {
-    nextRound: "Siguiente Ronda",
-    viewLeaderboard: "Ver Tabla de Posiciones",
-    playAgain: "Jugar de Nuevo",
-    providedDescription: "Tu descripción:",
-    aiGuessedDescription: "La IA adivinó:"
-  },
-  themes: {
-    title: "Elige un Tema",
-    subtitle: "Selecciona un tema para tus palabras:",
-    standard: "Palabras Estándar",
-    sports: "Deportes",
-    food: "Comida y Bebidas",
-    custom: "Tema Personalizado",
-    customPlaceholder: "Ingresa tu tema...",
-    pressKey: "Presiona",
-    continue: "Continuar",
-    generating: "Generando..."
-  },
-  howToPlay: {
-    setup: {
-      title: "Configuración",
-      description: "Elige un tema y obtén una palabra secreta."
+    game: {
+      title: "Think in Sync",
+      round: "Ronda",
+      buildDescription: "Construyan una frase juntos",
+      buildSubtitle: "Añadan palabras por turnos para crear una frase",
+      startSentence: "Empieza a construir tu frase...",
+      inputPlaceholder: "Ingresa UNA palabra...",
+      addWord: "Añadir palabra",
+      makeGuess: "Adivinar",
+      aiThinking: "La IA está pensando...",
+      aiDelayed: "La IA está ocupada en este momento. Por favor, inténtalo de nuevo en un momento.",
+      invalidWord: "Palabra inválida",
+      cantUseTargetWord: "No uses la palabra secreta",
+      lettersOnly: "Por favor, usa solo letras",
+      singleWordOnly: "Por favor, ingresa solo una palabra",
+      leaveGameTitle: "¿Salir del juego?",
+      leaveGameDescription: "Tu progreso actual se perderá. ¿Estás seguro de que quieres salir?",
+      cancel: "Cancelar",
+      confirm: "Confirmar",
+      describeWord: "Tu objetivo es describir la palabra"
     },
-    goal: {
-      title: "Objetivo",
-      description: "Ayuda a la IA a adivinar tu palabra proporcionando palabras descriptivas."
+    leaderboard: {
+      title: "Puntuaciones Más Altas",
+      yourScore: "Tu Puntuación",
+      roundCount: "rondas",
+      wordsPerRound: "palabras por ronda",
+      enterName: "Ingresa tu nombre",
+      submitting: "Enviando...",
+      submit: "Enviar Puntuación",
+      rank: "Posición",
+      player: "Jugador",
+      roundsColumn: "Rondas",
+      avgWords: "Ø Palabras",
+      noScores: "Aún no hay puntuaciones",
+      previous: "Anterior",
+      next: "Siguiente",
+      error: {
+        invalidName: "Por favor, ingresa un nombre válido",
+        noRounds: "Debes completar al menos una ronda",
+        alreadySubmitted: "Puntuación ya enviada",
+        newHighScore: "¡Nueva Puntuación Más Alta!",
+        beatRecord: "¡Has superado tu récord anterior de {score}!",
+        notHigher: "Puntuación de {current} no superior a tu mejor de {best}",
+        submitError: "Error al enviar la puntuación"
+      }
     },
-    rules: {
-      title: "Reglas",
-      items: [
-        "Agrega una palabra a la vez",
-        "No uses la palabra secreta",
-        "Sé creativo con tus descripciones",
-        "Intenta usar la menor cantidad de palabras posible"
-      ]
+    guess: {
+      title: "Suposición de la IA",
+      goalDescription: "Tu objetivo era describir la palabra",
+      providedDescription: "Proporcionaste la descripción",
+      aiGuessedDescription: "Basado en tu descripción, la IA adivinó",
+      correct: "¡Esto es correcto!",
+      incorrect: "Esto es incorrecto.",
+      nextRound: "Siguiente Ronda",
+      playAgain: "Jugar de Nuevo",
+      viewLeaderboard: "Ver Clasificación",
+      cheatingDetected: "¡Trampa detectada!"
+    },
+    themes: {
+      title: "Elige un Tema",
+      subtitle: "Selecciona un tema para la palabra que la IA intentará adivinar",
+      standard: "Estándar",
+      technology: "Tecnología",
+      sports: "Deportes",
+      food: "Comida",
+      custom: "Tema Personalizado",
+      customPlaceholder: "Ingresa tu tema personalizado...",
+      continue: "Continuar",
+      generating: "Generando...",
+      pressKey: "Presiona"
+    },
+    welcome: {
+      title: "Think in Sync",
+      subtitle: "¡Haz equipo con una IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
+      startButton: "Comenzar Juego",
+      howToPlay: "Cómo Jugar",
+      leaderboard: "Clasificación",
+      credits: "Creado durante el",
+      contest: {
+        prize: "¡Juega para ganar 50€!",
+        terms: "Ver términos",
+        howTo: "Cómo participar:",
+        conditions: [
+          "Usa tu nombre de usuario de Huggingface en la clasificación",
+          "Sin trampas",
+          "Dale me gusta al juego en Huggingface"
+        ],
+        termsDetails: "El ganador será sorteado al azar entre los 10 mejores jugadores de la clasificación que cumplan las tres condiciones el 4 de febrero a las 10:00 CET"
+      },
+      likeOnHuggingface: "Me gusta en Huggingface"
+    },
+    howToPlay: {
+      setup: {
+        title: "Preparación",
+        description: "Elige un tema y obtén una palabra secreta que la IA intentará adivinar."
+      },
+      goal: {
+        title: "Objetivo",
+        description: "Construye frases junto con la IA que describan tu palabra sin usarla directamente."
+      },
+      rules: {
+        title: "Reglas",
+        items: [
+          "Añade palabras por turnos para construir frases descriptivas",
+          "No uses la palabra secreta o sus variaciones",
+          "Sé creativo y descriptivo",
+          "La IA intentará adivinar tu palabra después de cada frase"
+        ]
+      }
     }
-  }
-} as const;
+};

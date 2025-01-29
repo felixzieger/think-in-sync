@@ -1,99 +1,112 @@
 export const en = {
-  leaderboard: {
-    title: "High Scores",
-    yourScore: "Your Score",
-    roundCount: "rounds",
-    wordsPerRound: "words per round",
-    enterName: "Enter your name",
-    submitting: "Submitting...",
-    submit: "Submit Score",
-    rank: "Rank",
-    player: "Player",
-    roundsColumn: "Rounds",
-    avgWords: "Avg. Words",
-    noScores: "No high scores yet",
-    previous: "Previous",
-    next: "Next",
-    success: "Score submitted successfully!",
-    error: {
-      invalidName: "Please enter a valid name (letters and numbers only)",
-      noRounds: "You need to complete at least one round",
-      alreadySubmitted: "You have already submitted your score",
-      submitError: "Error submitting score"
-    }
-  },
-  welcome: {
-    title: "Description Improv",
-    subtitle: "A word-guessing game where you collaborate with AI",
-    startButton: "Start Game",
-    howToPlay: "How to Play",
-    leaderboard: "Leaderboard",
-    likeOnHuggingface: "Like on Huggingface",
-    contest: {
-      prize: "Win up to $3,000 in prizes!",
-      terms: "Contest Terms",
-      howTo: "How to participate in the contest:",
-      conditions: [
-        "Play the game and submit your high scores",
-        "Like the project on Huggingface",
-        "Winners will be selected based on highest scores"
-      ],
-      termsDetails: "Contest runs until March 31st, 2024. Winners will be notified via email."
-    }
-  },
-  game: {
-    title: "Description Improv",
-    round: "Round",
-    describeWord: "Describe this word without using it:",
-    inputPlaceholder: "Enter a word...",
-    addWord: "Add Word",
-    makeGuess: "Make Guess",
-    aiThinking: "AI is thinking...",
-    aiDelayed: "The AI is taking longer than usual to respond. Please wait...",
-    singleWordOnly: "Please enter only one word",
-    cantUseTargetWord: "You can't use the target word",
-    lettersOnly: "Please use only letters",
-    leaveGameTitle: "Leave Game?",
-    leaveGameDescription: "Your progress will be lost if you leave now.",
-    cancel: "Cancel",
-    confirm: "Confirm"
-  },
-  guess: {
-    nextRound: "Next Round",
-    viewLeaderboard: "View Leaderboard",
-    playAgain: "Play Again",
-    providedDescription: "Your description:",
-    aiGuessedDescription: "The AI guessed:"
-  },
-  themes: {
-    title: "Choose a Theme",
-    subtitle: "Select a theme for your words:",
-    standard: "Standard Words",
-    sports: "Sports",
-    food: "Food & Drinks",
-    custom: "Custom Theme",
-    customPlaceholder: "Enter your theme...",
-    pressKey: "Press",
-    continue: "Continue",
-    generating: "Generating..."
-  },
-  howToPlay: {
-    setup: {
-      title: "Setup",
-      description: "Choose a theme and get a secret word."
+    game: {
+      title: "Think in Sync",
+      round: "Round",
+      buildDescription: "Build a sentence together",
+      buildSubtitle: "Take turns adding words to create a sentence",
+      startSentence: "Start building your sentence...",
+      inputPlaceholder: "Enter a SINGLE word...",
+      addWord: "Add Word",
+      makeGuess: "Make Guess",
+      aiThinking: "AI is thinking...",
+      aiDelayed: "The AI is currently busy. Please try again in a moment.",
+      invalidWord: "Invalid Word",
+      cantUseTargetWord: "Do not use the secret word",
+      lettersOnly: "Please use letters only",
+      singleWordOnly: "Please enter only one word",
+      leaveGameTitle: "Leave Game?",
+      leaveGameDescription: "Your current progress will be lost. Are you sure you want to leave?",
+      cancel: "Cancel",
+      confirm: "Confirm",
+      describeWord: "Your goal is to describe the word"
     },
-    goal: {
-      title: "Goal",
-      description: "Help the AI guess your word by providing descriptive words."
+    leaderboard: {
+      title: "High Scores",
+      yourScore: "Your Score",
+      roundCount: "rounds",
+      wordsPerRound: "words per round",
+      enterName: "Enter your name",
+      submitting: "Submitting...",
+      submit: "Submit Score",
+      rank: "Rank",
+      player: "Player",
+      roundsColumn: "Rounds",
+      avgWords: "Ø Words",
+      noScores: "No scores yet",
+      previous: "Previous",
+      next: "Next",
+      error: {
+        invalidName: "Please enter a valid name",
+        noRounds: "You need to complete at least one round",
+        alreadySubmitted: "Score already submitted",
+        newHighScore: "New High Score!",
+        beatRecord: "You beat your previous record of {score}!",
+        notHigher: "Score of {current} not higher than your best of {best}",
+        submitError: "Error submitting score"
+      }
     },
-    rules: {
-      title: "Rules",
-      items: [
-        "Add one word at a time",
-        "Don't use the secret word",
-        "Be creative with your descriptions",
-        "Try to use as few words as possible"
-      ]
+    guess: {
+      title: "AI's Guess",
+      goalDescription: "Your goal was to describe the word",
+      providedDescription: "You provided the description",
+      aiGuessedDescription: "Based on your description, the AI guessed",
+      correct: "This is right!",
+      incorrect: "This is wrong.",
+      nextRound: "Next Round",
+      playAgain: "Play Again",
+      viewLeaderboard: "Save your score",
+      cheatingDetected: "Cheating detected!"
+    },
+    themes: {
+      title: "Choose a Theme",
+      subtitle: "Select a theme for the word the AI will try to guess",
+      standard: "Standard",
+      technology: "Technology",
+      sports: "Sports",
+      food: "Food",
+      custom: "Custom Theme",
+      customPlaceholder: "Enter your custom theme...",
+      continue: "Continue",
+      generating: "Generating...",
+      pressKey: "Press"
+    },
+    welcome: {
+      title: "Think in Sync",
+      subtitle: "Team up with AI to craft a clue and have a different AI guess your secret word!",
+      startButton: "Start Game",
+      howToPlay: "How to Play",
+      leaderboard: "Leaderboard",
+      credits: "Created during the",
+      contest: {
+        prize: "Play for a chance to win 50€!",
+        terms: "See Terms",
+        howTo: "How to participate:",
+        conditions: [
+          "Use your huggingface username in the leaderboard",
+          "No cheating",
+          "Like the game on Huggingface"
+        ],
+        termsDetails: "The Winner will be drawn randomly from the top 10 players in the leaderboard that fulfill the three conditions by 4th of February 10:00 CET"
+      },
+      likeOnHuggingface: "Like on Huggingface"
+    },
+    howToPlay: {
+      setup: {
+        title: "Setup",
+        description: "Choose a theme and get a secret word that the AI will try to guess."
+      },
+      goal: {
+        title: "Goal",
+        description: "Build sentences together with the AI that describe your word without using it directly."
+      },
+      rules: {
+        title: "Rules",
+        items: [
+          "Take turns adding words to build descriptive sentences",
+          "Don't use the secret word or its variations",
+          "Try to be creative and descriptive",
+          "The AI will try to guess your word after each sentence"
+        ]
+      }
     }
-  }
-} as const;
+};
