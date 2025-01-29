@@ -3,6 +3,7 @@ title: Think in Sync
 emoji: 🧠
 colorFrom: blue
 colorTo: pink
+short_description: An addictive AI-powered word puzzle.
 sdk: docker
 app_port: 8080
 pinned: false
