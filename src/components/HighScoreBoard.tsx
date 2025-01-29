@@ -228,75 +228,13 @@ export const HighScoreBoard = ({
   };
 
   const renderPaginationItems = () => {
-    const items = [];
-    const maxVisiblePages = 5;
-    let startPage = 1;
-    let endPage = totalPages;
-
-    if (totalPages > maxVisiblePages) {
-      const leftOffset = Math.floor(maxVisiblePages / 2);
-      const rightOffset = maxVisiblePages - leftOffset - 1;
-
-      if (currentPage <= leftOffset) {
-        endPage = maxVisiblePages;
-      } else if (currentPage > totalPages - rightOffset) {
-        startPage = totalPages - maxVisiblePages + 1;
-      } else {
-        startPage = currentPage - leftOffset;
-        endPage = currentPage + rightOffset;
-      }
-    }
-
-    if (startPage > 1) {
-      items.push(
-        <PaginationItem key="start">
-          <PaginationLink onClick={() => setCurrentPage(1)}>1</PaginationLink>
-        </PaginationItem>
-      );
-      if (startPage > 2) {
-        items.push(
-          <PaginationItem key="start-ellipsis">
-            <span className="flex h-9 w-9 items-center justify-center">
-              <MoreHorizontal className="h-4 w-4" />
-            </span>
-          </PaginationItem>
-        );
-      }
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      items.push(
-        <PaginationItem key={i}>
-          <PaginationLink
-            onClick={() => setCurrentPage(i)}
-            isActive={currentPage === i}
-          >
-            {i}
-          </PaginationLink>
-        </PaginationItem>
-      );
-    }
-
-    if (endPage < totalPages) {
-      if (endPage < totalPages - 1) {
-        items.push(
-          <PaginationItem key="end-ellipsis">
-            <span className="flex h-9 w-9 items-center justify-center">
-              <MoreHorizontal className="h-4 w-4" />
-            </span>
-          </PaginationItem>
-        );
-      }
-      items.push(
-        <PaginationItem key="end">
-          <PaginationLink onClick={() => setCurrentPage(totalPages)}>
-            {totalPages}
-          </PaginationLink>
-        </PaginationItem>
-      );
-    }
-
-    return items;
+    return [
+      <PaginationItem key="current">
+        <PaginationLink isActive={true}>
+          {currentPage}
+        </PaginationLink>
+      </PaginationItem>
+    ];
   };
 
   useEffect(() => {
