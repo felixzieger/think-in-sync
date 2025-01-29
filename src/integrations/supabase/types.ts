@@ -47,6 +47,7 @@ export type Database = {
           player_name: string
           score: number
           session_id: string
+          theme: string
         }
         Insert: {
           avg_words_per_round: number
@@ -55,6 +56,7 @@ export type Database = {
           player_name: string
           score: number
           session_id: string
+          theme?: string
         }
         Update: {
           avg_words_per_round?: number
@@ -63,6 +65,7 @@ export type Database = {
           player_name?: string
           score?: number
           session_id?: string
+          theme?: string
         }
         Relationships: []
       }
@@ -71,7 +74,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      check_and_update_high_score: {
+        Args: {
+          p_player_name: string
+          p_score: number
+          p_avg_words_per_round: number
+          p_session_id: string
+          p_theme?: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

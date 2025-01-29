@@ -1,5 +1,7 @@
 import { useState, KeyboardEvent, useEffect, useContext } from "react";
-import { getRandomWord } from "@/lib/words";
+import { getRandomWord } from "@/lib/words-standard";
+import { getRandomSportsWord } from "@/lib/words-sports";
+import { getRandomFoodWord } from "@/lib/words-food";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
 import { getThemedWord } from "@/services/themeService";
@@ -26,6 +28,7 @@ export const GameContainer = () => {
   const [totalWords, setTotalWords] = useState<number>(0);
   const [usedWords, setUsedWords] = useState<string[]>([]);
   const [sessionId, setSessionId] = useState<string>("");
+  const [isHighScoreDialogOpen, setIsHighScoreDialogOpen] = useState(false);
   const { toast } = useToast();
   const t = useTranslation();
   const { language } = useContext(LanguageContext);
@@ -38,13 +41,14 @@ export const GameContainer = () => {
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
+      if (e.key === 'Enter' && !isHighScoreDialogOpen) {
         if (gameState === 'welcome') {
           handleStart();
         } else if (gameState === 'showing-guess') {
-          const correct = isGuessCorrect();
-          if (correct) {
+          if (isGuessCorrect()) {
             handleNextRound();
+          } else {
+            handlePlayAgain();
           }
         }
       }
@@ -52,7 +56,7 @@ export const GameContainer = () => {
 
     window.addEventListener('keydown', handleKeyPress as any);
     return () => window.removeEventListener('keydown', handleKeyPress as any);
-  }, [gameState, aiGuess, currentWord]);
+  }, [gameState, aiGuess, currentWord, isHighScoreDialogOpen]);
 
   const handleStart = () => {
     setGameState("theme-selection");
@@ -73,9 +77,20 @@ export const GameContainer = () => {
   const handleThemeSelect = async (theme: string) => {
     setCurrentTheme(theme);
     try {
-      const word = theme === "standard" ? 
-        getRandomWord(language) : 
-        await getThemedWord(theme, usedWords, language);
+      let word;
+      switch (theme) {
+        case "sports":
+          word = getRandomSportsWord(language);
+          break;
+        case "food":
+          word = getRandomFoodWord(language);
+          break;
+        case "standard":
+          word = getRandomWord(language);
+          break;
+        default:
+          word = await getThemedWord(theme, usedWords, language);
+      }
       setCurrentWord(word);
       setGameState("building-sentence");
       setSuccessfulRounds(0);
@@ -180,9 +195,20 @@ export const GameContainer = () => {
     if (handleGuessComplete()) {
       const getNewWord = async () => {
         try {
-          const word = currentTheme === "standard" ? 
-            getRandomWord(language) : 
-            await getThemedWord(currentTheme, usedWords, language);
+          let word;
+          switch (currentTheme) {
+            case "sports":
+              word = getRandomSportsWord(language);
+              break;
+            case "food":
+              word = getRandomFoodWord(language);
+              break;
+            case "standard":
+              word = getRandomWord(language);
+              break;
+            default:
+              word = await getThemedWord(currentTheme, usedWords, language);
+          }
           setCurrentWord(word);
           setGameState("building-sentence");
           setSentence([]);
@@ -264,6 +290,8 @@ export const GameContainer = () => {
             currentScore={successfulRounds}
             avgWordsPerRound={getAverageWordsPerRound()}
             sessionId={sessionId}
+            currentTheme={currentTheme}
+            onHighScoreDialogChange={setIsHighScoreDialogOpen}
           />
         )}
       </motion.div>

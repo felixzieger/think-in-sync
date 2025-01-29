@@ -16,8 +16,6 @@ However, you can only say one word at a time, taking turns with another AI.
 
 You need Node.js and npm installed on your system.
 
-Add a .env file with `VITE_MISTRAL_API_KEY=xxx` to query Mistral LLM from your local environment.
-
 ```
 npm i
 npm run dev

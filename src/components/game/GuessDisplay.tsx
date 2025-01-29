@@ -24,6 +24,8 @@ interface GuessDisplayProps {
   currentScore: number;
   avgWordsPerRound: number;
   sessionId: string;
+  currentTheme: string;
+  onHighScoreDialogChange?: (isOpen: boolean) => void;
 }
 
 export const GuessDisplay = ({
@@ -36,26 +38,25 @@ export const GuessDisplay = ({
   currentScore,
   avgWordsPerRound,
   sessionId,
+  currentTheme,
+  onHighScoreDialogChange,
 }: GuessDisplayProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasSubmittedScore, setHasSubmittedScore] = useState(false);
+  const [showHighScores, setShowHighScores] = useState(false);
   const t = useTranslation();
 
-  console.log("GuessDisplay - Rendering with showConfirmDialog:", showConfirmDialog);
+  useEffect(() => {
+    onHighScoreDialogChange?.(showHighScores);
+  }, [showHighScores, onHighScoreDialogChange]);
 
   const handleSetShowConfirmDialog = (show: boolean) => {
-    console.log("GuessDisplay - Setting showConfirmDialog to:", show);
     setShowConfirmDialog(show);
   };
-
-  useEffect(() => {
-    console.log("GuessDisplay - showConfirmDialog changed to:", showConfirmDialog);
-  }, [showConfirmDialog]);
 
   const isGuessCorrect = () => aiGuess.toLowerCase() === currentWord.toLowerCase();
 
   const handleScoreSubmitted = () => {
-    console.log('Score submitted, updating state');
     setHasSubmittedScore(true);
   };
 
@@ -85,8 +86,25 @@ export const GuessDisplay = ({
         currentScore={currentScore}
         avgWordsPerRound={avgWordsPerRound}
         sessionId={sessionId}
+        currentTheme={currentTheme}
         onScoreSubmitted={handleScoreSubmitted}
+        onHighScoreDialogChange={setShowHighScores}
       />
+
+      <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
+          <HighScoreBoard
+            currentScore={currentScore}
+            avgWordsPerRound={avgWordsPerRound}
+            onClose={() => setShowHighScores(false)}
+            onPlayAgain={onPlayAgain}
+            sessionId={sessionId}
+            showThemeFilter={false}
+            initialTheme={currentTheme}
+            onScoreSubmitted={handleScoreSubmitted}
+          />
+        </DialogContent>
+      </Dialog>
     </motion.div>
   );
 };

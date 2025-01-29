@@ -18,7 +18,10 @@ export const es = {
       leaveGameDescription: "Tu progreso actual se perderá. ¿Estás seguro de que quieres salir?",
       cancel: "Cancelar",
       confirm: "Confirmar",
-      describeWord: "Tu objetivo es describir la palabra"
+      describeWord: "Tu objetivo es describir la palabra",
+      nextRound: "Siguiente Ronda",
+      playAgain: "Jugar de Nuevo",
+      saveScore: "Guardar Puntuación"
     },
     leaderboard: {
       title: "Puntuaciones Más Altas",
@@ -31,10 +34,11 @@ export const es = {
       rank: "Posición",
       player: "Jugador",
       roundsColumn: "Rondas",
-      avgWords: "Ø Palabras",
+      avgWords: "Prom. Palabras",
       noScores: "Aún no hay puntuaciones",
       previous: "Anterior",
       next: "Siguiente",
+      success: "¡Puntuación enviada con éxito!",
       error: {
         invalidName: "Por favor, ingresa un nombre válido",
         noRounds: "Debes completar al menos una ronda",
@@ -68,17 +72,38 @@ export const es = {
       customPlaceholder: "Ingresa tu tema personalizado...",
       continue: "Continuar",
       generating: "Generando...",
-      pressKey: "Presiona"
+      pressKey: "Presiona",
+      playing: "Tema"
     },
     welcome: {
       title: "Think in Sync",
-      subtitle: "¡Haz equipo con una IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
-      startButton: "Comenzar Juego",
-      howToPlay: "Cómo Jugar",
-      leaderboard: "Clasificación",
+      subtitle: "¡Forma equipo con la IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
+      startButton: "Comenzar juego",
+      howToPlay: "Cómo jugar",
+      leaderboard: "Tabla de clasificación",
       credits: "Creado durante el",
-      helpWin: "Ayúdanos a ganar",
-      onHuggingface: "Dando me gusta en Huggingface"
+      contest: {
+        prize: "¡Juega para ganar hasta 50€!",
+        terms: "Ver términos",
+        howTo: "Cómo participar:",
+        conditions: [
+          "Juega Think in Sync usando la lista de palabras estándar",
+          "Establece tu nombre en la tabla de clasificación igual a tu nombre de usuario de Hugging Face",
+          "Dale me gusta a nuestro proyecto en Hugging Face"
+        ],
+        deadline: "Finaliza: 5 de febrero, 10:00 AM",
+        prizes: {
+          title: "Compite por los 5 primeros puestos y gana:",
+          list: [
+            "🥇 1º: 50€",
+            "🥈 2º: 20€",
+            "🥉 3º: 10€",
+            "🎖️ 4º y 5º: 10€ cada uno"
+          ]
+        },
+        fairPlay: "🚨 El juego limpio está monitoreado. ¡Cualquier trampa resultará en descalificación!"
+      },
+      likeOnHuggingface: "Me gusta en Hugging Face"
     },
     howToPlay: {
       setup: {

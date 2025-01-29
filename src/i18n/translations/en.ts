@@ -18,7 +18,10 @@ export const en = {
       leaveGameDescription: "Your current progress will be lost. Are you sure you want to leave?",
       cancel: "Cancel",
       confirm: "Confirm",
-      describeWord: "Your goal is to describe the word"
+      describeWord: "Your goal is to describe the word",
+      nextRound: "Next Round",
+      playAgain: "Play Again",
+      saveScore: "Save Score"
     },
     leaderboard: {
       title: "High Scores",
@@ -31,10 +34,11 @@ export const en = {
       rank: "Rank",
       player: "Player",
       roundsColumn: "Rounds",
-      avgWords: "Ø Words",
+      avgWords: "Avg. Words",
       noScores: "No scores yet",
       previous: "Previous",
       next: "Next",
+      success: "Score submitted successfully!",
       error: {
         invalidName: "Please enter a valid name",
         noRounds: "You need to complete at least one round",
@@ -59,7 +63,7 @@ export const en = {
     },
     themes: {
       title: "Choose a Theme",
-      subtitle: "Select a theme for the word the AI will try to guess",
+      subtitle: "Select a theme for the word that the AI will try to guess",
       standard: "Standard",
       technology: "Technology",
       sports: "Sports",
@@ -68,7 +72,8 @@ export const en = {
       customPlaceholder: "Enter your custom theme...",
       continue: "Continue",
       generating: "Generating...",
-      pressKey: "Press"
+      pressKey: "Press",
+      playing: "Theme"
     },
     welcome: {
       title: "Think in Sync",
@@ -77,8 +82,28 @@ export const en = {
       howToPlay: "How to Play",
       leaderboard: "Leaderboard",
       credits: "Created during the",
-      helpWin: "Help us win by",
-      onHuggingface: "Liking on Huggingface"
+      contest: {
+        prize: "Play to win up to 50€!",
+        terms: "See Terms",
+        howTo: "How to participate:",
+        conditions: [
+          "Play Think in Sync using the Standard wordlist",
+          "Set your leaderboard name to match your Hugging Face username",
+          "Like our project on Hugging Face"
+        ],
+        deadline: "Ends: February 5, 10:00 AM",
+        prizes: {
+          title: "Compete for the top 5 spots and win:",
+          list: [
+            "🥇 1st: 50€",
+            "🥈 2nd: 20€",
+            "🥉 3rd: 10€",
+            "🎖️ 4th & 5th: 10€ each"
+          ]
+        },
+        fairPlay: "🚨 Fair play is monitored. Any cheating will result in disqualification!"
+      },
+      likeOnHuggingface: "Like on Hugging Face"
     },
     howToPlay: {
       setup: {
