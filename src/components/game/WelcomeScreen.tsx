@@ -7,7 +7,7 @@ import { LanguageSelector } from "./LanguageSelector";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
-import { Heart, Info } from "lucide-react";
+import { Info } from "lucide-react";
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -65,43 +65,38 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="max-w-2xl mx-auto text-center mt-12"
+        className="max-w-2xl mx-auto text-center mt-8"
       >
-        <div className="flex flex-col items-center gap-4">
-          <div className="max-w-md mx-auto px-4 space-y-4">
-            <div className="text-center space-y-2">
-              <p className="text-lg font-semibold text-primary">{t.welcome.contest.prize}</p>
-              <p className="text-sm text-gray-600">{t.welcome.contest.howTo}</p>
-              <ul className="text-sm text-gray-600 list-disc list-inside text-left">
-                {t.welcome.contest.conditions.map((condition, index) => (
-                  <li key={index}>{condition}</li>
-                ))}
-              </ul>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="ghost" size="sm" className="mt-2">
-                    <Info className="h-4 w-4 mr-2" />
-                    {t.welcome.contest.terms}
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>{t.welcome.contest.terms}</DialogTitle>
-                  </DialogHeader>
-                  <p className="text-sm text-gray-600">{t.welcome.contest.termsDetails}</p>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </div>
+        <div className="flex flex-col items-center gap-2">
+          <p className="text-lg font-semibold text-primary">{t.welcome.contest.prize}</p>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button className="inline-flex items-center text-sm text-primary/80 hover:text-primary">
+                {t.welcome.contest.terms} <Info className="h-4 w-4 ml-1" />
+              </button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>{t.welcome.contest.terms}</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <p className="text-sm text-gray-600">{t.welcome.contest.howTo}</p>
+                <ul className="text-sm text-gray-600 list-disc list-inside">
+                  {t.welcome.contest.conditions.map((condition, index) => (
+                    <li key={index}>{condition}</li>
+                  ))}
+                </ul>
+                <p className="text-sm text-gray-600">{t.welcome.contest.termsDetails}</p>
+              </div>
+            </DialogContent>
+          </Dialog>
           <a 
             href="https://huggingface.co/spaces/Mistral-AI-Game-Jam/description-improv/tree/main" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex flex-col items-center gap-2 px-4 py-2 text-sm font-bold text-primary hover:text-primary/90 transition-colors border border-primary/20 rounded-md hover:border-primary/40"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary hover:text-primary/90 transition-colors"
           >
-            <span className="inline-flex items-center gap-2">
-              <Heart className="w-4 h-4" /> {t.welcome.likeOnHuggingface}
-            </span>
+            <Info className="w-4 h-4" /> {t.welcome.likeOnHuggingface}
           </a>
         </div>
       </motion.div>

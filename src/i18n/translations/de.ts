@@ -20,56 +20,56 @@ export const de = {
       confirm: "Bestätigen",
       describeWord: "Dein Ziel ist es folgendes Wort zu beschreiben"
     },
-  leaderboard: {
-    title: "Bestenliste",
-    yourScore: "Deine Punktzahl",
-    roundCount: "Runden",
-    wordsPerRound: "Wörter pro Runde",
-    enterName: "Gib deinen Namen ein",
-    submitting: "Wird übermittelt...",
-    submit: "Punktzahl einreichen",
-    rank: "Rang",
-    player: "Spieler",
-    roundsColumn: "Runden",
-    avgWords: "Ø Wörter",
-    noScores: "Noch keine Punktzahlen",
-    previous: "Vorherige",
-    next: "Nächste",
-    error: {
-      invalidName: "Bitte gib einen gültigen Namen ein",
-      noRounds: "Du musst mindestens eine Runde abschließen",
-      alreadySubmitted: "Punktzahl bereits eingereicht",
-      newHighScore: "Neuer Highscore!",
-      beatRecord: "Du hast deinen bisherigen Rekord von {score} geschlagen!",
-      notHigher: "Punktzahl von {current} nicht höher als dein Bester von {best}",
-      submitError: "Fehler beim Einreichen der Punktzahl"
-    }
-  },
-  guess: {
-    title: "KI-Vermutung",
-    goalDescription: "Dein Ziel war es folgendes Wort zu beschreiben",
-    providedDescription: "Du hast folgende Beschreibung gegeben",
-    aiGuessedDescription: "Basierend auf deiner Beschreibung hat die KI geraten",
-    correct: "Das ist richtig!",
-    incorrect: "Das ist falsch.",
-    nextRound: "Nächste Runde",
-    playAgain: "Erneut spielen",
-    viewLeaderboard: "In Bestenliste eintragen",
-    cheatingDetected: "Betrugsversuch erkannt!"
-  },
-  themes: {
-    title: "Wähle ein Thema",
-    subtitle: "Wähle ein Thema für das Wort, das die KI erraten soll",
-    standard: "Standard",
-    technology: "Technologie",
-    sports: "Sport",
-    food: "Essen",
-    custom: "Benutzerdefiniertes Thema",
-    customPlaceholder: "Gib dein eigenes Thema ein...",
-    continue: "Weiter",
-    generating: "Wird generiert...",
-    pressKey: "Drücke"
-  },
+    leaderboard: {
+      title: "Bestenliste",
+      yourScore: "Deine Punktzahl",
+      roundCount: "Runden",
+      wordsPerRound: "Wörter pro Runde",
+      enterName: "Gib deinen Namen ein",
+      submitting: "Wird übermittelt...",
+      submit: "Punktzahl einreichen",
+      rank: "Rang",
+      player: "Spieler",
+      roundsColumn: "Runden",
+      avgWords: "Ø Wörter",
+      noScores: "Noch keine Punktzahlen",
+      previous: "Vorherige",
+      next: "Nächste",
+      error: {
+        invalidName: "Bitte gib einen gültigen Namen ein",
+        noRounds: "Du musst mindestens eine Runde abschließen",
+        alreadySubmitted: "Punktzahl bereits eingereicht",
+        newHighScore: "Neuer Highscore!",
+        beatRecord: "Du hast deinen bisherigen Rekord von {score} geschlagen!",
+        notHigher: "Punktzahl von {current} nicht höher als dein Bester von {best}",
+        submitError: "Fehler beim Einreichen der Punktzahl"
+      }
+    },
+    guess: {
+      title: "KI-Vermutung",
+      goalDescription: "Dein Ziel war es folgendes Wort zu beschreiben",
+      providedDescription: "Du hast folgende Beschreibung gegeben",
+      aiGuessedDescription: "Basierend auf deiner Beschreibung hat die KI geraten",
+      correct: "Das ist richtig!",
+      incorrect: "Das ist falsch.",
+      nextRound: "Nächste Runde",
+      playAgain: "Erneut spielen",
+      viewLeaderboard: "In Bestenliste eintragen",
+      cheatingDetected: "Betrugsversuch erkannt!"
+    },
+    themes: {
+      title: "Wähle ein Thema",
+      subtitle: "Wähle ein Thema für das Wort, das die KI erraten soll",
+      standard: "Standard",
+      technology: "Technologie",
+      sports: "Sport",
+      food: "Essen",
+      custom: "Benutzerdefiniertes Thema",
+      customPlaceholder: "Gib dein eigenes Thema ein...",
+      continue: "Weiter",
+      generating: "Wird generiert...",
+      pressKey: "Drücke"
+    },
     welcome: {
       title: "Think in Sync",
       subtitle: "Arbeite mit einer KI zusammen, um einen Hinweis zu erstellen, und lass eine andere KI dein geheimes Wort erraten!",
@@ -78,35 +78,35 @@ export const de = {
       leaderboard: "Bestenliste",
       credits: "Erstellt während des",
       contest: {
-        prize: "Spiele und speichere deinen Score für die Chance auf 50€!",
+        prize: "Spiele und gewinne mit etwas Glück 50€!",
+        terms: "Bedingungen",
         howTo: "So kannst du teilnehmen:",
         conditions: [
           "Verwende deinen Huggingface-Benutzernamen in der Bestenliste",
           "Kein Betrug",
           "Like das Spiel auf Huggingface"
         ],
-        terms: "Teilnahmebedingungen",
         termsDetails: "Der Gewinner wird am 4. Februar um 10:00 Uhr MEZ zufällig aus den Top 10 Spielern der Bestenliste ausgelost, die die drei Bedingungen erfüllen"
       },
       likeOnHuggingface: "Auf Huggingface liken"
     },
-  howToPlay: {
-    setup: {
-      title: "Vorbereitung",
-      description: "Wähle ein Thema und erhalte ein geheimes Wort, das die KI erraten soll."
-    },
-    goal: {
-      title: "Ziel",
-      description: "Baue gemeinsam mit der KI Sätze, die dein Wort beschreiben, ohne es direkt zu verwenden."
-    },
-    rules: {
-      title: "Regeln",
-      items: [
-        "Füge abwechselnd Wörter hinzu, um beschreibende Sätze zu bilden",
-        "Verwende nicht das geheime Wort oder seine Variationen",
-        "Sei kreativ und beschreibend",
-        "Die KI wird nach jedem Satz versuchen, dein Wort zu erraten"
-      ]
+    howToPlay: {
+      setup: {
+        title: "Vorbereitung",
+        description: "Wähle ein Thema und erhalte ein geheimes Wort, das die KI erraten soll."
+      },
+      goal: {
+        title: "Ziel",
+        description: "Baue gemeinsam mit der KI Sätze, die dein Wort beschreiben, ohne es direkt zu verwenden."
+      },
+      rules: {
+        title: "Regeln",
+        items: [
+          "Füge abwechselnd Wörter hinzu, um beschreibende Sätze zu bilden",
+          "Verwende nicht das geheime Wort oder seine Variationen",
+          "Sei kreativ und beschreibend",
+          "Die KI wird nach jedem Satz versuchen, dein Wort zu erraten"
+        ]
+      }
     }
-  }
 };

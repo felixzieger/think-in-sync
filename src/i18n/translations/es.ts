@@ -78,14 +78,14 @@ export const es = {
       leaderboard: "Clasificación",
       credits: "Creado durante el",
       contest: {
-        prize: "¡Juega y guarda tu puntuación para tener la oportunidad de ganar 50€!",
+        prize: "¡Juega para ganar 50€!",
+        terms: "Ver términos",
         howTo: "Cómo participar:",
         conditions: [
           "Usa tu nombre de usuario de Huggingface en la clasificación",
           "Sin trampas",
           "Dale me gusta al juego en Huggingface"
         ],
-        terms: "Términos",
         termsDetails: "El ganador será sorteado al azar entre los 10 mejores jugadores de la clasificación que cumplan las tres condiciones el 4 de febrero a las 10:00 CET"
       },
       likeOnHuggingface: "Me gusta en Huggingface"

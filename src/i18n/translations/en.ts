@@ -78,14 +78,14 @@ export const en = {
       leaderboard: "Leaderboard",
       credits: "Created during the",
       contest: {
-        prize: "Play and save your score for a chance to win 50€!",
+        prize: "Play for a chance to win 50€!",
+        terms: "See Terms",
         howTo: "How to participate:",
         conditions: [
           "Use your huggingface username in the leaderboard",
           "No cheating",
           "Like the game on Huggingface"
         ],
-        terms: "Terms",
         termsDetails: "The Winner will be drawn randomly from the top 10 players in the leaderboard that fulfill the three conditions by 4th of February 10:00 CET"
       },
       likeOnHuggingface: "Like on Huggingface"
