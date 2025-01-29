@@ -80,6 +80,7 @@ export type Database = {
           p_score: number
           p_avg_words_per_round: number
           p_session_id: string
+          p_theme?: string
         }
         Returns: boolean
       }
