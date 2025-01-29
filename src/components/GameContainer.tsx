@@ -44,9 +44,10 @@ export const GameContainer = () => {
         if (gameState === 'welcome') {
           handleStart();
         } else if (gameState === 'showing-guess') {
-          const correct = isGuessCorrect();
-          if (correct) {
+          if (isGuessCorrect()) {
             handleNextRound();
+          } else {
+            handlePlayAgain();
           }
         }
       }
