@@ -48,25 +48,7 @@ export const GameReview = ({
       }
     };
 
-    const saveGameResults = async () => {
-      try {
-        const { data, error } = await supabase.functions.invoke('save-game-results', {
-          body: { sessionId }
-        });
-
-        if (error) {
-          console.error('Error saving game results:', error);
-          return;
-        }
-
-        console.log('Game results saved successfully:', data);
-      } catch (err) {
-        console.error('Failed to save game results:', err);
-      }
-    };
-
     fetchGameResults();
-    saveGameResults();
   }, [sessionId]);
 
   const handleCopyUrl = async () => {
@@ -95,6 +77,7 @@ export const GameReview = ({
       <h2 className="text-2xl font-bold mb-4">{t.game.review.title}</h2>
 
       <div className="space-y-4">
+
         <div className="bg-gray-100 p-4 rounded-lg">
           <p className="text-lg">
             {t.game.review.roundsPlayed}: <span className="font-bold">{gameResults.length}</span>
@@ -148,6 +131,6 @@ export const GameReview = ({
           />
         </DialogContent>
       </Dialog>
-    </motion.div>
+    </motion.div >
   );
 };
