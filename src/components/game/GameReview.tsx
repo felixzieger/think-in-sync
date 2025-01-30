@@ -77,7 +77,6 @@ export const GameReview = ({
       <h2 className="text-2xl font-bold mb-4">{t.game.review.title}</h2>
 
       <div className="space-y-4">
-        <p>{t.game.review.description}</p>
 
         <div className="bg-gray-100 p-4 rounded-lg">
           <p className="text-lg">
@@ -88,20 +87,23 @@ export const GameReview = ({
           </p>
         </div>
 
-        <div className="relative flex items-center space-x-2 bg-gray-50 p-4 rounded-lg">
-          <Input
-            value={shareUrl}
-            readOnly
-            className="pr-10"
-          />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleCopyUrl}
-            className="absolute right-6"
-          >
-            <Copy className="h-4 w-4" />
-          </Button>
+        <div className="relative items-center bg-gray-100 p-4 rounded-lg">
+          <p className="text-sm">{t.game.review.urlCopiedDesc}</p>
+          <div className="relative flex items-center p-4 rounded-lg">
+            <Input
+              value={shareUrl}
+              readOnly
+              className="pr-10"
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleCopyUrl}
+              className="absolute right-6"
+            >
+              <Copy className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
         <GameDetailsView gameResults={gameResults} />
@@ -129,6 +131,6 @@ export const GameReview = ({
           />
         </DialogContent>
       </Dialog>
-    </motion.div>
+    </motion.div >
   );
 };
