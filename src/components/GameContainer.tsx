@@ -301,6 +301,7 @@ export const GameContainer = () => {
             sessionId={sessionId}
             currentTheme={currentTheme}
             onHighScoreDialogChange={setIsHighScoreDialogOpen}
+            normalizeWord={normalizeWord}
           />
         )}
       </motion.div>
