@@ -65,9 +65,10 @@ export const HighScoreBoard = ({
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
-      // Apply theme filtering with correct syntax
       if (selectedTheme === 'custom') {
-        query = query.not('theme', 'in', STANDARD_THEMES);
+        // Using PostgREST filter syntax for "not in" operation
+        const filter = `not.in.(${STANDARD_THEMES.join(',')})`;
+        query = query.filter('theme', filter);
       } else {
         query = query.eq('theme', selectedTheme);
       }
