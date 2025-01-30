@@ -86,9 +86,9 @@ export const en = {
     credits: "Created during the",
     likeGameText: "If you want to show you like this game, please",
     contest: {
-      prize: "We are cooking something big!",
+      prize: "We are cooking something...",
       terms: "Find out more",
-      howTo: "To get a head start for what we plan:",
+      howTo: "To get a head start:",
       conditions: [
         "Play Think in Sync using the Standard wordlist",
         "Set your leaderboard name to match your Hugging Face username",

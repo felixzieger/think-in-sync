@@ -87,7 +87,7 @@ export const it = {
     credits: "Creato durante il",
     likeGameText: "Se vuoi mostrare che ti piace questo gioco,",
     contest: {
-      prize: "Stiamo preparando qualcosa di grande!",
+      prize: "Stiamo preparando qualcosa...",
       terms: "Scopri di più",
       howTo: "Per anticipare i nostri piani:",
       conditions: [

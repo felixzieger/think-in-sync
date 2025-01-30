@@ -85,9 +85,9 @@ export const de = {
     credits: "Erstellt während des",
     likeGameText: "Wenn dir das Spiel gefällt, dann",
     contest: {
-      prize: "Wir planen etwas Großes!",
+      prize: "Wir kochen etwas...",
       terms: "Erfahre mehr",
-      howTo: "So bereitest du dich auf unsere Pläne vor:",
+      howTo: "So bereitest du dich vor:",
       conditions: [
         "Spiele Think in Sync mit der Standard-Wortliste",
         "Setze deinen Bestenlisten-Namen gleich deinem Hugging Face Benutzernamen",
