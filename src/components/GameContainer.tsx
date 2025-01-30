@@ -10,11 +10,12 @@ import { WelcomeScreen } from "./game/WelcomeScreen";
 import { ThemeSelector } from "./game/ThemeSelector";
 import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
+import { GameReview } from "./game/GameReview";
 import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 
-type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess";
+type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-review";
 
 const normalizeWord = (word: string): string => {
   return word.normalize('NFD')
@@ -56,7 +57,7 @@ export const GameContainer = () => {
           if (isGuessCorrect()) {
             handleNextRound();
           } else {
-            handlePlayAgain();
+            handleNextRound();
           }
         }
       }
@@ -199,7 +200,7 @@ export const GameContainer = () => {
   };
 
   const handleNextRound = () => {
-    if (handleGuessComplete()) {
+    if (isGuessCorrect()) {
       const getNewWord = async () => {
         try {
           let word;
@@ -232,6 +233,8 @@ export const GameContainer = () => {
         }
       };
       getNewWord();
+    } else {
+      setGameState("game-review");
     }
   };
 
@@ -287,7 +290,7 @@ export const GameContainer = () => {
             normalizeWord={normalizeWord}
             onBack={handleBack}
           />
-        ) : (
+        ) : gameState === "showing-guess" ? (
           <GuessDisplay
             sentence={sentence}
             aiGuess={aiGuess}
@@ -301,6 +304,14 @@ export const GameContainer = () => {
             currentTheme={currentTheme}
             onHighScoreDialogChange={setIsHighScoreDialogOpen}
             normalizeWord={normalizeWord}
+          />
+        ) : (
+          <GameReview
+            currentScore={successfulRounds}
+            avgWordsPerRound={getAverageWordsPerRound()}
+            onPlayAgain={handlePlayAgain}
+            sessionId={sessionId}
+            currentTheme={currentTheme}
           />
         )}
       </motion.div>

@@ -22,7 +22,14 @@ export const de = {
     describeWord: "Dein Ziel ist es folgendes Wort zu beschreiben",
     nextRound: "Nächste Runde",
     playAgain: "Erneut spielen",
-    saveScore: "Punktzahl speichern"
+    saveScore: "Punktzahl speichern",
+    review: {
+      title: "Spielübersicht",
+      roundsPlayed: "Gespielte Runden",
+      description: "Hier ist dein Ergebnis:",
+      playAgain: "Erneut spielen",
+      saveScore: "Punktzahl speichern"
+    }
   },
   leaderboard: {
     title: "Bestenliste",

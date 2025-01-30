@@ -21,7 +21,14 @@ export const fr = {
     describeWord: "Votre objectif est de décrire le mot",
     nextRound: "Tour Suivant",
     playAgain: "Rejouer",
-    saveScore: "Sauvegarder le Score"
+    saveScore: "Sauvegarder le Score",
+    review: {
+      title: "Résumé de la Partie",
+      roundsPlayed: "Manches Jouées",
+      description: "Voici vos résultats :",
+      playAgain: "Rejouer",
+      saveScore: "Sauvegarder le Score"
+    }
   },
   leaderboard: {
     title: "Meilleurs Scores",

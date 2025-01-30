@@ -22,7 +22,14 @@ export const es = {
     describeWord: "Tu objetivo es describir la palabra",
     nextRound: "Siguiente Ronda",
     playAgain: "Jugar de Nuevo",
-    saveScore: "Guardar Puntuación"
+    saveScore: "Guardar Puntuación",
+    review: {
+      title: "Resumen del Juego",
+      roundsPlayed: "Rondas Jugadas",
+      description: "Aquí están tus resultados:",
+      playAgain: "Jugar de Nuevo",
+      saveScore: "Guardar Puntuación"
+    }
   },
   leaderboard: {
     title: "Puntuaciones Más Altas",

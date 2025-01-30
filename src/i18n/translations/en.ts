@@ -22,7 +22,14 @@ export const en = {
     describeWord: "Your goal is to describe the word",
     nextRound: "Next Round",
     playAgain: "Play Again",
-    saveScore: "Save Score"
+    saveScore: "Save Score",
+    review: {
+      title: "Game Review",
+      roundsPlayed: "Rounds Played",
+      description: "Here's how you did:",
+      playAgain: "Play Again",
+      saveScore: "Save Score"
+    }
   },
   leaderboard: {
     title: "High Scores",
