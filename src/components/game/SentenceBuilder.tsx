@@ -25,8 +25,8 @@ interface SentenceBuilderProps {
   onInputChange: (value: string) => void;
   onSubmitWord: (e: React.FormEvent) => void;
   onMakeGuess: () => void;
-  normalizeWord: () => void;
-  onBack?: () => void; 
+  normalizeWord: (word: string) => string;  // Updated type definition
+  onBack?: () => void;
 }
 
 export const SentenceBuilder = ({

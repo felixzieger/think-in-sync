@@ -151,7 +151,7 @@ export const GameContainer = () => {
           target_word: currentWord,
           description: sentence.join(' '),
           ai_guess: aiGuess,
-          is_correct: isCorrect,
+          is_correct: normalizeWord(aiGuess) === normalizeWord(currentWord), // Fixed comparison here
           session_id: sessionId
         });
 
@@ -182,9 +182,8 @@ export const GameContainer = () => {
       const guess = await guessWord(sentenceString, language);
       setAiGuess(guess);
 
-      // Save game result in the background
-      saveGameResult(finalSentence, guess, guess.toLowerCase() === currentWord.toLowerCase())
-        .catch(error => console.error('Background save failed:', error));
+      // Save game result using the normalized word comparison
+      await saveGameResult(finalSentence, guess, normalizeWord(guess) === normalizeWord(currentWord));
 
       setGameState("showing-guess");
     } catch (error) {
