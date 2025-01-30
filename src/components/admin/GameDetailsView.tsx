@@ -21,7 +21,7 @@ interface GameDetailsViewProps {
 
 export const GameDetailsView = ({ gameResults }: GameDetailsViewProps) => {
   const correctResults = gameResults.filter((result) => result.is_correct);
-  const correctResult = gameResults.find((result) => result.is_correct);
+  const inCorrectResult = gameResults.find((result) => !result.is_correct);
 
   if (correctResults.length === 0) {
     return null;
@@ -33,19 +33,17 @@ export const GameDetailsView = ({ gameResults }: GameDetailsViewProps) => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Target Word</TableHead>
               <TableHead>Description</TableHead>
-              <TableHead>AI Guess</TableHead>
+              <TableHead>Word</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {gameResults.map((result, index) => (
+            {correctResults.map((result, index) => (
               <TableRow key={index}>
                 <TableCell>{result.target_word}</TableCell>
                 <TableCell className="max-w-md break-words">
                   {result.description}
                 </TableCell>
-                <TableCell>{result.ai_guess}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -53,11 +51,11 @@ export const GameDetailsView = ({ gameResults }: GameDetailsViewProps) => {
       </div>
 
       <div className="rounded-lg border p-4">
-        <h3 className="font-semibold mb-2">Correct Answer</h3>
+        <h3 className="font-semibold mb-2">You failed at</h3>
         <div className="space-y-2">
-          <div><span className="font-medium">Target Word:</span> {correctResult?.target_word}</div>
-          <div><span className="font-medium">Description:</span> {correctResult?.description}</div>
-          <div><span className="font-medium">AI Guess:</span> {correctResult?.ai_guess}</div>
+          <div><span className="font-medium">Target Word:</span> {inCorrectResult?.target_word}</div>
+          <div><span className="font-medium">Description:</span> {inCorrectResult?.description}</div>
+          <div><span className="font-medium">AI Guess:</span> {inCorrectResult?.ai_guess}</div>
         </div>
       </div>
     </div>
