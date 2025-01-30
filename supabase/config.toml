@@ -7,3 +7,7 @@ enabled = false
 enabled = false
 [functions.generate-themed-word]
 verify_jwt = false
+[functions.generate-game]
+verify_jwt = false
+[functions.create-session]
+verify_jwt = false
