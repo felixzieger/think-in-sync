@@ -26,6 +26,7 @@ interface GuessDisplayProps {
   sessionId: string;
   currentTheme: string;
   onHighScoreDialogChange?: (isOpen: boolean) => void;
+  normalizeWord: (word: string) => string;
 }
 
 export const GuessDisplay = ({
@@ -40,6 +41,7 @@ export const GuessDisplay = ({
   sessionId,
   currentTheme,
   onHighScoreDialogChange,
+  normalizeWord,
 }: GuessDisplayProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasSubmittedScore, setHasSubmittedScore] = useState(false);
@@ -54,7 +56,7 @@ export const GuessDisplay = ({
     setShowConfirmDialog(show);
   };
 
-  const isGuessCorrect = () => aiGuess.toLowerCase() === currentWord.toLowerCase();
+  const isGuessCorrect = () => normalizeWord(aiGuess) === normalizeWord(currentWord);
 
   const handleScoreSubmitted = () => {
     setHasSubmittedScore(true);
@@ -70,17 +72,17 @@ export const GuessDisplay = ({
       animate={{ opacity: 1 }}
       className="text-center relative space-y-6"
     >
-      <RoundHeader 
-        successfulRounds={currentScore} 
+      <RoundHeader
+        successfulRounds={currentScore}
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={handleSetShowConfirmDialog}
       />
 
       <WordDisplay currentWord={currentWord} />
-      
+
       <GuessDescription sentence={sentence} aiGuess={aiGuess} />
-      
+
       <GuessResult aiGuess={aiGuess} isCorrect={isGuessCorrect()} />
 
       <ActionButtons
