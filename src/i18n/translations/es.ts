@@ -1,4 +1,4 @@
-export default {
+export const es = {
     game: {
       title: "Think in Sync",
       round: "Ronda",
