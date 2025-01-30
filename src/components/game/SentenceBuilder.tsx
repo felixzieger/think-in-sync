@@ -44,6 +44,7 @@ export const SentenceBuilder = ({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasMultipleWords, setHasMultipleWords] = useState(false);
   const [containsTargetWord, setContainsTargetWord] = useState(false);
+  const [isTooLong, setIsTooLong] = useState(false);
   const t = useTranslation();
 
   console.log("SentenceBuilder - Rendering with showConfirmDialog:", showConfirmDialog);
@@ -53,6 +54,7 @@ export const SentenceBuilder = ({
     setContainsTargetWord(
       normalizeWord(input).includes(normalizeWord(currentWord))
     );
+    setIsTooLong(input.trim().length >= 30);
   };
 
   const handleInputChange = (value: string) => {
@@ -92,6 +94,7 @@ export const SentenceBuilder = ({
         isAiThinking={isAiThinking}
         hasMultipleWords={hasMultipleWords}
         containsTargetWord={containsTargetWord}
+        isTooLong={isTooLong}
         isValidInput={isValidInput}
         sentence={sentence}
       />

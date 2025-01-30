@@ -12,6 +12,7 @@ export const en = {
       aiDelayed: "The AI is currently busy. Please try again in a moment.",
       invalidWord: "Invalid Word",
       cantUseTargetWord: "Do not use the secret word",
+      shorterWord: "Use a shorter word",
       lettersOnly: "Please use letters only",
       singleWordOnly: "Please enter only one word",
       leaveGameTitle: "Leave Game?",
