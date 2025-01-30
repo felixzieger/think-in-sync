@@ -28,7 +28,11 @@ export const fr = {
       description: "Voici vos résultats :",
       playAgain: "Rejouer",
       saveScore: "Sauvegarder le Score",
-      shareGame: "Partager"
+      shareGame: "Partager",
+      urlCopied: "URL copiée !",
+      urlCopiedDesc: "Partagez cette URL avec vos amis pour qu'ils jouent avec les mêmes mots",
+      urlCopyError: "Échec de la copie de l'URL",
+      urlCopyErrorDesc: "Veuillez essayer de copier l'URL manuellement"
     }
   },
   leaderboard: {

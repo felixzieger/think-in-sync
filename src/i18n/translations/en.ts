@@ -29,7 +29,11 @@ export const en = {
       description: "Here's how you did:",
       playAgain: "Play Again",
       saveScore: "Save Score",
-      shareGame: "Share"
+      shareGame: "Share",
+      urlCopied: "URL Copied!",
+      urlCopiedDesc: "Share this URL with friends to let them play with the same words",
+      urlCopyError: "Failed to copy URL",
+      urlCopyErrorDesc: "Please try copying the URL manually"
     }
   },
   leaderboard: {
