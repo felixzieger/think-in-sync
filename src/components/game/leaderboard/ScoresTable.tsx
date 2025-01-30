@@ -21,6 +21,7 @@ interface HighScore {
 interface ScoresTableProps {
   scores: HighScore[];
   startIndex: number;
+  showThemeColumn?: boolean;
 }
 
 const getRankMedal = (rank: number) => {
@@ -36,7 +37,7 @@ const getRankMedal = (rank: number) => {
   }
 };
 
-export const ScoresTable = ({ scores, startIndex }: ScoresTableProps) => {
+export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: ScoresTableProps) => {
   const t = useTranslation();
 
   return (
@@ -48,6 +49,9 @@ export const ScoresTable = ({ scores, startIndex }: ScoresTableProps) => {
             <TableHead>{t.leaderboard.player}</TableHead>
             <TableHead>{t.leaderboard.roundsColumn}</TableHead>
             <TableHead>{t.leaderboard.avgWords}</TableHead>
+            {showThemeColumn && (
+              <TableHead>{t.leaderboard.theme}</TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -60,12 +64,15 @@ export const ScoresTable = ({ scores, startIndex }: ScoresTableProps) => {
                 <TableCell>{score.player_name}</TableCell>
                 <TableCell>{score.score}</TableCell>
                 <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
+                {showThemeColumn && (
+                  <TableCell className="capitalize">{score.theme}</TableCell>
+                )}
               </TableRow>
             );
           })}
           {!scores?.length && (
             <TableRow>
-              <TableCell colSpan={4} className="text-center">
+              <TableCell colSpan={showThemeColumn ? 5 : 4} className="text-center">
                 {t.leaderboard.noScores}
               </TableCell>
             </TableRow>

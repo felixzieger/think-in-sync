@@ -194,6 +194,7 @@ export const HighScoreBoard = ({
       <ScoresTable
         scores={paginatedScores || []}
         startIndex={startIndex}
+        showThemeColumn={selectedTheme === 'custom'}
       />
 
       <LeaderboardPagination
