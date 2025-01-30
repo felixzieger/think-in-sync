@@ -1,8 +1,18 @@
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { useTranslation } from "@/hooks/useTranslation";
 import { Copy } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { HighScoreBoard } from "@/components/HighScoreBoard";
+import { GameDetailsView } from "@/components/admin/GameDetailsView";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 interface GameReviewProps {
   currentScore: number;
@@ -21,20 +31,35 @@ export const GameReview = ({
 }: GameReviewProps) => {
   const t = useTranslation();
   const { toast } = useToast();
+  const [showHighScores, setShowHighScores] = useState(false);
+  const [gameResults, setGameResults] = useState([]);
+  const shareUrl = `${window.location.origin}/start-game?from_session=${sessionId}`;
+
+  useEffect(() => {
+    const fetchGameResults = async () => {
+      const { data, error } = await supabase
+        .from('game_results')
+        .select('*')
+        .eq('session_id', sessionId)
+        .order('created_at', { ascending: true });
+
+      if (!error && data) {
+        setGameResults(data);
+      }
+    };
+
+    fetchGameResults();
+  }, [sessionId]);
 
   const handleCopyUrl = async () => {
     try {
-      const origin = window.location.origin;
-      const shareUrl = `${origin}/start-game?from_session=${sessionId}`;
-      
       await navigator.clipboard.writeText(shareUrl);
       toast({
         title: t.game.review.urlCopied,
         description: t.game.review.urlCopiedDesc,
-        variant: "default",
       });
-    } catch (error) {
-      console.error('Error copying URL:', error);
+    } catch (err) {
+      console.error('Failed to copy URL:', err);
       toast({
         title: t.game.review.urlCopyError,
         description: t.game.review.urlCopyErrorDesc,
@@ -44,42 +69,68 @@ export const GameReview = ({
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold mb-4">{t.game.review.title}</h2>
-        <p className="text-gray-600 mb-2">
-          {t.game.review.roundsPlayed}: {currentScore}
-        </p>
-        <p className="text-gray-600">
-          {t.game.review.description}: {avgWordsPerRound.toFixed(1)}
-        </p>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="text-center space-y-6"
+    >
+      <h2 className="text-2xl font-bold mb-4">{t.game.review.title}</h2>
+
+      <div className="space-y-4">
+
+        <div className="bg-gray-100 p-4 rounded-lg">
+          <p className="text-lg">
+            {t.game.review.roundsPlayed}: <span className="font-bold">{gameResults.length}</span>
+          </p>
+          <p className="text-sm text-gray-600">
+            {t.leaderboard.wordsPerRound}: {(gameResults.length > 0 ? avgWordsPerRound : 0).toFixed(1)}
+          </p>
+        </div>
+
+        <div className="relative items-center bg-gray-100 p-4 rounded-lg">
+          <p className="text-sm">{t.game.review.urlCopiedDesc}</p>
+          <div className="relative flex items-center p-4 rounded-lg">
+            <Input
+              value={shareUrl}
+              readOnly
+              className="pr-10"
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleCopyUrl}
+              className="absolute right-6"
+            >
+              <Copy className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        <GameDetailsView gameResults={gameResults} />
       </div>
 
-      <div className="flex items-center gap-2">
-        <Input
-          readOnly
-          value={`${window.location.origin}/start-game?from_session=${sessionId}`}
-          className="flex-1"
-        />
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={handleCopyUrl}
-          title={t.game.review.shareGame}
-        >
-          <Copy className="h-4 w-4" />
+      <div className="flex justify-center gap-4 mt-6">
+        <Button onClick={onPlayAgain} className="text-white">
+          {t.game.review.playAgain} ⏎
+        </Button>
+        <Button onClick={() => setShowHighScores(true)} variant="secondary" className="text-white">
+          {t.game.review.saveScore}
         </Button>
       </div>
 
-      <div className="space-y-2">
-        <Button
-          onClick={onPlayAgain}
-          className="w-full"
-          variant="default"
-        >
-          {t.game.review.playAgain}
-        </Button>
-      </div>
-    </div>
+      <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
+          <HighScoreBoard
+            currentScore={currentScore}
+            avgWordsPerRound={avgWordsPerRound}
+            onClose={() => setShowHighScores(false)}
+            onPlayAgain={onPlayAgain}
+            sessionId={sessionId}
+            showThemeFilter={false}
+            initialTheme={currentTheme}
+          />
+        </DialogContent>
+      </Dialog>
+    </motion.div >
   );
 };

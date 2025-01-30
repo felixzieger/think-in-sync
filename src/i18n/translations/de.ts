@@ -26,10 +26,10 @@ export const de = {
     review: {
       title: "Spielübersicht",
       roundsPlayed: "Gespielte Runden",
-      description: "Hier ist dein Ergebnis",
+      description: "Hier ist dein Ergebnis:",
       playAgain: "Erneut spielen",
       saveScore: "Punktzahl speichern",
-      shareGame: "Spiel teilen",
+      shareGame: "Teilen",
       urlCopied: "URL kopiert!",
       urlCopiedDesc: "Teile diese URL mit Freunden, damit sie mit den gleichen Wörtern spielen können",
       urlCopyError: "URL konnte nicht kopiert werden",

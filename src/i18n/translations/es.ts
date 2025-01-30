@@ -26,7 +26,7 @@ export const es = {
     review: {
       title: "Resumen del Juego",
       roundsPlayed: "Rondas Jugadas",
-      description: "Aquí están tus resultados",
+      description: "Aquí están tus resultados:",
       playAgain: "Jugar de Nuevo",
       saveScore: "Guardar Puntuación",
       shareGame: "Compartir",
@@ -91,7 +91,7 @@ export const es = {
   },
   welcome: {
     title: "Think in Sync",
-    subtitle: "Forma equipo con la IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
+    subtitle: "¡Forma equipo con la IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
     startButton: "Comenzar juego",
     howToPlay: "Cómo jugar",
     leaderboard: "Clasificación",
