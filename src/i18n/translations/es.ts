@@ -83,7 +83,7 @@ export const es = {
     howToPlay: "Cómo jugar",
     leaderboard: "Clasificación",
     credits: "Creado durante el",
-    likeGameText: "Si quieres mostrar que te gusta este juego,",
+    likeGameText: "Si quieres apoyar este juego",
     contest: {
       prize: "Estamos cocinando algo...",
       terms: "Descubre más",

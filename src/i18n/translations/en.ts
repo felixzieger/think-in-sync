@@ -84,7 +84,7 @@ export const en = {
     howToPlay: "How to Play",
     leaderboard: "Leaderboard",
     credits: "Created during the",
-    likeGameText: "If you want to show you like this game, please",
+    likeGameText: "If you want to support this game",
     contest: {
       prize: "We are cooking something...",
       terms: "Find out more",
