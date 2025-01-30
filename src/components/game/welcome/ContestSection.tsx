@@ -7,7 +7,7 @@ export const ContestSection = () => {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <p className="text-lg font-semibold text-primary">🕹️ {t.welcome.contest.prize} 🤑</p>
+      <p className="text-lg font-semibold text-primary">🕹️ {t.welcome.contest.prize} 🧑‍🍳</p>
       <Dialog>
         <DialogTrigger asChild>
           <button className="inline-flex items-center text-sm text-primary/80 hover:text-primary">
