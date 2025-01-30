@@ -1,7 +1,11 @@
-import { useContext } from "react";
+import { useState, KeyboardEvent, useEffect, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
+import { getRandomWord } from "@/lib/words-standard";
+import { getRandomSportsWord } from "@/lib/words-sports";
+import { getRandomFoodWord } from "@/lib/words-food";
 import { motion } from "framer-motion";
-import { guessWord } from "@/services/mistralService";
+import { generateAIResponse, guessWord } from "@/services/mistralService";
+import { getThemedWord } from "@/services/themeService";
 import { useToast } from "@/components/ui/use-toast";
 import { WelcomeScreen } from "./game/WelcomeScreen";
 import { ThemeSelector } from "./game/ThemeSelector";
@@ -9,49 +13,67 @@ import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
 import { GameReview } from "./game/GameReview";
 import { GameInvitation } from "./game/GameInvitation";
+import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageContext } from "@/contexts/LanguageContext";
-import { useGameState } from "@/hooks/useGameState";
-import { useSentenceState } from "@/hooks/useSentenceState";
-import { normalizeWord } from "@/utils/wordUtils";
 import { supabase } from "@/integrations/supabase/client";
+
+type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-review" | "invitation";
+
+const normalizeWord = (word: string): string => {
+  return word.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z]/g, '') // just match on lowercase chars, remove everything else
+    .trim();
+};
 
 export const GameContainer = () => {
   const [searchParams] = useSearchParams();
   const fromSession = searchParams.get('from_session');
-  const { language } = useContext(LanguageContext);
+  const [gameState, setGameState] = useState<GameState>(fromSession ? "invitation" : "welcome");
+  const [currentTheme, setCurrentTheme] = useState<string>("standard");
+  const [sessionId, setSessionId] = useState<string>("");
+  const [currentWord, setCurrentWord] = useState<string>("");
+  const [playerInput, setPlayerInput] = useState<string>("");
+  const [sentence, setSentence] = useState<string[]>([]);
+  const [isAiThinking, setIsAiThinking] = useState(false);
+  const [aiGuess, setAiGuess] = useState<string>("");
+  const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
+  const [totalWords, setTotalWords] = useState<number>(0);
+  const [usedWords, setUsedWords] = useState<string[]>([]);
+  const [isHighScoreDialogOpen, setIsHighScoreDialogOpen] = useState(false);
   const { toast } = useToast();
+  const t = useTranslation();
+  const { language } = useContext(LanguageContext);
 
-  const {
-    gameState,
-    setGameState,
-    currentTheme,
-    setCurrentTheme,
-    sessionId,
-    setSessionId,
-    currentWord,
-    setCurrentWord,
-    usedWords,
-    setUsedWords,
-    successfulRounds,
-    setSuccessfulRounds,
-    totalWords,
-    setTotalWords,
-    getNewWord,
-  } = useGameState(fromSession, language);
+  useEffect(() => {
+    if (gameState === "theme-selection") {
+      setSessionId(crypto.randomUUID());
+    }
+  }, [gameState]);
 
-  const {
-    sentence,
-    setSentence,
-    playerInput,
-    setPlayerInput,
-    isAiThinking,
-    setIsAiThinking,
-    aiGuess,
-    setAiGuess,
-    handlePlayerWord,
-  } = useSentenceState(language);
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && !isHighScoreDialogOpen) {
+        if (gameState === 'welcome') {
+          handleStart();
+        } else if (gameState === 'showing-guess' && isGuessCorrect()) {
+          handleNextRound();
+        } else if (gameState === 'showing-guess' && !isGuessCorrect()) {
+          handleGameReview();
+        } else if (gameState === 'game-review' && !isHighScoreDialogOpen) {
+          handlePlayAgain();
+        }
+      }
+    };
 
-  const handleStart = () => setGameState("theme-selection");
+    window.addEventListener('keydown', handleKeyPress as any);
+    return () => window.removeEventListener('keydown', handleKeyPress as any);
+  }, [gameState, aiGuess, currentWord, isHighScoreDialogOpen]);
+
+  const handleStart = () => {
+    setGameState("theme-selection");
+  };
 
   const handleBack = () => {
     setGameState("welcome");
@@ -105,7 +127,20 @@ export const GameContainer = () => {
   const handleThemeSelect = async (theme: string) => {
     setCurrentTheme(theme);
     try {
-      const word = await getNewWord(theme);
+      let word;
+      switch (theme) {
+        case "sports":
+          word = getRandomSportsWord(language);
+          break;
+        case "food":
+          word = getRandomFoodWord(language);
+          break;
+        case "standard":
+          word = getRandomWord(language);
+          break;
+        default:
+          word = await getThemedWord(theme, usedWords, language);
+      }
       setCurrentWord(word);
       setGameState("building-sentence");
       setSuccessfulRounds(0);
@@ -113,19 +148,45 @@ export const GameContainer = () => {
       setUsedWords([word]);
       console.log("Game started with word:", word, "theme:", theme, "language:", language);
     } catch (error) {
-      console.error('Error in theme selection:', error);
+      console.error('Error getting themed word:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get a word for the selected theme. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handlePlayerWord = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!playerInput.trim()) return;
+
+    const word = playerInput.trim();
+    const newSentence = [...sentence, word];
+    setSentence(newSentence);
+    setPlayerInput("");
+    setTotalWords(prev => prev + 1);
+
+    setIsAiThinking(true);
+    try {
+      const aiWord = await generateAIResponse(currentWord, newSentence, language);
+      const newSentenceWithAi = [...newSentence, aiWord];
+      setSentence(newSentenceWithAi);
+      setTotalWords(prev => prev + 1);
+    } catch (error) {
+      console.error('Error in AI turn:', error);
+      toast({
+        title: t.game.aiThinking,
+        description: t.game.aiDelayed,
+        variant: "default",
+      });
+    } finally {
+      setIsAiThinking(false);
     }
   };
 
   const saveGameResult = async (sentenceString: string, aiGuess: string, isCorrect: boolean) => {
-    // Only proceed if we have a valid sessionId
-    if (!sessionId) {
-      console.log("No sessionId available, skipping game result save");
-      return;
-    }
-
     try {
-      console.log("Saving game result with sessionId:", sessionId);
       const { error } = await supabase
         .from('game_results')
         .insert({
@@ -161,10 +222,9 @@ export const GameContainer = () => {
 
       const sentenceString = finalSentence.join(' ');
       const guess = await guessWord(sentenceString, language);
-      console.log("AI guessed:", guess);
       setAiGuess(guess);
 
-      const isCorrect = normalizeWord(guess) === normalizeWord(currentWord);
+      const isCorrect = normalizeWord(guess) === normalizeWord(currentWord)
       await saveGameResult(sentenceString, guess, isCorrect);
 
       setGameState("showing-guess");
@@ -180,21 +240,41 @@ export const GameContainer = () => {
     }
   };
 
-  const handleNextRound = async () => {
-    const isCorrect = normalizeWord(aiGuess) === normalizeWord(currentWord);
-    if (isCorrect) {
+  const handleNextRound = () => {
+    if (isGuessCorrect()) {
       setSuccessfulRounds(prev => prev + 1);
-      try {
-        const word = await getNewWord(currentTheme);
-        setCurrentWord(word);
-        setGameState("building-sentence");
-        setSentence([]);
-        setAiGuess("");
-        setUsedWords(prev => [...prev, word]);
-        console.log("Next round started with word:", word, "theme:", currentTheme);
-      } catch (error) {
-        console.error('Error getting new word:', error);
-      }
+      const getNewWord = async () => {
+        try {
+          let word;
+          switch (currentTheme) {
+            case "sports":
+              word = getRandomSportsWord(language);
+              break;
+            case "food":
+              word = getRandomFoodWord(language);
+              break;
+            case "standard":
+              word = getRandomWord(language);
+              break;
+            default:
+              word = await getThemedWord(currentTheme, usedWords, language);
+          }
+          setCurrentWord(word);
+          setGameState("building-sentence");
+          setSentence([]);
+          setAiGuess("");
+          setUsedWords(prev => [...prev, word]);
+          console.log("Next round started with word:", word, "theme:", currentTheme);
+        } catch (error) {
+          console.error('Error getting new word:', error);
+          toast({
+            title: "Error",
+            description: "Failed to get a new word. Please try again.",
+            variant: "destructive",
+          });
+        }
+      };
+      getNewWord();
     } else {
       setGameState("game-review");
     }
@@ -211,9 +291,18 @@ export const GameContainer = () => {
     setUsedWords([]);
   };
 
+  const handleGameReview = () => {
+    setGameState("game-review");
+  }
+
+  const isGuessCorrect = () => {
+    return normalizeWord(aiGuess) === normalizeWord(currentWord);
+  };
+
   const getAverageWordsPerRound = () => {
     const totalRounds = usedWords.length;
-    return totalRounds === 0 ? 0 : totalWords / totalRounds;
+    if (totalRounds === 0) return 0;
+    return totalWords / totalRounds;
   };
 
   return (
@@ -237,7 +326,7 @@ export const GameContainer = () => {
             playerInput={playerInput}
             isAiThinking={isAiThinking}
             onInputChange={setPlayerInput}
-            onSubmitWord={(e) => handlePlayerWord(e, currentWord, setTotalWords)}
+            onSubmitWord={handlePlayerWord}
             onMakeGuess={handleMakeGuess}
             normalizeWord={normalizeWord}
             onBack={handleBack}
@@ -248,7 +337,7 @@ export const GameContainer = () => {
             aiGuess={aiGuess}
             currentWord={currentWord}
             onNextRound={handleNextRound}
-            onGameReview={() => setGameState("game-review")}
+            onGameReview={handleGameReview}
             onBack={handleBack}
             currentScore={successfulRounds}
             avgWordsPerRound={getAverageWordsPerRound()}

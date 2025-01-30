@@ -37,26 +37,13 @@ export const GameReview = ({
 
   useEffect(() => {
     const fetchGameResults = async () => {
-      // Only fetch if we have a valid sessionId
-      if (!sessionId) {
-        console.log("No sessionId available, skipping game results fetch");
-        return;
-      }
-
-      console.log("Fetching game results for session:", sessionId);
       const { data, error } = await supabase
         .from('game_results')
         .select('*')
         .eq('session_id', sessionId)
         .order('created_at', { ascending: true });
 
-      if (error) {
-        console.error('Error fetching game results:', error);
-        return;
-      }
-
-      if (data) {
-        console.log("Fetched game results:", data);
+      if (!error && data) {
         setGameResults(data);
       }
     };
@@ -90,6 +77,7 @@ export const GameReview = ({
       <h2 className="text-2xl font-bold mb-4">{t.game.review.title}</h2>
 
       <div className="space-y-4">
+
         <div className="bg-gray-100 p-4 rounded-lg">
           <p className="text-lg">
             {t.game.review.roundsPlayed}: <span className="font-bold">{gameResults.length}</span>
@@ -143,6 +131,6 @@ export const GameReview = ({
           />
         </DialogContent>
       </Dialog>
-    </motion.div>
+    </motion.div >
   );
 };
