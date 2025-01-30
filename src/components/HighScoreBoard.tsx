@@ -66,9 +66,8 @@ export const HighScoreBoard = ({
         .order("avg_words_per_round", { ascending: true });
 
       if (selectedTheme === 'custom') {
-        // Using PostgREST filter syntax for "not in" operation
-        const filter = `not.in.(${STANDARD_THEMES.join(',')})`;
-        query = query.filter('theme', filter);
+        const filterValue = `(${STANDARD_THEMES.join(',')})`;
+        query = query.filter('theme', 'not.in', filterValue);
       } else {
         query = query.eq('theme', selectedTheme);
       }
