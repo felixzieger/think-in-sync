@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { HighScoreBoard } from "@/components/HighScoreBoard";
+import { GameDetailsView } from "@/components/admin/GameDetailsView";
+import { supabase } from "@/integrations/supabase/client";
 
 interface GameReviewProps {
   currentScore: number;
@@ -26,6 +28,23 @@ export const GameReview = ({
 }: GameReviewProps) => {
   const t = useTranslation();
   const [showHighScores, setShowHighScores] = useState(false);
+  const [gameResults, setGameResults] = useState([]);
+
+  useEffect(() => {
+    const fetchGameResults = async () => {
+      const { data, error } = await supabase
+        .from('game_results')
+        .select('*')
+        .eq('session_id', sessionId)
+        .order('created_at', { ascending: true });
+
+      if (!error && data) {
+        setGameResults(data);
+      }
+    };
+
+    fetchGameResults();
+  }, [sessionId]);
 
   return (
     <motion.div
@@ -46,6 +65,8 @@ export const GameReview = ({
             {t.leaderboard.wordsPerRound}: {avgWordsPerRound.toFixed(1)}
           </p>
         </div>
+
+        <GameDetailsView gameResults={gameResults} />
       </div>
 
       <div className="flex justify-center gap-4 mt-6">
