@@ -1,4 +1,5 @@
 import { useState, KeyboardEvent, useEffect, useContext } from "react";
+import { useSearchParams } from "react-router-dom";
 import { getRandomWord } from "@/lib/words-standard";
 import { getRandomSportsWord } from "@/lib/words-sports";
 import { getRandomFoodWord } from "@/lib/words-food";
@@ -11,11 +12,12 @@ import { ThemeSelector } from "./game/ThemeSelector";
 import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
 import { GameReview } from "./game/GameReview";
+import { GameInvitation } from "./game/GameInvitation";
 import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 
-type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-review";
+type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-review" | "invitation";
 
 const normalizeWord = (word: string): string => {
   return word.normalize('NFD')
@@ -26,7 +28,9 @@ const normalizeWord = (word: string): string => {
 };
 
 export const GameContainer = () => {
-  const [gameState, setGameState] = useState<GameState>("welcome");
+  const [searchParams] = useSearchParams();
+  const fromSession = searchParams.get('from_session');
+  const [gameState, setGameState] = useState<GameState>(fromSession ? "invitation" : "welcome");
   const [currentTheme, setCurrentTheme] = useState<string>("standard");
   const [sessionId, setSessionId] = useState<string>("");
   const [currentWord, setCurrentWord] = useState<string>("");
@@ -81,6 +85,43 @@ export const GameContainer = () => {
     setTotalWords(0);
     setUsedWords([]);
     setSessionId("");
+  };
+
+  const handleInvitationContinue = async () => {
+    if (!fromSession) return;
+    
+    try {
+      const { data: sessionData, error: sessionError } = await supabase
+        .from('sessions')
+        .select('game_id')
+        .eq('id', fromSession)
+        .single();
+
+      if (sessionError) throw sessionError;
+
+      const { data: gameData, error: gameError } = await supabase
+        .from('games')
+        .select('theme, words')
+        .eq('id', sessionData.game_id)
+        .single();
+
+      if (gameError) throw gameError;
+
+      setCurrentTheme(gameData.theme);
+      setCurrentWord(gameData.words[0]);
+      setUsedWords(gameData.words);
+      setSessionId(fromSession);
+      setGameState("building-sentence");
+      console.log("Game started from invitation with session:", fromSession);
+    } catch (error) {
+      console.error('Error starting game from invitation:', error);
+      toast({
+        title: "Error",
+        description: "Failed to start the game. Please try again.",
+        variant: "destructive",
+      });
+      setGameState("welcome");
+    }
   };
 
   const handleThemeSelect = async (theme: string) => {
@@ -275,6 +316,8 @@ export const GameContainer = () => {
           <WelcomeScreen onStart={handleStart} />
         ) : gameState === "theme-selection" ? (
           <ThemeSelector onThemeSelect={handleThemeSelect} onBack={handleBack} />
+        ) : gameState === "invitation" ? (
+          <GameInvitation onContinue={handleInvitationContinue} onBack={handleBack} />
         ) : gameState === "building-sentence" ? (
           <SentenceBuilder
             currentWord={currentWord}

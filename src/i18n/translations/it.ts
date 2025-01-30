@@ -34,6 +34,10 @@ export const it = {
       urlCopiedDesc: "Condividi questo URL con gli amici per farli giocare con le stesse parole",
       urlCopyError: "Impossibile copiare l'URL",
       urlCopyErrorDesc: "Prova a copiare l'URL manualmente"
+    },
+    invitation: {
+      title: "Invito al Gioco",
+      description: "Ehi, sei stato invitato a giocare. Gioca ora per scoprire come te la cavi con le stesse parole!"
     }
   },
   leaderboard: {

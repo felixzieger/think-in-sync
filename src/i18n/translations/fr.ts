@@ -3,6 +3,7 @@ export const fr = {
     title: "Think in Sync",
     round: "Tour",
     buildDescription: "Construisez une phrase ensemble",
+    buildSubtitle: "Ajoutez des mots à tour de rôle pour créer une phrase",
     startSentence: "Commencez à construire votre phrase...",
     inputPlaceholder: "Entrez UN mot...",
     addWord: "Ajouter un mot",
@@ -33,6 +34,10 @@ export const fr = {
       urlCopiedDesc: "Partagez cette URL avec vos amis pour qu'ils jouent avec les mêmes mots",
       urlCopyError: "Échec de la copie de l'URL",
       urlCopyErrorDesc: "Veuillez essayer de copier l'URL manuellement"
+    },
+    invitation: {
+      title: "Invitation au Jeu",
+      description: "Hey, tu as été invité à jouer. Joue maintenant pour découvrir comment tu te débrouilles avec les mêmes mots !"
     }
   },
   leaderboard: {

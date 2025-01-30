@@ -34,6 +34,10 @@ export const de = {
       urlCopiedDesc: "Teile diese URL mit Freunden, damit sie mit den gleichen Wörtern spielen können",
       urlCopyError: "URL konnte nicht kopiert werden",
       urlCopyErrorDesc: "Bitte versuche die URL manuell zu kopieren"
+    },
+    invitation: {
+      title: "Spieleinladung",
+      description: "Hey, du wurdest zu einem Spiel eingeladen. Spiele jetzt und finde heraus, wie gut du mit denselben Wörtern abschneidest!"
     }
   },
   leaderboard: {
