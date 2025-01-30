@@ -39,7 +39,7 @@ export const en = {
       previous: "Previous",
       next: "Next",
       success: "Score submitted successfully!",
-      themeColumn: "Theme",
+      theme: "Theme",
       error: {
         invalidName: "Please enter a valid name",
         noRounds: "You need to complete at least one round",

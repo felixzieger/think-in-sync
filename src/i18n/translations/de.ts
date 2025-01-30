@@ -39,7 +39,7 @@ export const de = {
       previous: "Vorherige",
       next: "Nächste",
       success: "Punktzahl erfolgreich übermittelt!",
-      themeColumn: "Thema",
+      theme: "Thema",
       error: {
         invalidName: "Bitte gib einen gültigen Namen ein",
         noRounds: "Du musst mindestens eine Runde abschließen",

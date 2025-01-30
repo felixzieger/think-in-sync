@@ -38,7 +38,9 @@ const getRankMedal = (rank: number) => {
 };
 
 export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: ScoresTableProps) => {
-  const t
+  const t = useTranslation();
+
+  return (
     <div className="rounded-md border">
       <Table>
         <TableHeader>
@@ -48,7 +50,7 @@ export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: Sco
             <TableHead>{t.leaderboard.roundsColumn}</TableHead>
             <TableHead>{t.leaderboard.avgWords}</TableHead>
             {showThemeColumn && (
-              <TableHead>{t.leaderboard.themeColumn}</TableHead>
+              <TableHead>{t.leaderboard.theme}</TableHead>
             )}
           </TableRow>
         </TableHeader>
