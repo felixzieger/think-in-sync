@@ -1,11 +1,8 @@
 import { useState, KeyboardEvent, useEffect, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getRandomWord } from "@/lib/words-standard";
-import { getRandomSportsWord } from "@/lib/words-sports";
-import { getRandomFoodWord } from "@/lib/words-food";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
-import { getThemedWord } from "@/services/themeService";
+import { createGame, createSession } from "@/services/gameService";
 import { useToast } from "@/components/ui/use-toast";
 import { WelcomeScreen } from "./game/WelcomeScreen";
 import { ThemeSelector } from "./game/ThemeSelector";
@@ -23,7 +20,7 @@ const normalizeWord = (word: string): string => {
   return word.normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
-    .replace(/[^a-z]/g, '') // just match on lowercase chars, remove everything else
+    .replace(/[^a-z]/g, '')
     .trim();
 };
 
@@ -33,35 +30,40 @@ export const GameContainer = () => {
   const [gameState, setGameState] = useState<GameState>(fromSession ? "invitation" : "welcome");
   const [currentTheme, setCurrentTheme] = useState<string>("standard");
   const [sessionId, setSessionId] = useState<string>("");
-  const [currentWord, setCurrentWord] = useState<string>("");
+  const [gameId, setGameId] = useState<string>("");
+  const [words, setWords] = useState<string[]>([]);
+  const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [playerInput, setPlayerInput] = useState<string>("");
   const [sentence, setSentence] = useState<string[]>([]);
   const [isAiThinking, setIsAiThinking] = useState(false);
   const [aiGuess, setAiGuess] = useState<string>("");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
   const [totalWords, setTotalWords] = useState<number>(0);
-  const [usedWords, setUsedWords] = useState<string[]>([]);
-  const [isHighScoreDialogOpen, setIsHighScoreDialogOpen] = useState(false);
   const { toast } = useToast();
   const t = useTranslation();
   const { language } = useContext(LanguageContext);
 
+  const currentWord = words[currentWordIndex] || "";
+
   useEffect(() => {
     if (gameState === "theme-selection") {
-      setSessionId(crypto.randomUUID());
+      setGameId("");
+      setSessionId("");
+      setWords([]);
+      setCurrentWordIndex(0);
     }
   }, [gameState]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && !isHighScoreDialogOpen) {
+      if (e.key === 'Enter') {
         if (gameState === 'welcome') {
           handleStart();
         } else if (gameState === 'showing-guess' && isGuessCorrect()) {
           handleNextRound();
         } else if (gameState === 'showing-guess' && !isGuessCorrect()) {
           handleGameReview();
-        } else if (gameState === 'game-review' && !isHighScoreDialogOpen) {
+        } else if (gameState === 'game-review') {
           handlePlayAgain();
         }
       }
@@ -69,7 +71,7 @@ export const GameContainer = () => {
 
     window.addEventListener('keydown', handleKeyPress as any);
     return () => window.removeEventListener('keydown', handleKeyPress as any);
-  }, [gameState, aiGuess, currentWord, isHighScoreDialogOpen]);
+  }, [gameState, aiGuess, currentWord]);
 
   const handleStart = () => {
     setGameState("theme-selection");
@@ -79,11 +81,12 @@ export const GameContainer = () => {
     setGameState("welcome");
     setSentence([]);
     setAiGuess("");
-    setCurrentWord("");
     setCurrentTheme("standard");
     setSuccessfulRounds(0);
     setTotalWords(0);
-    setUsedWords([]);
+    setWords([]);
+    setCurrentWordIndex(0);
+    setGameId("");
     setSessionId("");
   };
 
@@ -108,8 +111,9 @@ export const GameContainer = () => {
       if (gameError) throw gameError;
 
       setCurrentTheme(gameData.theme);
-      setCurrentWord(gameData.words[0]);
-      setUsedWords(gameData.words);
+      setWords(gameData.words);
+      setCurrentWordIndex(0);
+      setGameId(sessionData.game_id);
       setSessionId(fromSession);
       setGameState("building-sentence");
       console.log("Game started from invitation with session:", fromSession);
@@ -127,31 +131,30 @@ export const GameContainer = () => {
   const handleThemeSelect = async (theme: string) => {
     setCurrentTheme(theme);
     try {
-      let word;
-      switch (theme) {
-        case "sports":
-          word = getRandomSportsWord(language);
-          break;
-        case "food":
-          word = getRandomFoodWord(language);
-          break;
-        case "standard":
-          word = getRandomWord(language);
-          break;
-        default:
-          word = await getThemedWord(theme, usedWords, language);
-      }
-      setCurrentWord(word);
+      const newGameId = await createGame(theme, language);
+      const newSessionId = await createSession(newGameId);
+      
+      const { data: gameData, error: gameError } = await supabase
+        .from('games')
+        .select('words')
+        .eq('id', newGameId)
+        .single();
+
+      if (gameError) throw gameError;
+
+      setGameId(newGameId);
+      setSessionId(newSessionId);
+      setWords(gameData.words);
+      setCurrentWordIndex(0);
       setGameState("building-sentence");
       setSuccessfulRounds(0);
       setTotalWords(0);
-      setUsedWords([word]);
-      console.log("Game started with word:", word, "theme:", theme, "language:", language);
+      console.log("Game started with theme:", theme, "language:", language);
     } catch (error) {
-      console.error('Error getting themed word:', error);
+      console.error('Error starting new game:', error);
       toast({
         title: "Error",
-        description: "Failed to get a word for the selected theme. Please try again.",
+        description: "Failed to start the game. Please try again.",
         variant: "destructive",
       });
     }
@@ -243,38 +246,15 @@ export const GameContainer = () => {
   const handleNextRound = () => {
     if (isGuessCorrect()) {
       setSuccessfulRounds(prev => prev + 1);
-      const getNewWord = async () => {
-        try {
-          let word;
-          switch (currentTheme) {
-            case "sports":
-              word = getRandomSportsWord(language);
-              break;
-            case "food":
-              word = getRandomFoodWord(language);
-              break;
-            case "standard":
-              word = getRandomWord(language);
-              break;
-            default:
-              word = await getThemedWord(currentTheme, usedWords, language);
-          }
-          setCurrentWord(word);
-          setGameState("building-sentence");
-          setSentence([]);
-          setAiGuess("");
-          setUsedWords(prev => [...prev, word]);
-          console.log("Next round started with word:", word, "theme:", currentTheme);
-        } catch (error) {
-          console.error('Error getting new word:', error);
-          toast({
-            title: "Error",
-            description: "Failed to get a new word. Please try again.",
-            variant: "destructive",
-          });
-        }
-      };
-      getNewWord();
+      if (currentWordIndex < words.length - 1) {
+        setCurrentWordIndex(prev => prev + 1);
+        setGameState("building-sentence");
+        setSentence([]);
+        setAiGuess("");
+        console.log("Next round started with word:", words[currentWordIndex + 1]);
+      } else {
+        handleGameReview();
+      }
     } else {
       setGameState("game-review");
     }
@@ -284,11 +264,13 @@ export const GameContainer = () => {
     setGameState("theme-selection");
     setSentence([]);
     setAiGuess("");
-    setCurrentWord("");
     setCurrentTheme("standard");
     setSuccessfulRounds(0);
     setTotalWords(0);
-    setUsedWords([]);
+    setWords([]);
+    setCurrentWordIndex(0);
+    setGameId("");
+    setSessionId("");
   };
 
   const handleGameReview = () => {
@@ -300,7 +282,7 @@ export const GameContainer = () => {
   };
 
   const getAverageWordsPerRound = () => {
-    const totalRounds = usedWords.length;
+    const totalRounds = currentWordIndex + 1;
     if (totalRounds === 0) return 0;
     return totalWords / totalRounds;
   };
