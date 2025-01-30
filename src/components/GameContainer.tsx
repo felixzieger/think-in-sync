@@ -53,12 +53,12 @@ export const GameContainer = () => {
       if (e.key === 'Enter' && !isHighScoreDialogOpen) {
         if (gameState === 'welcome') {
           handleStart();
-        } else if (gameState === 'showing-guess') {
-          if (isGuessCorrect()) {
-            handleNextRound();
-          } else {
-            handleNextRound();
-          }
+        } else if (gameState === 'showing-guess' && isGuessCorrect()) {
+          handleNextRound();
+        } else if (gameState === 'showing-guess' && !isGuessCorrect()) {
+          handleGameReview();
+        } else if (gameState === 'game-review') {
+          handlePlayAgain();
         }
       }
     };
