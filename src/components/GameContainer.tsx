@@ -201,6 +201,7 @@ export const GameContainer = () => {
 
   const handleNextRound = () => {
     if (isGuessCorrect()) {
+      setSuccessfulRounds(prev => prev + 1);
       const getNewWord = async () => {
         try {
           let word;
@@ -258,8 +259,9 @@ export const GameContainer = () => {
   };
 
   const getAverageWordsPerRound = () => {
-    if (successfulRounds === 0) return 0;
-    return totalWords / (successfulRounds + 1);
+    const totalRounds = usedWords.length;
+    if (totalRounds === 0) return 0;
+    return totalWords / totalRounds;
   };
 
   return (

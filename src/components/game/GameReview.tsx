@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Copy } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +12,7 @@ import {
 import { HighScoreBoard } from "@/components/HighScoreBoard";
 import { GameDetailsView } from "@/components/admin/GameDetailsView";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 interface GameReviewProps {
   currentScore: number;
@@ -27,8 +30,10 @@ export const GameReview = ({
   currentTheme,
 }: GameReviewProps) => {
   const t = useTranslation();
+  const { toast } = useToast();
   const [showHighScores, setShowHighScores] = useState(false);
   const [gameResults, setGameResults] = useState([]);
+  const shareUrl = `${window.location.origin}/start-game?from_session=${sessionId}`;
 
   useEffect(() => {
     const fetchGameResults = async () => {
@@ -46,6 +51,23 @@ export const GameReview = ({
     fetchGameResults();
   }, [sessionId]);
 
+  const handleCopyUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      toast({
+        title: t.game.review.urlCopied,
+        description: t.game.review.urlCopiedDesc,
+      });
+    } catch (err) {
+      console.error('Failed to copy URL:', err);
+      toast({
+        title: t.game.review.urlCopyError,
+        description: t.game.review.urlCopyErrorDesc,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -59,11 +81,27 @@ export const GameReview = ({
 
         <div className="bg-gray-100 p-4 rounded-lg">
           <p className="text-lg">
-            {t.game.review.roundsPlayed}: <span className="font-bold">{currentScore}</span>
+            {t.game.review.roundsPlayed}: <span className="font-bold">{gameResults.length}</span>
           </p>
           <p className="text-sm text-gray-600">
-            {t.leaderboard.wordsPerRound}: {avgWordsPerRound.toFixed(1)}
+            {t.leaderboard.wordsPerRound}: {(gameResults.length > 0 ? avgWordsPerRound : 0).toFixed(1)}
           </p>
+        </div>
+
+        <div className="relative flex items-center space-x-2 bg-gray-50 p-4 rounded-lg">
+          <Input
+            value={shareUrl}
+            readOnly
+            className="pr-10"
+          />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleCopyUrl}
+            className="absolute right-6"
+          >
+            <Copy className="h-4 w-4" />
+          </Button>
         </div>
 
         <GameDetailsView gameResults={gameResults} />
@@ -75,9 +113,6 @@ export const GameReview = ({
         </Button>
         <Button onClick={() => setShowHighScores(true)} variant="secondary" className="text-white">
           {t.game.review.saveScore}
-        </Button>
-        <Button onClick={() => setShowHighScores(true)} variant="secondary" className="text-white">
-          {t.game.review.shareGame}
         </Button>
       </div>
 
@@ -94,6 +129,6 @@ export const GameReview = ({
           />
         </DialogContent>
       </Dialog>
-    </motion.div >
+    </motion.div>
   );
 };
