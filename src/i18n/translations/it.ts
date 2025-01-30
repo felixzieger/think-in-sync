@@ -1,4 +1,4 @@
-export default {
+export const it = {
   leaderboard: {
     title: "Punteggi Migliori",
     yourScore: "Il Tuo Punteggio",
