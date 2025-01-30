@@ -47,7 +47,7 @@ export const SentenceBuilder = ({
   console.log("SentenceBuilder - Rendering with showConfirmDialog:", showConfirmDialog);
 
   const validateInput = (input: string) => {
-    setHasMultipleWords(input.trim().split(/\s+/).length > 1);
+    setHasMultipleWords(input.trim().split(/\s+/).length >= 1 && input.trim().split(/\s+/).length <= 30);
     setContainsTargetWord(
       input.toLowerCase().includes(currentWord.toLowerCase())
     );
