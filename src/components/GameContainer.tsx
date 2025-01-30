@@ -27,16 +27,16 @@ const normalizeWord = (word: string): string => {
 
 export const GameContainer = () => {
   const [gameState, setGameState] = useState<GameState>("welcome");
-  const [currentWord, setCurrentWord] = useState<string>("");
   const [currentTheme, setCurrentTheme] = useState<string>("standard");
-  const [sentence, setSentence] = useState<string[]>([]);
+  const [sessionId, setSessionId] = useState<string>("");
+  const [currentWord, setCurrentWord] = useState<string>("");
   const [playerInput, setPlayerInput] = useState<string>("");
+  const [sentence, setSentence] = useState<string[]>([]);
   const [isAiThinking, setIsAiThinking] = useState(false);
   const [aiGuess, setAiGuess] = useState<string>("");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
   const [totalWords, setTotalWords] = useState<number>(0);
   const [usedWords, setUsedWords] = useState<string[]>([]);
-  const [sessionId, setSessionId] = useState<string>("");
   const [isHighScoreDialogOpen, setIsHighScoreDialogOpen] = useState(false);
   const { toast } = useToast();
   const t = useTranslation();
@@ -251,14 +251,6 @@ export const GameContainer = () => {
 
   const isGuessCorrect = () => {
     return normalizeWord(aiGuess) === normalizeWord(currentWord);
-  };
-
-  const handleGuessComplete = () => {
-    if (isGuessCorrect()) {
-      setSuccessfulRounds(prev => prev + 1);
-      return true;
-    }
-    return false;
   };
 
   const getAverageWordsPerRound = () => {
