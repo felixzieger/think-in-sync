@@ -92,7 +92,7 @@ export const fr = {
         "Utilisez votre nom d'utilisateur Hugging Face dans le classement",
         "Aimez notre projet sur Hugging Face"
       ],
-      deadline: "Fin : 5 février, 10h00",
+      deadline: "Nous annoncerons bientôt les détails ici",
       prizes: {
         title: "Participez pour les 5 premières places et gagnez :",
         list: [

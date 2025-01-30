@@ -93,7 +93,7 @@ export const de = {
         "Setze deinen Bestenlisten-Namen gleich deinem Hugging Face Benutzernamen",
         "Like unser Projekt auf Hugging Face"
       ],
-      deadline: "Ende: 5. Februar, 10:00 Uhr",
+      deadline: "Wir werden die Details bald hier bekannt geben",
       prizes: {
         title: "Kämpfe um die Top 5 Plätze und gewinne:",
         list: [

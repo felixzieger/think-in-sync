@@ -94,7 +94,7 @@ export const en = {
         "Set your leaderboard name to match your Hugging Face username",
         "Like our project on Hugging Face"
       ],
-      deadline: "Ends: February 5, 10:00 AM",
+      deadline: "We're gonna announce the details soon here",
       prizes: {
         title: "Compete for the top 5 spots and win:",
         list: [

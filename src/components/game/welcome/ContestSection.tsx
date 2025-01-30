@@ -25,7 +25,9 @@ export const ContestSection = () => {
                 <li key={index}>{condition}</li>
               ))}
             </ul>
+            <p className="text-sm text-gray-600">{t.welcome.contest.deadline} ⏳</p>
           </div>
+
         </DialogContent>
       </Dialog>
     </div>

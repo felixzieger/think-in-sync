@@ -93,7 +93,7 @@ export const es = {
         "Establece tu nombre en la tabla de clasificación igual a tu nombre de usuario de Hugging Face",
         "Dale me gusta a nuestro proyecto en Hugging Face"
       ],
-      deadline: "Finaliza: 5 de febrero, 10:00 AM",
+      deadline: "Pronto anunciaremos los detalles aquí",
       prizes: {
         title: "Compite por los 5 primeros puestos y gana:",
         list: [
