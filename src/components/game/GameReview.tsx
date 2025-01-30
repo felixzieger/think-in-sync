@@ -33,7 +33,7 @@ export const GameReview = ({
   const { toast } = useToast();
   const [showHighScores, setShowHighScores] = useState(false);
   const [gameResults, setGameResults] = useState([]);
-  const shareUrl = `${window.location.origin}/start-game?from_session=${sessionId}`;
+  const shareUrl = `${window.location.origin}/game?from_session=${sessionId}`;
 
   useEffect(() => {
     const fetchGameResults = async () => {
