@@ -1,4 +1,4 @@
-export default = {
+export default {
     game: {
       title: "Think in Sync",
       round: "Runde",
@@ -39,7 +39,7 @@ export default = {
       previous: "Vorherige",
       next: "Nächste",
       success: "Punktzahl erfolgreich übermittelt!",
-      theme: "Thema",
+      themeColumn: "Thema",
       error: {
         invalidName: "Bitte gib einen gültigen Namen ein",
         noRounds: "Du musst mindestens eine Runde abschließen",
