@@ -20,6 +20,7 @@ const normalizeWord = (word: string): string => {
   return word.normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
+    .replace(/[^a-z]/g, '') // just match on lowercase chars, remove everything else
     .trim();
 };
 
@@ -180,11 +181,11 @@ export const GameContainer = () => {
       const sentenceString = finalSentence.join(' ');
       const guess = await guessWord(sentenceString, language);
       setAiGuess(guess);
-      
+
       // Save game result in the background
       saveGameResult(finalSentence, guess, guess.toLowerCase() === currentWord.toLowerCase())
         .catch(error => console.error('Background save failed:', error));
-      
+
       setGameState("showing-guess");
     } catch (error) {
       console.error('Error getting AI guess:', error);
