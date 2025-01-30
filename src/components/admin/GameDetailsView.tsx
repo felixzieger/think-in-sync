@@ -28,7 +28,6 @@ export const GameDetailsView = ({ gameResults }: GameDetailsViewProps) => {
             <TableHead>Target Word</TableHead>
             <TableHead>Description</TableHead>
             <TableHead>AI Guess</TableHead>
-            <TableHead>Result</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -39,13 +38,6 @@ export const GameDetailsView = ({ gameResults }: GameDetailsViewProps) => {
                 {result.description}
               </TableCell>
               <TableCell>{result.ai_guess}</TableCell>
-              <TableCell>
-                {result.is_correct ? (
-                  <Check className="h-4 w-4 text-green-500" />
-                ) : (
-                  <X className="h-4 w-4 text-red-500" />
-                )}
-              </TableCell>
             </TableRow>
           ))}
         </TableBody>
