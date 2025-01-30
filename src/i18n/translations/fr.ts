@@ -3,6 +3,7 @@ export const fr = {
     title: "Think in Sync",
     round: "Tour",
     buildDescription: "Construisez une phrase ensemble",
+    buildSubtitle: "Ajoutez des mots à tour de rôle pour créer une phrase",
     startSentence: "Commencez à construire votre phrase...",
     inputPlaceholder: "Entrez UN mot...",
     addWord: "Ajouter un mot",
@@ -25,7 +26,7 @@ export const fr = {
     review: {
       title: "Résumé de la Partie",
       roundsPlayed: "Manches Jouées",
-      description: "Voici vos résultats :",
+      description: "Voici vos résultats",
       playAgain: "Rejouer",
       saveScore: "Sauvegarder le Score",
       shareGame: "Partager",

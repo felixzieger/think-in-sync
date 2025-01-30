@@ -24,22 +24,20 @@ export const GameReview = ({
 
   const handleCopyUrl = async () => {
     try {
-      // Get the current origin (protocol + hostname)
       const origin = window.location.origin;
-      // Create the share URL without a colon after the domain
       const shareUrl = `${origin}/start-game?from_session=${sessionId}`;
       
       await navigator.clipboard.writeText(shareUrl);
       toast({
-        title: t.game.urlCopied,
-        description: t.game.urlCopiedDesc,
+        title: t.game.review.urlCopied,
+        description: t.game.review.urlCopiedDesc,
         variant: "default",
       });
     } catch (error) {
       console.error('Error copying URL:', error);
       toast({
-        title: t.game.urlCopyError,
-        description: t.game.urlCopyErrorDesc,
+        title: t.game.review.urlCopyError,
+        description: t.game.review.urlCopyErrorDesc,
         variant: "destructive",
       });
     }
@@ -48,12 +46,12 @@ export const GameReview = ({
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold mb-4">{t.game.title}</h2>
+        <h2 className="text-2xl font-bold mb-4">{t.game.review.title}</h2>
         <p className="text-gray-600 mb-2">
-          {t.game.roundsPlayed}: {currentScore}
+          {t.game.review.roundsPlayed}: {currentScore}
         </p>
         <p className="text-gray-600">
-          {t.game.description}: {avgWordsPerRound.toFixed(1)}
+          {t.game.review.description}: {avgWordsPerRound.toFixed(1)}
         </p>
       </div>
 
@@ -67,7 +65,7 @@ export const GameReview = ({
           variant="outline"
           size="icon"
           onClick={handleCopyUrl}
-          title={t.game.shareGame}
+          title={t.game.review.shareGame}
         >
           <Copy className="h-4 w-4" />
         </Button>
@@ -79,7 +77,7 @@ export const GameReview = ({
           className="w-full"
           variant="default"
         >
-          {t.game.playAgain}
+          {t.game.review.playAgain}
         </Button>
       </div>
     </div>
