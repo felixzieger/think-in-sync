@@ -12,14 +12,14 @@ export const GuessResult = ({ aiGuess, isCorrect, onNextRound }: GuessResultProp
 
   return (
     <div className="space-y-4">
-      <div className={`p-4 rounded-lg ${isCorrect ? 'bg-green-100' : 'bg-red-100'}`}>
-        <p className="font-medium">
-          {isCorrect ? t.guess.correct : t.guess.incorrect}
+      <p className="text-sm text-gray-600">
+        {t.guess.aiGuessedDescription}
+      </p>
+      <div className={`rounded-lg ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
+        <p className={`p-4 text-2xl font-bold tracking-wider ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
+          {aiGuess}
         </p>
       </div>
-      <Button onClick={onNextRound} className="w-full">
-        {t.game.nextRound} ⏎
-      </Button>
     </div>
   );
 };

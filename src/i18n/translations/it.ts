@@ -28,7 +28,8 @@ export const it = {
       roundsPlayed: "Turni Giocati",
       description: "Ecco i tuoi risultati:",
       playAgain: "Gioca Ancora",
-      saveScore: "Salva Punteggio"
+      saveScore: "Salva Punteggio",
+      shareGame: "Condividi"
     }
   },
   leaderboard: {

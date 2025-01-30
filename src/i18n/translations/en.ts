@@ -28,7 +28,8 @@ export const en = {
       roundsPlayed: "Rounds Played",
       description: "Here's how you did:",
       playAgain: "Play Again",
-      saveScore: "Save Score"
+      saveScore: "Save Score",
+      shareGame: "Share"
     }
   },
   leaderboard: {
@@ -68,7 +69,7 @@ export const en = {
     nextRound: "Next Round",
     playAgain: "Play Again",
     viewLeaderboard: "Save your score",
-    cheatingDetected: "Cheating detected!"
+    cheatingDetected: "Cheating detected!",
   },
   themes: {
     title: "Choose a Theme",

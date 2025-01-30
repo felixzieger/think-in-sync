@@ -249,6 +249,10 @@ export const GameContainer = () => {
     setUsedWords([]);
   };
 
+  const handleGameReview = () => {
+    setGameState("game-review");
+  }
+
   const isGuessCorrect = () => {
     return normalizeWord(aiGuess) === normalizeWord(currentWord);
   };
@@ -288,13 +292,12 @@ export const GameContainer = () => {
             aiGuess={aiGuess}
             currentWord={currentWord}
             onNextRound={handleNextRound}
-            onPlayAgain={handlePlayAgain}
+            onGameReview={handleGameReview}
             onBack={handleBack}
             currentScore={successfulRounds}
             avgWordsPerRound={getAverageWordsPerRound()}
             sessionId={sessionId}
             currentTheme={currentTheme}
-            onHighScoreDialogChange={setIsHighScoreDialogOpen}
             normalizeWord={normalizeWord}
           />
         ) : (

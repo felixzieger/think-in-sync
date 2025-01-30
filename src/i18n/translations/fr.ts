@@ -27,7 +27,8 @@ export const fr = {
       roundsPlayed: "Manches Jouées",
       description: "Voici vos résultats :",
       playAgain: "Rejouer",
-      saveScore: "Sauvegarder le Score"
+      saveScore: "Sauvegarder le Score",
+      shareGame: "Partager"
     }
   },
   leaderboard: {

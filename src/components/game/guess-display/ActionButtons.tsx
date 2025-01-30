@@ -5,20 +5,17 @@ import { useTranslation } from "@/hooks/useTranslation";
 interface ActionButtonsProps {
   isCorrect: boolean;
   onNextRound: () => void;
-  onPlayAgain: () => void;
+  onGameReview: () => void;
   currentScore: number;
   avgWordsPerRound: number;
   sessionId: string;
   currentTheme: string;
-  onScoreSubmitted?: () => void;
-  onShowHighScores: () => void;
 }
 
 export const ActionButtons = ({
   isCorrect,
   onNextRound,
-  onPlayAgain,
-  onShowHighScores,
+  onGameReview,
 }: ActionButtonsProps) => {
   const t = useTranslation();
 
@@ -27,14 +24,7 @@ export const ActionButtons = ({
       {isCorrect ? (
         <Button onClick={onNextRound} className="text-white">{t.game.nextRound} ⏎</Button>
       ) : (
-        <>
-          <Button onClick={onPlayAgain} className="text-white">
-            {t.game.playAgain} ⏎
-          </Button>
-          <Button onClick={onShowHighScores} variant="secondary" className="text-white">
-            {t.game.saveScore}
-          </Button>
-        </>
+        <Button onClick={onGameReview} className="text-white">{t.game.review.title} ⏎</Button>
       )}
     </div>
   );

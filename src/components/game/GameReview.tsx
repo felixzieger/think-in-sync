@@ -34,10 +34,10 @@ export const GameReview = ({
       className="text-center space-y-6"
     >
       <h2 className="text-2xl font-bold mb-4">{t.game.review.title}</h2>
-      
+
       <div className="space-y-4">
         <p>{t.game.review.description}</p>
-        
+
         <div className="bg-gray-100 p-4 rounded-lg">
           <p className="text-lg">
             {t.game.review.roundsPlayed}: <span className="font-bold">{currentScore}</span>
@@ -49,11 +49,14 @@ export const GameReview = ({
       </div>
 
       <div className="flex justify-center gap-4 mt-6">
-        <Button onClick={onPlayAgain} variant="outline">
-          {t.game.review.playAgain}
+        <Button onClick={onPlayAgain} className="text-white">
+          {t.game.review.playAgain} ⏎
         </Button>
-        <Button onClick={() => setShowHighScores(true)}>
+        <Button onClick={() => setShowHighScores(true)} variant="secondary" className="text-white">
           {t.game.review.saveScore}
+        </Button>
+        <Button onClick={() => setShowHighScores(true)} variant="secondary" className="text-white">
+          {t.game.review.shareGame}
         </Button>
       </div>
 
@@ -70,6 +73,6 @@ export const GameReview = ({
           />
         </DialogContent>
       </Dialog>
-    </motion.div>
+    </motion.div >
   );
 };
