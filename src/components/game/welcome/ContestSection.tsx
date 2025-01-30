@@ -4,7 +4,7 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 export const ContestSection = () => {
   const t = useTranslation();
-  
+
   return (
     <div className="flex flex-col items-center gap-2">
       <p className="text-lg font-semibold text-primary">🕹️ {t.welcome.contest.prize} 🤑</p>
@@ -25,18 +25,6 @@ export const ContestSection = () => {
                 <li key={index}>{condition}</li>
               ))}
             </ul>
-            {/* <div className="space-y-2">
-              <p className="text-sm text-gray-600">{t.welcome.contest.deadline}</p>
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-gray-800">{t.welcome.contest.prizes.title}</p>
-                <ul className="text-sm text-gray-600 list-none space-y-1">
-                  {t.welcome.contest.prizes.list.map((prize, index) => (
-                    <li key={index}>{prize}</li>
-                  ))}
-                </ul>
-              </div>
-              <p className="text-sm font-medium text-red-600">{t.welcome.contest.fairPlay}</p> */}
-            </div>
           </div>
         </DialogContent>
       </Dialog>
