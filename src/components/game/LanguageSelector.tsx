@@ -14,13 +14,20 @@ const languages: { code: Language; name: string; flag: string }[] = [
 export const LanguageSelector = () => {
   const { language, setLanguage } = useContext(LanguageContext);
 
+  console.log('[LanguageSelector] Current language:', language);
+
+  const handleLanguageChange = (code: Language) => {
+    console.log('[LanguageSelector] Language button clicked:', code);
+    setLanguage(code);
+  };
+
   return (
     <div className="flex flex-wrap justify-center gap-2 mb-4">
       {languages.map(({ code, name, flag }) => (
         <Button
           key={code}
           variant={language === code ? "default" : "outline"}
-          onClick={() => setLanguage(code)}
+          onClick={() => handleLanguageChange(code)}
           className="flex items-center gap-2"
         >
           <span>{flag}</span>
