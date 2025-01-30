@@ -30,7 +30,6 @@ export const englishFoodWords = [
   "MUSHROOM",
   "PUMPKIN",
   "ZUCCHINI",
-  "BELL PEPPER",
   "CORN",
   "AVOCADO",
   "YOGURT",
@@ -39,7 +38,6 @@ export const englishFoodWords = [
   "PUDDING",
   "JAM"
 ];
-
 export const germanFoodWords = [
   "PIZZA",
   "NUDELN",
@@ -81,7 +79,6 @@ export const germanFoodWords = [
   "PUDDING",
   "MARMELADE"
 ];
-
 export const frenchFoodWords = [
   "PIZZA",
   "PÂTES",
@@ -114,7 +111,6 @@ export const frenchFoodWords = [
   "CHAMPIGNON",
   "COURGE",
   "COURGETTE",
-  "POIVRON DOUX",
   "MAÏS",
   "AVOCAT",
   "YAOURT",
@@ -123,7 +119,6 @@ export const frenchFoodWords = [
   "CRÈME",
   "CONFITURE"
 ];
-
 export const italianFoodWords = [
   "PIZZA",
   "PASTA",
@@ -156,7 +151,6 @@ export const italianFoodWords = [
   "FUNGHI",
   "ZUCCA",
   "ZUCCHINI",
-  "PEPERONE DOLCE",
   "MAIS",
   "AVOCADO",
   "YOGURT",
@@ -165,7 +159,6 @@ export const italianFoodWords = [
   "CREMA",
   "MARMELLATA"
 ];
-
 export const spanishFoodWords = [
   "PIZZA",
   "PASTA",
