@@ -32,14 +32,12 @@ export const guessWord = async (sentence: string, language: string): Promise<str
   console.log('Processing guess for sentence:', sentence);
   
   const words = sentence.trim().split(/\s+/);
-  const targetWord = words[0].toLowerCase();
   
   console.log('Calling guess-word function with sentence:', sentence, 'language:', language);
   
   const { data, error } = await supabase.functions.invoke('guess-word', {
     body: { 
-      sentence, 
-      targetWord,
+      sentence,
       language 
     }
   });
