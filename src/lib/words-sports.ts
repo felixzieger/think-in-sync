@@ -54,7 +54,6 @@ export const englishSportsWords = [
   "CANYONING",
   "CAVING"
 ];
-
 export const germanSportsWords = [
   "FUSSBALL",
   "TENNIS",
@@ -97,7 +96,6 @@ export const germanSportsWords = [
   "RUDERN",
   "LACROSSE"
 ];
-
 export const frenchSportsWords = [
   "FOOTBALL",
   "TENNIS",
@@ -120,7 +118,6 @@ export const frenchSportsWords = [
   "VOILE",
   "LUTTE",
   "GYMNASTIQUE",
-  "TIR À L'ARC",
   "ESCRIME",
   "MOTOCYCLISME",
   "TIR",
@@ -135,12 +132,9 @@ export const frenchSportsWords = [
   "SKATEBOARD",
   "WINDSURF",
   "BADMINTON",
-  "TENNIS DE TABLE",
-  "NATATION SYNCHRONISÉE",
   "AVIRON",
   "LACROSSE"
 ];
-
 export const italianSportsWords = [
   "CALCIO",
   "TENNIS",
@@ -163,27 +157,22 @@ export const italianSportsWords = [
   "VELA",
   "LOTTA",
   "GINNASTICA",
-  "TIRO CON L'ARCO",
   "SCHERMA",
   "MOTOCICLISMO",
-  "TIRO A SEGNO",
   "EQUITAZIONE",
   "PALLAMANO",
   "SNOWBOARD",
   "PALLANUOTO",
   "TRIATHLON",
-  "SOLLEVAMENTO PESI",
   "JUDO",
   "TAEKWONDO",
   "SKATEBOARD",
   "WINDSURF",
   "BADMINTON",
   "PING-PONG",
-  "NUOTO SINCRONIZZATO",
   "CANOTTAGGIO",
   "LACROSSE"
 ];
-
 export const spanishSportsWords = [
   "FÚTBOL",
   "TENIS",
@@ -206,7 +195,6 @@ export const spanishSportsWords = [
   "VELA",
   "LUCHA",
   "GIMNASIA",
-  "TIRO CON ARCO",
   "ESGRIMA",
   "MOTOCICLISMO",
   "TIRO",
@@ -221,12 +209,9 @@ export const spanishSportsWords = [
   "SKATEBOARD",
   "WINDSURF",
   "BÁDMINTON",
-  "TENIS DE MESA",
-  "NATACIÓN SINCRONIZADA",
   "REMO",
   "LACROSSE"
 ];
-
 
 export const getRandomSportsWord = (language: string = 'en') => {
   let wordList;

@@ -225,7 +225,6 @@ export const englishWords = [
   "PHONE",
   "CAMERA"
 ];
-
 export const germanWords = [
   "HUND",
   "KATZE",
@@ -453,7 +452,6 @@ export const germanWords = [
   "TELEFON",
   "KAMERA"
 ];
-
 export const frenchWords = [
   "CHIEN",
   "CHAT",
@@ -570,7 +568,6 @@ export const frenchWords = [
   "PILE",
   "BOUGIE", // duplicate
   "CLÔTURE",
-  "BOÎTE AUX LETTRES",
   "BRIQUE",
   "LANTERNE",
   "ROUE",
@@ -598,7 +595,6 @@ export const frenchWords = [
   "FIL",
   "AIGUILLE",
   "BOUTON",
-  "FERMETURE ÉCLAIR",
   "PANTOUFLE",
   "MANTEAU",
   "MOUFLE",
@@ -615,34 +611,25 @@ export const frenchWords = [
   "CHAPEAU", // duplicate
   "CASQUETTE",
   "MASQUE",
-  "LUNETTES DE SOLEIL",
   "MONTRE",
   "COLLIER",
   "BRACELET",
   "BAGUE",
-  "BOUCLE D'OREILLE",
-  "SAC À DOS",
   "VALISE",
   "BILLET",
   "PASSEPORT",
   "CARTE",
   "BOUSSOLE",
   "TORCHE",
-  "LAMPE DE POCHE",
-  "FEU DE CAMP",
   "TENTE",
-  "SAC DE COUCHAGE",
   "PIQUE-NIQUE",
   "BANC",
   "CLÔTURE", // duplicate
   "PORTAIL",
   "PANNEAU",
-  "PASSAGE PIÉTON",
-  "FEU DE SIGNALISATION",
   "TROTTOIR",
   "LANTERNE", // duplicate
   "BALLON",   // duplicate
-  "CARTE POSTALE",
   "TIMBRE",
   "LETTRE",
   "ENVELOPPE",
@@ -681,7 +668,6 @@ export const frenchWords = [
   "TÉLÉPHONE",
   "APPAREIL PHOTO"
 ];
-
 export const italianWords = [
   "CANE",
   "GATTO",
@@ -798,7 +784,6 @@ export const italianWords = [
   "BATTERIA",
   "CANDELA",  // duplicate
   "RECINTO",
-  "CASSETTA DELLE LETTERE",
   "MATTONE",
   "LANTERNA",
   "RUOTA",
@@ -821,7 +806,6 @@ export const italianWords = [
   "ASCIUGAMANO",
   "PANNO",
   "FORBICI",
-  "NASTRO ADESIVO",
   "NASTRO",
   "FILO",
   "AGO",
@@ -843,7 +827,6 @@ export const italianWords = [
   "CAPPELLO", // duplicate
   "BERRETTO", // instead of MÜTZE, let's keep it consistent in Italian
   "MASCHERA",
-  "OCCHIALI DA SOLE",
   "OROLOGIO",
   "COLLANA",
   "BRACCIALETTO",
@@ -856,16 +839,13 @@ export const italianWords = [
   "CARTINA",
   "BUSSOLA",
   "TORCIA",
-  "TORCIA ELETTRICA",
   "FALÒ",
   "TENDA",
-  "SACCO A PELO",
   "PICNIC",
   "PANCHINA",
   "RECINTO", // duplicate
   "CANCELLO",
   "SEGNALE",
-  "STRISCE PEDONALI",
   "SEMAFORO",
   "MARCIAPIEDE",
   "LANTERNA", // duplicate
@@ -909,7 +889,6 @@ export const italianWords = [
   "TELEFONO",
   "FOTOCAMERA"
 ];
-
 export const spanishWords = [
   "PERRO",
   "GATO",
@@ -953,7 +932,6 @@ export const spanishWords = [
   "CABALLO",
   "LEÓN",
   "MONO",
-  "OSO PANDA",
   "AVIÓN",
   "TREN",
   "CARAMELO",
@@ -1071,7 +1049,6 @@ export const spanishWords = [
   "SOMBRERO",  // duplicate
   "GORRA",
   "MÁSCARA",
-  "GAFAS DE SOL",
   "RELOJ",
   "COLLAR",
   "PULSERA",
@@ -1086,14 +1063,11 @@ export const spanishWords = [
   "ANTORCHA",
   "LINTERNA",
   "HOGUERA",
-  "TIENDA DE CAMPAÑA",
-  "SACO DE DORMIR",
   "PICNIC",
   "BANCO",
   "VALLA",       // duplicate
   "PUERTA",      // gate can be “PUERTA” or “PORTÓN”; used PUERTA earlier for “door,” so let's keep “PORTÓN” for gate below
   "SEÑAL",
-  "PASO DE PEATONES",
   "SEMÁFORO",
   "ACERA",
   "FAROL",       // duplicate
