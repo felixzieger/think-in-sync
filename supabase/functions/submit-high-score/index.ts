@@ -32,20 +32,28 @@ Deno.serve(async (req) => {
     // First verify that the claimed score matches actual game results
     const { data: gameResults, error: gameError } = await supabaseClient
       .from('game_results')
-      .select('is_correct')
+      .select('is_correct, target_word')
       .eq('session_id', sessionId)
 
     if (gameError) {
+      console.error('Error fetching game results:', gameError)
       throw new Error('Failed to verify game results')
     }
 
-    // Count successful rounds
-    const successfulRounds = gameResults?.filter(result => result.is_correct).length ?? 0
+    // Count successful rounds by checking unique target words with correct guesses
+    const successfulRounds = new Set(
+      gameResults
+        ?.filter(result => result.is_correct)
+        .map(result => result.target_word)
+    ).size
 
     console.log('Verified game results:', {
       sessionId,
       claimedScore: score,
-      actualSuccessfulRounds: successfulRounds
+      actualSuccessfulRounds: successfulRounds,
+      totalResults: gameResults?.length,
+      correctResults: gameResults?.filter(r => r.is_correct).length,
+      uniqueWords: new Set(gameResults?.map(r => r.target_word)).size
     })
 
     // Verify that claimed score matches actual successful rounds
@@ -53,7 +61,14 @@ Deno.serve(async (req) => {
       return new Response(
         JSON.stringify({ 
           error: 'Score verification failed',
-          message: 'Submitted score does not match game results'
+          message: 'Submitted score does not match game results',
+          details: {
+            claimedScore: score,
+            actualScore: successfulRounds,
+            totalResults: gameResults?.length,
+            correctResults: gameResults?.filter(r => r.is_correct).length,
+            uniqueWords: new Set(gameResults?.map(r => r.target_word)).size
+          }
         }),
         {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -73,6 +88,7 @@ Deno.serve(async (req) => {
     })
 
     if (error) {
+      console.error('Error updating high score:', error)
       throw error
     }
 
