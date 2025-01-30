@@ -38,7 +38,7 @@ export default {
       previous: "Précédent",
       next: "Suivant",
       success: "Score soumis avec succès !",
-      theme: "Thème",
+      themeColumn: "Thème",
       error: {
         invalidName: "Veuillez entrer un nom valide",
         noRounds: "Vous devez compléter au moins un tour",

@@ -39,7 +39,7 @@ export default {
       previous: "Precedente",
       next: "Successivo",
       success: "Punteggio inviato con successo!",
-      theme: "Tema",
+      themeColumn: "Tema",
       error: {
         invalidName: "Inserisci un nome valido",
         noRounds: "Devi completare almeno un turno",

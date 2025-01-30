@@ -39,7 +39,7 @@ export default {
       previous: "Anterior",
       next: "Siguiente",
       success: "¡Puntuación enviada con éxito!",
-      theme: "Tema",
+      themeColumn: "Tema",
       error: {
         invalidName: "Por favor, ingresa un nombre válido",
         noRounds: "Debes completar al menos una ronda",
@@ -93,7 +93,7 @@ export default {
           "Establece tu nombre en la tabla de clasificación igual a tu nombre de usuario de Hugging Face",
           "Dale me gusta a nuestro proyecto en Hugging Face"
         ],
-        deadline: "Finaliza: 5 de febrero, 10:00 AM",
+        deadline: "Finaliza: 5 de febrero, 10 AM",
         prizes: {
           title: "Compite por los 5 primeros puestos y gana:",
           list: [
