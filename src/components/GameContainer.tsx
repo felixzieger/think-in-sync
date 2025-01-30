@@ -143,15 +143,15 @@ export const GameContainer = () => {
     }
   };
 
-  const saveGameResult = async (sentence: string[], aiGuess: string, isCorrect: boolean) => {
+  const saveGameResult = async (sentenceString: string, aiGuess: string, isCorrect: boolean) => {
     try {
       const { error } = await supabase
         .from('game_results')
         .insert({
           target_word: currentWord,
-          description: sentence.join(' '),
+          description: sentenceString,
           ai_guess: aiGuess,
-          is_correct: normalizeWord(aiGuess) === normalizeWord(currentWord), // Fixed comparison here
+          is_correct: isCorrect,
           session_id: sessionId
         });
 
@@ -182,8 +182,8 @@ export const GameContainer = () => {
       const guess = await guessWord(sentenceString, language);
       setAiGuess(guess);
 
-      // Save game result using the normalized word comparison
-      await saveGameResult(finalSentence, guess, normalizeWord(guess) === normalizeWord(currentWord));
+      const isCorrect = normalizeWord(guess) === normalizeWord(currentWord)
+      await saveGameResult(sentenceString, guess, isCorrect);
 
       setGameState("showing-guess");
     } catch (error) {
