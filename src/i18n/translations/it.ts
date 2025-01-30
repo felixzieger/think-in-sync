@@ -12,6 +12,7 @@ export const it = {
     aiDelayed: "L'IA è attualmente occupata. Riprova tra un momento.",
     invalidWord: "Parola non valida",
     cantUseTargetWord: "Non usare la parola segreta",
+    shorterWord: "Usa una parola più corta",
     lettersOnly: "Usa solo lettere",
     singleWordOnly: "Inserisci una sola parola",
     leaveGameTitle: "Lasciare il gioco?",
