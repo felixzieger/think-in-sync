@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Index } from "@/pages/Index";
+import Index from "@/pages/Index";
 import { AdminIndex } from "@/pages/admin/Index";
 import { AdminLogin } from "@/pages/admin/Login";
 import { Toaster } from "@/components/ui/toaster";

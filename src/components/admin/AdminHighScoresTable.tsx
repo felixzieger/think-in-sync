@@ -38,27 +38,43 @@ export const AdminHighScoresTable = () => {
   const { data: highScores, isLoading } = useQuery({
     queryKey: ["adminHighScores"],
     queryFn: async () => {
-      console.log("Fetching high scores with game results...");
-      const { data, error } = await supabase
+      console.log("Fetching high scores...");
+      // First fetch high scores
+      const { data: highScoresData, error: highScoresError } = await supabase
         .from("high_scores")
-        .select(`
-          *,
-          game_results (
-            target_word,
-            description,
-            ai_guess,
-            is_correct
-          )
-        `)
+        .select("*")
         .order("score", { ascending: false });
 
-      if (error) {
-        console.error("Error fetching high scores:", error);
-        throw error;
+      if (highScoresError) {
+        console.error("Error fetching high scores:", highScoresError);
+        throw highScoresError;
       }
 
-      console.log("Fetched high scores with game results:", data);
-      return data as HighScoreWithGames[];
+      // Then fetch game results for each high score
+      const highScoresWithGames = await Promise.all(
+        highScoresData.map(async (score) => {
+          const { data: gameResults, error: gameResultsError } = await supabase
+            .from("game_results")
+            .select("target_word, description, ai_guess, is_correct")
+            .eq("session_id", score.session_id);
+
+          if (gameResultsError) {
+            console.error("Error fetching game results:", gameResultsError);
+            return {
+              ...score,
+              game_results: [],
+            };
+          }
+
+          return {
+            ...score,
+            game_results: gameResults || [],
+          };
+        })
+      );
+
+      console.log("Fetched high scores with game results:", highScoresWithGames);
+      return highScoresWithGames as HighScoreWithGames[];
     },
   });
 
