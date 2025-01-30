@@ -118,7 +118,14 @@ export const GameContainer = () => {
   };
 
   const saveGameResult = async (sentenceString: string, aiGuess: string, isCorrect: boolean) => {
+    // Only proceed if we have a valid sessionId
+    if (!sessionId) {
+      console.log("No sessionId available, skipping game result save");
+      return;
+    }
+
     try {
+      console.log("Saving game result with sessionId:", sessionId);
       const { error } = await supabase
         .from('game_results')
         .insert({
@@ -154,6 +161,7 @@ export const GameContainer = () => {
 
       const sentenceString = finalSentence.join(' ');
       const guess = await guessWord(sentenceString, language);
+      console.log("AI guessed:", guess);
       setAiGuess(guess);
 
       const isCorrect = normalizeWord(guess) === normalizeWord(currentWord);
