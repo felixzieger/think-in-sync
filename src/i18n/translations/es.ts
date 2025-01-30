@@ -81,7 +81,7 @@ export const es = {
       subtitle: "¡Forma equipo con la IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
       startButton: "Comenzar juego",
       howToPlay: "Cómo jugar",
-      leaderboard: "Tabla de clasificación",
+      leaderboard: "Clasificación",
       credits: "Creado durante el",
       likeGameText: "Si quieres mostrar que te gusta este juego,",
       contest: {
