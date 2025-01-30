@@ -57,7 +57,7 @@ export const GameContainer = () => {
           handleNextRound();
         } else if (gameState === 'showing-guess' && !isGuessCorrect()) {
           handleGameReview();
-        } else if (gameState === 'game-review') {
+        } else if (gameState === 'game-review' && !isHighScoreDialogOpen) {
           handlePlayAgain();
         }
       }
