@@ -25,7 +25,8 @@ interface SentenceBuilderProps {
   onInputChange: (value: string) => void;
   onSubmitWord: (e: React.FormEvent) => void;
   onMakeGuess: () => void;
-  onBack?: () => void;
+  normalizeWord: () => void;
+  onBack?: () => void; 
 }
 
 export const SentenceBuilder = ({
@@ -37,11 +38,13 @@ export const SentenceBuilder = ({
   onInputChange,
   onSubmitWord,
   onMakeGuess,
+  normalizeWord,
   onBack,
 }: SentenceBuilderProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasMultipleWords, setHasMultipleWords] = useState(false);
   const [containsTargetWord, setContainsTargetWord] = useState(false);
+  const [isTooLong, setIsTooLong] = useState(false);
   const t = useTranslation();
 
   console.log("SentenceBuilder - Rendering with showConfirmDialog:", showConfirmDialog);
@@ -49,8 +52,9 @@ export const SentenceBuilder = ({
   const validateInput = (input: string) => {
     setHasMultipleWords(input.trim().split(/\s+/).length > 1);
     setContainsTargetWord(
-      input.toLowerCase().includes(currentWord.toLowerCase())
+      normalizeWord(input).includes(normalizeWord(currentWord))
     );
+    setIsTooLong(input.trim().length >= 30);
   };
 
   const handleInputChange = (value: string) => {
@@ -90,6 +94,7 @@ export const SentenceBuilder = ({
         isAiThinking={isAiThinking}
         hasMultipleWords={hasMultipleWords}
         containsTargetWord={containsTargetWord}
+        isTooLong={isTooLong}
         isValidInput={isValidInput}
         sentence={sentence}
       />

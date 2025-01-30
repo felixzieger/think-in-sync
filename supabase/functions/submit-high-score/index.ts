@@ -27,7 +27,42 @@ Deno.serve(async (req) => {
       }
     )
 
-    console.log('Submitting score:', { playerName, score, avgWordsPerRound, sessionId, theme })
+    console.log('Verifying game results for session:', sessionId)
+
+    // First verify that the claimed score matches actual game results
+    const { data: gameResults, error: gameError } = await supabaseClient
+      .from('game_results')
+      .select('is_correct')
+      .eq('session_id', sessionId)
+
+    if (gameError) {
+      throw new Error('Failed to verify game results')
+    }
+
+    // Count successful rounds
+    const successfulRounds = gameResults?.filter(result => result.is_correct).length ?? 0
+
+    console.log('Verified game results:', {
+      sessionId,
+      claimedScore: score,
+      actualSuccessfulRounds: successfulRounds
+    })
+
+    // Verify that claimed score matches actual successful rounds
+    if (score !== successfulRounds) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'Score verification failed',
+          message: 'Submitted score does not match game results'
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400,
+        },
+      )
+    }
+
+    console.log('Submitting verified score:', { playerName, score, avgWordsPerRound, sessionId, theme })
 
     const { data, error } = await supabaseClient.rpc('check_and_update_high_score', {
       p_player_name: playerName,

@@ -11,6 +11,7 @@ interface InputFormProps {
   isAiThinking: boolean;
   hasMultipleWords: boolean;
   containsTargetWord: boolean;
+  isTooLong: boolean;
   isValidInput: boolean;
   sentence: string[];
 }
@@ -23,6 +24,7 @@ export const InputForm = ({
   isAiThinking,
   hasMultipleWords,
   containsTargetWord,
+  isTooLong,
   isValidInput,
   sentence
 }: InputFormProps) => {
@@ -40,7 +42,7 @@ export const InputForm = ({
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
-      if (!hasMultipleWords && !containsTargetWord && !isAiThinking && isValidInput) {
+      if (!hasMultipleWords && !containsTargetWord && !isTooLong && !isAiThinking && isValidInput) {
         onMakeGuess();
       }
     }
@@ -49,6 +51,7 @@ export const InputForm = ({
   const getInputError = () => {
     if (hasMultipleWords) return t.game.singleWordOnly;
     if (containsTargetWord) return t.game.cantUseTargetWord;
+    if (isTooLong) return t.game.shorterWord;
     if (!isValidInput && playerInput) return t.game.lettersOnly;
     return null;
   };
@@ -56,7 +59,7 @@ export const InputForm = ({
   const error = getInputError();
 
   const canMakeGuess = (sentence.length > 0 || playerInput.trim().length > 0) && 
-    !hasMultipleWords && !containsTargetWord && isValidInput && !isAiThinking;
+    !hasMultipleWords && !containsTargetWord && !isTooLong && isValidInput && !isAiThinking;
 
   return (
     <form onSubmit={onSubmitWord} className="mb-4">
@@ -82,7 +85,7 @@ export const InputForm = ({
         <Button
           type="submit"
           className="flex-1 bg-primary text-lg hover:bg-primary/90"
-          disabled={!playerInput.trim() || isAiThinking || hasMultipleWords || containsTargetWord || !isValidInput}
+          disabled={!playerInput.trim() || isAiThinking || hasMultipleWords || containsTargetWord || isTooLong || !isValidInput}
         >
           {isAiThinking ? t.game.aiThinking : `${t.game.addWord}  ⏎`}
         </Button>

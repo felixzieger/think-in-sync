@@ -284,6 +284,7 @@ export const GameContainer = () => {
             onInputChange={setPlayerInput}
             onSubmitWord={handlePlayerWord}
             onMakeGuess={handleMakeGuess}
+            normalizeWord={normalizeWord}
             onBack={handleBack}
           />
         ) : (
