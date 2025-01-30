@@ -40,6 +40,15 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           onShowHighScores={() => setShowHighScores(true)}
         />
       </motion.div>
+      
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.1 }}
+        className="max-w-2xl mx-auto text-center mt-8"
+      >
+        <ContestSection />
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0 }}

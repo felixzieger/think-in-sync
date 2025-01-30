@@ -25,7 +25,7 @@ export const ContestSection = () => {
                 <li key={index}>{condition}</li>
               ))}
             </ul>
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <p className="text-sm text-gray-600">{t.welcome.contest.deadline}</p>
               <div className="space-y-1">
                 <p className="text-sm font-medium text-gray-800">{t.welcome.contest.prizes.title}</p>
@@ -35,7 +35,7 @@ export const ContestSection = () => {
                   ))}
                 </ul>
               </div>
-              <p className="text-sm font-medium text-red-600">{t.welcome.contest.fairPlay}</p>
+              <p className="text-sm font-medium text-red-600">{t.welcome.contest.fairPlay}</p> */}
             </div>
           </div>
         </DialogContent>
