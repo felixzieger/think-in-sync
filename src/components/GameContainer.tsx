@@ -94,6 +94,7 @@ export const GameContainer = () => {
     if (!fromSession) return;
     
     try {
+      // First get the game_id from the original session
       const { data: sessionData, error: sessionError } = await supabase
         .from('sessions')
         .select('game_id')
@@ -102,6 +103,7 @@ export const GameContainer = () => {
 
       if (sessionError) throw sessionError;
 
+      // Get the game data (theme and words)
       const { data: gameData, error: gameError } = await supabase
         .from('games')
         .select('theme, words')
@@ -110,13 +112,16 @@ export const GameContainer = () => {
 
       if (gameError) throw gameError;
 
+      // Create a new session for this player using the same game
+      const newSessionId = await createSession(sessionData.game_id);
+
       setCurrentTheme(gameData.theme);
       setWords(gameData.words);
       setCurrentWordIndex(0);
       setGameId(sessionData.game_id);
-      setSessionId(fromSession);
+      setSessionId(newSessionId); // Use the new session ID instead of the invitation session ID
       setGameState("building-sentence");
-      console.log("Game started from invitation with session:", fromSession);
+      console.log("Game started from invitation with new session:", newSessionId);
     } catch (error) {
       console.error('Error starting game from invitation:', error);
       toast({
