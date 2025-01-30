@@ -11,3 +11,5 @@ verify_jwt = false
 verify_jwt = false
 [functions.create-session]
 verify_jwt = false
+[functions.guess-word]
+verify_jwt = false
