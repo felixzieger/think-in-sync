@@ -50,7 +50,7 @@ export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: Sco
             <TableHead>{t.leaderboard.roundsColumn}</TableHead>
             <TableHead>{t.leaderboard.avgWords}</TableHead>
             {showThemeColumn && (
-              <TableHead>{t.leaderboard.theme}</TableHead>
+              <TableHead>{t.leaderboard.themeColumn}</TableHead>
             )}
           </TableRow>
         </TableHeader>
