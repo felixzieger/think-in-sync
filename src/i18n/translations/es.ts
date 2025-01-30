@@ -39,6 +39,7 @@ export const es = {
       previous: "Anterior",
       next: "Siguiente",
       success: "¡Puntuación enviada con éxito!",
+      theme: "Tema",
       error: {
         invalidName: "Por favor, ingresa un nombre válido",
         noRounds: "Debes completar al menos una ronda",
