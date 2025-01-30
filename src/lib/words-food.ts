@@ -70,7 +70,7 @@ export const germanFoodWords = [
   "PILZ",
   "KÜRBIS",
   "ZUCCHINI",
-  "BELL-PAPRIKA",
+  "PAPRIKA",
   "MAIS",
   "AVOCADO",
   "JOGHURT",
