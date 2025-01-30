@@ -25,8 +25,7 @@ interface SentenceBuilderProps {
   onInputChange: (value: string) => void;
   onSubmitWord: (e: React.FormEvent) => void;
   onMakeGuess: () => void;
-  normalizeWord: () => void;
-  onBack?: () => void; 
+  onBack?: () => void;
 }
 
 export const SentenceBuilder = ({
@@ -38,7 +37,6 @@ export const SentenceBuilder = ({
   onInputChange,
   onSubmitWord,
   onMakeGuess,
-  normalizeWord,
   onBack,
 }: SentenceBuilderProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -51,7 +49,7 @@ export const SentenceBuilder = ({
   const validateInput = (input: string) => {
     setHasMultipleWords(input.trim().split(/\s+/).length >= 1 && input.trim().split(/\s+/).length <= 30);
     setContainsTargetWord(
-      normalizeWord(input).includes(normalizeWord(currentWord))
+      input.toLowerCase().includes(currentWord.toLowerCase())
     );
   };
 
