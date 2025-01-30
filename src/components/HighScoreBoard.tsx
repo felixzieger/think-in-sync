@@ -31,6 +31,7 @@ interface HighScoreBoardProps {
 }
 
 const ITEMS_PER_PAGE = 5;
+const STANDARD_THEMES = ['standard', 'sports', 'food'];
 
 export const HighScoreBoard = ({
   currentScore = 0,
@@ -58,12 +59,20 @@ export const HighScoreBoard = ({
     queryKey: ["highScores", selectedTheme],
     queryFn: async () => {
       console.log("Fetching high scores for theme:", selectedTheme);
-      const { data, error } = await supabase
+      let query = supabase
         .from("high_scores")
         .select("*")
-        .eq('theme', selectedTheme)
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
+
+      // Apply theme filtering
+      if (selectedTheme === 'custom') {
+        query = query.not('theme', 'in', STANDARD_THEMES);
+      } else {
+        query = query.eq('theme', selectedTheme);
+      }
+
+      const { data, error } = await query;
 
       if (error) {
         console.error("Error fetching high scores:", error);
