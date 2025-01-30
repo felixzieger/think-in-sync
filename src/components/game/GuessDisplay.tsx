@@ -83,7 +83,11 @@ export const GuessDisplay = ({
 
       <GuessDescription sentence={sentence} aiGuess={aiGuess} />
 
-      <GuessResult aiGuess={aiGuess} isCorrect={isGuessCorrect()} />
+      <GuessResult 
+        aiGuess={aiGuess} 
+        isCorrect={isGuessCorrect()} 
+        onNextRound={onNextRound}
+      />
 
       <ActionButtons
         isCorrect={isGuessCorrect()}
