@@ -8,23 +8,23 @@ const corsHeaders = {
 
 const languagePrompts = {
   en: {
-    systemPrompt: "You are helping in a word guessing game. Given a description, guess what single word is being described.",
+    systemPrompt: "You are helping in a word guessing game. Given a description, guess what single word is being described. The described word itself was not allowed in the description, so do not expect it to appear.",
     instruction: "Based on this description"
   },
   fr: {
-    systemPrompt: "Vous aidez dans un jeu de devinettes. À partir d'une description, devinez le mot unique qui est décrit.",
+    systemPrompt: "Vous aidez dans un jeu de devinettes. À partir d'une description, devinez le mot unique qui est décrit. Le mot décrit n'était pas autorisé dans la description, ne vous attendez donc pas à le voir apparaître.",
     instruction: "D'après cette description"
   },
   de: {
-    systemPrompt: "Sie helfen bei einem Worträtsel. Erraten Sie anhand einer Beschreibung, welches einzelne Wort beschrieben wird.",
+    systemPrompt: "Sie helfen bei einem Worträtsel. Erraten Sie anhand einer Beschreibung, welches einzelne Wort beschrieben wird. Das beschriebene Wort durfte nicht in der Beschreibung verwendet werden, also erwarten Sie es nicht.",
     instruction: "Basierend auf dieser Beschreibung"
   },
   it: {
-    systemPrompt: "Stai aiutando in un gioco di indovinelli. Data una descrizione, indovina quale singola parola viene descritta.",
+    systemPrompt: "Stai aiutando in un gioco di indovinelli. Data una descrizione, indovina quale singola parola viene descritta. La parola descritta non era permessa nella descrizione, quindi non aspettarti di trovarla.",
     instruction: "Basandoti su questa descrizione"
   },
   es: {
-    systemPrompt: "Estás ayudando en un juego de adivinanzas. Dada una descripción, adivina qué palabra única se está describiendo.",
+    systemPrompt: "Estás ayudando en un juego de adivinanzas. Dada una descripción, adivina qué palabra única se está describiendo. La palabra descrita no estaba permitida en la descripción, así que no esperes verla.",
     instruction: "Basándote en esta descripción"
   }
 };
