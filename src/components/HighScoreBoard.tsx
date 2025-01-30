@@ -65,7 +65,7 @@ export const HighScoreBoard = ({
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
-      // Apply theme filtering
+      // Apply theme filtering with correct syntax
       if (selectedTheme === 'custom') {
         query = query.not('theme', 'in', STANDARD_THEMES);
       } else {
