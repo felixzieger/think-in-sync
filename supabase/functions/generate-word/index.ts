@@ -10,27 +10,32 @@ const languagePrompts = {
   en: {
     systemPrompt: "You are helping in a word game. The secret word is",
     task: "Your task is to find a sentence to describe this word without using it directly.",
-    instruction: "Answer with a description for this word. Start your answer with"
+    instruction: "Answer with a description for this word. Start your answer with",
+    noQuotes: "Do not add quotes or backticks. Just answer with the sentence."
   },
   fr: {
     systemPrompt: "Vous aidez dans un jeu de mots. Le mot secret est",
     task: "Votre tâche est de trouver une phrase pour décrire ce mot sans l'utiliser directement.",
-    instruction: "Répondez avec une phrase qui commence par"
+    instruction: "Répondez avec une phrase qui commence par",
+    noQuotes: "Ne rajoutez pas de guillemets ni de backticks. Répondez simplement par la phrase."
   },
   de: {
     systemPrompt: "Sie helfen bei einem Wortspiel. Das geheime Wort ist",
     task: "Ihre Aufgabe ist es, eine Beschreibung zu finden, der dieses Wort beschreibt, ohne es direkt zu verwenden.",
-    instruction: "Beginnen sie ihre Antwort mit"
+    instruction: "Beginnen sie ihre Antwort mit",
+    noQuotes: "Fügen Sie keine Anführungszeichen oder Backticks hinzu. Antworten Sie einfach mit dem Satz."
   },
   it: {
     systemPrompt: "Stai aiutando in un gioco di parole. La parola segreta è",
     task: "Il tuo compito è trovare una frase per descrivere questa parola senza usarla direttamente.",
-    instruction: "Rispondi con una frase completa e grammaticalmente corretta che inizia con"
+    instruction: "Rispondi con una frase completa e grammaticalmente corretta che inizia con",
+    noQuotes: "Non aggiungere virgolette o backticks. Rispondi semplicemente con la frase."
   },
   es: {
     systemPrompt: "Estás ayudando en un juego de palabras. La palabra secreta es",
     task: "Tu tarea es encontrar una frase para describir esta palabra sin usarla directamente.",
-    instruction: "Responde con una frase completa y gramaticalmente correcta que comience con"
+    instruction: "Responde con una frase completa y gramaticalmente correcta que comience con",
+    noQuotes: "No añadas comillas ni backticks. Simplemente responde con la frase."
   }
 };
 
@@ -53,7 +58,7 @@ async function tryMistral(currentWord: string, existingSentence: string, languag
     messages: [
       {
         role: "system",
-        content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". Do not add quotes or backticks. Just answer with the sentence.`
+        content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". ${prompts.noQuotes}`
       }
     ],
     maxTokens: 50,
@@ -62,7 +67,7 @@ async function tryMistral(currentWord: string, existingSentence: string, languag
 
   const aiResponse = response.choices[0].message.content.trim();
   console.log('Mistral full response:', aiResponse);
-  
+
   return aiResponse
     .slice(existingSentence.length)
     .trim()
@@ -89,7 +94,7 @@ async function tryOpenRouter(currentWord: string, existingSentence: string, lang
       messages: [
         {
           role: "system",
-          content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". Do not add quotes or backticks. Just answer with the sentence.`
+          content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". ${prompts.noQuotes}`
         }
       ]
     })
@@ -102,7 +107,7 @@ async function tryOpenRouter(currentWord: string, existingSentence: string, lang
   const data = await response.json();
   const aiResponse = data.choices[0].message.content.trim();
   console.log('OpenRouter full response:', aiResponse);
-  
+
   return aiResponse
     .slice(existingSentence.length)
     .trim()
@@ -132,7 +137,7 @@ serve(async (req) => {
     } catch (mistralError) {
       console.error('Mistral error:', mistralError);
       console.log('Falling back to OpenRouter...');
-      
+
       const word = await tryOpenRouter(currentWord, existingSentence, language);
       console.log('Successfully generated word with OpenRouter:', word);
       return new Response(
@@ -144,7 +149,7 @@ serve(async (req) => {
     console.error('Error generating word:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
-      { 
+      {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
