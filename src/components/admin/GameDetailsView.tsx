@@ -8,6 +8,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useTranslation } from "@/hooks/useTranslation";
+import { GuessDescription } from "@/components/game/guess-display/GuessDescription";
+import { GuessResult } from "@/components/game/guess-display/GuessResult";
 
 interface GameResult {
   id: string;
@@ -35,21 +37,31 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
             {currentResult?.target_word}
           </DialogTitle>
         </DialogHeader>
-        <div className="space-y-4 mt-4">
+        <div className="space-y-6 mt-4">
           <div>
             <h3 className="font-semibold mb-2">{t.game.review.yourDescription}</h3>
-            <p className="text-sm text-gray-600">{currentResult?.description}</p>
-            <p className="text-sm mt-1">
-              {t.game.review.aiGuessed}: <span className="font-medium">{currentResult?.ai_guess}</span>
-            </p>
+            <GuessDescription 
+              sentence={currentResult?.description?.split(' ') || []} 
+              aiGuess={currentResult?.ai_guess || ''}
+            />
+            <GuessResult 
+              aiGuess={currentResult?.ai_guess || ''} 
+              isCorrect={currentResult?.is_correct || false}
+              onNextRound={() => {}}
+            />
           </div>
           {friendResult && (
             <div>
               <h3 className="font-semibold mb-2">{t.game.review.friendDescription}</h3>
-              <p className="text-sm text-gray-600">{friendResult.description}</p>
-              <p className="text-sm mt-1">
-                {t.game.review.aiGuessed}: <span className="font-medium">{friendResult.ai_guess}</span>
-              </p>
+              <GuessDescription 
+                sentence={friendResult.description?.split(' ') || []} 
+                aiGuess={friendResult.ai_guess || ''}
+              />
+              <GuessResult 
+                aiGuess={friendResult.ai_guess || ''} 
+                isCorrect={friendResult.is_correct || false}
+                onNextRound={() => {}}
+              />
             </div>
           )}
         </div>
@@ -119,7 +131,7 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
                 onClick={() => setSelectedResult(result)}
               >
                 <td className="px-6 py-4 font-medium">
-                  {result.target_word}
+                  {result.is_correct ? '✅' : '❌'} {result.target_word}
                 </td>
                 <td className="px-6 py-4">
                   {getWordCount(result.description)}
