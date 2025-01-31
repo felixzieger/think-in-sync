@@ -74,6 +74,7 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
         .order('created_at', { ascending: true });
 
       if (!error && data) {
+        console.log('Friend results:', data);
         setFriendResults(data);
       }
     };
@@ -94,6 +95,9 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
       <table className="w-full text-sm text-left">
         <thead className="text-xs uppercase bg-gray-50">
           <tr>
+            <th className="w-10 px-2 py-3">
+              <span className="sr-only">{t.game.review.result}</span>
+            </th>
             <th className="px-6 py-3">
               {t.game.review.word}
             </th>
@@ -105,9 +109,6 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
                 {t.game.review.friendWords}
               </th>
             )}
-            <th className="px-6 py-3">
-              {t.game.review.friendWords}
-            </th>
             <th className="px-6 py-3">
               <span className="sr-only">{t.game.review.details}</span>
             </th>
@@ -122,8 +123,11 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
                 className="bg-white border-b hover:bg-gray-50 cursor-pointer"
                 onClick={() => setSelectedResult(result)}
               >
+                <td className="px-2 py-4 text-center">
+                  {result.is_correct ? '✅' : '❌'}
+                </td>
                 <td className="px-6 py-4 font-medium">
-                  {result.is_correct ? '✅' : '❌'} {result.target_word}
+                  {result.target_word}
                 </td>
                 <td className="px-6 py-4">
                   {getWordCount(result.description)}
@@ -133,9 +137,6 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
                     {friendResult ? getWordCount(friendResult.description) : '-'}
                   </td>
                 )}
-                <td className="px-6 py-4">
-                  {friendResult ? getWordCount(friendResult.description) : '-'}
-                </td>
                 <td className="px-6 py-4">
                   <Eye className="h-4 w-4 text-gray-500" />
                 </td>
