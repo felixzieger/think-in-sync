@@ -20,6 +20,7 @@ interface GameReviewProps {
   currentScore: number;
   avgWordsPerRound: number;
   onPlayAgain: () => void;
+  onBack?: () => void;
   gameId?: string;
   sessionId: string;
   currentTheme: string;
@@ -29,6 +30,7 @@ export const GameReview = ({
   currentScore,
   avgWordsPerRound,
   onPlayAgain,
+  onBack,
   gameId,
   sessionId,
   currentTheme,
@@ -43,6 +45,7 @@ export const GameReview = ({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const fromSession = searchParams.get('from_session');
   const shareUrl = `${window.location.origin}/game?from_session=${sessionId}`;
+
 
   useEffect(() => {
     const fetchGameResults = async () => {
@@ -133,10 +136,6 @@ export const GameReview = ({
     }
   };
 
-  const handleBack = () => {
-    navigate('/');
-  };
-
   const renderComparisonResult = () => {
     if (!friendData) return null;
 
@@ -163,7 +162,7 @@ export const GameReview = ({
     >
       <RoundHeader
         successfulRounds={currentScore}
-        onBack={handleBack}
+        onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={setShowConfirmDialog}
       />

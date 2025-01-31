@@ -128,6 +128,8 @@ export const GameContainer = () => {
     setCurrentWordIndex(0);
     setGameId("");
     setSessionId("");
+
+    navigate('/');
   };
 
   const handleInvitationContinue = async () => {
@@ -170,7 +172,7 @@ export const GameContainer = () => {
       if (gameError) throw gameError;
 
       navigate(`/game/${newGameId}`);
-      
+
       setGameId(newGameId);
       setSessionId(newSessionId);
       setWords(gameData.words);
@@ -361,6 +363,7 @@ export const GameContainer = () => {
             currentScore={successfulRounds}
             avgWordsPerRound={getAverageWordsPerSuccessfulRound()}
             onPlayAgain={handlePlayAgain}
+            onBack={handleBack}
             gameId={gameId}
             sessionId={sessionId}
             currentTheme={currentTheme}
