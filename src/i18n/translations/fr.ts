@@ -112,6 +112,7 @@ export const fr = {
     startButton: "Commencer",
     startDailyButton: "Défi du Jour",
     startNewButton: "Nouvelle Partie",
+    dailyLeaderboard: "Classement du jour",
     howToPlay: "Comment Jouer",
     leaderboard: "Classement",
     credits: "Créé pendant le",

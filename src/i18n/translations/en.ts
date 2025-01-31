@@ -112,6 +112,7 @@ export const en = {
     startButton: "Start Game",
     startDailyButton: "Daily Challenge",
     startNewButton: "New Game",
+    dailyLeaderboard: "Today's Ranking",
     howToPlay: "How to Play",
     leaderboard: "Leaderboard",
     credits: "Created during the",

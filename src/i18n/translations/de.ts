@@ -112,6 +112,7 @@ export const de = {
     startButton: "Spiel starten",
     startDailyButton: "Tägliche Herausforderung",
     startNewButton: "Neues Spiel",
+    dailyLeaderboard: "Tagesranking",
     howToPlay: "Spielanleitung",
     leaderboard: "Bestenliste",
     credits: "Erstellt während des",

@@ -114,6 +114,7 @@ export const it = {
     startButton: "Inizia gioco",
     startDailyButton: "Sfida Giornaliera",
     startNewButton: "Nuova Partita",
+    dailyLeaderboard: "Classifica di oggi",
     howToPlay: "Come giocare",
     leaderboard: "Classifica",
     credits: "Creato durante il",
