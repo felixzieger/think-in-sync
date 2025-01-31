@@ -26,7 +26,7 @@ interface ComparisonDialogProps {
 
 const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: ComparisonDialogProps) => {
   const t = useTranslation();
-  
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
@@ -122,9 +122,6 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
                 className="bg-white border-b hover:bg-gray-50 cursor-pointer"
                 onClick={() => setSelectedResult(result)}
               >
-                <td className="px-2 py-4 text-center">
-                  
-                </td>
                 <td className="px-6 py-4 font-medium">
                   {result.is_correct ? '✅' : '❌'} {result.target_word}
                 </td>
