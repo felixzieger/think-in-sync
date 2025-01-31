@@ -64,6 +64,7 @@ export type Database = {
         Row: {
           avg_words_per_round: number
           created_at: string
+          game_id: string | null
           id: string
           player_name: string
           score: number
@@ -73,6 +74,7 @@ export type Database = {
         Insert: {
           avg_words_per_round: number
           created_at?: string
+          game_id?: string | null
           id?: string
           player_name: string
           score: number
@@ -82,13 +84,22 @@ export type Database = {
         Update: {
           avg_words_per_round?: number
           created_at?: string
+          game_id?: string | null
           id?: string
           player_name?: string
           score?: number
           session_id?: string
           theme?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "high_scores_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       sessions: {
         Row: {

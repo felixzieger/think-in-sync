@@ -11,7 +11,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { playerName, score, avgWordsPerRound, sessionId, theme } = await req.json()
+    const { playerName, score, avgWordsPerRound, sessionId, theme, gameId } = await req.json()
 
     if (!playerName || !score || !avgWordsPerRound || !sessionId || !theme) {
       throw new Error('Missing required fields')
@@ -50,7 +50,8 @@ Deno.serve(async (req) => {
     console.log('Verified game results:', {
       sessionId,
       claimedScore: score,
-      actualSuccessfulRounds: successfulRounds
+      actualSuccessfulRounds: successfulRounds,
+      gameId
     })
 
     // Verify that claimed score matches actual successful rounds
@@ -69,15 +70,19 @@ Deno.serve(async (req) => {
       )
     }
 
-    console.log('Submitting verified score:', { playerName, score, avgWordsPerRound, sessionId, theme })
-
-    const { data, error } = await supabaseClient.rpc('check_and_update_high_score', {
-      p_player_name: playerName,
-      p_score: score,
-      p_avg_words_per_round: avgWordsPerRound,
-      p_session_id: sessionId,
-      p_theme: theme
-    })
+    // Insert or update the high score
+    const { data, error } = await supabaseClient
+      .from('high_scores')
+      .upsert({
+        player_name: playerName,
+        score,
+        avg_words_per_round: avgWordsPerRound,
+        session_id: sessionId,
+        theme,
+        game_id: gameId
+      })
+      .select()
+      .single()
 
     if (error) {
       throw error

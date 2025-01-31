@@ -8,6 +8,7 @@ import { ScoreSubmissionForm } from "./game/leaderboard/ScoreSubmissionForm";
 import { ScoresTable } from "./game/leaderboard/ScoresTable";
 import { LeaderboardHeader } from "./game/leaderboard/LeaderboardHeader";
 import { LeaderboardPagination } from "./game/leaderboard/LeaderboardPagination";
+import { useSearchParams } from "react-router-dom";
 
 interface HighScore {
   id: string;
@@ -17,6 +18,7 @@ interface HighScore {
   created_at: string;
   session_id: string;
   theme: string;
+  game_id: string | null;
 }
 
 interface HighScoreBoardProps {
@@ -52,24 +54,42 @@ export const HighScoreBoard = ({
   const { toast } = useToast();
   const t = useTranslation();
   const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
+  const fromSession = searchParams.get('from_session');
 
   const showScoreInfo = sessionId !== "" && currentScore > 0;
 
   const { data: highScores } = useQuery({
-    queryKey: ["highScores", selectedTheme],
+    queryKey: ["highScores", selectedTheme, fromSession],
     queryFn: async () => {
-      console.log("Fetching high scores for theme:", selectedTheme);
+      console.log("Fetching high scores for theme:", selectedTheme, "fromSession:", fromSession);
       let query = supabase
         .from("high_scores")
         .select("*")
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
-      if (selectedTheme === 'custom') {
-        const filterValue = `(${STANDARD_THEMES.join(',')})`;
-        query = query.filter('theme', 'not.in', filterValue);
+      if (fromSession) {
+        // First get the game_id from the session
+        const { data: sessionData } = await supabase
+          .from("sessions")
+          .select("game_id")
+          .eq("id", fromSession)
+          .single();
+
+        if (sessionData) {
+          console.log("Found game_id for session:", sessionData.game_id);
+          query = query.eq('game_id', sessionData.game_id);
+        }
       } else {
-        query = query.eq('theme', selectedTheme);
+        if (selectedTheme === 'custom') {
+          const filterValue = `(${STANDARD_THEMES.join(',')})`;
+          query = query.filter('theme', 'not.in', filterValue);
+        } else {
+          query = query.eq('theme', selectedTheme);
+        }
+        // Only show global scores (no game_id)
+        query = query.is('game_id', null);
       }
 
       const { data, error } = await query;
@@ -113,6 +133,16 @@ export const HighScoreBoard = ({
 
     setIsSubmitting(true);
     try {
+      let gameId = null;
+      if (fromSession) {
+        const { data: sessionData } = await supabase
+          .from("sessions")
+          .select("game_id")
+          .eq("id", fromSession)
+          .single();
+        gameId = sessionData?.game_id;
+      }
+
       console.log("Submitting score via Edge Function...");
       const { data, error } = await supabase.functions.invoke('submit-high-score', {
         body: {
@@ -120,7 +150,8 @@ export const HighScoreBoard = ({
           score: currentScore,
           avgWordsPerRound,
           sessionId,
-          theme: selectedTheme
+          theme: selectedTheme,
+          gameId
         }
       });
 
@@ -171,9 +202,10 @@ export const HighScoreBoard = ({
         currentScore={currentScore}
         avgWordsPerRound={avgWordsPerRound}
         showScoreInfo={showScoreInfo}
+        isGameSpecific={!!fromSession}
       />
 
-      {showThemeFilter && (
+      {showThemeFilter && !fromSession && (
         <ThemeFilter
           selectedTheme={selectedTheme}
           onThemeChange={setSelectedTheme}
@@ -194,7 +226,7 @@ export const HighScoreBoard = ({
       <ScoresTable
         scores={paginatedScores || []}
         startIndex={startIndex}
-        showThemeColumn={selectedTheme === 'custom'}
+        showThemeColumn={selectedTheme === 'custom' && !fromSession}
       />
 
       <LeaderboardPagination
