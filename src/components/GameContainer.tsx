@@ -1,5 +1,5 @@
 import { useState, KeyboardEvent, useEffect, useContext } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
 import { createGame, createSession } from "@/services/gameService";
@@ -26,6 +26,8 @@ const normalizeWord = (word: string): string => {
 
 export const GameContainer = () => {
   const [searchParams] = useSearchParams();
+  const { gameId: urlGameId } = useParams();
+  const navigate = useNavigate();
   const fromSession = searchParams.get('from_session');
   const [gameState, setGameState] = useState<GameState>(fromSession ? "invitation" : "welcome");
   const [currentTheme, setCurrentTheme] = useState<string>("standard");
@@ -73,6 +75,44 @@ export const GameContainer = () => {
     return () => window.removeEventListener('keydown', handleKeyPress as any);
   }, [gameState, aiGuess, currentWord]);
 
+  useEffect(() => {
+    if (urlGameId && !gameId) {
+      handleLoadGameFromUrl();
+    }
+  }, [urlGameId]);
+
+  const handleLoadGameFromUrl = async () => {
+    if (!urlGameId) return;
+
+    try {
+      const { data: gameData, error: gameError } = await supabase
+        .from('games')
+        .select('theme, words')
+        .eq('id', urlGameId)
+        .single();
+
+      if (gameError) throw gameError;
+
+      const newSessionId = await createSession(urlGameId);
+
+      setCurrentTheme(gameData.theme);
+      setWords(gameData.words);
+      setCurrentWordIndex(0);
+      setGameId(urlGameId);
+      setSessionId(newSessionId);
+      setGameState("building-sentence");
+      console.log("Game started from URL with game ID:", urlGameId);
+    } catch (error) {
+      console.error('Error loading game from URL:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load the game. Please try again.",
+        variant: "destructive",
+      });
+      navigate('/');
+    }
+  };
+
   const handleStart = () => {
     setGameState("theme-selection");
   };
@@ -94,7 +134,6 @@ export const GameContainer = () => {
     if (!fromSession) return;
 
     try {
-      // First get the game_id from the original session
       const { data: sessionData, error: sessionError } = await supabase
         .from('sessions')
         .select('game_id')
@@ -103,25 +142,8 @@ export const GameContainer = () => {
 
       if (sessionError) throw sessionError;
 
-      // Get the game data (theme and words)
-      const { data: gameData, error: gameError } = await supabase
-        .from('games')
-        .select('theme, words')
-        .eq('id', sessionData.game_id)
-        .single();
-
-      if (gameError) throw gameError;
-
-      // Create a new session for this player using the same game
-      const newSessionId = await createSession(sessionData.game_id);
-
-      setCurrentTheme(gameData.theme);
-      setWords(gameData.words);
-      setCurrentWordIndex(0);
-      setGameId(sessionData.game_id);
-      setSessionId(newSessionId); // Use the new session ID instead of the invitation session ID
-      setGameState("building-sentence");
-      console.log("Game started from invitation with new session:", newSessionId);
+      navigate(`/game/${sessionData.game_id}`);
+      console.log("Redirecting to game with ID:", sessionData.game_id);
     } catch (error) {
       console.error('Error starting game from invitation:', error);
       toast({
@@ -147,6 +169,8 @@ export const GameContainer = () => {
 
       if (gameError) throw gameError;
 
+      navigate(`/game/${newGameId}`);
+      
       setGameId(newGameId);
       setSessionId(newSessionId);
       setWords(gameData.words);
@@ -231,7 +255,6 @@ export const GameContainer = () => {
 
       const isCorrect = normalizeWord(guess) === normalizeWord(currentWord);
 
-      // Update total words in successful rounds if guess is correct
       if (isCorrect) {
         setTotalWordsInSuccessfulRounds(prev => prev + finalSentence.length);
       }
