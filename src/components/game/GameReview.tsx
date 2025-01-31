@@ -13,6 +13,7 @@ import { HighScoreBoard } from "@/components/HighScoreBoard";
 import { GameDetailsView } from "@/components/admin/GameDetailsView";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
+import { useSearchParams } from "react-router-dom";
 
 interface GameReviewProps {
   currentScore: number;
@@ -20,6 +21,11 @@ interface GameReviewProps {
   onPlayAgain: () => void;
   sessionId: string;
   currentTheme: string;
+}
+
+interface ComparisonData {
+  score: number;
+  avgWords: number;
 }
 
 export const GameReview = ({
@@ -31,8 +37,11 @@ export const GameReview = ({
 }: GameReviewProps) => {
   const t = useTranslation();
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const fromSession = searchParams.get('from_session');
   const [showHighScores, setShowHighScores] = useState(false);
   const [gameResults, setGameResults] = useState([]);
+  const [friendData, setFriendData] = useState<ComparisonData | null>(null);
   const shareUrl = `${window.location.origin}/game?from_session=${sessionId}`;
 
   useEffect(() => {
@@ -48,8 +57,36 @@ export const GameReview = ({
       }
     };
 
+    const fetchFriendResults = async () => {
+      if (!fromSession) return;
+
+      const { data: friendResults, error } = await supabase
+        .from('game_results')
+        .select('is_correct')
+        .eq('session_id', fromSession);
+
+      if (error) {
+        console.error('Error fetching friend results:', error);
+        return;
+      }
+
+      if (friendResults) {
+        const successfulRounds = friendResults.filter(r => r.is_correct).length;
+        const totalWords = friendResults.reduce((acc, r) => acc + (r.description?.split(' ').length || 0), 0);
+        const avgWords = successfulRounds > 0 ? totalWords / successfulRounds : 0;
+
+        setFriendData({
+          score: successfulRounds,
+          avgWords: avgWords
+        });
+      }
+    };
+
     fetchGameResults();
-  }, [sessionId]);
+    if (fromSession) {
+      fetchFriendResults();
+    }
+  }, [sessionId, fromSession]);
 
   const handleCopyUrl = async () => {
     try {
@@ -68,6 +105,24 @@ export const GameReview = ({
     }
   };
 
+  const renderComparisonResult = () => {
+    if (!friendData) return null;
+
+    const didWin = currentScore > friendData.score || 
+      (currentScore === friendData.score && avgWordsPerRound < friendData.avgWords);
+
+    return (
+      <div className="space-y-4 mt-4">
+        <p className="text-sm text-gray-600">
+          {t.game.review.friendScore(friendData.score, friendData.avgWords.toFixed(1))}
+        </p>
+        <p className="text-xl font-bold">
+          {didWin ? `${t.game.review.youWin} 🎉` : `${t.game.review.youLost} 😔`}
+        </p>
+      </div>
+    );
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -82,8 +137,9 @@ export const GameReview = ({
             {t.game.review.successfulRounds}: <span className="font-bold">{currentScore}</span>
           </p>
           <p className="text-sm text-gray-600">
-            {t.leaderboard.wordsPerRound}: {(gameResults.length > 0 ? avgWordsPerRound : 0).toFixed(1)}
+            {t.leaderboard.wordsPerRound}: {avgWordsPerRound.toFixed(1)}
           </p>
+          {renderComparisonResult()}
         </div>
 
         <GameDetailsView gameResults={gameResults} />
