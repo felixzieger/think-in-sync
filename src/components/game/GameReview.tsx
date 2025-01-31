@@ -113,11 +113,11 @@ export const GameReview = ({
 
     return (
       <div className="space-y-4 mt-4">
+        <p className="text-xl font-bold">
+          {didWin ? `${t.game.review.youWin} 🎉` : `${t.game.review.youLost} 🧘`}
+        </p>
         <p className="text-sm text-gray-600">
           {t.game.review.friendScore(friendData.score, friendData.avgWords.toFixed(1))}
-        </p>
-        <p className="text-xl font-bold">
-          {didWin ? `${t.game.review.youWin} 🎉` : `${t.game.review.youLost} 😔`}
         </p>
       </div>
     );
