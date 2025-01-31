@@ -29,14 +29,14 @@ export const MainActions = ({ onStartDaily: onStartDaily, onStartNew: onStartNew
         <Button
           onClick={onShowHowToPlay}
           variant="outline"
-          className="text-lg"
+          className="text-lg hover:text-white"
         >
           {t.welcome.howToPlay} 📖
         </Button>
         <Button
           onClick={onShowHighScores}
           variant="outline"
-          className="text-lg"
+          className="text-lg hover:text-white"
         >
           {t.welcome.leaderboard} 🏆
         </Button>
