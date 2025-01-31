@@ -62,7 +62,7 @@ export const GameReview = ({
 
       const { data: friendResults, error } = await supabase
         .from('game_results')
-        .select('is_correct, description')
+        .select('target_word, is_correct, description, ai_guess')
         .eq('session_id', fromSession);
 
       if (error) {
@@ -108,7 +108,7 @@ export const GameReview = ({
   const renderComparisonResult = () => {
     if (!friendData) return null;
 
-    const didWin = currentScore > friendData.score || 
+    const didWin = currentScore > friendData.score ||
       (currentScore === friendData.score && avgWordsPerRound < friendData.avgWords);
 
     return (
@@ -142,7 +142,7 @@ export const GameReview = ({
           {renderComparisonResult()}
         </div>
 
-        <GameDetailsView gameResults={gameResults} />
+        <GameDetailsView gameResults={gameResults} fromSession={fromSession} />
 
         <div className="relative items-center bg-gray-100 p-4 rounded-lg">
           <p className="text-sm">{t.game.review.urlCopiedDesc}</p>
