@@ -24,6 +24,7 @@ interface HighScoreBoardProps {
   avgWordsPerRound?: number;
   onClose?: () => void;
   onPlayAgain?: () => void;
+  gameId?: string;
   sessionId?: string;
   onScoreSubmitted?: () => void;
   showThemeFilter?: boolean;
@@ -37,6 +38,7 @@ export const HighScoreBoard = ({
   currentScore = 0,
   avgWordsPerRound = 0,
   onClose,
+  gameId = "",
   sessionId = "",
   onScoreSubmitted,
   showThemeFilter = true,
@@ -120,7 +122,8 @@ export const HighScoreBoard = ({
           score: currentScore,
           avgWordsPerRound,
           sessionId,
-          theme: selectedTheme
+          theme: selectedTheme,
+          gameId
         }
       });
 
@@ -130,13 +133,13 @@ export const HighScoreBoard = ({
       }
 
       console.log("Score submitted successfully:", data);
-      
+
       if (data.success) {
         toast({
           title: t.leaderboard.success,
           description: t.leaderboard.success,
         });
-        
+
         setHasSubmitted(true);
         onScoreSubmitted?.();
         setPlayerName("");

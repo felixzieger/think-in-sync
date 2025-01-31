@@ -19,6 +19,7 @@ interface GameReviewProps {
   currentScore: number;
   avgWordsPerRound: number;
   onPlayAgain: () => void;
+  gameId?: string;
   sessionId: string;
   currentTheme: string;
 }
@@ -32,6 +33,7 @@ export const GameReview = ({
   currentScore,
   avgWordsPerRound,
   onPlayAgain,
+  gameId,
   sessionId,
   currentTheme,
 }: GameReviewProps) => {
@@ -180,6 +182,7 @@ export const GameReview = ({
             avgWordsPerRound={avgWordsPerRound}
             onClose={() => setShowHighScores(false)}
             onPlayAgain={onPlayAgain}
+            gameId={gameId}
             sessionId={sessionId}
             showThemeFilter={false}
             initialTheme={currentTheme}

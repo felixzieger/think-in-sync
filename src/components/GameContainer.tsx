@@ -92,7 +92,7 @@ export const GameContainer = () => {
 
   const handleInvitationContinue = async () => {
     if (!fromSession) return;
-    
+
     try {
       // First get the game_id from the original session
       const { data: sessionData, error: sessionError } = await supabase
@@ -138,7 +138,7 @@ export const GameContainer = () => {
     try {
       const newGameId = await createGame(theme, language);
       const newSessionId = await createSession(newGameId);
-      
+
       const { data: gameData, error: gameError } = await supabase
         .from('games')
         .select('words')
@@ -230,12 +230,12 @@ export const GameContainer = () => {
       setAiGuess(guess);
 
       const isCorrect = normalizeWord(guess) === normalizeWord(currentWord);
-      
+
       // Update total words in successful rounds if guess is correct
       if (isCorrect) {
         setTotalWordsInSuccessfulRounds(prev => prev + finalSentence.length);
       }
-      
+
       await saveGameResult(sentenceString, guess, isCorrect);
       setGameState("showing-guess");
     } catch (error) {
@@ -338,6 +338,7 @@ export const GameContainer = () => {
             currentScore={successfulRounds}
             avgWordsPerRound={getAverageWordsPerSuccessfulRound()}
             onPlayAgain={handlePlayAgain}
+            gameId={gameId}
             sessionId={sessionId}
             currentTheme={currentTheme}
           />
