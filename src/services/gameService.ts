@@ -7,7 +7,7 @@ import { Language } from "@/i18n/translations";
 
 const generateWordsForTheme = async (theme: string, wordCount: number = 10, language: Language = 'en'): Promise<string[]> => {
   console.log('Generating words for theme:', theme, 'count:', wordCount, 'language:', language);
-  
+
   const words: string[] = [];
   const usedWords: string[] = [];
 
@@ -35,9 +35,9 @@ const generateWordsForTheme = async (theme: string, wordCount: number = 10, lang
 
 export const createGame = async (theme: string, language: Language = 'en'): Promise<string> => {
   console.log('Creating new game with theme:', theme);
-  
-  const words = await generateWordsForTheme(theme, 10, language);
-  
+
+  const words = await generateWordsForTheme(theme, 25, language);
+
   const { data: game, error } = await supabase
     .from('games')
     .insert({
@@ -58,7 +58,7 @@ export const createGame = async (theme: string, language: Language = 'en'): Prom
 
 export const createSession = async (gameId: string): Promise<string> => {
   console.log('Creating new session for game:', gameId);
-  
+
   const { data: session, error } = await supabase
     .from('sessions')
     .insert({
