@@ -94,6 +94,7 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
       <table className="w-full text-sm text-left">
         <thead className="text-xs uppercase bg-gray-50">
           <tr>
+            <th className="px-2 py-3 w-10"></th>
             <th className="px-6 py-3">
               {t.game.review.word}
             </th>
@@ -106,7 +107,7 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
               </th>
             )}
             <th className="px-6 py-3">
-              {t.game.review.result}
+              {t.game.review.friendWords}
             </th>
             <th className="px-6 py-3">
               <span className="sr-only">{t.game.review.details}</span>
@@ -122,6 +123,9 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
                 className="bg-white border-b hover:bg-gray-50 cursor-pointer"
                 onClick={() => setSelectedResult(result)}
               >
+                <td className="px-2 py-4 text-center">
+                  {result.is_correct ? '✅' : '❌'}
+                </td>
                 <td className="px-6 py-4 font-medium">
                   {result.target_word}
                 </td>
@@ -134,7 +138,7 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
                   </td>
                 )}
                 <td className="px-6 py-4">
-                  {result.is_correct ? '✅' : '❌'}
+                  {friendResult ? getWordCount(friendResult.description) : '-'}
                 </td>
                 <td className="px-6 py-4">
                   <Eye className="h-4 w-4 text-gray-500" />
