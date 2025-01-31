@@ -25,12 +25,12 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         animate={{ opacity: 1 }}
         className="max-w-2xl mx-auto text-center space-y-8 relative"
       >
-        <div className="absolute top-0 right-0">
+        <div className="flex items-center justify-between">
+          <h1 className="text-4xl font-bold text-gray-900">{t.welcome.title}</h1>
           <LanguageSelector />
         </div>
         
-        <div className="pt-12">
-          <h1 className="mb-4 text-4xl font-bold text-gray-900">{t.welcome.title}</h1>
+        <div>
           <p className="text-lg text-gray-600">
             {t.welcome.subtitle}
           </p>

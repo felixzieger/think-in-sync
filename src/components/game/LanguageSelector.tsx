@@ -32,8 +32,9 @@ export const LanguageSelector = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="w-9 px-0">
-          <span>{currentLanguage?.flag}</span>
+        <Button variant="outline" size="sm" className="min-w-24">
+          <span className="mr-2">{currentLanguage?.flag}</span>
+          <span>{currentLanguage?.name}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
