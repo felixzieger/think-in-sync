@@ -45,7 +45,8 @@ export const es = {
       details: "Detalles",
       yourDescription: "Tu Descripción",
       friendDescription: "Descripción del Amigo",
-      aiGuessed: "La IA adivinó"
+      aiGuessed: "La IA adivinó",
+      words: "Palabras"
     },
     invitation: {
       title: "Invitación al Juego",

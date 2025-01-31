@@ -105,14 +105,16 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
         <thead className="text-xs uppercase bg-gray-50">
           <tr>
             <th className="px-6 py-3">
-              {t.game.review.word}
+              {t.game.round}
             </th>
             <th className="px-6 py-3">
-              {t.game.review.yourWords}
+              {friendResults.length > 0 ? t.game.review.yourWords : t.game.review.words}
             </th>
-            <th className="px-6 py-3">
-              {t.game.review.friendWords}
-            </th>
+            {friendResults.length > 0 && (
+              <th className="px-6 py-3">
+                {t.game.review.friendWords}
+              </th>
+            )}
             <th className="px-6 py-3">
               <span className="sr-only">{t.game.review.details}</span>
             </th>
@@ -131,11 +133,13 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
                   {result.target_word}
                 </td>
                 <td className="px-6 py-4">
-                  {getWordCount(result.description)}
+                  {result.is_correct ? '✅' : '❌'} {getWordCount(result.description)}
                 </td>
-                <td className="px-6 py-4">
-                  {friendResult ? `${friendResult.is_correct ? '✅' : '❌'} ${getWordCount(friendResult.description)}` : '-'}
-                </td>
+                {friendResults.length > 0 && (
+                  <td className="px-6 py-4">
+                    {friendResult ? `${friendResult.is_correct ? '✅' : '❌'} ${getWordCount(friendResult.description)}` : '-'}
+                  </td>
+                )}
                 <td className="px-6 py-4">
                   <Eye className="h-4 w-4 text-gray-500" />
                 </td>

@@ -45,7 +45,8 @@ export const en = {
       details: "Details",
       yourDescription: "Your Description",
       friendDescription: "Friend's Description",
-      aiGuessed: "AI guessed"
+      aiGuessed: "AI guessed",
+      words: "Words"
     },
     invitation: {
       title: "Game Invitation",
