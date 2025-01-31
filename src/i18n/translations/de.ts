@@ -83,7 +83,7 @@ export const de = {
     title: "KI-Vermutung",
     goalDescription: "Dein Ziel war es folgendes Wort zu beschreiben",
     providedDescription: "Du hast folgende Beschreibung gegeben",
-    aiGuessedDescription: "Basierend auf deiner Beschreibung hat die KI geraten",
+    aiGuessedDescription: "Basierend auf dieser Beschreibung hat die KI geraten",
     correct: "Das ist richtig!",
     incorrect: "Das ist falsch.",
     nextRound: "Nächste Runde",

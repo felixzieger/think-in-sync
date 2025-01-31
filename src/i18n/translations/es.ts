@@ -83,7 +83,7 @@ export const es = {
     title: "Suposición de la IA",
     goalDescription: "Tu objetivo era describir la palabra",
     providedDescription: "Proporcionaste la descripción",
-    aiGuessedDescription: "Basado en tu descripción, la IA adivinó",
+    aiGuessedDescription: "Basándose en esta descripción, la IA adivinó",
     correct: "¡Esto es correcto!",
     incorrect: "Esto es incorrecto.",
     nextRound: "Siguiente Ronda",

@@ -83,7 +83,7 @@ export const en = {
     title: "AI's Guess",
     goalDescription: "Your goal was to describe the word",
     providedDescription: "You provided the description",
-    aiGuessedDescription: "Based on your description, the AI guessed",
+    aiGuessedDescription: "Based on this description, the AI guessed",
     correct: "This is right!",
     incorrect: "This is wrong.",
     nextRound: "Next Round",

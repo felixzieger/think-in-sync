@@ -83,7 +83,7 @@ export const fr = {
     title: "Devinette de l'IA",
     goalDescription: "Votre objectif était de décrire le mot",
     providedDescription: "Vous avez fourni la description",
-    aiGuessedDescription: "Basé sur votre description, l'IA a deviné",
+    aiGuessedDescription: "Sur la base de cette description, l'IA a deviné",
     correct: "C'est correct !",
     incorrect: "C'est incorrect.",
     nextRound: "Tour Suivant",

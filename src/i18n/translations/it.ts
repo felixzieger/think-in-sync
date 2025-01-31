@@ -85,7 +85,7 @@ export const it = {
     aiGuessed: "L'IA ha indovinato",
     goalDescription: "Il tuo obiettivo era descrivere la parola",
     providedDescription: "Hai fornito la descrizione",
-    aiGuessedDescription: "Basandosi sulla tua descrizione, l'IA ha indovinato",
+    aiGuessedDescription: "Basandosi su questa descrizione, l'IA ha indovinato",
     correct: "Corretto! L'IA ha indovinato la parola!",
     incorrect: "Sbagliato. Riprova!",
     nextRound: "Prossimo Turno",
