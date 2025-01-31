@@ -335,11 +335,11 @@ export const GameContainer = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="flex min-h-screen items-center justify-center p-4 md:p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg"
+        className="w-full md:max-w-md rounded-none md:rounded-xl bg-transparent md:bg-white p-4 md:p-8 md:shadow-lg"
       >
         {gameState === "welcome" ? (
           <WelcomeScreen onStart={handleStart} />
