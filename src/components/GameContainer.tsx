@@ -38,7 +38,7 @@ export const GameContainer = () => {
   const [isAiThinking, setIsAiThinking] = useState(false);
   const [aiGuess, setAiGuess] = useState<string>("");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
-  const [totalWords, setTotalWords] = useState<number>(0);
+  const [totalWordsInSuccessfulRounds, setTotalWordsInSuccessfulRounds] = useState<number>(0);
   const { toast } = useToast();
   const t = useTranslation();
   const { language } = useContext(LanguageContext);
@@ -83,7 +83,7 @@ export const GameContainer = () => {
     setAiGuess("");
     setCurrentTheme("standard");
     setSuccessfulRounds(0);
-    setTotalWords(0);
+    setTotalWordsInSuccessfulRounds(0);
     setWords([]);
     setCurrentWordIndex(0);
     setGameId("");
@@ -153,7 +153,7 @@ export const GameContainer = () => {
       setCurrentWordIndex(0);
       setGameState("building-sentence");
       setSuccessfulRounds(0);
-      setTotalWords(0);
+      setTotalWordsInSuccessfulRounds(0);
       console.log("Game started with theme:", theme, "language:", language);
     } catch (error) {
       console.error('Error starting new game:', error);
@@ -173,14 +173,12 @@ export const GameContainer = () => {
     const newSentence = [...sentence, word];
     setSentence(newSentence);
     setPlayerInput("");
-    setTotalWords(prev => prev + 1);
 
     setIsAiThinking(true);
     try {
       const aiWord = await generateAIResponse(currentWord, newSentence, language);
       const newSentenceWithAi = [...newSentence, aiWord];
       setSentence(newSentenceWithAi);
-      setTotalWords(prev => prev + 1);
     } catch (error) {
       console.error('Error in AI turn:', error);
       toast({
@@ -223,7 +221,6 @@ export const GameContainer = () => {
         finalSentence = [...sentence, playerInput.trim()];
         setSentence(finalSentence);
         setPlayerInput("");
-        setTotalWords(prev => prev + 1);
       }
 
       if (finalSentence.length === 0) return;
@@ -232,9 +229,14 @@ export const GameContainer = () => {
       const guess = await guessWord(sentenceString, language);
       setAiGuess(guess);
 
-      const isCorrect = normalizeWord(guess) === normalizeWord(currentWord)
+      const isCorrect = normalizeWord(guess) === normalizeWord(currentWord);
+      
+      // Update total words in successful rounds if guess is correct
+      if (isCorrect) {
+        setTotalWordsInSuccessfulRounds(prev => prev + finalSentence.length);
+      }
+      
       await saveGameResult(sentenceString, guess, isCorrect);
-
       setGameState("showing-guess");
     } catch (error) {
       console.error('Error getting AI guess:', error);
@@ -271,7 +273,7 @@ export const GameContainer = () => {
     setAiGuess("");
     setCurrentTheme("standard");
     setSuccessfulRounds(0);
-    setTotalWords(0);
+    setTotalWordsInSuccessfulRounds(0);
     setWords([]);
     setCurrentWordIndex(0);
     setGameId("");
@@ -286,10 +288,9 @@ export const GameContainer = () => {
     return normalizeWord(aiGuess) === normalizeWord(currentWord);
   };
 
-  const getAverageWordsPerRound = () => {
-    const totalRounds = currentWordIndex + 1;
-    if (totalRounds === 0) return 0;
-    return totalWords / totalRounds;
+  const getAverageWordsPerSuccessfulRound = () => {
+    if (successfulRounds === 0) return 0;
+    return totalWordsInSuccessfulRounds / successfulRounds;
   };
 
   return (
@@ -327,7 +328,7 @@ export const GameContainer = () => {
             onGameReview={handleGameReview}
             onBack={handleBack}
             currentScore={successfulRounds}
-            avgWordsPerRound={getAverageWordsPerRound()}
+            avgWordsPerRound={getAverageWordsPerSuccessfulRound()}
             sessionId={sessionId}
             currentTheme={currentTheme}
             normalizeWord={normalizeWord}
@@ -335,7 +336,7 @@ export const GameContainer = () => {
         ) : (
           <GameReview
             currentScore={successfulRounds}
-            avgWordsPerRound={getAverageWordsPerRound()}
+            avgWordsPerRound={getAverageWordsPerSuccessfulRound()}
             onPlayAgain={handlePlayAgain}
             sessionId={sessionId}
             currentTheme={currentTheme}
