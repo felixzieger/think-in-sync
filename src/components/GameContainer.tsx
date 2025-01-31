@@ -82,6 +82,14 @@ export const GameContainer = () => {
     }
   }, [urlGameId]);
 
+  // New effect to handle location changes
+  useEffect(() => {
+    if (location.pathname === '/' && gameId) {
+      console.log("Location changed to root with active gameId, handling back navigation");
+      handleBack();
+    }
+  }, [location.pathname, gameId]);
+
   const handleLoadGameFromUrl = async () => {
     if (!urlGameId) return;
 
@@ -325,17 +333,6 @@ export const GameContainer = () => {
     if (successfulRounds === 0) return 0;
     return totalWordsInSuccessfulRounds / successfulRounds;
   };
-
-  useEffect(() => {
-    const handleLocationChange = () => {
-      if (location.pathname === '/' && gameId) {
-        handleBack();
-      }
-    };
-
-    window.addEventListener('popstate', handleLocationChange);
-    return () => window.removeEventListener('popstate', handleLocationChange);
-  }, [gameId]);
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
