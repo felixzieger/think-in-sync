@@ -337,7 +337,7 @@ export const GameContainer = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4 md:p-4">
+    <div className="flex min-h-screen items-center justify-center p-1 md:p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
