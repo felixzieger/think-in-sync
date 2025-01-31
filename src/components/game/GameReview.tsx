@@ -24,6 +24,7 @@ interface GameReviewProps {
   gameId?: string;
   sessionId: string;
   currentTheme: string;
+  fromSession?: string | null;
 }
 
 export const GameReview = ({
@@ -34,6 +35,7 @@ export const GameReview = ({
   gameId,
   sessionId,
   currentTheme,
+  fromSession,
 }: GameReviewProps) => {
   const t = useTranslation();
   const { toast } = useToast();
@@ -43,7 +45,6 @@ export const GameReview = ({
   const [gameResults, setGameResults] = useState([]);
   const [friendData, setFriendData] = useState<{ score: number; avgWords: number } | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const fromSession = searchParams.get('from_session');
   const shareUrl = `${window.location.origin}/game?from_session=${sessionId}`;
 
 

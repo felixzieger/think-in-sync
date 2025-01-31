@@ -385,6 +385,7 @@ export const GameContainer = () => {
             gameId={gameId}
             sessionId={sessionId}
             currentTheme={currentTheme}
+            fromSession={fromSession}
           />
         )}
       </motion.div>
