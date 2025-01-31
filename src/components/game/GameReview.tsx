@@ -79,7 +79,7 @@ export const GameReview = ({
       <div className="space-y-4">
         <div className="bg-gray-100 p-4 rounded-lg">
           <p className="text-lg">
-            {t.game.review.roundsPlayed}: <span className="font-bold">{gameResults.length}</span>
+            {t.game.review.successfulRounds}: <span className="font-bold">{currentScore}</span>
           </p>
           <p className="text-sm text-gray-600">
             {t.leaderboard.wordsPerRound}: {(gameResults.length > 0 ? avgWordsPerRound : 0).toFixed(1)}

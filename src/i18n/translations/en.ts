@@ -25,7 +25,7 @@ export const en = {
     saveScore: "Save Score",
     review: {
       title: "Game Review",
-      roundsPlayed: "Rounds Played",
+      successfulRounds: "Successful Rounds",
       description: "Here's how you did:",
       playAgain: "Play Again",
       saveScore: "Save Score",

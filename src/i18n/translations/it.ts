@@ -25,7 +25,7 @@ export const it = {
     saveScore: "Salva Punteggio",
     review: {
       title: "Riepilogo Partita",
-      roundsPlayed: "Turni Giocati",
+      successfulRounds: "Turni Riusciti",
       description: "Ecco i tuoi risultati:",
       playAgain: "Gioca Ancora",
       saveScore: "Salva Punteggio",

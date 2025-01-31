@@ -25,7 +25,7 @@ export const de = {
     saveScore: "Punktzahl speichern",
     review: {
       title: "Spielübersicht",
-      roundsPlayed: "Gespielte Runden",
+      successfulRounds: "Erfolgreiche Runden",
       description: "Hier ist dein Ergebnis:",
       playAgain: "Erneut spielen",
       saveScore: "Punktzahl speichern",

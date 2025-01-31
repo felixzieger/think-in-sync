@@ -25,7 +25,7 @@ export const es = {
     saveScore: "Guardar Puntuación",
     review: {
       title: "Resumen del Juego",
-      roundsPlayed: "Rondas Jugadas",
+      successfulRounds: "Rondas Exitosas",
       description: "Aquí están tus resultados:",
       playAgain: "Jugar de Nuevo",
       saveScore: "Guardar Puntuación",

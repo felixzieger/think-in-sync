@@ -25,7 +25,7 @@ export const fr = {
     saveScore: "Sauvegarder le Score",
     review: {
       title: "Résumé de la Partie",
-      roundsPlayed: "Manches Jouées",
+      successfulRounds: "Manches Réussies",
       description: "Voici vos résultats :",
       playAgain: "Rejouer",
       saveScore: "Sauvegarder le Score",
