@@ -39,8 +39,8 @@ export const es = {
       friendScore: (score: number, avgWords: string) =>
         `La persona que te desafió completó ${score} rondas exitosamente con un promedio de ${avgWords} palabras.`,
       word: "Palabra",
-      yourWords: "Tus Palabras",
-      friendWords: "Palabras del Amigo",
+      yourWords: "Tú",
+      friendWords: "Amigo",
       result: "Resultado",
       details: "Detalles",
       yourDescription: "Tu Descripción",

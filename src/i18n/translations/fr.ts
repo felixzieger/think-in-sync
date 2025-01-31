@@ -39,8 +39,8 @@ export const fr = {
       friendScore: (score: number, avgWords: string) =>
         `La personne qui vous a défié a complété ${score} manches avec une moyenne de ${avgWords} mots.`,
       word: "Mot",
-      yourWords: "Vos Mots",
-      friendWords: "Mots de l'Ami",
+      yourWords: "Vous",
+      friendWords: "Ami",
       result: "Résultat",
       details: "Détails",
       yourDescription: "Votre Description",

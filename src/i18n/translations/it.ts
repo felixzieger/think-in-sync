@@ -39,8 +39,8 @@ export const it = {
       friendScore: (score: number, avgWords: string) =>
         `La persona che ti ha sfidato ha completato ${score} turni con una media di ${avgWords} parole.`,
       word: "Parola",
-      yourWords: "Le Tue Parole",
-      friendWords: "Parole dell'Amico",
+      yourWords: "Tu",
+      friendWords: "Amico",
       result: "Risultato",
       details: "Dettagli",
       yourDescription: "La Tua Descrizione",
