@@ -37,7 +37,15 @@ export const it = {
       youWin: "Hai vinto!",
       youLost: "Hai perso!",
       friendScore: (score: number, avgWords: string) =>
-        `La persona che ti ha sfidato ha completato ${score} turni con una media di ${avgWords} parole.`
+        `La persona che ti ha sfidato ha completato ${score} turni con una media di ${avgWords} parole.`,
+      word: "Parola",
+      yourWords: "Le Tue Parole",
+      friendWords: "Parole dell'Amico",
+      result: "Risultato",
+      details: "Dettagli",
+      yourDescription: "La Tua Descrizione",
+      friendDescription: "Descrizione dell'Amico",
+      aiGuessed: "L'IA ha indovinato"
     },
     invitation: {
       title: "Invito al Gioco",
