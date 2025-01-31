@@ -94,7 +94,6 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
       <table className="w-full text-sm text-left">
         <thead className="text-xs uppercase bg-gray-50">
           <tr>
-            <th className="px-2 py-3 w-10"></th>
             <th className="px-6 py-3">
               {t.game.review.word}
             </th>
@@ -124,10 +123,10 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
                 onClick={() => setSelectedResult(result)}
               >
                 <td className="px-2 py-4 text-center">
-                  {result.is_correct ? '✅' : '❌'}
+                  
                 </td>
                 <td className="px-6 py-4 font-medium">
-                  {result.target_word}
+                  {result.is_correct ? '✅' : '❌'} {result.target_word}
                 </td>
                 <td className="px-6 py-4">
                   {getWordCount(result.description)}
