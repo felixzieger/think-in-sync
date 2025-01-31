@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dialog";
 import { useTranslation } from "@/hooks/useTranslation";
 import { GuessDescription } from "@/components/game/guess-display/GuessDescription";
-import { GuessResult } from "@/components/game/guess-display/GuessResult";
 
 interface GameResult {
   id: string;
@@ -39,16 +38,16 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
         </DialogHeader>
         <div className="space-y-6 mt-4">
           <div>
-            <h3 className="font-semibold mb-2">{t.game.review.yourDescription}</h3>
+            {friendResult && (
+              <h3 className="font-semibold mb-2">{t.game.review.yourDescription}</h3>
+            )}
             <GuessDescription 
               sentence={currentResult?.description?.split(' ') || []} 
               aiGuess={currentResult?.ai_guess || ''}
             />
-            <GuessResult 
-              aiGuess={currentResult?.ai_guess || ''} 
-              isCorrect={currentResult?.is_correct || false}
-              onNextRound={() => {}}
-            />
+            <p className="text-sm text-gray-600 mt-2">
+              {t.guess.aiGuessedDescription}: <span className="font-medium">{currentResult?.ai_guess}</span>
+            </p>
           </div>
           {friendResult && (
             <div>
@@ -57,11 +56,9 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
                 sentence={friendResult.description?.split(' ') || []} 
                 aiGuess={friendResult.ai_guess || ''}
               />
-              <GuessResult 
-                aiGuess={friendResult.ai_guess || ''} 
-                isCorrect={friendResult.is_correct || false}
-                onNextRound={() => {}}
-              />
+              <p className="text-sm text-gray-600 mt-2">
+                {t.guess.aiGuessedDescription}: <span className="font-medium">{friendResult.ai_guess}</span>
+              </p>
             </div>
           )}
         </div>
