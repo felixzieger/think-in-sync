@@ -14,6 +14,7 @@ import { GameDetailsView } from "@/components/admin/GameDetailsView";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { RoundHeader } from "./sentence-builder/RoundHeader";
 
 interface GameReviewProps {
   currentScore: number;
@@ -39,6 +40,7 @@ export const GameReview = ({
   const [showHighScores, setShowHighScores] = useState(false);
   const [gameResults, setGameResults] = useState([]);
   const [friendData, setFriendData] = useState<{ score: number; avgWords: number } | null>(null);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const fromSession = searchParams.get('from_session');
   const shareUrl = `${window.location.origin}/game?from_session=${sessionId}`;
 
@@ -105,7 +107,6 @@ export const GameReview = ({
 
   const handlePlayAgain = async () => {
     if (gameId) {
-      // If we have a gameId, create a new session for the same game
       try {
         const { data: session, error } = await supabase
           .from('sessions')
@@ -117,7 +118,6 @@ export const GameReview = ({
 
         if (error) throw error;
 
-        // Stay on the same game URL but with a fresh session
         navigate(`/game/${gameId}`);
         onPlayAgain();
       } catch (error) {
@@ -129,9 +129,12 @@ export const GameReview = ({
         });
       }
     } else {
-      // If no gameId, go back to theme selection as before
       onPlayAgain();
     }
+  };
+
+  const handleBack = () => {
+    navigate('/');
   };
 
   const renderComparisonResult = () => {
@@ -158,7 +161,12 @@ export const GameReview = ({
       animate={{ opacity: 1 }}
       className="text-center space-y-6"
     >
-      <h2 className="text-2xl font-bold mb-4">{t.game.review.title}</h2>
+      <RoundHeader
+        successfulRounds={currentScore}
+        onBack={handleBack}
+        showConfirmDialog={showConfirmDialog}
+        setShowConfirmDialog={setShowConfirmDialog}
+      />
 
       <div className="space-y-4">
         <div className="bg-gray-100 p-4 rounded-lg">
