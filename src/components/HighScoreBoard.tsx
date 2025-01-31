@@ -58,20 +58,27 @@ export const HighScoreBoard = ({
   const showScoreInfo = sessionId !== "" && currentScore > 0;
 
   const { data: highScores } = useQuery({
-    queryKey: ["highScores", selectedTheme],
+    queryKey: ["highScores", selectedTheme, gameId],
     queryFn: async () => {
-      console.log("Fetching high scores for theme:", selectedTheme);
+      console.log("Fetching high scores for theme:", selectedTheme, "gameId:", gameId);
       let query = supabase
         .from("high_scores")
         .select("*")
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
-      if (selectedTheme === 'custom') {
-        const filterValue = `(${STANDARD_THEMES.join(',')})`;
-        query = query.filter('theme', 'not.in', filterValue);
+      // If we have a gameId, filter by it
+      if (gameId) {
+        query = query.eq('game_id', gameId);
+        console.log("Filtering scores by game_id:", gameId);
       } else {
-        query = query.eq('theme', selectedTheme);
+        // Only apply theme filtering when not viewing a specific game
+        if (selectedTheme === 'custom') {
+          const filterValue = `(${STANDARD_THEMES.join(',')})`;
+          query = query.filter('theme', 'not.in', filterValue);
+        } else {
+          query = query.eq('theme', selectedTheme);
+        }
       }
 
       const { data, error } = await query;
@@ -176,7 +183,7 @@ export const HighScoreBoard = ({
         showScoreInfo={showScoreInfo}
       />
 
-      {showThemeFilter && (
+      {showThemeFilter && !gameId && (
         <ThemeFilter
           selectedTheme={selectedTheme}
           onThemeChange={setSelectedTheme}
@@ -197,7 +204,7 @@ export const HighScoreBoard = ({
       <ScoresTable
         scores={paginatedScores || []}
         startIndex={startIndex}
-        showThemeColumn={selectedTheme === 'custom'}
+        showThemeColumn={selectedTheme === 'custom' && !gameId}
       />
 
       <LeaderboardPagination
