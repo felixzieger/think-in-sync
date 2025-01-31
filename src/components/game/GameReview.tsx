@@ -77,7 +77,6 @@ export const GameReview = ({
       <h2 className="text-2xl font-bold mb-4">{t.game.review.title}</h2>
 
       <div className="space-y-4">
-
         <div className="bg-gray-100 p-4 rounded-lg">
           <p className="text-lg">
             {t.game.review.roundsPlayed}: <span className="font-bold">{gameResults.length}</span>
@@ -86,6 +85,8 @@ export const GameReview = ({
             {t.leaderboard.wordsPerRound}: {(gameResults.length > 0 ? avgWordsPerRound : 0).toFixed(1)}
           </p>
         </div>
+
+        <GameDetailsView gameResults={gameResults} />
 
         <div className="relative items-center bg-gray-100 p-4 rounded-lg">
           <p className="text-sm">{t.game.review.urlCopiedDesc}</p>
@@ -105,8 +106,6 @@ export const GameReview = ({
             </Button>
           </div>
         </div>
-
-        <GameDetailsView gameResults={gameResults} />
       </div>
 
       <div className="flex justify-center gap-4 mt-6">
@@ -131,6 +130,6 @@ export const GameReview = ({
           />
         </DialogContent>
       </Dialog>
-    </motion.div >
+    </motion.div>
   );
 };
