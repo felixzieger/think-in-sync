@@ -22,18 +22,24 @@ export const LanguageSelector = () => {
   };
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 mb-4">
-      {languages.map(({ code, name, flag }) => (
-        <Button
-          key={code}
-          variant={language === code ? "default" : "outline"}
-          onClick={() => handleLanguageChange(code)}
-          className="flex items-center gap-2"
-        >
-          <span>{flag}</span>
-          <span>{name}</span>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm" >
+          <span className="text-xl">{currentLanguage?.flag}</span>
         </Button>
-      ))}
-    </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {languages.map(({ code, name, flag }) => (
+          <DropdownMenuItem
+            key={code}
+            onClick={() => handleLanguageChange(code)}
+            className="cursor-pointer"
+          >
+            <span className="mr-2">{flag}</span>
+            <span>{name}</span>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };

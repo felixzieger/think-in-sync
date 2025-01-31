@@ -25,22 +25,24 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         animate={{ opacity: 1 }}
         className="max-w-2xl mx-auto text-center space-y-8"
       >
-        <LanguageSelector />
-        
-        <div>
+
+        <div className="relative">
           <h1 className="mb-4 text-4xl font-bold text-gray-900">{t.welcome.title}</h1>
+          <div className="absolute top-0 right-0">
+            <LanguageSelector />
+          </div>
           <p className="text-lg text-gray-600">
             {t.welcome.subtitle}
           </p>
         </div>
 
-        <MainActions 
+        <MainActions
           onStart={onStart}
           onShowHowToPlay={() => setShowHowToPlay(true)}
           onShowHighScores={() => setShowHighScores(true)}
         />
       </motion.div>
-      
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -68,8 +70,8 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         </DialogContent>
       </Dialog>
 
-      <HowToPlayDialog 
-        open={showHowToPlay} 
+      <HowToPlayDialog
+        open={showHowToPlay}
         onOpenChange={setShowHowToPlay}
       />
     </>
