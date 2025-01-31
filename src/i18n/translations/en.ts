@@ -37,7 +37,15 @@ export const en = {
       youWin: "You Won!",
       youLost: "You Lost!",
       friendScore: (score: number, avgWords: string) =>
-        `The person that challenged you completed ${score} rounds successfully with an average of ${avgWords} words.`
+        `The person that challenged you completed ${score} rounds successfully with an average of ${avgWords} words.`,
+      word: "Word",
+      yourWords: "Your Words",
+      friendWords: "Friend's Words",
+      result: "Result",
+      details: "Details",
+      yourDescription: "Your Description",
+      friendDescription: "Friend's Description",
+      aiGuessed: "AI guessed"
     },
     invitation: {
       title: "Game Invitation",
