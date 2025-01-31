@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Copy, Home } from "lucide-react";
+import { Copy } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -105,6 +105,7 @@ export const GameReview = ({
 
   const handlePlayAgain = async () => {
     if (gameId) {
+      // If we have a gameId, create a new session for the same game
       try {
         const { data: session, error } = await supabase
           .from('sessions')
@@ -116,6 +117,7 @@ export const GameReview = ({
 
         if (error) throw error;
 
+        // Stay on the same game URL but with a fresh session
         navigate(`/game/${gameId}`);
         onPlayAgain();
       } catch (error) {
@@ -127,12 +129,9 @@ export const GameReview = ({
         });
       }
     } else {
+      // If no gameId, go back to theme selection as before
       onPlayAgain();
     }
-  };
-
-  const handleHomeClick = () => {
-    navigate('/');
   };
 
   const renderComparisonResult = () => {
@@ -159,19 +158,9 @@ export const GameReview = ({
       animate={{ opacity: 1 }}
       className="text-center space-y-6"
     >
-      <div className="bg-primary text-primary-foreground rounded-t-xl -mx-8 -mt-8 p-6 relative">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleHomeClick}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-foreground hover:text-primary-foreground/80"
-        >
-          <Home className="h-5 w-5" />
-        </Button>
-        <h2 className="text-2xl font-bold">{t.game.review.title}</h2>
-      </div>
+      <h2 className="text-2xl font-bold mb-4">{t.game.review.title}</h2>
 
-      <div className="space-y-4 mt-8">
+      <div className="space-y-4">
         <div className="bg-gray-100 p-4 rounded-lg">
           <p className="text-lg">
             {t.game.review.successfulRounds}: <span className="font-bold">{currentScore}</span>
