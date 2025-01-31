@@ -2,29 +2,29 @@ import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Filter } from "lucide-react";
 
-type Theme = 'standard' | 'sports' | 'food' | 'custom';
+type ViewMode = 'daily' | 'all-time';
 
 interface ThemeFilterProps {
-  selectedTheme: Theme;
-  onThemeChange: (theme: Theme) => void;
+  selectedMode: ViewMode;
+  onModeChange: (mode: ViewMode) => void;
 }
 
-export const ThemeFilter = ({ selectedTheme, onThemeChange }: ThemeFilterProps) => {
+export const ThemeFilter = ({ selectedMode, onModeChange }: ThemeFilterProps) => {
   const t = useTranslation();
 
-  const themes: Theme[] = ['standard', 'sports', 'food', 'custom'];
+  const modes: ViewMode[] = ['daily', 'all-time'];
 
   return (
     <div className="flex flex-wrap gap-2 mb-4 items-center">
       <Filter className="h-4 w-4 text-gray-500" />
-      {themes.map((theme) => (
+      {modes.map((mode) => (
         <Button
-          key={theme}
-          variant={selectedTheme === theme ? "default" : "outline"}
+          key={mode}
+          variant={selectedMode === mode ? "default" : "outline"}
           size="sm"
-          onClick={() => onThemeChange(theme)}
+          onClick={() => onModeChange(mode)}
         >
-          {t.themes[theme]}
+          {t.leaderboard.modes[mode]}
         </Button>
       ))}
     </div>

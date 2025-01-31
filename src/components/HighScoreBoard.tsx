@@ -31,7 +31,6 @@ interface HighScoreBoardProps {
 }
 
 const ITEMS_PER_PAGE = 5;
-const STANDARD_THEMES = ['standard', 'sports', 'food'];
 
 export const HighScoreBoard = ({
   currentScore = 0,
@@ -47,9 +46,7 @@ export const HighScoreBoard = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedTheme, setSelectedTheme] = useState<'standard' | 'sports' | 'food' | 'custom'>(
-    initialTheme as 'standard' | 'sports' | 'food' | 'custom'
-  );
+  const [selectedMode, setSelectedMode] = useState<'daily' | 'all-time'>('daily');
   const { toast } = useToast();
   const t = useTranslation();
   const queryClient = useQueryClient();
@@ -57,9 +54,9 @@ export const HighScoreBoard = ({
   const showScoreInfo = sessionId !== "" && currentScore > 0;
 
   const { data: highScores } = useQuery({
-    queryKey: ["highScores", selectedTheme, gameId],
+    queryKey: ["highScores", selectedMode, gameId],
     queryFn: async () => {
-      console.log("Fetching high scores for theme:", selectedTheme, "gameId:", gameId);
+      console.log("Fetching high scores for mode:", selectedMode, "gameId:", gameId);
       let query = supabase
         .from("high_scores")
         .select("*")
@@ -70,14 +67,11 @@ export const HighScoreBoard = ({
       if (gameId) {
         query = query.eq('game_id', gameId);
         console.log("Filtering scores by game_id:", gameId);
-      } else {
-        // Only apply theme filtering when not viewing a specific game
-        if (selectedTheme === 'custom') {
-          const filterValue = `(${STANDARD_THEMES.join(',')})`;
-          query = query.filter('theme', 'not.in', filterValue);
-        } else {
-          query = query.eq('theme', selectedTheme);
-        }
+      } else if (selectedMode === 'daily') {
+        // For daily challenge, only show scores from today
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        query = query.gte('created_at', today.toISOString());
       }
 
       const { data, error } = await query;
@@ -128,7 +122,7 @@ export const HighScoreBoard = ({
           score: currentScore,
           avgWordsPerRound,
           sessionId,
-          theme: selectedTheme,
+          theme: initialTheme,
           gameId
         }
       });
@@ -184,8 +178,8 @@ export const HighScoreBoard = ({
 
       {showThemeFilter && !gameId && (
         <ThemeFilter
-          selectedTheme={selectedTheme}
-          onThemeChange={setSelectedTheme}
+          selectedMode={selectedMode}
+          onModeChange={setSelectedMode}
         />
       )}
 
@@ -203,7 +197,7 @@ export const HighScoreBoard = ({
       <ScoresTable
         scores={paginatedScores || []}
         startIndex={startIndex}
-        showThemeColumn={selectedTheme === 'custom' && !gameId}
+        showThemeColumn={selectedMode === 'all-time' && !gameId}
       />
 
       <LeaderboardPagination
