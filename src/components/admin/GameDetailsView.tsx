@@ -41,8 +41,8 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
             {friendResult && (
               <h3 className="font-semibold mb-2">{t.game.review.yourDescription}</h3>
             )}
-            <GuessDescription 
-              sentence={currentResult?.description?.split(' ') || []} 
+            <GuessDescription
+              sentence={currentResult?.description?.split(' ') || []}
               aiGuess={currentResult?.ai_guess || ''}
             />
             <p className="text-sm text-gray-600 mt-2">
@@ -52,8 +52,8 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
           {friendResult && (
             <div>
               <h3 className="font-semibold mb-2">{t.game.review.friendDescription}</h3>
-              <GuessDescription 
-                sentence={friendResult.description?.split(' ') || []} 
+              <GuessDescription
+                sentence={friendResult.description?.split(' ') || []}
                 aiGuess={friendResult.ai_guess || ''}
               />
               <p className="text-sm text-gray-600 mt-2">
@@ -128,13 +128,13 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
                 onClick={() => setSelectedResult(result)}
               >
                 <td className="px-6 py-4 font-medium">
-                  {result.is_correct ? '✅' : '❌'} {result.target_word}
+                  {result.target_word}
                 </td>
                 <td className="px-6 py-4">
                   {getWordCount(result.description)}
                 </td>
                 <td className="px-6 py-4">
-                  {friendResult ? getWordCount(friendResult.description) : '-'}
+                  {friendResult ? `${friendResult.is_correct ? '✅' : '❌'} ${getWordCount(friendResult.description)}` : '-'}
                 </td>
                 <td className="px-6 py-4">
                   <Eye className="h-4 w-4 text-gray-500" />
