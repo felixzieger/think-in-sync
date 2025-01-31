@@ -70,6 +70,10 @@ export const de = {
     next: "Nächste",
     success: "Punktzahl erfolgreich übermittelt!",
     theme: "Thema",
+    modes: {
+      daily: "Tägliche Herausforderung",
+      "all-time": "Bestenliste"
+    },
     error: {
       invalidName: "Bitte gib einen gültigen Namen ein",
       noRounds: "Du musst mindestens eine Runde abschließen",

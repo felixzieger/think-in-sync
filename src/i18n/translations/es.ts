@@ -70,6 +70,10 @@ export const es = {
     next: "Siguiente",
     success: "¡Puntuación enviada con éxito!",
     theme: "Tema",
+    modes: {
+      daily: "Desafío Diario",
+      "all-time": "Histórico"
+    },
     error: {
       invalidName: "Por favor, ingresa un nombre válido",
       noRounds: "Debes completar al menos una ronda",

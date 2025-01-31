@@ -70,6 +70,10 @@ export const it = {
     next: "Successivo",
     success: "Punteggio inviato con successo!",
     theme: "Tema",
+    modes: {
+      daily: "Sfida Giornaliera",
+      "all-time": "Classifica Generale"
+    },
     error: {
       invalidName: "Inserisci un nome valido",
       noRounds: "Devi completare almeno un turno",
