@@ -66,7 +66,7 @@ export const GameContainer = () => {
         } else if (gameState === 'showing-guess' && !isGuessCorrect()) {
           handleGameReview();
         } else if (gameState === 'game-review') {
-          handlePlayAgain();
+          handlePlayAgain(gameId);
         }
       }
     };
@@ -292,17 +292,24 @@ export const GameContainer = () => {
     }
   };
 
-  const handlePlayAgain = () => {
-    setGameState("theme-selection");
+  const handlePlayAgain = (gameId?: string) => {
     setSentence([]);
     setAiGuess("");
-    setCurrentTheme("standard");
     setSuccessfulRounds(0);
     setTotalWordsInSuccessfulRounds(0);
     setWords([]);
     setCurrentWordIndex(0);
-    setGameId("");
     setSessionId("");
+    if (gameId) {
+      navigate(`/game/${gameId}`);
+      handleLoadGameFromUrl()
+    }
+    else {
+      setGameState("theme-selection");
+      setCurrentTheme("standard");
+      setGameId("");
+      navigate(`/`);
+    }
   };
 
   const handleGameReview = () => {

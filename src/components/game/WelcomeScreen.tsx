@@ -64,7 +64,6 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           <HighScoreBoard
             showThemeFilter={true}
             onClose={() => setShowHighScores(false)}
-            onPlayAgain={onStart}
           />
         </DialogContent>
       </Dialog>

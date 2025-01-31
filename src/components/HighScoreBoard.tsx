@@ -23,7 +23,6 @@ interface HighScoreBoardProps {
   currentScore?: number;
   avgWordsPerRound?: number;
   onClose?: () => void;
-  onPlayAgain?: () => void;
   gameId?: string;
   sessionId?: string;
   onScoreSubmitted?: () => void;
