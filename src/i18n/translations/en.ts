@@ -110,6 +110,8 @@ export const en = {
     title: "Think in Sync",
     subtitle: "Team up with AI to craft a clue and have a different AI guess your secret word!",
     startButton: "Start Game",
+    startDailyButton: "Daily Challenge",
+    startNewButton: "New Game",
     howToPlay: "How to Play",
     leaderboard: "Leaderboard",
     credits: "Created during the",

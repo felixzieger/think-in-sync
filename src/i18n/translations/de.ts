@@ -110,6 +110,8 @@ export const de = {
     title: "Think in Sync",
     subtitle: "Arbeite mit KI zusammen, um einen Hinweis zu erstellen und lass eine andere KI dein geheimes Wort erraten!",
     startButton: "Spiel starten",
+    startDailyButton: "Tägliche Herausforderung",
+    startNewButton: "Neues Spiel",
     howToPlay: "Spielanleitung",
     leaderboard: "Bestenliste",
     credits: "Erstellt während des",

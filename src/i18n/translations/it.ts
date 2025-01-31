@@ -112,6 +112,8 @@ export const it = {
     title: "Think in Sync",
     subtitle: "Fai squadra con l'IA per creare un indizio e lascia che un'altra IA indovini la tua parola segreta!",
     startButton: "Inizia gioco",
+    startDailyButton: "Sfida Giornaliera",
+    startNewButton: "Nuova Partita",
     howToPlay: "Come giocare",
     leaderboard: "Classifica",
     credits: "Creato durante il",

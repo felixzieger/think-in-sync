@@ -110,6 +110,8 @@ export const fr = {
     title: "Think in Sync",
     subtitle: "Collaborez avec une IA pour créer un indice, puis laissez-en une autre deviner votre mot secret !",
     startButton: "Commencer",
+    startDailyButton: "Défi du Jour",
+    startNewButton: "Nouvelle Partie",
     howToPlay: "Comment Jouer",
     leaderboard: "Classement",
     credits: "Créé pendant le",

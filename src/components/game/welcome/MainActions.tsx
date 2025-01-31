@@ -2,21 +2,28 @@ import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/hooks/useTranslation";
 
 interface MainActionsProps {
-  onStart: () => void;
+  onStartDaily: () => void;
+  onStartNew: () => void;
   onShowHowToPlay: () => void;
   onShowHighScores: () => void;
 }
 
-export const MainActions = ({ onStart, onShowHowToPlay, onShowHighScores }: MainActionsProps) => {
+export const MainActions = ({ onStartDaily: onStartDaily, onStartNew: onStartNew, onShowHowToPlay, onShowHighScores }: MainActionsProps) => {
   const t = useTranslation();
-  
+
   return (
     <div className="space-y-4">
       <Button
-        onClick={onStart}
+        onClick={onStartDaily}
         className="w-full bg-primary text-lg hover:bg-primary/90"
       >
-        {t.welcome.startButton} ⏎
+        {t.welcome.startDailyButton} ⏎
+      </Button>
+      <Button
+        onClick={onStartNew}
+        className="w-full bg-secondary text-lg hover:bg-primary/90"
+      >
+        {t.welcome.startNewButton}
       </Button>
       <div className="grid grid-cols-2 gap-4">
         <Button

@@ -24,6 +24,8 @@ const normalizeWord = (word: string): string => {
     .trim();
 };
 
+const dailyGameId = "06ce2045-d496-49df-9c29-a7390c9312e9";
+
 export const GameContainer = () => {
   const [searchParams] = useSearchParams();
   const { gameId: urlGameId } = useParams();
@@ -342,7 +344,7 @@ export const GameContainer = () => {
         className="w-full md:max-w-md rounded-none md:rounded-xl bg-transparent md:bg-white p-4 md:p-8 md:shadow-lg"
       >
         {gameState === "welcome" ? (
-          <WelcomeScreen onStart={handleStart} />
+          <WelcomeScreen onStartDaily={() => handlePlayAgain(dailyGameId)} onStartNew={handleStart} />
         ) : gameState === "theme-selection" ? (
           <ThemeSelector onThemeSelect={handleThemeSelect} onBack={handleBack} />
         ) : gameState === "invitation" ? (

@@ -110,6 +110,8 @@ export const es = {
     title: "Think in Sync",
     subtitle: "¡Forma equipo con la IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
     startButton: "Comenzar juego",
+    startDailyButton: "Desafío Diario",
+    startNewButton: "Nuevo Juego",
     howToPlay: "Cómo jugar",
     leaderboard: "Clasificación",
     credits: "Creado durante el",

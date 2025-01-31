@@ -10,10 +10,11 @@ import { MainActions } from "./welcome/MainActions";
 import { HowToPlayDialog } from "./welcome/HowToPlayDialog";
 
 interface WelcomeScreenProps {
-  onStart: () => void;
+  onStartDaily: () => void;
+  onStartNew: () => void;
 }
 
-export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
+export const WelcomeScreen = ({ onStartDaily: onStartDaily, onStartNew: onStartNew }: WelcomeScreenProps) => {
   const [showHighScores, setShowHighScores] = useState(false);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const t = useTranslation();
@@ -37,7 +38,8 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         </div>
 
         <MainActions
-          onStart={onStart}
+          onStartDaily={onStartDaily}
+          onStartNew={onStartNew}
           onShowHowToPlay={() => setShowHowToPlay(true)}
           onShowHighScores={() => setShowHighScores(true)}
         />
