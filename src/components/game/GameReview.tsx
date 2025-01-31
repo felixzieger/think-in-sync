@@ -13,7 +13,7 @@ import { HighScoreBoard } from "@/components/HighScoreBoard";
 import { GameDetailsView } from "@/components/admin/GameDetailsView";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 interface GameReviewProps {
   currentScore: number;
@@ -22,11 +22,6 @@ interface GameReviewProps {
   gameId?: string;
   sessionId: string;
   currentTheme: string;
-}
-
-interface ComparisonData {
-  score: number;
-  avgWords: number;
 }
 
 export const GameReview = ({
@@ -40,10 +35,11 @@ export const GameReview = ({
   const t = useTranslation();
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
-  const fromSession = searchParams.get('from_session');
+  const navigate = useNavigate();
   const [showHighScores, setShowHighScores] = useState(false);
   const [gameResults, setGameResults] = useState([]);
-  const [friendData, setFriendData] = useState<ComparisonData | null>(null);
+  const [friendData, setFriendData] = useState<{ score: number; avgWords: number } | null>(null);
+  const fromSession = searchParams.get('from_session');
   const shareUrl = `${window.location.origin}/game?from_session=${sessionId}`;
 
   useEffect(() => {
@@ -107,6 +103,37 @@ export const GameReview = ({
     }
   };
 
+  const handlePlayAgain = async () => {
+    if (gameId) {
+      // If we have a gameId, create a new session for the same game
+      try {
+        const { data: session, error } = await supabase
+          .from('sessions')
+          .insert({
+            game_id: gameId
+          })
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        // Stay on the same game URL but with a fresh session
+        navigate(`/game/${gameId}`);
+        onPlayAgain();
+      } catch (error) {
+        console.error('Error creating new session:', error);
+        toast({
+          title: "Error",
+          description: "Failed to restart the game. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } else {
+      // If no gameId, go back to theme selection as before
+      onPlayAgain();
+    }
+  };
+
   const renderComparisonResult = () => {
     if (!friendData) return null;
 
@@ -167,7 +194,7 @@ export const GameReview = ({
       </div>
 
       <div className="flex justify-center gap-4 mt-6">
-        <Button onClick={onPlayAgain} className="text-white">
+        <Button onClick={handlePlayAgain} className="text-white">
           {t.game.review.playAgain} ⏎
         </Button>
         <Button onClick={() => setShowHighScores(true)} variant="secondary" className="text-white">
@@ -181,7 +208,7 @@ export const GameReview = ({
             currentScore={currentScore}
             avgWordsPerRound={avgWordsPerRound}
             onClose={() => setShowHighScores(false)}
-            onPlayAgain={onPlayAgain}
+            onPlayAgain={handlePlayAgain}
             gameId={gameId}
             sessionId={sessionId}
             showThemeFilter={false}
