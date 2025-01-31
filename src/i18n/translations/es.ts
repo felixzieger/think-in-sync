@@ -33,7 +33,11 @@ export const es = {
       urlCopied: "¡URL copiada!",
       urlCopiedDesc: "Comparte esta URL con amigos para que jueguen con las mismas palabras",
       urlCopyError: "Error al copiar la URL",
-      urlCopyErrorDesc: "Por favor, intenta copiar la URL manualmente"
+      urlCopyErrorDesc: "Por favor, intenta copiar la URL manualmente",
+      youWin: "¡Has ganado!",
+      youLost: "¡Has perdido!",
+      friendScore: (score: number, avgWords: string) =>
+        `La persona que te desafió completó ${score} rondas exitosamente con un promedio de ${avgWords} palabras.`
     },
     invitation: {
       title: "Invitación al Juego",

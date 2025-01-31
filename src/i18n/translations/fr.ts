@@ -33,7 +33,11 @@ export const fr = {
       urlCopied: "URL copiée !",
       urlCopiedDesc: "Partagez cette URL avec vos amis pour qu'ils jouent avec les mêmes mots",
       urlCopyError: "Échec de la copie de l'URL",
-      urlCopyErrorDesc: "Veuillez essayer de copier l'URL manuellement"
+      urlCopyErrorDesc: "Veuillez essayer de copier l'URL manuellement",
+      youWin: "Vous avez gagné !",
+      youLost: "Vous avez perdu !",
+      friendScore: (score: number, avgWords: string) =>
+        `La personne qui vous a défié a complété ${score} manches avec une moyenne de ${avgWords} mots.`
     },
     invitation: {
       title: "Invitation au Jeu",
