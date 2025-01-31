@@ -1,5 +1,5 @@
 import { useState, KeyboardEvent, useEffect, useContext } from "react";
-import { useSearchParams, useParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
 import { createGame, createSession } from "@/services/gameService";
@@ -28,6 +28,7 @@ export const GameContainer = () => {
   const [searchParams] = useSearchParams();
   const { gameId: urlGameId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const fromSession = searchParams.get('from_session');
   const [gameState, setGameState] = useState<GameState>(fromSession ? "invitation" : "welcome");
   const [currentTheme, setCurrentTheme] = useState<string>("standard");
@@ -118,6 +119,7 @@ export const GameContainer = () => {
   };
 
   const handleBack = () => {
+    console.log("Handling back navigation, resetting game state");
     setGameState("welcome");
     setSentence([]);
     setAiGuess("");
@@ -128,7 +130,6 @@ export const GameContainer = () => {
     setCurrentWordIndex(0);
     setGameId("");
     setSessionId("");
-
     navigate('/');
   };
 
@@ -324,6 +325,17 @@ export const GameContainer = () => {
     if (successfulRounds === 0) return 0;
     return totalWordsInSuccessfulRounds / successfulRounds;
   };
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      if (location.pathname === '/' && gameId) {
+        handleBack();
+      }
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, [gameId]);
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
