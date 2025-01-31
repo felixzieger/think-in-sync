@@ -62,7 +62,7 @@ export const GameReview = ({
 
       const { data: friendResults, error } = await supabase
         .from('game_results')
-        .select('is_correct')
+        .select('is_correct, description')
         .eq('session_id', fromSession);
 
       if (error) {
