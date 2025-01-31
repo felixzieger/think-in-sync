@@ -70,6 +70,10 @@ export const fr = {
     next: "Suivant",
     success: "Score soumis avec succès !",
     theme: "Thème",
+    modes: {
+      daily: "Défi du Jour",
+      "all-time": "Historique"
+    },
     error: {
       invalidName: "Veuillez entrer un nom valide",
       noRounds: "Vous devez compléter au moins un tour",
