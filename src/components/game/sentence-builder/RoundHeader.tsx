@@ -1,7 +1,7 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/hooks/useTranslation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Home } from "lucide-react";
 
 interface RoundHeaderProps {
   successfulRounds: number;
@@ -30,9 +30,23 @@ export const RoundHeader = ({
       >
         <ArrowLeft className="h-4 w-4" />
       </Button>
+
+      <div className="flex items-center gap-2 absolute right-0 top-0">
+        <span className="text-sm font-medium">
+          {t.game.round} {successfulRounds + 1}
+        </span>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setShowConfirmDialog(true)}
+        >
+          <Home className="h-4 w-4" />
+        </Button>
+      </div>
+
       <div className="w-full text-center">
         <h2 className="text-xl font-semibold">
-          {t.game.round} {successfulRounds + 1}
+          Think in Sync
         </h2>
       </div>
 
