@@ -80,7 +80,7 @@ export const ScoresTable = ({
             <TableHead>{t.leaderboard.roundsColumn}</TableHead>
             <TableHead>{t.leaderboard.avgWords}</TableHead>
             {selectedMode === 'all-time' && (
-              <TableHead className="text-right">
+              <TableHead>
                 {t.leaderboard.playSameWords}
               </TableHead>
             )}
@@ -101,7 +101,7 @@ export const ScoresTable = ({
                 <TableCell>{score.score}</TableCell>
                 <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
                 {selectedMode === 'all-time' && (
-                  <TableCell className="text-right">
+                  <TableCell>
                     {score.game_id && onPlayGame && (
                       <Button
                         variant="ghost"
