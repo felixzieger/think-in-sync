@@ -28,6 +28,7 @@ export const en = {
       successfulRounds: "Successful Rounds",
       description: "Here's how you did:",
       playAgain: "Play same words again",
+      playNewWords: "Play new words",
       saveScore: "Save Score",
       shareGame: "Share",
       urlCopied: "URL Copied!",

@@ -200,13 +200,18 @@ export const GameReview = ({
         </div>
       </div>
 
-      <div className="flex justify-center gap-4 mt-6">
-        <Button onClick={handlePlayAgain} className="text-white">
-          {t.game.review.playAgain} ⏎
+      <div className="grid grid-cols-1 gap-4">
+        <Button onClick={() => setShowHighScores(true)} className="w-full bg-primary hover:bg-primary/90">
+          {t.game.review.saveScore} 🏆
         </Button>
-        <Button onClick={() => setShowHighScores(true)} variant="secondary" className="text-white">
-          {t.game.review.saveScore}
-        </Button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Button onClick={handlePlayAgain} variant="secondary" className="text-white w-full">
+            {t.game.review.playAgain} ⏎
+          </Button>
+          <Button onClick={handlePlayAgain} variant="secondary" className="text-white w-full">
+            {t.game.review.playNewWords}
+          </Button>
+        </div>
       </div>
 
       <Dialog open={showHighScores} onOpenChange={setShowHighScores}>

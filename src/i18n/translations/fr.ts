@@ -28,6 +28,7 @@ export const fr = {
       successfulRounds: "Manches Réussies",
       description: "Voici vos résultats :",
       playAgain: "Rejouer avec les mêmes mots",
+      playNewWords: "Jouer avec de nouveaux mots",
       saveScore: "Sauvegarder le Score",
       shareGame: "Partager",
       urlCopied: "URL copiée !",

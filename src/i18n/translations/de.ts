@@ -23,11 +23,13 @@ export const de = {
     nextRound: "Nächste Runde",
     playAgain: "Erneut spielen",
     saveScore: "Punktzahl speichern",
+    playNewWords: "Neue Wörter spielen",
     review: {
       title: "Spielübersicht",
       successfulRounds: "Erfolgreiche Runden",
       description: "Hier ist dein Ergebnis:",
       playAgain: "Gleiche Wörter erneut spielen",
+      playNewWords: "Neue Wörter spielen",
       saveScore: "Punktzahl speichern",
       shareGame: "Teilen",
       urlCopied: "URL kopiert!",

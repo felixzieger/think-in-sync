@@ -23,11 +23,13 @@ export const es = {
     nextRound: "Siguiente Ronda",
     playAgain: "Jugar de Nuevo",
     saveScore: "Guardar Puntuación",
+    playNewWords: "Jugar nuevas palabras",
     review: {
       title: "Resumen del Juego",
       successfulRounds: "Rondas Exitosas",
       description: "Aquí están tus resultados:",
       playAgain: "Jugar las mismas palabras de nuevo",
+      playNewWords: "Jugar nuevas palabras",
       saveScore: "Guardar Puntuación",
       shareGame: "Compartir",
       urlCopied: "¡URL copiada!",

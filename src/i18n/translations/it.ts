@@ -28,6 +28,7 @@ export const it = {
       successfulRounds: "Turni Riusciti",
       description: "Ecco i tuoi risultati:",
       playAgain: "Gioca di nuovo le stesse parole",
+      playNewWords: "Gioca nuove parole",
       saveScore: "Salva Punteggio",
       shareGame: "Condividi",
       urlCopied: "URL copiato!",
