@@ -185,28 +185,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      check_and_update_high_score:
-        | {
-            Args: {
-              p_player_name: string
-              p_score: number
-              p_avg_words_per_round: number
-              p_session_id: string
-              p_theme?: string
-            }
-            Returns: boolean
-          }
-        | {
-            Args: {
-              p_player_name: string
-              p_score: number
-              p_avg_words_per_round: number
-              p_session_id: string
-              p_theme?: string
-              p_game_id?: string
-            }
-            Returns: boolean
-          }
+      check_and_update_high_score: {
+        Args: {
+          p_player_name: string
+          p_score: number
+          p_avg_words_per_round: number
+          p_session_id: string
+          p_theme?: string
+          p_game_id?: string
+        }
+        Returns: boolean
+      }
       is_admin: {
         Args: {
           user_id: string
