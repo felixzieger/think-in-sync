@@ -18,6 +18,7 @@ interface HighScore {
   created_at: string;
   session_id: string;
   theme: string;
+  language?: string;
 }
 
 interface HighScoreBoardProps {
@@ -60,16 +61,14 @@ export const HighScoreBoard = ({
       console.log("Fetching high scores for mode:", selectedMode, "gameId:", gameId);
       let query = supabase
         .from("high_scores")
-        .select("*")
+        .select("*, games(language)")
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
-      // If we have a gameId, filter by it
       if (gameId) {
         query = query.eq('game_id', gameId);
         console.log("Filtering scores by game_id:", gameId);
       } else if (selectedMode === 'daily') {
-        // For daily challenge, filter by the daily game IDs
         const dailyGames = await getDailyGames();
         const dailyGameIds = dailyGames.map(game => game.game_id);
         query = query.in('game_id', dailyGameIds);
@@ -82,8 +81,15 @@ export const HighScoreBoard = ({
         console.error("Error fetching high scores:", error);
         throw error;
       }
-      console.log("Fetched high scores:", data);
-      return data as HighScore[];
+
+      // Transform the data to include the language from the games table
+      const transformedData = data.map(score => ({
+        ...score,
+        language: score.games?.language || 'en'
+      }));
+
+      console.log("Fetched high scores:", transformedData);
+      return transformedData as HighScore[];
     },
   });
 
@@ -199,7 +205,6 @@ export const HighScoreBoard = ({
       <ScoresTable
         scores={paginatedScores || []}
         startIndex={startIndex}
-        showThemeColumn={selectedMode === 'all-time' && !gameId}
       />
 
       <LeaderboardPagination
