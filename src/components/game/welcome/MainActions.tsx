@@ -21,7 +21,7 @@ export const MainActions = ({ onStartDaily: onStartDaily, onStartNew: onStartNew
       </Button>
       <Button
         onClick={onStartNew}
-        className="w-full bg-secondary text-lg hover:bg-primary/90"
+        className="w-full bg-secondary text-lg hover:bg-secondary/90"
       >
         {t.welcome.startNewButton}
       </Button>
