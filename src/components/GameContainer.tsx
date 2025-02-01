@@ -63,7 +63,7 @@ export const GameContainer = () => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         if (gameState === 'welcome') {
-          handleStart();
+          handlePlayAgain(dailyGameId);
         } else if (gameState === 'showing-guess' && isGuessCorrect()) {
           handleNextRound();
         } else if (gameState === 'showing-guess' && !isGuessCorrect()) {
