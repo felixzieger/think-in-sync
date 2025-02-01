@@ -51,6 +51,10 @@ export const it = {
     invitation: {
       title: "Invito al Gioco",
       description: "Ehi, sei stato invitato a giocare. Gioca ora per scoprire come te la cavi con le stesse parole!"
+    },
+    error: {
+      title: "Impossibile avviare il gioco",
+      description: "Per favore riprova tra un momento."
     }
   },
   leaderboard: {

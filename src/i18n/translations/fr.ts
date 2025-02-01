@@ -51,6 +51,10 @@ export const fr = {
     invitation: {
       title: "Invitation au Jeu",
       description: "Hey, tu as été invité à jouer. Joue maintenant pour découvrir comment tu te débrouilles avec les mêmes mots !"
+    },
+    error: {
+      title: "Le jeu n'a pas pu être démarré",
+      description: "Veuillez réessayer dans un moment."
     }
   },
   leaderboard: {

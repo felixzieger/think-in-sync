@@ -51,6 +51,10 @@ export const en = {
     invitation: {
       title: "Game Invitation",
       description: "Hey, you got invited to play a game. Play now to find out how well you do on the same set of words!"
+    },
+    error: {
+      title: "Game could not be started",
+      description: "Please try again in a moment."
     }
   },
   leaderboard: {
