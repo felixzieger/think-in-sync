@@ -184,7 +184,7 @@ export const HighScoreBoard = ({
       if (error) throw error;
 
       console.log("Session created:", session);
-      navigate(`/?session_id=${session.id}`);
+      navigate(`/game/${gameId}`);
       onClose?.();
     } catch (error) {
       console.error('Error creating session:', error);
