@@ -75,7 +75,7 @@ export const it = {
     success: "Punteggio inviato con successo!",
     theme: "Tema",
     actions: "Azioni",
-    playSameWords: "Gioca con le stesse parole",
+    playSameWords: "Gioca le stesse parole",
     modes: {
       daily: "Sfida Giornaliera",
       "all-time": "Classifica Generale"

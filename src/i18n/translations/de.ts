@@ -75,7 +75,7 @@ export const de = {
     success: "Punktzahl erfolgreich übermittelt!",
     theme: "Thema",
     actions: "Aktionen",
-    playSameWords: "Mit gleichen Wörtern spielen",
+    playSameWords: "Gleiche Wörter spielen",
     modes: {
       daily: "Tägliche Herausforderung",
       "all-time": "Bestenliste"
