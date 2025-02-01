@@ -58,10 +58,10 @@ function getWordList(language: string): string[] {
 function generateRandomWords(language: string, count: number): string[] {
   const wordList = getWordList(language);
   const words: string[] = [];
-  
+
   // Create a copy of the word list to avoid duplicates
   const availableWords = [...wordList];
-  
+
   for (let i = 0; i < count; i++) {
     if (availableWords.length === 0) {
       // If we run out of unique words, reset the available words
@@ -71,7 +71,7 @@ function generateRandomWords(language: string, count: number): string[] {
     words.push(availableWords[randomIndex]);
     availableWords.splice(randomIndex, 1);
   }
-  
+
   return words;
 }
 
@@ -106,13 +106,13 @@ serve(async (req) => {
 
     for (const language of languages) {
       console.log(`Creating new game for language: ${language}`);
-      
+
       // Create new game
       const { data: gameData, error: gameError } = await supabase
         .from('games')
         .insert({
           theme: 'standard',
-          words: generateRandomWords(language, 25),
+          words: generateRandomWords(language, 10),
           language: language
         })
         .select()
@@ -153,7 +153,7 @@ serve(async (req) => {
     console.error('Error in generate-daily-challenge:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
-      { 
+      {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
