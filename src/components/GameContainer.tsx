@@ -14,6 +14,7 @@ import { GameInvitation } from "./game/GameInvitation";
 import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
+import { Language } from "@/i18n/translations";
 
 type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-review" | "invitation";
 
@@ -46,7 +47,7 @@ export const GameContainer = () => {
   const [totalWordsInSuccessfulRounds, setTotalWordsInSuccessfulRounds] = useState<number>(0);
   const { toast } = useToast();
   const t = useTranslation();
-  const { language } = useContext(LanguageContext);
+  const { language, setLanguage } = useContext(LanguageContext);
 
   const currentWord = words[currentWordIndex] || "";
 
@@ -58,25 +59,6 @@ export const GameContainer = () => {
       setCurrentWordIndex(0);
     }
   }, [gameState]);
-
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        if (gameState === 'welcome') {
-          handleStartDaily();
-        } else if (gameState === 'showing-guess' && isGuessCorrect()) {
-          handleNextRound();
-        } else if (gameState === 'showing-guess' && !isGuessCorrect()) {
-          handleGameReview();
-        } else if (gameState === 'game-review') {
-          handlePlayAgain(gameId);
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress as any);
-    return () => window.removeEventListener('keydown', handleKeyPress as any);
-  }, [gameState, aiGuess, currentWord]);
 
   useEffect(() => {
     if (urlGameId && !gameId) {
@@ -111,13 +93,19 @@ export const GameContainer = () => {
     try {
       const { data: gameData, error: gameError } = await supabase
         .from('games')
-        .select('theme, words')
+        .select('theme, words, language')
         .eq('id', urlGameId)
         .single();
 
       if (gameError) throw gameError;
 
       const newSessionId = await createSession(urlGameId);
+
+      // Set the language to match the game's language
+      if (gameData.language) {
+        console.log("Setting language to match game's language:", gameData.language);
+        setLanguage(gameData.language as Language);
+      }
 
       setCurrentTheme(gameData.theme);
       setWords(gameData.words);
