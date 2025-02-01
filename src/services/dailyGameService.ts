@@ -5,12 +5,12 @@ export const getDailyGame = async (language: string = 'en'): Promise<string> => 
   
   try {
     // First try to get a daily challenge in the user's language
-    let { data: dailyChallenge, error } = await supabase
+    const { data: dailyChallenge, error } = await supabase
       .from('daily_challenges')
       .select('game_id, games!inner(language)')
       .eq('is_active', true)
       .eq('games.language', language)
-      .single();
+      .maybeSingle();
 
     // If no challenge exists in user's language, fall back to English
     if (!dailyChallenge) {
@@ -20,7 +20,7 @@ export const getDailyGame = async (language: string = 'en'): Promise<string> => 
         .select('game_id, games!inner(language)')
         .eq('is_active', true)
         .eq('games.language', 'en')
-        .single();
+        .maybeSingle();
 
       if (englishError) throw englishError;
       if (!englishChallenge) throw new Error('No active daily challenge found');
