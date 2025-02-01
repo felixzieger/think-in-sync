@@ -61,25 +61,6 @@ export const GameContainer = () => {
   }, [gameState]);
 
   useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        if (gameState === 'welcome') {
-          handleStartDaily();
-        } else if (gameState === 'showing-guess' && isGuessCorrect()) {
-          handleNextRound();
-        } else if (gameState === 'showing-guess' && !isGuessCorrect()) {
-          handleGameReview();
-        } else if (gameState === 'game-review') {
-          handlePlayAgain(gameId);
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress as any);
-    return () => window.removeEventListener('keydown', handleKeyPress as any);
-  }, [gameState, aiGuess, currentWord]);
-
-  useEffect(() => {
     if (urlGameId && !gameId) {
       handleLoadGameFromUrl();
     }

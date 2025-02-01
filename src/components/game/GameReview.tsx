@@ -92,6 +92,18 @@ export const GameReview = ({
     }
   }, [sessionId, fromSession]);
 
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Only handle Enter key if high scores dialog is not open
+      if (e.key === 'Enter' && !showHighScores) {
+        handlePlayAgain();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [showHighScores]); // Add showHighScores to dependencies
+
   const handleCopyUrl = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);

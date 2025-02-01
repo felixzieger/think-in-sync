@@ -43,6 +43,21 @@ export const GuessDisplay = ({
 
   const isGuessCorrect = () => normalizeWord(aiGuess) === normalizeWord(currentWord);
 
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        if (isGuessCorrect()) {
+          onNextRound();
+        } else {
+          onGameReview();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [isGuessCorrect, onNextRound, onGameReview]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
