@@ -39,17 +39,17 @@ export const RoundHeader = ({
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t.game.confirmExit}</AlertDialogTitle>
+            <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
             <AlertDialogDescription>
-              {t.game.confirmExitDescription}
+              {t.game.leaveGameDescription}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={onCancel}>
-              {t.common.cancel}
+              {t.game.cancel}
             </AlertDialogCancel>
             <AlertDialogAction onClick={onBack}>
-              {t.common.confirm}
+              {t.game.confirm}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
