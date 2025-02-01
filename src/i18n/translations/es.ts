@@ -78,6 +78,10 @@ export const es = {
     theme: "Tema",
     actions: "Acciones",
     playSameWords: "Jugar con las mismas palabras",
+    scoreUpdated: "¡Puntuación actualizada!",
+    scoreUpdatedDesc: "Tu puntuación anterior para este juego ha sido actualizada",
+    scoreSubmitted: "¡Puntuación enviada!",
+    scoreSubmittedDesc: "Tu puntuación ha sido añadida a la tabla de clasificación",
     modes: {
       daily: "Desafío Diario",
       "all-time": "Histórico"

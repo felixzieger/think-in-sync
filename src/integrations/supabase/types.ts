@@ -194,7 +194,10 @@ export type Database = {
           p_theme?: string
           p_game_id?: string
         }
-        Returns: boolean
+        Returns: {
+          success: boolean
+          is_update: boolean
+        }[]
       }
       is_admin: {
         Args: {

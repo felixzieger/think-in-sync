@@ -142,8 +142,8 @@ export const HighScoreBoard = ({
 
       if (data.success) {
         toast({
-          title: t.leaderboard.success,
-          description: t.leaderboard.success,
+          title: data.isUpdate ? t.leaderboard.scoreUpdated : t.leaderboard.scoreSubmitted,
+          description: data.isUpdate ? t.leaderboard.scoreUpdatedDesc : t.leaderboard.scoreSubmittedDesc,
         });
 
         setHasSubmitted(true);

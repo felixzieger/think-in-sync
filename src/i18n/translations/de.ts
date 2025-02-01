@@ -78,6 +78,10 @@ export const de = {
     theme: "Thema",
     actions: "Aktionen",
     playSameWords: "Gleiche Wörter spielen",
+    scoreUpdated: "Punktzahl aktualisiert!",
+    scoreUpdatedDesc: "Deine vorherige Punktzahl für dieses Spiel wurde aktualisiert",
+    scoreSubmitted: "Punktzahl eingereicht!",
+    scoreSubmittedDesc: "Deine Punktzahl wurde zur Bestenliste hinzugefügt",
     modes: {
       daily: "Tägliche Herausforderung",
       "all-time": "Bestenliste"

@@ -77,6 +77,10 @@ export const fr = {
     theme: "Thème",
     actions: "Actions",
     playSameWords: "Jouer avec les mêmes mots",
+    scoreUpdated: "Score mis à jour !",
+    scoreUpdatedDesc: "Votre score précédent pour ce jeu a été mis à jour",
+    scoreSubmitted: "Score soumis !",
+    scoreSubmittedDesc: "Votre score a été ajouté au classement",
     modes: {
       daily: "Défi du Jour",
       "all-time": "Historique"

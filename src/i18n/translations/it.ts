@@ -77,6 +77,10 @@ export const it = {
     theme: "Tema",
     actions: "Azioni",
     playSameWords: "Gioca le stesse parole",
+    scoreUpdated: "Punteggio aggiornato!",
+    scoreUpdatedDesc: "Il tuo punteggio precedente per questo gioco è stato aggiornato",
+    scoreSubmitted: "Punteggio inviato!",
+    scoreSubmittedDesc: "Il tuo punteggio è stato aggiunto alla classifica",
     modes: {
       daily: "Sfida Giornaliera",
       "all-time": "Classifica Generale"
