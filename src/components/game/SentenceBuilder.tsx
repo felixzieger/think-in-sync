@@ -15,6 +15,7 @@ import { RoundHeader } from "./sentence-builder/RoundHeader";
 import { WordDisplay } from "./sentence-builder/WordDisplay";
 import { SentenceDisplay } from "./sentence-builder/SentenceDisplay";
 import { InputForm } from "./sentence-builder/InputForm";
+import { Button } from "@/components/ui/button";
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -27,6 +28,7 @@ interface SentenceBuilderProps {
   onMakeGuess: () => void;
   normalizeWord: (word: string) => string;  // Updated type definition
   onBack?: () => void;
+  onClose: () => void;
 }
 
 export const SentenceBuilder = ({
@@ -40,6 +42,7 @@ export const SentenceBuilder = ({
   onMakeGuess,
   normalizeWord,
   onBack,
+  onClose,
 }: SentenceBuilderProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasMultipleWords, setHasMultipleWords] = useState(false);
@@ -108,7 +111,7 @@ export const SentenceBuilder = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogCancel onClick={onClose}>{t.game.cancel}</AlertDialogCancel>
             <AlertDialogAction onClick={() => onBack?.()}>
               {t.game.confirm}
             </AlertDialogAction>
