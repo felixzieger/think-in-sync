@@ -34,7 +34,7 @@ const generateWordsForTheme = async (theme: string, wordCount: number = 10, lang
 };
 
 export const createGame = async (theme: string, language: Language = 'en'): Promise<string> => {
-  console.log('Creating new game with theme:', theme);
+  console.log('Creating new game with theme:', theme, 'language:', language);
 
   const words = await generateWordsForTheme(theme, 25, language);
 
@@ -42,7 +42,8 @@ export const createGame = async (theme: string, language: Language = 'en'): Prom
     .from('games')
     .insert({
       theme,
-      words
+      words,
+      language  // Added this line to include the language
     })
     .select()
     .single();
