@@ -159,6 +159,42 @@ export type Database = {
           },
         ]
       }
+      temp_games: {
+        Row: {
+          id: string | null
+          language: string | null
+          session_id: string | null
+          theme: string | null
+          words: string[] | null
+        }
+        Insert: {
+          id?: string | null
+          language?: string | null
+          session_id?: string | null
+          theme?: string | null
+          words?: string[] | null
+        }
+        Update: {
+          id?: string | null
+          language?: string | null
+          session_id?: string | null
+          theme?: string | null
+          words?: string[] | null
+        }
+        Relationships: []
+      }
+      temp_session_ids: {
+        Row: {
+          session_id: string | null
+        }
+        Insert: {
+          session_id?: string | null
+        }
+        Update: {
+          session_id?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

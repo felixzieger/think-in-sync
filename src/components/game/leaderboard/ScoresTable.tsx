@@ -80,7 +80,7 @@ export const ScoresTable = ({
             <TableHead>{t.leaderboard.roundsColumn}</TableHead>
             <TableHead>{t.leaderboard.avgWords}</TableHead>
             {selectedMode === 'all-time' && (
-              <TableHead>
+              <TableHead className="text-center">
                 {t.leaderboard.playSameWords}
               </TableHead>
             )}
@@ -93,21 +93,21 @@ export const ScoresTable = ({
             const language = score.game?.language || 'en';
             return (
               <TableRow key={score.id}>
-                <TableCell>{medal}</TableCell>
-                <TableCell className="flex items-center gap-2">
+                <TableCell className="align-middle">{medal}</TableCell>
+                <TableCell className="flex items-center gap-2 h-full align-middle">
                   {score.player_name}
-                  <span className="ml-2">{getLanguageEmoji(language)}</span>
+                  <span>{getLanguageEmoji(language)}</span>
                 </TableCell>
-                <TableCell>{score.score}</TableCell>
-                <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
+                <TableCell className="align-middle">{score.score}</TableCell>
+                <TableCell className="align-middle">{score.avg_words_per_round.toFixed(1)}</TableCell>
                 {selectedMode === 'all-time' && (
-                  <TableCell>
+                  <TableCell className="text-center align-middle">
                     {score.game_id && onPlayGame && (
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => onPlayGame(score.game_id!)}
-                        className="gap-2"
+                        className="gap-2 mx-auto"
                       >
                         <Play className="h-4 w-4" />
                       </Button>
