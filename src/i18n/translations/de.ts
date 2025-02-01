@@ -70,6 +70,8 @@ export const de = {
     next: "Nächste",
     success: "Punktzahl erfolgreich übermittelt!",
     theme: "Thema",
+    actions: "Aktionen",
+    playSameWords: "Mit gleichen Wörtern spielen",
     modes: {
       daily: "Tägliche Herausforderung",
       "all-time": "Bestenliste"

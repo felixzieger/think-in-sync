@@ -70,6 +70,8 @@ export const en = {
     next: "Next",
     success: "Score submitted successfully!",
     theme: "Theme",
+    actions: "Actions",
+    playSameWords: "Play same words",
     modes: {
       daily: "Daily Challenge",
       "all-time": "All Time"
