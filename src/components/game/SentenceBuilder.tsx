@@ -26,7 +26,7 @@ interface SentenceBuilderProps {
   onInputChange: (value: string) => void;
   onSubmitWord: (e: React.FormEvent) => void;
   onMakeGuess: () => void;
-  normalizeWord: (word: string) => string;  // Updated type definition
+  normalizeWord: (word: string) => string;
   onBack?: () => void;
   onClose: () => void;
 }
@@ -111,8 +111,10 @@ export const SentenceBuilder = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={onClose}>{t.game.cancel}</AlertDialogCancel>
-            <AlertDialogAction onClick={() => onBack?.()}>
+            <AlertDialogCancel onClick={() => setShowConfirmDialog(false)}>
+              {t.game.cancel}
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={onBack}>
               {t.game.confirm}
             </AlertDialogAction>
           </AlertDialogFooter>
