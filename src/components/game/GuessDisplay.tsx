@@ -41,6 +41,10 @@ export const GuessDisplay = ({
     setShowConfirmDialog(show);
   };
 
+  const handleCancel = () => {
+    setShowConfirmDialog(false);
+  };
+
   const isGuessCorrect = () => normalizeWord(aiGuess) === normalizeWord(currentWord);
 
   useEffect(() => {
@@ -69,6 +73,7 @@ export const GuessDisplay = ({
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={handleSetShowConfirmDialog}
+        onCancel={handleCancel}
       />
 
       <WordDisplay currentWord={currentWord} />
