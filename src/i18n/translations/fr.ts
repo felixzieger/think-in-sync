@@ -27,7 +27,7 @@ export const fr = {
       title: "Résumé de la Partie",
       successfulRounds: "Manches Réussies",
       description: "Voici vos résultats :",
-      playAgain: "Rejouer",
+      playAgain: "Rejouer avec les mêmes mots",
       saveScore: "Sauvegarder le Score",
       shareGame: "Partager",
       urlCopied: "URL copiée !",

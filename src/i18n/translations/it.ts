@@ -27,7 +27,7 @@ export const it = {
       title: "Riepilogo Partita",
       successfulRounds: "Turni Riusciti",
       description: "Ecco i tuoi risultati:",
-      playAgain: "Gioca Ancora",
+      playAgain: "Gioca di nuovo le stesse parole",
       saveScore: "Salva Punteggio",
       shareGame: "Condividi",
       urlCopied: "URL copiato!",

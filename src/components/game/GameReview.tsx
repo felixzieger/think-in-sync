@@ -19,7 +19,7 @@ import { RoundHeader } from "./sentence-builder/RoundHeader";
 interface GameReviewProps {
   currentScore: number;
   avgWordsPerRound: number;
-  onPlayAgain: (game_id?: string) => void;
+  onPlayAgain: (game_id?: string, fromSession?: string) => void;
   onBack?: () => void;
   gameId?: string;
   sessionId: string;
@@ -122,7 +122,7 @@ export const GameReview = ({
 
         if (error) throw error;
 
-        onPlayAgain(gameId);
+        onPlayAgain(gameId, fromSession);
       } catch (error) {
         console.error('Error creating new session:', error);
         toast({

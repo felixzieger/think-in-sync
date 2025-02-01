@@ -27,7 +27,7 @@ export const es = {
       title: "Resumen del Juego",
       successfulRounds: "Rondas Exitosas",
       description: "Aquí están tus resultados:",
-      playAgain: "Jugar de Nuevo",
+      playAgain: "Jugar las mismas palabras de nuevo",
       saveScore: "Guardar Puntuación",
       shareGame: "Compartir",
       urlCopied: "¡URL copiada!",

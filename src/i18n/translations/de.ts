@@ -27,7 +27,7 @@ export const de = {
       title: "Spielübersicht",
       successfulRounds: "Erfolgreiche Runden",
       description: "Hier ist dein Ergebnis:",
-      playAgain: "Erneut spielen",
+      playAgain: "Gleiche Wörter erneut spielen",
       saveScore: "Punktzahl speichern",
       shareGame: "Teilen",
       urlCopied: "URL kopiert!",

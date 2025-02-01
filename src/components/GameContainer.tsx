@@ -30,8 +30,9 @@ export const GameContainer = () => {
   const { gameId: urlGameId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const fromSession = searchParams.get('from_session');
-  const [gameState, setGameState] = useState<GameState>(fromSession ? "invitation" : "welcome");
+  const fromSessionParam = searchParams.get('from_session');
+  const [fromSession, setFromSession] = useState<string | null>(fromSessionParam);
+  const [gameState, setGameState] = useState<GameState>(fromSessionParam ? "invitation" : "welcome");
   const [currentTheme, setCurrentTheme] = useState<string>("standard");
   const [sessionId, setSessionId] = useState<string>("");
   const [gameId, setGameId] = useState<string>("");
@@ -152,6 +153,7 @@ export const GameContainer = () => {
     setCurrentWordIndex(0);
     setGameId("");
     setSessionId("");
+    setFromSession(null);
     navigate('/');
   };
 
@@ -315,7 +317,7 @@ export const GameContainer = () => {
     }
   };
 
-  const handlePlayAgain = (gameId?: string) => {
+  const handlePlayAgain = (gameId?: string, fromSession?: string) => {
     setSentence([]);
     setAiGuess("");
     setSuccessfulRounds(0);
@@ -323,6 +325,9 @@ export const GameContainer = () => {
     setWords([]);
     setCurrentWordIndex(0);
     setSessionId("");
+    if (fromSession) {
+      setFromSession(fromSession);
+    }
     if (gameId) {
       navigate(`/game/${gameId}`);
       handleLoadGameFromUrl()

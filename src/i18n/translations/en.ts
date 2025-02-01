@@ -27,7 +27,7 @@ export const en = {
       title: "Game Review",
       successfulRounds: "Successful Rounds",
       description: "Here's how you did:",
-      playAgain: "Play Again",
+      playAgain: "Play same words again",
       saveScore: "Save Score",
       shareGame: "Share",
       urlCopied: "URL Copied!",
