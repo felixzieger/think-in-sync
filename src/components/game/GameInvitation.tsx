@@ -2,25 +2,14 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { ArrowLeft } from "lucide-react";
-import { useContext } from "react";
-import { LanguageContext } from "@/contexts/LanguageContext";
 
 interface GameInvitationProps {
   onContinue: () => void;
   onBack: () => void;
-  gameId?: string;
 }
 
-export const GameInvitation = ({ onContinue, onBack, gameId }: GameInvitationProps) => {
+export const GameInvitation = ({ onContinue, onBack }: GameInvitationProps) => {
   const t = useTranslation();
-  const { setGameLanguage } = useContext(LanguageContext);
-  
-  const handleContinue = async () => {
-    if (gameId) {
-      await setGameLanguage(gameId);
-    }
-    onContinue();
-  };
   
   return (
     <motion.div
@@ -44,7 +33,7 @@ export const GameInvitation = ({ onContinue, onBack, gameId }: GameInvitationPro
       <p className="text-gray-600 text-center">{t.game.invitation.description}</p>
 
       <Button
-        onClick={handleContinue}
+        onClick={onContinue}
         className="w-full"
       >
         {t.themes.continue} ⏎
