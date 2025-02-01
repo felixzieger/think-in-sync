@@ -327,6 +327,8 @@ export const GameContainer = () => {
     setSessionId("");
     if (fromSession) {
       setFromSession(fromSession);
+    } else {
+      setFromSession(null);
     }
     if (gameId) {
       navigate(`/game/${gameId}`);
