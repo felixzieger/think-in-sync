@@ -110,30 +110,30 @@ export const GameReview = ({
   };
 
   const handlePlayAgain = async () => {
-    if (gameId) {
-      try {
-        const { data: session, error } = await supabase
-          .from('sessions')
-          .insert({
-            game_id: gameId
-          })
-          .select()
-          .single();
+    try {
+      const { data: session, error } = await supabase
+        .from('sessions')
+        .insert({
+          game_id: gameId
+        })
+        .select()
+        .single();
 
-        if (error) throw error;
+      if (error) throw error;
 
-        onPlayAgain(gameId, fromSession);
-      } catch (error) {
-        console.error('Error creating new session:', error);
-        toast({
-          title: "Error",
-          description: "Failed to restart the game. Please try again.",
-          variant: "destructive",
-        });
-      }
-    } else {
-      onPlayAgain();
+      onPlayAgain(gameId, fromSession);
+    } catch (error) {
+      console.error('Error creating new session:', error);
+      toast({
+        title: "Error",
+        description: "Failed to restart the game. Please try again.",
+        variant: "destructive",
+      });
     }
+  };
+
+  const handlePlayNewWords = async () => {
+    onPlayAgain();
   };
 
   const renderComparisonResult = () => {
@@ -208,7 +208,7 @@ export const GameReview = ({
           <Button onClick={handlePlayAgain} variant="secondary" className="text-white w-full">
             {t.game.review.playAgain} ⏎
           </Button>
-          <Button onClick={handlePlayAgain} variant="secondary" className="text-white w-full">
+          <Button onClick={handlePlayNewWords} variant="secondary" className="text-white w-full">
             {t.game.review.playNewWords}
           </Button>
         </div>
