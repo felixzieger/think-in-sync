@@ -3,6 +3,7 @@ import { useSearchParams, useParams, useNavigate, useLocation } from "react-rout
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/mistralService";
 import { createGame, createSession } from "@/services/gameService";
+import { getDailyGame } from "@/services/dailyGameService";
 import { useToast } from "@/components/ui/use-toast";
 import { WelcomeScreen } from "./game/WelcomeScreen";
 import { ThemeSelector } from "./game/ThemeSelector";
@@ -23,8 +24,6 @@ const normalizeWord = (word: string): string => {
     .replace(/[^a-z]/g, '')
     .trim();
 };
-
-const dailyGameId = "06ce2045-d496-49df-9c29-a7390c9312e9";
 
 export const GameContainer = () => {
   const [searchParams] = useSearchParams();
@@ -63,7 +62,7 @@ export const GameContainer = () => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         if (gameState === 'welcome') {
-          handlePlayAgain(dailyGameId);
+          handleStartDaily();
         } else if (gameState === 'showing-guess' && isGuessCorrect()) {
           handleNextRound();
         } else if (gameState === 'showing-guess' && !isGuessCorrect()) {
@@ -84,13 +83,26 @@ export const GameContainer = () => {
     }
   }, [urlGameId]);
 
-  // New effect to handle location changes
   useEffect(() => {
     if (location.pathname === '/' && gameId) {
       console.log("Location changed to root with active gameId, handling back navigation");
       handleBack();
     }
   }, [location.pathname, gameId]);
+
+  const handleStartDaily = async () => {
+    try {
+      const dailyGameId = await getDailyGame(language);
+      handlePlayAgain(dailyGameId);
+    } catch (error) {
+      console.error('Error starting daily game:', error);
+      toast({
+        title: "Error",
+        description: "Failed to start the daily challenge. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleLoadGameFromUrl = async () => {
     if (!urlGameId) return;
@@ -344,7 +356,7 @@ export const GameContainer = () => {
         className="w-full md:max-w-md rounded-none md:rounded-xl bg-transparent md:bg-white p-4 md:p-8 md:shadow-lg"
       >
         {gameState === "welcome" ? (
-          <WelcomeScreen onStartDaily={() => handlePlayAgain(dailyGameId)} onStartNew={handleStart} />
+          <WelcomeScreen onStartDaily={handleStartDaily} onStartNew={handleStart} />
         ) : gameState === "theme-selection" ? (
           <ThemeSelector onThemeSelect={handleThemeSelect} onBack={handleBack} />
         ) : gameState === "invitation" ? (
