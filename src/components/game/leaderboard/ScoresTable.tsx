@@ -7,13 +7,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslation } from "@/hooks/useTranslation";
-import { Flag } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 interface HighScore {
   id: string;
@@ -47,37 +40,20 @@ const getRankMedal = (rank: number) => {
   }
 };
 
-const getLanguageColor = (language: string) => {
+const getLanguageEmoji = (language: string) => {
   switch (language) {
     case 'en':
-      return '#ff0000'; // Red for English
+      return '🇬🇧';
     case 'de':
-      return '#000000'; // Black for German
+      return '🇩🇪';
     case 'fr':
-      return '#0000ff'; // Blue for French
+      return '🇫🇷';
     case 'it':
-      return '#00ff00'; // Green for Italian
+      return '🇮🇹';
     case 'es':
-      return '#ffff00'; // Yellow for Spanish
+      return '🇪🇸';
     default:
-      return '#808080'; // Gray for unknown
-  }
-};
-
-const getLanguageName = (language: string) => {
-  switch (language) {
-    case 'en':
-      return 'English';
-    case 'de':
-      return 'German';
-    case 'fr':
-      return 'French';
-    case 'it':
-      return 'Italian';
-    case 'es':
-      return 'Spanish';
-    default:
-      return 'Unknown';
+      return '🌐';
   }
 };
 
@@ -108,20 +84,7 @@ export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: Sco
                 <TableCell>{medal}</TableCell>
                 <TableCell className="flex items-center gap-2">
                   {score.player_name}
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Flag 
-                          size={16} 
-                          color={getLanguageColor(language)}
-                          className="inline-block ml-2"
-                        />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{getLanguageName(language)}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <span className="ml-2">{getLanguageEmoji(language)}</span>
                 </TableCell>
                 <TableCell>{score.score}</TableCell>
                 <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>

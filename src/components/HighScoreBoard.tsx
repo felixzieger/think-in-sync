@@ -202,7 +202,7 @@ export const HighScoreBoard = ({
       <ScoresTable
         scores={paginatedScores || []}
         startIndex={startIndex}
-        showThemeColumn={selectedMode === 'all-time' && !gameId}
+        showThemeColumn={selectedMode === 'daily'}
       />
 
       <LeaderboardPagination
