@@ -5,7 +5,7 @@ export const getDailyGame = async (language: string = 'en'): Promise<string> => 
   
   try {
     // First try to get a daily challenge in the user's language
-    const { data: dailyChallenge, error } = await supabase
+    let { data: dailyChallenge, error } = await supabase
       .from('daily_challenges')
       .select('game_id, games!inner(language)')
       .eq('is_active', true)
