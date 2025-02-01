@@ -43,18 +43,21 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          language: string | null
           theme: string
           words: string[]
         }
         Insert: {
           created_at?: string
           id?: string
+          language?: string | null
           theme: string
           words: string[]
         }
         Update: {
           created_at?: string
           id?: string
+          language?: string | null
           theme?: string
           words?: string[]
         }
