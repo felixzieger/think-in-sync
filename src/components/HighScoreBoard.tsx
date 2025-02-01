@@ -9,6 +9,7 @@ import { ScoresTable } from "./game/leaderboard/ScoresTable";
 import { LeaderboardHeader } from "./game/leaderboard/LeaderboardHeader";
 import { LeaderboardPagination } from "./game/leaderboard/LeaderboardPagination";
 import { getDailyGames } from "@/services/dailyGameService";
+import { useNavigate } from "react-router-dom";
 
 interface HighScore {
   id: string;
@@ -21,6 +22,7 @@ interface HighScore {
   game?: {
     language: string;
   };
+  game_id?: string;
 }
 
 interface HighScoreBoardProps {
@@ -54,6 +56,7 @@ export const HighScoreBoard = ({
   const { toast } = useToast();
   const t = useTranslation();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const showScoreInfo = sessionId !== "" && currentScore > 0;
 
@@ -67,12 +70,10 @@ export const HighScoreBoard = ({
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
-      // If we have a gameId, filter by it
       if (gameId) {
         query = query.eq('game_id', gameId);
         console.log("Filtering scores by game_id:", gameId);
       } else if (selectedMode === 'daily') {
-        // For daily challenge, filter by the daily game IDs
         const dailyGames = await getDailyGames();
         const dailyGameIds = dailyGames.map(game => game.game_id);
         query = query.in('game_id', dailyGameIds);
@@ -169,6 +170,32 @@ export const HighScoreBoard = ({
     }
   };
 
+  const handlePlayGame = async (gameId: string) => {
+    try {
+      console.log("Creating new session for game:", gameId);
+      const { data: session, error } = await supabase
+        .from('sessions')
+        .insert({
+          game_id: gameId
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      console.log("Session created:", session);
+      navigate(`/?session_id=${session.id}`);
+      onClose?.();
+    } catch (error) {
+      console.error('Error creating session:', error);
+      toast({
+        title: t.game.error.title,
+        description: t.game.error.description,
+        variant: "destructive",
+      });
+    }
+  };
+
   const totalPages = highScores ? Math.ceil(highScores.length / ITEMS_PER_PAGE) : 0;
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedScores = highScores?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
@@ -202,6 +229,9 @@ export const HighScoreBoard = ({
       <ScoresTable
         scores={paginatedScores || []}
         startIndex={startIndex}
+        showThemeColumn={selectedMode === 'daily'}
+        onPlayGame={handlePlayGame}
+        selectedMode={selectedMode}
       />
 
       <LeaderboardPagination

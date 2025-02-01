@@ -7,6 +7,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslation } from "@/hooks/useTranslation";
+import { Button } from "@/components/ui/button";
+import { Play } from "lucide-react";
 
 interface HighScore {
   id: string;
@@ -18,11 +20,15 @@ interface HighScore {
   game?: {
     language: string;
   };
+  game_id?: string;
 }
 
 interface ScoresTableProps {
   scores: HighScore[];
   startIndex: number;
+  showThemeColumn?: boolean;
+  onPlayGame?: (gameId: string) => void;
+  selectedMode?: 'daily' | 'all-time';
 }
 
 const getRankMedal = (rank: number) => {
@@ -55,7 +61,13 @@ const getLanguageEmoji = (language: string) => {
   }
 };
 
-export const ScoresTable = ({ scores, startIndex }: ScoresTableProps) => {
+export const ScoresTable = ({ 
+  scores, 
+  startIndex, 
+  showThemeColumn = false,
+  onPlayGame,
+  selectedMode = 'daily'
+}: ScoresTableProps) => {
   const t = useTranslation();
 
   return (
@@ -67,6 +79,9 @@ export const ScoresTable = ({ scores, startIndex }: ScoresTableProps) => {
             <TableHead>{t.leaderboard.player}</TableHead>
             <TableHead>{t.leaderboard.roundsColumn}</TableHead>
             <TableHead>{t.leaderboard.avgWords}</TableHead>
+            {selectedMode === 'all-time' && (
+              <TableHead className="text-right">{t.leaderboard.actions}</TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -83,12 +98,27 @@ export const ScoresTable = ({ scores, startIndex }: ScoresTableProps) => {
                 </TableCell>
                 <TableCell>{score.score}</TableCell>
                 <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
+                {selectedMode === 'all-time' && (
+                  <TableCell className="text-right">
+                    {score.game_id && onPlayGame && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onPlayGame(score.game_id!)}
+                        className="gap-2"
+                      >
+                        <Play className="h-4 w-4" />
+                        {t.leaderboard.playSameWords}
+                      </Button>
+                    )}
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}
           {!scores?.length && (
             <TableRow>
-              <TableCell colSpan={4} className="text-center">
+              <TableCell colSpan={5} className="text-center">
                 {t.leaderboard.noScores}
               </TableCell>
             </TableRow>
