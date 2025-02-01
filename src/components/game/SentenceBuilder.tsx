@@ -70,10 +70,6 @@ export const SentenceBuilder = ({
     setShowConfirmDialog(show);
   };
 
-  const handleCancel = () => {
-    setShowConfirmDialog(false);
-  };
-
   const isValidInput = !playerInput || /^[\p{L} ]+$/u.test(playerInput);
 
   return (
@@ -87,7 +83,6 @@ export const SentenceBuilder = ({
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={handleSetShowConfirmDialog}
-        onCancel={handleCancel}
       />
 
       <WordDisplay currentWord={currentWord} />

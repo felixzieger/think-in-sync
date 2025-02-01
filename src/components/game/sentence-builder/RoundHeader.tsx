@@ -1,56 +1,74 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { House } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/hooks/useTranslation";
-import { ArrowLeft, Home } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface RoundHeaderProps {
   successfulRounds: number;
   onBack?: () => void;
   showConfirmDialog: boolean;
   setShowConfirmDialog: (show: boolean) => void;
-  onCancel: () => void;
 }
 
 export const RoundHeader = ({
   successfulRounds,
   onBack,
   showConfirmDialog,
-  setShowConfirmDialog,
-  onCancel
+  setShowConfirmDialog
 }: RoundHeaderProps) => {
   const t = useTranslation();
 
+  const handleHomeClick = () => {
+    console.log("RoundHeader - Home button clicked, successful rounds:", successfulRounds);
+    if (successfulRounds > 0) {
+      console.log("RoundHeader - Setting showConfirmDialog to true");
+      setShowConfirmDialog(true);
+    } else {
+      console.log("RoundHeader - No successful rounds, navigating directly");
+      onBack?.();
+    }
+  };
+
+  const handleDialogChange = (open: boolean) => {
+    console.log("RoundHeader - Dialog state changing to:", open);
+    setShowConfirmDialog(open);
+    if (!open) {  // Dialog is closing
+      console.log("RoundHeader - Dialog closing, triggering navigation");
+      onBack?.();
+    }
+  };
+
   return (
-    <div className="flex items-center justify-between mb-4">
+    <div className="relative">
+      <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg">
+        <span className="text-sm font-medium text-primary">
+          {t.game.round} {successfulRounds + 1}
+        </span>
+      </div>
+
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setShowConfirmDialog(true)}
-        className="absolute left-0 top-0"
+        className="absolute left-0 top-0 text-gray-600 hover:text-white"
+        onClick={handleHomeClick}
       >
-        <ArrowLeft className="h-4 w-4" />
+        <House className="h-5 w-5" />
       </Button>
 
-      <div className="flex items-center gap-2 absolute right-0 top-0">
-        <span className="text-sm font-medium">
-          {t.game.round} {successfulRounds + 1}
-        </span>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setShowConfirmDialog(true)}
-        >
-          <Home className="h-4 w-4" />
-        </Button>
-      </div>
+      <h2 className="mb-4 text-2xl font-semibold text-gray-900">
+        {t.game.title}
+      </h2>
 
-      <div className="w-full text-center">
-        <h2 className="text-xl font-semibold">
-          Think in Sync
-        </h2>
-      </div>
-
-      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+      <AlertDialog open={showConfirmDialog} onOpenChange={handleDialogChange}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
@@ -59,12 +77,8 @@ export const RoundHeader = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={onCancel}>
-              {t.game.cancel}
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={onBack}>
-              {t.game.confirm}
-            </AlertDialogAction>
+            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogAction>{t.game.confirm}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

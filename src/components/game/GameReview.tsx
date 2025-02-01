@@ -47,6 +47,7 @@ export const GameReview = ({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const shareUrl = `${window.location.origin}/game?from_session=${sessionId}`;
 
+
   useEffect(() => {
     const fetchGameResults = async () => {
       const { data, error } = await supabase
@@ -165,10 +166,6 @@ export const GameReview = ({
     );
   };
 
-  const handleCancel = () => {
-    setShowConfirmDialog(false);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -180,7 +177,6 @@ export const GameReview = ({
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={setShowConfirmDialog}
-        onCancel={handleCancel}
       />
 
       <div className="space-y-4">
