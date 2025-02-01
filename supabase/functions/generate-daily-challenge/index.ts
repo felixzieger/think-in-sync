@@ -7,33 +7,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Word lists from words-standard.ts
-const englishWords = [
-  "CAT", "SUN", "RAIN", "TREE", "STAR", "MOON", "FISH", "BIRD", "CLOUD", "SKY",
-  "WIND", "SNOW", "FLOWER", "BUTTERFLY", "WATER", "OCEAN", "RIVER", "MOUNTAIN", "FOREST", "HOUSE",
-  "CANDLE", "GARDEN", "BRIDGE", "ISLAND", "BREEZE", "LIGHT", "THUNDER", "RAINBOW", "SMILE", "FRIEND",
-  "FAMILY", "APPLE", "BANANA", "CAR", "BOAT", "BALL", "CAKE", "FROG", "HORSE", "LION",
-  "MONKEY", "PANDA", "PLANE", "TRAIN", "CANDY", "KITE", "BALLOON", "PARK", "BEACH", "TOY",
-  "BOOK", "BUBBLE", "SHELL", "PEN", "ICE", "HAT", "SHOE", "CLOCK", "BED", "CUP",
-  "KEY", "DOOR", "CHICKEN", "DUCK", "SHEEP", "COW", "PIG", "GOAT", "FOX", "BEAR",
-  "DEER", "OWL", "EGG", "NEST", "ROCK", "LEAF", "BRUSH", "TOOTH", "HAND", "FEET",
-  "EYE", "NOSE", "EAR", "MOUTH", "CHILD", "RAINCOAT", "LADDER", "WINDOW", "DOCTOR", "NURSE",
-  "TEACHER", "STUDENT", "PENCIL", "TABLE", "CHAIR", "LAMP", "MIRROR", "BOWL", "PLATE", "SPOON",
-  "FORK", "KNIFE", "GLASS", "STRAW", "RULER", "PAPER", "BASKET", "CARPET", "SOFA", "TELEVISION",
-  "RADIO", "BATTERY", "CANDLE", "FENCE", "MAILBOX", "BRICK", "LANTERN", "WHEEL", "BELL", "UMBRELLA",
-  "TRUCK", "MOTORCYCLE", "BICYCLE", "STOVE", "REFRIGERATOR", "MICROWAVE", "WASHER", "DRYER", "FURNACE", "FAN",
-  "PAINTBRUSH", "BUCKET", "SPONGE", "SOAP", "TOWEL", "CLOTH", "SCISSORS", "TAPE", "RIBBON", "THREAD",
-  "NEEDLE", "BUTTON", "ZIPPER", "SLIPPER", "COAT", "MITTEN", "SCARF", "GLOVE", "PANTS", "SHIRT",
-  "JACKET", "DRESS", "SKIRT", "SOCK", "BOOT", "SANDAL", "HAT", "CAP", "MASK", "SUNGALASSES",
-  "WATCH", "NECKLACE", "BRACELET", "RING", "EARRING", "BACKPACK", "SUITCASE", "TICKET", "PASSPORT", "MAP",
-  "COMPASS", "TORCH", "FLASHLIGHT", "CAMPFIRE", "TENT", "SLEEPINGBAG", "PICNIC", "BENCH", "FENCE", "GATE",
-  "SIGN", "CROSSWALK", "TRAFFICLIGHT", "SIDEWALK", "LANTERN", "BALLOON", "POSTCARD", "STAMP", "LETTER", "ENVELOPE",
-  "PARKING", "STREET", "HIGHWAY", "BRIDGE", "TUNNEL", "STATUE", "FOUNTAIN", "TOWER", "CASTLE", "PYRAMID",
-  "PLANET", "GALAXY", "SATELLITE", "ASTRONAUT", "TELESCOPE", "MICROSCOPE", "MAGNET", "BATTERY", "BULB", "SOCKET",
-  "PLUG", "WIRE", "SWITCH", "CIRCUIT", "ROBOT", "COMPUTER", "MOUSE", "KEYBOARD", "SCREEN", "PRINTER",
-  "SPEAKER", "HEADPHONE", "PHONE", "CAMERA", "DOG"
-];
-
 const wordTranslations: Record<string, Record<string, string>> = {
   "CAT": { de: "KATZE", fr: "CHAT", it: "GATTO", es: "GATO" },
   "DOG": { de: "HUND", fr: "CHIEN", it: "CANE", es: "PERRO" },
@@ -172,12 +145,12 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "TOWEL": { de: "HANDTUCH", fr: "SERVIETTE", it: "ASCIUGAMANO", es: "TOALLA" },
   "CLOTH": { de: "STOFF", fr: "TISSU", it: "STOFFA", es: "TELA" },
   "SCISSORS": { de: "SCHERE", fr: "CISEAUX", it: "FORBICI", es: "TIJERAS" },
-  "TAPE": { de: "KLEBEBAND", fr: "RUBAN ADESÍF", it: "NASTRO ADESIVO", es: "CINTA ADESIVA" },
+  // "TAPE": { de: "KLEBEBAND", fr: "RUBAN ADESÍF", it: "NASTRO ADESIVO", es: "CINTA ADESIVA" },
   "RIBBON": { de: "BAND", fr: "RUBAN", it: "NASTRO", es: "CINTA" },
   "THREAD": { de: "FADEN", fr: "FIL", it: "FILO", es: "HILO" },
   "NEEDLE": { de: "NADEL", fr: "AIGUILLE", it: "AGO", es: "AGUJA" },
   "BUTTON": { de: "KNOPF", fr: "BOUTON", it: "BOTTONE", es: "BOTÓN" },
-  "ZIPPER": { de: "REISSVERSCHLUSS", fr: "FERMETURE ÉCLAIR", it: "CERNIERA", es: "CREMALLERA" },
+  // "ZIPPER": { de: "REISSVERSCHLUSS", fr: "FERMETURE ÉCLAIR", it: "CERNIERA", es: "CREMALLERA" },
   "SLIPPER": { de: "HAUSSCHUH", fr: "PANTOUFLE", it: "PANTOFOLE", es: "PANTUFLA" },
   "COAT": { de: "MANTEL", fr: "MANTEAU", it: "CAPPOTTO", es: "ABRIGO" },
   "MITTEN": { de: "FAUSTHANDSCHUH", fr: "MOUFLE", it: "GUANTO", es: "MANOPLA" },
@@ -191,15 +164,14 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "SOCK": { de: "SOCKE", fr: "CHAUSSETTE", it: "CALZINO", es: "CALCETÍN" },
   "BOOT": { de: "STIEFEL", fr: "BOTTE", it: "STIVALE", es: "BOTA" },
   "SANDAL": { de: "SANDALE", fr: "SANDALE", it: "SANDALO", es: "SANDALIA" },
-  "HAT": { de: "HUT", fr: "CHAPEAU", it: "CAPPELLO", es: "SOMBRERO" },
   "CAP": { de: "MÜTZE", fr: "CASQUETTE", it: "BERRETTO", es: "GORRA" },
   "MASK": { de: "MASKE", fr: "MASQUE", it: "MASCHERA", es: "MÁSCARA" },
-  "SUNGLASSES": { de: "SONNENBRILLE", fr: "LUNETTES DE SOLEIL", it: "OCCHIALI DA SOLE", es: "GAFAS DE SOL" },
+  // "SUNGLASSES": { de: "SONNENBRILLE", fr: "LUNETTES DE SOLEIL", it: "OCCHIALI DA SOLE", es: "GAFAS DE SOL" },
   "WATCH": { de: "UHR", fr: "MONTRE", it: "OROLOGIO", es: "RELOJ" },
   "NECKLACE": { de: "HALSKETTE", fr: "COLLER", it: "COLLANA", es: "COLLAR" },
   "BRACELET": { de: "ARMBAND", fr: "BRACELET", it: "BRACCIALE", es: "PULSERA" },
   "RING": { de: "RING", fr: "BAGUE", it: "ANELLO", es: "ANILLO" },
-  "EARRING": { de: "OHRRING", fr: "BOUCLE D'OREILLE", it: "ORECCHINO", es: "PENDIENTE" },
+  // "EARRING": { de: "OHRRING", fr: "BOUCLE D'OREILLE", it: "ORECCHINO", es: "PENDIENTE" },
   "BACKPACK": { de: "RUCKSACK", fr: "SAC À DOS", it: "ZAINO", es: "MOCHILA" },
   "SUITCASE": { de: "KOFFER", fr: "VALISE", it: "VALIGIA", es: "MALETA" },
   "TICKET": { de: "TICKET", fr: "BILLET", it: "BIGLIETTO", es: "BILLETE" },
@@ -207,20 +179,17 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "MAP": { de: "KARTE", fr: "CARTE", it: "MAPP", es: "MAPA" },
   "COMPASS": { de: "KOMPASS", fr: "BOUSSOLE", it: "BUSSOLA", es: "BRÚJULA" },
   "TORCH": { de: "FACKEL", fr: "TORCHE", it: "TORCIA", es: "ANTORCHA" },
-  "FLASHLIGHT": { de: "TASCHENLAMPE", fr: "LAMPE DE POCHE", it: "TORCIA ELETTRICA", es: "LINterna" },
+  // "FLASHLIGHT": { de: "TASCHENLAMPE", fr: "LAMPE DE POCHE", it: "TORCIA ELETTRICA", es: "LINterna" },
   "CAMPFIRE": { de: "LAGERFEUER", fr: "FEU DE CAMP", it: "FALÒ", es: "FOGATA" },
   "TENT": { de: "ZELT", fr: "TENTE", it: "TENDA", es: "TIENDA DE CAMPAÑA" },
-  "SLEEPINGBAG": { de: "SCHLAFSACK", fr: "SAC DE COUCHAGE", it: "SACCO A PELO", es: "SACO DE DORMIR" },
+  // "SLEEPINGBAG": { de: "SCHLAFSACK", fr: "SAC DE COUCHAGE", it: "SACCO A PELO", es: "SACO DE DORMIR" },
   "PICNIC": { de: "PICKNICK", fr: "PIQUE-NIQUE", it: "PICNIC", es: "PICNIC" },
   "BENCH": { de: "BANK", fr: "BANC", it: "PANCHINA", es: "BANCO" },
-  "FENCE": { de: "ZAUN", fr: "CLÔTURE", it: "RECINTO", es: "VALLA" },
   "GATE": { de: "TOR", fr: "PORTAIL", it: "CANCELLO", es: "PORTÓN" },
   "SIGN": { de: "SCHILD", fr: "PANNEAU", it: "SEGNALE", es: "SEÑAL" },
-  "CROSSWALK": { de: "ZEBRASTREIFEN", fr: "PASSAGE PIÉTONS", it: "ATTRAVERSAMENTO PEDONALE", es: "PASO DE PEATONES" },
-  "TRAFFICLIGHT": { de: "VERKEHRSAMPEL", fr: "FEU DE CIRCULATION", it: "SEMAFORO", es: "SEMÁFORO" },
+  // "CROSSWALK": { de: "ZEBRASTREIFEN", fr: "PASSAGE PIÉTONS", it: "ATTRAVERSAMENTO PEDONALE", es: "PASO DE PEATONES" },
+  // "TRAFFICLIGHT": { de: "VERKEHRSAMPEL", fr: "FEU DE CIRCULATION", it: "SEMAFORO", es: "SEMÁFORO" },
   "SIDEWALK": { de: "BÜRGERSTEIG", fr: "TROTTOIR", it: "MARCIAPIEDE", es: "ACERA" },
-  "LANTERN": { de: "LATERNE", fr: "LANTERNE", it: "LANTERNA", es: "FAROL" },
-  "BALLOON": { de: "BALLON", fr: "BALLON", it: "PALLONCINO", es: "GLOBO" },
   "POSTCARD": { de: "POSTKARTE", fr: "CARTE POSTALE", it: "CARTOLINA", es: "POSTAL" },
   "STAMP": { de: "BRIEFMARKE", fr: "TIMBRE", it: "FRANCOBOLLO", es: "SELLO" },
   "LETTER": { de: "BRIEF", fr: "LETTRE", it: "LETTERA", es: "CARTA" },
@@ -228,7 +197,6 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "PARKING": { de: "PARKPLATZ", fr: "PARKING", it: "PARCHEGGIO", es: "ESTACIONAMIENTO" },
   "STREET": { de: "STRAßE", fr: "RUE", it: "STRADA", es: "CALLE" },
   "HIGHWAY": { de: "AUTOBAHN", fr: "AUTOROUTE", it: "AUTOSTRADA", es: "AUTOPISTA" },
-  "BRIDGE": { de: "BRÜCKE", fr: "PONT", it: "PONTE", es: "PUENTE" },
   "TUNNEL": { de: "TUNNEL", fr: "TUNNEL", it: "GALLERIA", es: "TÚNEL" },
   "STATUE": { de: "STATUE", fr: "STATUE", it: "STATUA", es: "ESTATUA" },
   "FOUNTAIN": { de: "BRUNNEN", fr: "FONTAINE", it: "FONTANA", es: "FUENTE" },
@@ -242,7 +210,6 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "TELESCOPE": { de: "TELESCOP", fr: "TÉLESCOPE", it: "TELESCOPIO", es: "TELESCOPIO" },
   "MICROSCOPE": { de: "MIKROSKOP", fr: "MICROSCOPE", it: "MICROSCOPIO", es: "MICROSCOPIO" },
   "MAGNET": { de: "MAGNET", fr: "AIMANT", it: "MAGNETE", es: "IMÁN" },
-  "BATTERY": { de: "BATTERIE", fr: "PILE", it: "BATTERIA", es: "BATERÍA" },
   "BULB": { de: "GLÜHBIRNE", fr: "AMPOULE", it: "LAMPADINA", es: "BOMBILLA" },
   "SOCKET": { de: "STECKDOSE", fr: "PRISE", it: "PRESA", es: "ENCHUFE" },
   "PLUG": { de: "STECKER", fr: "FICHE", it: "SPINA", es: "CLAVIJA" },
@@ -258,8 +225,7 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "SPEAKER": { de: "LAUTSPRECHER", fr: "HAUT-PARLEUR", it: "ALTOPARLANTE", es: "ALTAVOZ" },
   "HEADPHONE": { de: "KOPFHÖRER", fr: "CASQUE", it: "CUFFIE", es: "AURICULARES" },
   "PHONE": { de: "TELEFON", fr: "TÉLÉPHONE", it: "TELEFONO", es: "TELÉFONO" },
-  "CAMERA": { de: "KAMERA", fr: "APPAREIL PHOTO", it: "FOTOCAMERA", es: "CÁMARA" },
-  "DOG": { de: "HUND", fr: "CHIEN", it: "CANE", es: "PERRO" }
+  // "CAMERA": { de: "KAMERA", fr: "APPAREIL PHOTO", it: "FOTOCAMERA", es: "CÁMARA" },
 };
 
 // Helper function to translate a word to target language
@@ -279,6 +245,8 @@ function generateTranslatedWords(englishWords: string[], targetLang: string): st
 
 function generateEnglishRandomWords(count: number): string[] {
   const words: string[] = [];
+
+  const englishWords = Object.keys(wordTranslations);
 
   // Create a copy of the word list to avoid duplicates
   const availableWords = [...englishWords];
