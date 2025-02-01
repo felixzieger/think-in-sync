@@ -18,6 +18,9 @@ interface HighScore {
   created_at: string;
   session_id: string;
   theme: string;
+  game?: {
+    language: string;
+  };
 }
 
 interface HighScoreBoardProps {
@@ -60,7 +63,7 @@ export const HighScoreBoard = ({
       console.log("Fetching high scores for mode:", selectedMode, "gameId:", gameId);
       let query = supabase
         .from("high_scores")
-        .select("*")
+        .select("*, game:games(language)")
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
