@@ -15,7 +15,6 @@ interface HighScore {
   avg_words_per_round: number;
   created_at: string;
   session_id: string;
-  theme: string;
   game?: {
     language: string;
   };
@@ -24,7 +23,6 @@ interface HighScore {
 interface ScoresTableProps {
   scores: HighScore[];
   startIndex: number;
-  showThemeColumn?: boolean;
 }
 
 const getRankMedal = (rank: number) => {
@@ -57,7 +55,7 @@ const getLanguageEmoji = (language: string) => {
   }
 };
 
-export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: ScoresTableProps) => {
+export const ScoresTable = ({ scores, startIndex }: ScoresTableProps) => {
   const t = useTranslation();
 
   return (
@@ -69,9 +67,6 @@ export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: Sco
             <TableHead>{t.leaderboard.player}</TableHead>
             <TableHead>{t.leaderboard.roundsColumn}</TableHead>
             <TableHead>{t.leaderboard.avgWords}</TableHead>
-            {showThemeColumn && (
-              <TableHead>{t.leaderboard.theme}</TableHead>
-            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -88,15 +83,12 @@ export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: Sco
                 </TableCell>
                 <TableCell>{score.score}</TableCell>
                 <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
-                {showThemeColumn && (
-                  <TableCell className="capitalize">{score.theme}</TableCell>
-                )}
               </TableRow>
             );
           })}
           {!scores?.length && (
             <TableRow>
-              <TableCell colSpan={showThemeColumn ? 5 : 4} className="text-center">
+              <TableCell colSpan={4} className="text-center">
                 {t.leaderboard.noScores}
               </TableCell>
             </TableRow>
