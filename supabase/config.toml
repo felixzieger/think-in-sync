@@ -17,3 +17,5 @@ verify_jwt = false
 verify_jwt = false
 [functions.submit-high-score]
 verify_jwt = false
+[functions.generate-daily-challenge]
+verify_jwt = false
