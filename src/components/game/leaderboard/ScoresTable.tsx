@@ -61,9 +61,9 @@ const getLanguageEmoji = (language: string) => {
   }
 };
 
-export const ScoresTable = ({ 
-  scores, 
-  startIndex, 
+export const ScoresTable = ({
+  scores,
+  startIndex,
   showThemeColumn = false,
   onPlayGame,
   selectedMode = 'daily'
@@ -80,7 +80,9 @@ export const ScoresTable = ({
             <TableHead>{t.leaderboard.roundsColumn}</TableHead>
             <TableHead>{t.leaderboard.avgWords}</TableHead>
             {selectedMode === 'all-time' && (
-              <TableHead className="text-right">{t.leaderboard.actions}</TableHead>
+              <TableHead className="text-right">
+                {t.leaderboard.playSameWords}
+              </TableHead>
             )}
           </TableRow>
         </TableHeader>
@@ -108,7 +110,6 @@ export const ScoresTable = ({
                         className="gap-2"
                       >
                         <Play className="h-4 w-4" />
-                        {t.leaderboard.playSameWords}
                       </Button>
                     )}
                   </TableCell>
