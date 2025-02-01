@@ -368,6 +368,7 @@ export const GameContainer = () => {
             onMakeGuess={handleMakeGuess}
             normalizeWord={normalizeWord}
             onBack={handleBack}
+            onClose={handleBack}
           />
         ) : gameState === "showing-guess" ? (
           <GuessDisplay
