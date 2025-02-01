@@ -8,7 +8,7 @@ import { ScoreSubmissionForm } from "./game/leaderboard/ScoreSubmissionForm";
 import { ScoresTable } from "./game/leaderboard/ScoresTable";
 import { LeaderboardHeader } from "./game/leaderboard/LeaderboardHeader";
 import { LeaderboardPagination } from "./game/leaderboard/LeaderboardPagination";
-import { getDailyGame } from "@/services/dailyGameService";
+import { getDailyGames } from "@/services/dailyGameService";
 
 interface HighScore {
   id: string;
@@ -69,10 +69,11 @@ export const HighScoreBoard = ({
         query = query.eq('game_id', gameId);
         console.log("Filtering scores by game_id:", gameId);
       } else if (selectedMode === 'daily') {
-        // For daily challenge, filter by the daily game ID
-        dailyGameId = getDailyGame()
-        query = query.eq('game_id', dailyGameId);
-        console.log("Filtering scores by daily game_id:", dailyGameId);
+        // For daily challenge, filter by the daily game IDs
+        const dailyGames = await getDailyGames();
+        const dailyGameIds = dailyGames.map(game => game.game_id);
+        query = query.in('game_id', dailyGameIds);
+        console.log("Filtering scores by daily game_ids:", dailyGameIds);
       }
 
       const { data, error } = await query;
