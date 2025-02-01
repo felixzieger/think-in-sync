@@ -77,7 +77,7 @@ export const RoundHeader = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setShowConfirmDialog(false)}>{t.game.cancel}</AlertDialogCancel>
             <AlertDialogAction>{t.game.confirm}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
