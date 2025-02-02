@@ -17,13 +17,15 @@ interface RoundHeaderProps {
   onBack?: () => void;
   showConfirmDialog: boolean;
   setShowConfirmDialog: (show: boolean) => void;
+  onCancel?: () => void;
 }
 
 export const RoundHeader = ({
   successfulRounds,
   onBack,
   showConfirmDialog,
-  setShowConfirmDialog
+  setShowConfirmDialog,
+  onCancel
 }: RoundHeaderProps) => {
   const t = useTranslation();
 
@@ -77,7 +79,7 @@ export const RoundHeader = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setShowConfirmDialog(false)}>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogCancel onClick={onCancel}>{t.game.cancel}</AlertDialogCancel>
             <AlertDialogAction>{t.game.confirm}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
