@@ -245,15 +245,11 @@ function generateTranslatedWords(englishWords: string[], targetLang: string): st
 
 function generateEnglishRandomWords(count: number): string[] {
   const words: string[] = [];
-
   const englishWords = Object.keys(wordTranslations);
-
-  // Create a copy of the word list to avoid duplicates
   const availableWords = [...englishWords];
 
   for (let i = 0; i < count; i++) {
     if (availableWords.length === 0) {
-      // If we run out of unique words, reset the available words
       availableWords.push(...englishWords);
     }
     const randomIndex = Math.floor(Math.random() * availableWords.length);
@@ -282,10 +278,18 @@ serve(async (req) => {
   try {
     console.log('Starting daily challenge generation...');
 
+    // Get environment variables
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+
+    // Validate environment variables
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing required environment variables: SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
+    }
+
     // Initialize Supabase client
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
+    console.log('Supabase client initialized');
 
     // Deactivate current active challenges
     console.log('Deactivating current active challenges...');
