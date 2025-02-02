@@ -9,6 +9,35 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      daily_challenges: {
+        Row: {
+          created_at: string
+          game_id: string
+          id: string
+          is_active: boolean
+        }
+        Insert: {
+          created_at?: string
+          game_id: string
+          id?: string
+          is_active?: boolean
+        }
+        Update: {
+          created_at?: string
+          game_id?: string
+          id?: string
+          is_active?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "daily_challenges_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: true
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       game_results: {
         Row: {
           ai_guess: string
@@ -39,10 +68,35 @@ export type Database = {
         }
         Relationships: []
       }
+      games: {
+        Row: {
+          created_at: string
+          id: string
+          language: string | null
+          theme: string
+          words: string[]
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          language?: string | null
+          theme: string
+          words: string[]
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          language?: string | null
+          theme?: string
+          words?: string[]
+        }
+        Relationships: []
+      }
       high_scores: {
         Row: {
           avg_words_per_round: number
           created_at: string
+          game_id: string | null
           id: string
           player_name: string
           score: number
@@ -52,6 +106,7 @@ export type Database = {
         Insert: {
           avg_words_per_round: number
           created_at?: string
+          game_id?: string | null
           id?: string
           player_name: string
           score: number
@@ -61,11 +116,82 @@ export type Database = {
         Update: {
           avg_words_per_round?: number
           created_at?: string
+          game_id?: string | null
           id?: string
           player_name?: string
           score?: number
           session_id?: string
           theme?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "high_scores_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sessions: {
+        Row: {
+          created_at: string
+          game_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          game_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          game_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sessions_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      temp_games: {
+        Row: {
+          id: string | null
+          language: string | null
+          session_id: string | null
+          theme: string | null
+          words: string[] | null
+        }
+        Insert: {
+          id?: string | null
+          language?: string | null
+          session_id?: string | null
+          theme?: string | null
+          words?: string[] | null
+        }
+        Update: {
+          id?: string | null
+          language?: string | null
+          session_id?: string | null
+          theme?: string | null
+          words?: string[] | null
+        }
+        Relationships: []
+      }
+      temp_session_ids: {
+        Row: {
+          session_id: string | null
+        }
+        Insert: {
+          session_id?: string | null
+        }
+        Update: {
+          session_id?: string | null
         }
         Relationships: []
       }
@@ -102,8 +228,12 @@ export type Database = {
           p_avg_words_per_round: number
           p_session_id: string
           p_theme?: string
+          p_game_id?: string
         }
-        Returns: boolean
+        Returns: {
+          success: boolean
+          is_update: boolean
+        }[]
       }
       is_admin: {
         Args: {

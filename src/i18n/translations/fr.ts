@@ -3,6 +3,7 @@ export const fr = {
     title: "Think in Sync",
     round: "Tour",
     buildDescription: "Construisez une phrase ensemble",
+    buildSubtitle: "Ajoutez des mots à tour de rôle pour créer une phrase",
     startSentence: "Commencez à construire votre phrase...",
     inputPlaceholder: "Entrez UN mot...",
     addWord: "Ajouter un mot",
@@ -21,7 +22,41 @@ export const fr = {
     describeWord: "Votre objectif est de décrire le mot",
     nextRound: "Tour Suivant",
     playAgain: "Rejouer",
-    saveScore: "Sauvegarder le Score"
+    saveScore: "Sauvegarder le Score",
+    review: {
+      title: "Résumé de la Partie",
+      successfulRounds: "Manches Réussies",
+      description: "Voici vos résultats :",
+      playAgain: "Rejouer avec les mêmes mots",
+      playNewWords: "Jouer avec de nouveaux mots",
+      saveScore: "Sauvegarder le Score",
+      shareGame: "Partager",
+      urlCopied: "URL copiée !",
+      urlCopiedDesc: "Partagez cette URL avec vos amis pour qu'ils jouent avec les mêmes mots",
+      urlCopyError: "Échec de la copie de l'URL",
+      urlCopyErrorDesc: "Veuillez essayer de copier l'URL manuellement",
+      youWin: "Vous avez gagné !",
+      youLost: "Vous avez perdu !",
+      friendScore: (score: number, avgWords: string) =>
+        `La personne qui vous a défié a complété ${score} manches avec une moyenne de ${avgWords} mots.`,
+      word: "Mot",
+      yourWords: "Vous",
+      friendWords: "Ami",
+      result: "Résultat",
+      details: "Détails",
+      yourDescription: "Votre Description",
+      friendDescription: "Description de l'Ami",
+      aiGuessed: "L'IA a deviné",
+      words: "Mots"
+    },
+    invitation: {
+      title: "Invitation au Jeu",
+      description: "Hey, tu as été invité à jouer. Joue maintenant pour découvrir comment tu te débrouilles avec les mêmes mots !"
+    },
+    error: {
+      title: "Le jeu n'a pas pu être démarré",
+      description: "Veuillez réessayer dans un moment."
+    }
   },
   leaderboard: {
     title: "Meilleurs Scores",
@@ -40,6 +75,16 @@ export const fr = {
     next: "Suivant",
     success: "Score soumis avec succès !",
     theme: "Thème",
+    actions: "Actions",
+    playSameWords: "Jouer avec les mêmes mots",
+    scoreUpdated: "Score mis à jour !",
+    scoreUpdatedDesc: "Votre score précédent pour ce jeu a été mis à jour",
+    scoreSubmitted: "Score soumis !",
+    scoreSubmittedDesc: "Votre score a été ajouté au classement",
+    modes: {
+      daily: "Défi du Jour",
+      "all-time": "Historique"
+    },
     error: {
       invalidName: "Veuillez entrer un nom valide",
       noRounds: "Vous devez compléter au moins un tour",
@@ -54,7 +99,7 @@ export const fr = {
     title: "Devinette de l'IA",
     goalDescription: "Votre objectif était de décrire le mot",
     providedDescription: "Vous avez fourni la description",
-    aiGuessedDescription: "Basé sur votre description, l'IA a deviné",
+    aiGuessedDescription: "Sur la base de cette description, l'IA a deviné",
     correct: "C'est correct !",
     incorrect: "C'est incorrect.",
     nextRound: "Tour Suivant",
@@ -78,8 +123,11 @@ export const fr = {
   },
   welcome: {
     title: "Think in Sync",
-    subtitle: "Faites équipe avec une IA pour créer un indice et laissez une autre IA deviner votre mot secret !",
+    subtitle: "Collaborez avec une IA pour créer un indice, puis laissez-en une autre deviner votre mot secret !",
     startButton: "Commencer",
+    startDailyButton: "Défi du Jour",
+    startNewButton: "Nouvelle Partie",
+    dailyLeaderboard: "Classement du jour",
     howToPlay: "Comment Jouer",
     leaderboard: "Classement",
     credits: "Créé pendant le",

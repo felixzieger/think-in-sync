@@ -9,23 +9,28 @@ const corsHeaders = {
 const languagePrompts = {
   en: {
     systemPrompt: "You are helping in a word guessing game. Given a description, guess what single word is being described. The described word itself was not allowed in the description, so do not expect it to appear.",
-    instruction: "Based on this description"
+    instruction: "Based on this description",
+    responseInstruction: "Respond with ONLY the word you think is being described, in uppercase letters. Do not add any explanation or punctuation."
   },
   fr: {
     systemPrompt: "Vous aidez dans un jeu de devinettes. À partir d'une description, devinez le mot unique qui est décrit. Le mot décrit n'était pas autorisé dans la description, ne vous attendez donc pas à le voir apparaître.",
-    instruction: "D'après cette description"
+    instruction: "D'après cette description",
+    responseInstruction: "Répondez uniquement par le mot que vous pensez être décrit, en lettres majuscules. N'ajoutez aucune explication ni ponctuation."
   },
   de: {
     systemPrompt: "Sie helfen bei einem Worträtsel. Erraten Sie anhand einer Beschreibung, welches einzelne Wort beschrieben wird. Das beschriebene Wort durfte nicht in der Beschreibung verwendet werden, also erwarten Sie es nicht.",
-    instruction: "Basierend auf dieser Beschreibung"
+    instruction: "Basierend auf dieser Beschreibung",
+    responseInstruction: "Antworten Sie nur mit dem Wort, das Sie für beschrieben halten, in Großbuchstaben. Fügen Sie keine Erklärungen oder Satzzeichen hinzu."
   },
   it: {
     systemPrompt: "Stai aiutando in un gioco di indovinelli. Data una descrizione, indovina quale singola parola viene descritta. La parola descritta non era permessa nella descrizione, quindi non aspettarti di trovarla.",
-    instruction: "Basandoti su questa descrizione"
+    instruction: "Basandoti su questa descrizione",
+    responseInstruction: "Rispondi solo con la parola che pensi venga descritta, in lettere maiuscole. Non aggiungere spiegazioni o punteggiatura."
   },
   es: {
     systemPrompt: "Estás ayudando en un juego de adivinanzas. Dada una descripción, adivina qué palabra única se está describiendo. La palabra descrita no estaba permitida en la descripción, así que no esperes verla.",
-    instruction: "Basándote en esta descripción"
+    instruction: "Basándote en esta descripción",
+    responseInstruction: "Responde únicamente con la palabra que crees que se está describiendo, en letras mayúsculas. No añadas ninguna explicación ni puntuación."
   }
 };
 
@@ -48,7 +53,7 @@ async function tryMistral(sentence: string, language: string) {
     messages: [
       {
         role: "system",
-        content: `${prompts.systemPrompt} Respond with ONLY the word you think is being described, in uppercase letters. Do not add any explanation or punctuation.`
+        content: `${prompts.systemPrompt} ${prompts.responseInstruction}`
       },
       {
         role: "user",
@@ -81,7 +86,7 @@ async function tryOpenRouter(sentence: string, language: string) {
       messages: [
         {
           role: "system",
-          content: `${prompts.systemPrompt} Respond with ONLY the word you think is being described, in uppercase letters. Do not add any explanation or punctuation.`
+          content: `${prompts.systemPrompt} ${prompts.responseInstruction}`
         },
         {
           role: "user",
@@ -119,7 +124,7 @@ serve(async (req) => {
     } catch (mistralError) {
       console.error('Mistral error:', mistralError);
       console.log('Falling back to OpenRouter...');
-      
+
       const guess = await tryOpenRouter(sentence, language);
       console.log('Successfully generated guess with OpenRouter:', guess);
       return new Response(
@@ -131,7 +136,7 @@ serve(async (req) => {
     console.error('Error generating guess:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
-      { 
+      {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }

@@ -22,7 +22,41 @@ export const it = {
     describeWord: "Il tuo obiettivo è descrivere la parola",
     nextRound: "Prossimo Turno",
     playAgain: "Gioca Ancora",
-    saveScore: "Salva Punteggio"
+    saveScore: "Salva Punteggio",
+    review: {
+      title: "Riepilogo Partita",
+      successfulRounds: "Turni Riusciti",
+      description: "Ecco i tuoi risultati:",
+      playAgain: "Gioca di nuovo le stesse parole",
+      playNewWords: "Gioca nuove parole",
+      saveScore: "Salva Punteggio",
+      shareGame: "Condividi",
+      urlCopied: "URL copiato!",
+      urlCopiedDesc: "Condividi questo URL con gli amici per farli giocare con le stesse parole",
+      urlCopyError: "Impossibile copiare l'URL",
+      urlCopyErrorDesc: "Prova a copiare l'URL manualmente",
+      youWin: "Hai vinto!",
+      youLost: "Hai perso!",
+      friendScore: (score: number, avgWords: string) =>
+        `La persona che ti ha sfidato ha completato ${score} turni con una media di ${avgWords} parole.`,
+      word: "Parola",
+      yourWords: "Tu",
+      friendWords: "Amico",
+      result: "Risultato",
+      details: "Dettagli",
+      yourDescription: "La Tua Descrizione",
+      friendDescription: "Descrizione dell'Amico",
+      aiGuessed: "L'IA ha indovinato",
+      words: "Parole"
+    },
+    invitation: {
+      title: "Invito al Gioco",
+      description: "Ehi, sei stato invitato a giocare. Gioca ora per scoprire come te la cavi con le stesse parole!"
+    },
+    error: {
+      title: "Impossibile avviare il gioco",
+      description: "Per favore riprova tra un momento."
+    }
   },
   leaderboard: {
     title: "Punteggi Migliori",
@@ -41,6 +75,16 @@ export const it = {
     next: "Successivo",
     success: "Punteggio inviato con successo!",
     theme: "Tema",
+    actions: "Azioni",
+    playSameWords: "Gioca le stesse parole",
+    scoreUpdated: "Punteggio aggiornato!",
+    scoreUpdatedDesc: "Il tuo punteggio precedente per questo gioco è stato aggiornato",
+    scoreSubmitted: "Punteggio inviato!",
+    scoreSubmittedDesc: "Il tuo punteggio è stato aggiunto alla classifica",
+    modes: {
+      daily: "Sfida Giornaliera",
+      "all-time": "Classifica Generale"
+    },
     error: {
       invalidName: "Inserisci un nome valido",
       noRounds: "Devi completare almeno un turno",
@@ -57,7 +101,7 @@ export const it = {
     aiGuessed: "L'IA ha indovinato",
     goalDescription: "Il tuo obiettivo era descrivere la parola",
     providedDescription: "Hai fornito la descrizione",
-    aiGuessedDescription: "Basandosi sulla tua descrizione, l'IA ha indovinato",
+    aiGuessedDescription: "Basandosi su questa descrizione, l'IA ha indovinato",
     correct: "Corretto! L'IA ha indovinato la parola!",
     incorrect: "Sbagliato. Riprova!",
     nextRound: "Prossimo Turno",
@@ -83,6 +127,9 @@ export const it = {
     title: "Think in Sync",
     subtitle: "Fai squadra con l'IA per creare un indizio e lascia che un'altra IA indovini la tua parola segreta!",
     startButton: "Inizia gioco",
+    startDailyButton: "Sfida Giornaliera",
+    startNewButton: "Nuova Partita",
+    dailyLeaderboard: "Classifica di oggi",
     howToPlay: "Come giocare",
     leaderboard: "Classifica",
     credits: "Creato durante il",

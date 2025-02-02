@@ -8,6 +8,8 @@ import { ScoreSubmissionForm } from "./game/leaderboard/ScoreSubmissionForm";
 import { ScoresTable } from "./game/leaderboard/ScoresTable";
 import { LeaderboardHeader } from "./game/leaderboard/LeaderboardHeader";
 import { LeaderboardPagination } from "./game/leaderboard/LeaderboardPagination";
+import { getDailyGames } from "@/services/dailyGameService";
+import { useNavigate } from "react-router-dom";
 
 interface HighScore {
   id: string;
@@ -17,13 +19,17 @@ interface HighScore {
   created_at: string;
   session_id: string;
   theme: string;
+  game?: {
+    language: string;
+  };
+  game_id?: string;
 }
 
 interface HighScoreBoardProps {
   currentScore?: number;
   avgWordsPerRound?: number;
   onClose?: () => void;
-  onPlayAgain?: () => void;
+  gameId?: string;
   sessionId?: string;
   onScoreSubmitted?: () => void;
   showThemeFilter?: boolean;
@@ -31,12 +37,12 @@ interface HighScoreBoardProps {
 }
 
 const ITEMS_PER_PAGE = 5;
-const STANDARD_THEMES = ['standard', 'sports', 'food'];
 
 export const HighScoreBoard = ({
   currentScore = 0,
   avgWordsPerRound = 0,
   onClose,
+  gameId = "",
   sessionId = "",
   onScoreSubmitted,
   showThemeFilter = true,
@@ -46,30 +52,32 @@ export const HighScoreBoard = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedTheme, setSelectedTheme] = useState<'standard' | 'sports' | 'food' | 'custom'>(
-    initialTheme as 'standard' | 'sports' | 'food' | 'custom'
-  );
+  const [selectedMode, setSelectedMode] = useState<'daily' | 'all-time'>('daily');
   const { toast } = useToast();
   const t = useTranslation();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const showScoreInfo = sessionId !== "" && currentScore > 0;
 
   const { data: highScores } = useQuery({
-    queryKey: ["highScores", selectedTheme],
+    queryKey: ["highScores", selectedMode, gameId],
     queryFn: async () => {
-      console.log("Fetching high scores for theme:", selectedTheme);
+      console.log("Fetching high scores for mode:", selectedMode, "gameId:", gameId);
       let query = supabase
         .from("high_scores")
-        .select("*")
+        .select("*, game:games(language)")
         .order("score", { ascending: false })
         .order("avg_words_per_round", { ascending: true });
 
-      if (selectedTheme === 'custom') {
-        const filterValue = `(${STANDARD_THEMES.join(',')})`;
-        query = query.filter('theme', 'not.in', filterValue);
-      } else {
-        query = query.eq('theme', selectedTheme);
+      if (gameId) {
+        query = query.eq('game_id', gameId);
+        console.log("Filtering scores by game_id:", gameId);
+      } else if (selectedMode === 'daily') {
+        const dailyGames = await getDailyGames();
+        const dailyGameIds = dailyGames.map(game => game.game_id);
+        query = query.in('game_id', dailyGameIds);
+        console.log("Filtering scores by daily game_ids:", dailyGameIds);
       }
 
       const { data, error } = await query;
@@ -120,7 +128,8 @@ export const HighScoreBoard = ({
           score: currentScore,
           avgWordsPerRound,
           sessionId,
-          theme: selectedTheme
+          theme: initialTheme,
+          gameId
         }
       });
 
@@ -130,13 +139,13 @@ export const HighScoreBoard = ({
       }
 
       console.log("Score submitted successfully:", data);
-      
+
       if (data.success) {
         toast({
-          title: t.leaderboard.success,
-          description: t.leaderboard.success,
+          title: data.isUpdate ? t.leaderboard.scoreUpdated : t.leaderboard.scoreSubmitted,
+          description: data.isUpdate ? t.leaderboard.scoreUpdatedDesc : t.leaderboard.scoreSubmittedDesc,
         });
-        
+
         setHasSubmitted(true);
         onScoreSubmitted?.();
         setPlayerName("");
@@ -161,6 +170,32 @@ export const HighScoreBoard = ({
     }
   };
 
+  const handlePlayGame = async (gameId: string) => {
+    try {
+      console.log("Creating new session for game:", gameId);
+      const { data: session, error } = await supabase
+        .from('sessions')
+        .insert({
+          game_id: gameId
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      console.log("Session created:", session);
+      navigate(`/game/${gameId}`);
+      onClose?.();
+    } catch (error) {
+      console.error('Error creating session:', error);
+      toast({
+        title: t.game.error.title,
+        description: t.game.error.description,
+        variant: "destructive",
+      });
+    }
+  };
+
   const totalPages = highScores ? Math.ceil(highScores.length / ITEMS_PER_PAGE) : 0;
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedScores = highScores?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
@@ -173,10 +208,10 @@ export const HighScoreBoard = ({
         showScoreInfo={showScoreInfo}
       />
 
-      {showThemeFilter && (
+      {showThemeFilter && !gameId && (
         <ThemeFilter
-          selectedTheme={selectedTheme}
-          onThemeChange={setSelectedTheme}
+          selectedMode={selectedMode}
+          onModeChange={setSelectedMode}
         />
       )}
 
@@ -194,7 +229,9 @@ export const HighScoreBoard = ({
       <ScoresTable
         scores={paginatedScores || []}
         startIndex={startIndex}
-        showThemeColumn={selectedTheme === 'custom'}
+        showThemeColumn={selectedMode === 'daily'}
+        onPlayGame={handlePlayGame}
+        selectedMode={selectedMode}
       />
 
       <LeaderboardPagination

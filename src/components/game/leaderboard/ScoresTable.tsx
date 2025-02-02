@@ -7,6 +7,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslation } from "@/hooks/useTranslation";
+import { Button } from "@/components/ui/button";
+import { Play } from "lucide-react";
 
 interface HighScore {
   id: string;
@@ -15,13 +17,18 @@ interface HighScore {
   avg_words_per_round: number;
   created_at: string;
   session_id: string;
-  theme: string;
+  game?: {
+    language: string;
+  };
+  game_id?: string;
 }
 
 interface ScoresTableProps {
   scores: HighScore[];
   startIndex: number;
   showThemeColumn?: boolean;
+  onPlayGame?: (gameId: string) => void;
+  selectedMode?: 'daily' | 'all-time';
 }
 
 const getRankMedal = (rank: number) => {
@@ -37,7 +44,30 @@ const getRankMedal = (rank: number) => {
   }
 };
 
-export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: ScoresTableProps) => {
+const getLanguageEmoji = (language: string) => {
+  switch (language) {
+    case 'en':
+      return '🇬🇧';
+    case 'de':
+      return '🇩🇪';
+    case 'fr':
+      return '🇫🇷';
+    case 'it':
+      return '🇮🇹';
+    case 'es':
+      return '🇪🇸';
+    default:
+      return '🌐';
+  }
+};
+
+export const ScoresTable = ({
+  scores,
+  startIndex,
+  showThemeColumn = false,
+  onPlayGame,
+  selectedMode = 'daily'
+}: ScoresTableProps) => {
   const t = useTranslation();
 
   return (
@@ -49,8 +79,10 @@ export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: Sco
             <TableHead>{t.leaderboard.player}</TableHead>
             <TableHead>{t.leaderboard.roundsColumn}</TableHead>
             <TableHead>{t.leaderboard.avgWords}</TableHead>
-            {showThemeColumn && (
-              <TableHead>{t.leaderboard.theme}</TableHead>
+            {selectedMode === 'all-time' && (
+              <TableHead className="text-center">
+                {t.leaderboard.playSameWords}
+              </TableHead>
             )}
           </TableRow>
         </TableHeader>
@@ -58,21 +90,36 @@ export const ScoresTable = ({ scores, startIndex, showThemeColumn = false }: Sco
           {scores?.map((score, index) => {
             const absoluteRank = startIndex + index + 1;
             const medal = getRankMedal(absoluteRank);
+            const language = score.game?.language || 'en';
             return (
               <TableRow key={score.id}>
-                <TableCell>{medal}</TableCell>
-                <TableCell>{score.player_name}</TableCell>
-                <TableCell>{score.score}</TableCell>
-                <TableCell>{score.avg_words_per_round.toFixed(1)}</TableCell>
-                {showThemeColumn && (
-                  <TableCell className="capitalize">{score.theme}</TableCell>
+                <TableCell className="align-middle">{medal}</TableCell>
+                <TableCell className="flex items-center gap-2 h-full align-middle">
+                  {score.player_name}
+                  <span>{getLanguageEmoji(language)}</span>
+                </TableCell>
+                <TableCell className="align-middle">{score.score}</TableCell>
+                <TableCell className="align-middle">{score.avg_words_per_round.toFixed(1)}</TableCell>
+                {selectedMode === 'all-time' && (
+                  <TableCell className="text-center align-middle">
+                    {score.game_id && onPlayGame && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onPlayGame(score.game_id!)}
+                        className="gap-2 mx-auto"
+                      >
+                        <Play className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </TableCell>
                 )}
               </TableRow>
             );
           })}
           {!scores?.length && (
             <TableRow>
-              <TableCell colSpan={showThemeColumn ? 5 : 4} className="text-center">
+              <TableCell colSpan={5} className="text-center">
                 {t.leaderboard.noScores}
               </TableCell>
             </TableRow>

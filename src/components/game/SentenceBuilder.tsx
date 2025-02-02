@@ -15,6 +15,7 @@ import { RoundHeader } from "./sentence-builder/RoundHeader";
 import { WordDisplay } from "./sentence-builder/WordDisplay";
 import { SentenceDisplay } from "./sentence-builder/SentenceDisplay";
 import { InputForm } from "./sentence-builder/InputForm";
+import { Button } from "@/components/ui/button";
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -25,8 +26,9 @@ interface SentenceBuilderProps {
   onInputChange: (value: string) => void;
   onSubmitWord: (e: React.FormEvent) => void;
   onMakeGuess: () => void;
-  normalizeWord: (word: string) => string;  // Updated type definition
+  normalizeWord: (word: string) => string;
   onBack?: () => void;
+  onClose: () => void;
 }
 
 export const SentenceBuilder = ({
@@ -40,6 +42,7 @@ export const SentenceBuilder = ({
   onMakeGuess,
   normalizeWord,
   onBack,
+  onClose,
 }: SentenceBuilderProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasMultipleWords, setHasMultipleWords] = useState(false);
@@ -108,8 +111,10 @@ export const SentenceBuilder = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
-            <AlertDialogAction onClick={() => onBack?.()}>
+            <AlertDialogCancel onClick={() => setShowConfirmDialog(false)}>
+              {t.game.cancel}
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={onBack}>
               {t.game.confirm}
             </AlertDialogAction>
           </AlertDialogFooter>

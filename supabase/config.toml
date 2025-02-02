@@ -7,3 +7,15 @@ enabled = false
 enabled = false
 [functions.generate-themed-word]
 verify_jwt = false
+[functions.generate-game]
+verify_jwt = false
+[functions.create-session]
+verify_jwt = false
+[functions.generate-word]
+verify_jwt = false
+[functions.guess-word]
+verify_jwt = false
+[functions.submit-high-score]
+verify_jwt = false
+[functions.generate-daily-challenge]
+verify_jwt = false

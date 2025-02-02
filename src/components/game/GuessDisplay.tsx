@@ -1,56 +1,41 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { RoundHeader } from "./sentence-builder/RoundHeader";
 import { WordDisplay } from "./sentence-builder/WordDisplay";
 import { GuessDescription } from "./guess-display/GuessDescription";
 import { GuessResult } from "./guess-display/GuessResult";
 import { ActionButtons } from "./guess-display/ActionButtons";
-import { HighScoreBoard } from "@/components/HighScoreBoard";
 
 interface GuessDisplayProps {
+  currentScore: number;
+  currentWord: string;
   sentence: string[];
   aiGuess: string;
-  currentWord: string;
-  onNextRound: () => void;
-  onPlayAgain: () => void;
-  onBack?: () => void;
-  currentScore: number;
   avgWordsPerRound: number;
   sessionId: string;
   currentTheme: string;
-  onHighScoreDialogChange?: (isOpen: boolean) => void;
+  onNextRound: () => void;
+  onGameReview: () => void;
+  onBack?: () => void;
   normalizeWord: (word: string) => string;
 }
 
 export const GuessDisplay = ({
+  currentScore,
+  currentWord,
   sentence,
   aiGuess,
-  currentWord,
-  onNextRound,
-  onPlayAgain,
-  onBack,
-  currentScore,
   avgWordsPerRound,
   sessionId,
   currentTheme,
-  onHighScoreDialogChange,
+  onNextRound,
+  onBack,
+  onGameReview,
   normalizeWord,
 }: GuessDisplayProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [hasSubmittedScore, setHasSubmittedScore] = useState(false);
-  const [showHighScores, setShowHighScores] = useState(false);
   const t = useTranslation();
-
-  useEffect(() => {
-    onHighScoreDialogChange?.(showHighScores);
-  }, [showHighScores, onHighScoreDialogChange]);
 
   const handleSetShowConfirmDialog = (show: boolean) => {
     setShowConfirmDialog(show);
@@ -58,13 +43,20 @@ export const GuessDisplay = ({
 
   const isGuessCorrect = () => normalizeWord(aiGuess) === normalizeWord(currentWord);
 
-  const handleScoreSubmitted = () => {
-    setHasSubmittedScore(true);
-  };
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        if (isGuessCorrect()) {
+          onNextRound();
+        } else {
+          onGameReview();
+        }
+      }
+    };
 
-  const handleShowHighScores = () => {
-    setShowHighScores(true);
-  };
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [isGuessCorrect, onNextRound, onGameReview]);
 
   return (
     <motion.div
@@ -83,34 +75,22 @@ export const GuessDisplay = ({
 
       <GuessDescription sentence={sentence} aiGuess={aiGuess} />
 
-      <GuessResult aiGuess={aiGuess} isCorrect={isGuessCorrect()} />
+      <GuessResult
+        aiGuess={aiGuess}
+        isCorrect={isGuessCorrect()}
+        onNextRound={onNextRound}
+      />
 
       <ActionButtons
         isCorrect={isGuessCorrect()}
         onNextRound={onNextRound}
-        onPlayAgain={onPlayAgain}
+        onGameReview={onGameReview}
         currentScore={currentScore}
         avgWordsPerRound={avgWordsPerRound}
         sessionId={sessionId}
         currentTheme={currentTheme}
-        onScoreSubmitted={handleScoreSubmitted}
-        onShowHighScores={handleShowHighScores}
       />
 
-      <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
-          <HighScoreBoard
-            currentScore={currentScore}
-            avgWordsPerRound={avgWordsPerRound}
-            onClose={() => setShowHighScores(false)}
-            onPlayAgain={onPlayAgain}
-            sessionId={sessionId}
-            showThemeFilter={false}
-            initialTheme={currentTheme}
-            onScoreSubmitted={handleScoreSubmitted}
-          />
-        </DialogContent>
-      </Dialog>
     </motion.div>
   );
 };

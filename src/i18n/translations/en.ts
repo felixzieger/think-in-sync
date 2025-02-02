@@ -22,7 +22,41 @@ export const en = {
     describeWord: "Your goal is to describe the word",
     nextRound: "Next Round",
     playAgain: "Play Again",
-    saveScore: "Save Score"
+    saveScore: "Save Score",
+    review: {
+      title: "Game Review",
+      successfulRounds: "Successful Rounds",
+      description: "Here's how you did:",
+      playAgain: "Play same words again",
+      playNewWords: "Play new words",
+      saveScore: "Save Score",
+      shareGame: "Share",
+      urlCopied: "URL Copied!",
+      urlCopiedDesc: "Share this URL with friends to let them play with the same words",
+      urlCopyError: "Failed to copy URL",
+      urlCopyErrorDesc: "Please try copying the URL manually",
+      youWin: "You Won!",
+      youLost: "You Lost!",
+      friendScore: (score: number, avgWords: string) =>
+        `The person that challenged you completed ${score} rounds successfully with an average of ${avgWords} words.`,
+      word: "Word",
+      yourWords: "You",
+      friendWords: "Friend",
+      result: "Result",
+      details: "Details",
+      yourDescription: "Your Description",
+      friendDescription: "Friend's Description",
+      aiGuessed: "AI guessed",
+      words: "Words"
+    },
+    invitation: {
+      title: "Game Invitation",
+      description: "Hey, you got invited to play a game. Play now to find out how well you do on the same set of words!"
+    },
+    error: {
+      title: "Game could not be started",
+      description: "Please try again in a moment."
+    }
   },
   leaderboard: {
     title: "High Scores",
@@ -41,6 +75,16 @@ export const en = {
     next: "Next",
     success: "Score submitted successfully!",
     theme: "Theme",
+    actions: "Actions",
+    playSameWords: "Play same words",
+    scoreUpdated: "Score Updated!",
+    scoreUpdatedDesc: "Your previous score for this game has been updated",
+    scoreSubmitted: "Score Submitted!",
+    scoreSubmittedDesc: "Your score has been added to the leaderboard",
+    modes: {
+      daily: "Daily Challenge",
+      "all-time": "All Time"
+    },
     error: {
       invalidName: "Please enter a valid name",
       noRounds: "You need to complete at least one round",
@@ -55,13 +99,13 @@ export const en = {
     title: "AI's Guess",
     goalDescription: "Your goal was to describe the word",
     providedDescription: "You provided the description",
-    aiGuessedDescription: "Based on your description, the AI guessed",
+    aiGuessedDescription: "Based on this description, the AI guessed",
     correct: "This is right!",
     incorrect: "This is wrong.",
     nextRound: "Next Round",
     playAgain: "Play Again",
     viewLeaderboard: "Save your score",
-    cheatingDetected: "Cheating detected!"
+    cheatingDetected: "Cheating detected!",
   },
   themes: {
     title: "Choose a Theme",
@@ -81,6 +125,9 @@ export const en = {
     title: "Think in Sync",
     subtitle: "Team up with AI to craft a clue and have a different AI guess your secret word!",
     startButton: "Start Game",
+    startDailyButton: "Daily Challenge",
+    startNewButton: "New Game",
+    dailyLeaderboard: "Today's Ranking",
     howToPlay: "How to Play",
     leaderboard: "Leaderboard",
     credits: "Created during the",

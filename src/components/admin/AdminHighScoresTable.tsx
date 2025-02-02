@@ -27,6 +27,7 @@ interface HighScoreWithGames {
   session_id: string;
   theme: string;
   game_results: {
+    id: string;
     target_word: string;
     description: string;
     ai_guess: string;
@@ -55,7 +56,7 @@ export const AdminHighScoresTable = () => {
         highScoresData.map(async (score) => {
           const { data: gameResults, error: gameResultsError } = await supabase
             .from("game_results")
-            .select("target_word, description, ai_guess, is_correct")
+            .select("id, target_word, description, ai_guess, is_correct")
             .eq("session_id", score.session_id);
 
           if (gameResultsError) {

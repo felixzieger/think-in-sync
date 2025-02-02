@@ -22,7 +22,42 @@ export const de = {
     describeWord: "Dein Ziel ist es folgendes Wort zu beschreiben",
     nextRound: "Nächste Runde",
     playAgain: "Erneut spielen",
-    saveScore: "Punktzahl speichern"
+    saveScore: "Punktzahl speichern",
+    playNewWords: "Neue Wörter spielen",
+    review: {
+      title: "Spielübersicht",
+      successfulRounds: "Erfolgreiche Runden",
+      description: "Hier ist dein Ergebnis:",
+      playAgain: "Gleiche Wörter erneut spielen",
+      playNewWords: "Neue Wörter spielen",
+      saveScore: "Punktzahl speichern",
+      shareGame: "Teilen",
+      urlCopied: "URL kopiert!",
+      urlCopiedDesc: "Teile diese URL mit Freunden, damit sie mit den gleichen Wörtern spielen können",
+      urlCopyError: "URL konnte nicht kopiert werden",
+      urlCopyErrorDesc: "Bitte versuche die URL manuell zu kopieren",
+      youWin: "Du hast gewonnen!",
+      youLost: "Du hast verloren!",
+      friendScore: (score: number, avgWords: string) =>
+        `Die Person, die dich herausgefordert hat, hat ${score} Runden erfolgreich mit durchschnittlich ${avgWords} Wörtern abgeschlossen.`,
+      word: "Wort",
+      yourWords: "Du",
+      friendWords: "Freund",
+      result: "Ergebnis",
+      details: "Details",
+      yourDescription: "Deine Beschreibung",
+      friendDescription: "Beschreibung des Freundes",
+      aiGuessed: "KI hat geraten",
+      words: "Wörter"
+    },
+    invitation: {
+      title: "Spieleinladung",
+      description: "Hey, du wurdest zu einem Spiel eingeladen. Spiele jetzt und finde heraus, wie gut du mit denselben Wörtern abschneidest!"
+    },
+    error: {
+      title: "Spiel konnte nicht gestartet werden",
+      description: "Bitte versuche es in einem Moment erneut."
+    }
   },
   leaderboard: {
     title: "Bestenliste",
@@ -41,6 +76,16 @@ export const de = {
     next: "Nächste",
     success: "Punktzahl erfolgreich übermittelt!",
     theme: "Thema",
+    actions: "Aktionen",
+    playSameWords: "Gleiche Wörter spielen",
+    scoreUpdated: "Punktzahl aktualisiert!",
+    scoreUpdatedDesc: "Deine vorherige Punktzahl für dieses Spiel wurde aktualisiert",
+    scoreSubmitted: "Punktzahl eingereicht!",
+    scoreSubmittedDesc: "Deine Punktzahl wurde zur Bestenliste hinzugefügt",
+    modes: {
+      daily: "Tägliche Herausforderung",
+      "all-time": "Bestenliste"
+    },
     error: {
       invalidName: "Bitte gib einen gültigen Namen ein",
       noRounds: "Du musst mindestens eine Runde abschließen",
@@ -55,7 +100,7 @@ export const de = {
     title: "KI-Vermutung",
     goalDescription: "Dein Ziel war es folgendes Wort zu beschreiben",
     providedDescription: "Du hast folgende Beschreibung gegeben",
-    aiGuessedDescription: "Basierend auf deiner Beschreibung hat die KI geraten",
+    aiGuessedDescription: "Basierend auf dieser Beschreibung hat die KI geraten",
     correct: "Das ist richtig!",
     incorrect: "Das ist falsch.",
     nextRound: "Nächste Runde",
@@ -81,6 +126,9 @@ export const de = {
     title: "Think in Sync",
     subtitle: "Arbeite mit KI zusammen, um einen Hinweis zu erstellen und lass eine andere KI dein geheimes Wort erraten!",
     startButton: "Spiel starten",
+    startDailyButton: "Tägliche Herausforderung",
+    startNewButton: "Neues Spiel",
+    dailyLeaderboard: "Tagesranking",
     howToPlay: "Spielanleitung",
     leaderboard: "Bestenliste",
     credits: "Erstellt während des",

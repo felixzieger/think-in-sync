@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HighScoreBoard } from "../HighScoreBoard";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { LanguageSelector } from "./LanguageSelector";
@@ -10,13 +10,25 @@ import { MainActions } from "./welcome/MainActions";
 import { HowToPlayDialog } from "./welcome/HowToPlayDialog";
 
 interface WelcomeScreenProps {
-  onStart: () => void;
+  onStartDaily: () => void;
+  onStartNew: () => void;
 }
 
-export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
+export const WelcomeScreen = ({ onStartDaily: onStartDaily, onStartNew: onStartNew }: WelcomeScreenProps) => {
   const [showHighScores, setShowHighScores] = useState(false);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const t = useTranslation();
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        onStartDaily()
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [onStartDaily]);
 
   return (
     <>
@@ -25,22 +37,25 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         animate={{ opacity: 1 }}
         className="max-w-2xl mx-auto text-center space-y-8"
       >
-        <LanguageSelector />
-        
-        <div>
+
+        <div className="relative">
           <h1 className="mb-4 text-4xl font-bold text-gray-900">{t.welcome.title}</h1>
+          <div className="absolute top-0 right-0">
+            <LanguageSelector />
+          </div>
           <p className="text-lg text-gray-600">
             {t.welcome.subtitle}
           </p>
         </div>
 
-        <MainActions 
-          onStart={onStart}
+        <MainActions
+          onStartDaily={onStartDaily}
+          onStartNew={onStartNew}
           onShowHowToPlay={() => setShowHowToPlay(true)}
           onShowHighScores={() => setShowHighScores(true)}
         />
       </motion.div>
-      
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -64,13 +79,12 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           <HighScoreBoard
             showThemeFilter={true}
             onClose={() => setShowHighScores(false)}
-            onPlayAgain={onStart}
           />
         </DialogContent>
       </Dialog>
 
-      <HowToPlayDialog 
-        open={showHowToPlay} 
+      <HowToPlayDialog
+        open={showHowToPlay}
         onOpenChange={setShowHowToPlay}
       />
     </>

@@ -13,6 +13,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/game" element={<Index />} />
+          <Route path="/game/:gameId" element={<Index />} />
           <Route path="/admin" element={<AdminIndex />} />
           <Route path="/admin/login" element={<AdminLogin />} />
         </Routes>

@@ -19,14 +19,14 @@ interface RoundHeaderProps {
   setShowConfirmDialog: (show: boolean) => void;
 }
 
-export const RoundHeader = ({ 
-  successfulRounds, 
+export const RoundHeader = ({
+  successfulRounds,
   onBack,
   showConfirmDialog,
   setShowConfirmDialog
 }: RoundHeaderProps) => {
   const t = useTranslation();
-  
+
   const handleHomeClick = () => {
     console.log("RoundHeader - Home button clicked, successful rounds:", successfulRounds);
     if (successfulRounds > 0) {
@@ -58,7 +58,7 @@ export const RoundHeader = ({
       <Button
         variant="ghost"
         size="icon"
-        className="absolute left-0 top-0 text-gray-600 hover:text-primary"
+        className="absolute left-0 top-0 text-gray-600 hover:text-white"
         onClick={handleHomeClick}
       >
         <House className="h-5 w-5" />
@@ -77,7 +77,7 @@ export const RoundHeader = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setShowConfirmDialog(false)}>{t.game.cancel}</AlertDialogCancel>
             <AlertDialogAction>{t.game.confirm}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

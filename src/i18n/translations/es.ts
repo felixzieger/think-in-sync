@@ -22,7 +22,42 @@ export const es = {
     describeWord: "Tu objetivo es describir la palabra",
     nextRound: "Siguiente Ronda",
     playAgain: "Jugar de Nuevo",
-    saveScore: "Guardar Puntuación"
+    saveScore: "Guardar Puntuación",
+    playNewWords: "Jugar nuevas palabras",
+    review: {
+      title: "Resumen del Juego",
+      successfulRounds: "Rondas Exitosas",
+      description: "Aquí están tus resultados:",
+      playAgain: "Jugar las mismas palabras de nuevo",
+      playNewWords: "Jugar nuevas palabras",
+      saveScore: "Guardar Puntuación",
+      shareGame: "Compartir",
+      urlCopied: "¡URL copiada!",
+      urlCopiedDesc: "Comparte esta URL con amigos para que jueguen con las mismas palabras",
+      urlCopyError: "Error al copiar la URL",
+      urlCopyErrorDesc: "Por favor, intenta copiar la URL manualmente",
+      youWin: "¡Has ganado!",
+      youLost: "¡Has perdido!",
+      friendScore: (score: number, avgWords: string) =>
+        `La persona que te desafió completó ${score} rondas exitosamente con un promedio de ${avgWords} palabras.`,
+      word: "Palabra",
+      yourWords: "Tú",
+      friendWords: "Amigo",
+      result: "Resultado",
+      details: "Detalles",
+      yourDescription: "Tu Descripción",
+      friendDescription: "Descripción del Amigo",
+      aiGuessed: "La IA adivinó",
+      words: "Palabras"
+    },
+    invitation: {
+      title: "Invitación al Juego",
+      description: "¡Hey, has sido invitado a jugar! ¡Juega ahora para descubrir qué tan bien lo haces con las mismas palabras!"
+    },
+    error: {
+      title: "No se pudo iniciar el juego",
+      description: "Por favor, inténtalo de nuevo en un momento."
+    }
   },
   leaderboard: {
     title: "Puntuaciones Más Altas",
@@ -41,6 +76,16 @@ export const es = {
     next: "Siguiente",
     success: "¡Puntuación enviada con éxito!",
     theme: "Tema",
+    actions: "Acciones",
+    playSameWords: "Jugar con las mismas palabras",
+    scoreUpdated: "¡Puntuación actualizada!",
+    scoreUpdatedDesc: "Tu puntuación anterior para este juego ha sido actualizada",
+    scoreSubmitted: "¡Puntuación enviada!",
+    scoreSubmittedDesc: "Tu puntuación ha sido añadida a la tabla de clasificación",
+    modes: {
+      daily: "Desafío Diario",
+      "all-time": "Histórico"
+    },
     error: {
       invalidName: "Por favor, ingresa un nombre válido",
       noRounds: "Debes completar al menos una ronda",
@@ -55,7 +100,7 @@ export const es = {
     title: "Suposición de la IA",
     goalDescription: "Tu objetivo era describir la palabra",
     providedDescription: "Proporcionaste la descripción",
-    aiGuessedDescription: "Basado en tu descripción, la IA adivinó",
+    aiGuessedDescription: "Basándose en esta descripción, la IA adivinó",
     correct: "¡Esto es correcto!",
     incorrect: "Esto es incorrecto.",
     nextRound: "Siguiente Ronda",
@@ -81,6 +126,9 @@ export const es = {
     title: "Think in Sync",
     subtitle: "¡Forma equipo con la IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
     startButton: "Comenzar juego",
+    startDailyButton: "Desafío Diario",
+    startNewButton: "Nuevo Juego",
+    dailyLeaderboard: "Ranking diario",
     howToPlay: "Cómo jugar",
     leaderboard: "Clasificación",
     credits: "Creado durante el",
