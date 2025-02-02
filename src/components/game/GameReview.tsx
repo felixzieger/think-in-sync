@@ -45,8 +45,7 @@ export const GameReview = ({
   const [gameResults, setGameResults] = useState([]);
   const [friendData, setFriendData] = useState<{ score: number; avgWords: number } | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const shareUrl = `${window.location.origin}/game?from_session=${sessionId}`;
-
+  const shareUrl = `${window.location.origin}/?from_session=${sessionId}`;
 
   useEffect(() => {
     const fetchGameResults = async () => {
@@ -177,6 +176,7 @@ export const GameReview = ({
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={setShowConfirmDialog}
+        onCancel={() => setShowConfirmDialog(false)}
       />
 
       <div className="space-y-4">
