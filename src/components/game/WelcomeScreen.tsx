@@ -62,7 +62,6 @@ export const WelcomeScreen = ({ onStartDaily: onStartDaily, onStartNew: onStartN
         transition={{ delay: 0.2 }}
         className="max-w-2xl mx-auto text-center mt-8"
       >
-        <HuggingFaceLink />
       </motion.div>
 
       <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
