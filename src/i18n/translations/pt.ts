@@ -1,6 +1,6 @@
 export const pt = {
     game: {
-        title: "Pense em Sincronia",
+        title: "Think in Sync",
         round: "Rodada",
         buildDescription: "Construam uma frase juntos",
         buildSubtitle: "Adicionem palavras alternadamente para criar uma frase",
@@ -123,7 +123,7 @@ export const pt = {
         playing: "Tema"
     },
     welcome: {
-        title: "Pense em Sincronia",
+        title: "Think in Sync",
         subtitle: "Forme uma equipe com a IA para criar uma pista e deixe outra IA adivinhar sua palavra secreta!",
         startButton: "Iniciar jogo",
         startDailyButton: "Desafio Diário",
