@@ -27,6 +27,10 @@ const languagePrompts = {
   es: {
     systemPrompt: "Estás ayudando a generar palabras para un juego de adivinanzas. Genera una sola palabra en español relacionada con el tema",
     requirements: "La palabra debe ser:\n- Una sola palabra (sin espacios ni guiones)\n- Lo suficientemente común para que la gente la conozca\n- Lo suficientemente específica para ser interesante\n- Relacionada con el tema\n- Entre 4 y 12 letras\n- Un sustantivo\n- NO ser ninguna de estas palabras ya utilizadas:"
+  },
+  pt: {
+    systemPrompt: "Estás ajudando a gerar palavras para um jogo de adivinhação. Gere uma única palavra em português relacionada ao tema",
+    requirements: "A palavra deve ser:\n- Uma única palavra (sem espaços ou hífens)\n- Comum o suficiente para que as pessoas a conheçam\n- Específica o suficiente para ser interessante\n- Relacionada ao tema\n- Entre 4 e 12 letras\n- Um substantivo\n- NÃO ser nenhuma destas palavras já utilizadas:"
   }
 };
 
@@ -104,7 +108,7 @@ async function tryOpenRouter(theme: string, usedWords: string[], language: strin
   }
 
   const data = await response.json();
-  
+
   if (!data?.choices?.[0]?.message?.content) {
     throw new Error('Invalid response from OpenRouter API');
   }
@@ -131,7 +135,7 @@ serve(async (req) => {
     } catch (mistralError) {
       console.error('Mistral error:', mistralError);
       console.log('Falling back to OpenRouter...');
-      
+
       try {
         word = await tryOpenRouter(theme, usedWords, language);
         console.log('Successfully generated word with OpenRouter:', word);
@@ -143,11 +147,11 @@ serve(async (req) => {
 
     if (!word) {
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: 'Failed to generate word with both Mistral and OpenRouter',
           details: error?.message || 'Unknown error'
         }),
-        { 
+        {
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         }
@@ -161,11 +165,11 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error generating themed word:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: 'Error generating themed word',
-        details: error.message 
+        details: error.message
       }),
-      { 
+      {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }

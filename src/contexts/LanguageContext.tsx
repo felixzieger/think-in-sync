@@ -8,7 +8,7 @@ interface LanguageContextType {
 
 export const LanguageContext = createContext<LanguageContextType>({
   language: 'en',
-  setLanguage: () => {},
+  setLanguage: () => { },
 });
 
 interface LanguageProviderProps {
@@ -21,7 +21,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   useEffect(() => {
     const savedLang = localStorage.getItem('language') as Language;
     console.log('[LanguageContext] Initial load - Saved language:', savedLang);
-    if (savedLang && ['en', 'fr', 'de', 'it', 'es'].includes(savedLang)) {
+    if (savedLang && ['en', 'fr', 'de', 'it', 'es', 'pt'].includes(savedLang)) {
       setLanguage(savedLang);
     }
   }, []);

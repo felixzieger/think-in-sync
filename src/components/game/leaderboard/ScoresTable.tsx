@@ -56,6 +56,8 @@ const getLanguageEmoji = (language: string) => {
       return '🇮🇹';
     case 'es':
       return '🇪🇸';
+    case 'pt':
+      return '🇵🇹';
     default:
       return '🌐';
   }

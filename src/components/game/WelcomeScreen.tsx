@@ -59,20 +59,22 @@ export const WelcomeScreen = ({ onStartDaily: onStartDaily, onStartNew: onStartN
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.1 }}
-        className="max-w-2xl mx-auto text-center mt-8"
-      >
-        <ContestSection />
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
         className="max-w-2xl mx-auto text-center mt-8"
       >
-        <HuggingFaceLink />
-      </motion.div>
+        <div className="mt-12 text-sm text-gray-500 space-y-2">
+          <p>
+            Made by{" "}
+            <a href="https://www.linkedin.com/in/sandro-mikautadze/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Sandro</a>,{" "}
+            <a href="https://www.linkedin.com/in/alessandro-pranzo/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Alessandro</a>,{" "}
+            <a href="https://www.linkedin.com/in/mattia-martino-528363225/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"> Mattia</a>,{" "}
+            <a href="https://www.linkedin.com/in/michael-sheroubi/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Michael</a>,{" "}
+            <a href="https://www.linkedin.com/in/michael-sheroubi/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Emiliano</a>, and{" "}
+            <a href="https://felixzieger.de/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Felix</a>{" "}
+          </p>
+        </div>
+      </motion.div >
+
 
       <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">

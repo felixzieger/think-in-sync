@@ -31,6 +31,11 @@ const languagePrompts = {
     systemPrompt: "Estás ayudando en un juego de adivinanzas. Dada una descripción, adivina qué palabra única se está describiendo. La palabra descrita no estaba permitida en la descripción, así que no esperes verla.",
     instruction: "Basándote en esta descripción",
     responseInstruction: "Responde únicamente con la palabra que crees que se está describiendo, en letras mayúsculas. No añadas ninguna explicación ni puntuación."
+  },
+  pt: {
+    systemPromp: "Estás ajudando em um jogo de adivinhação. Dada uma descrição, adivinha qual palavra única está sendo descrita. A palavra descrita não foi permitida na descrição, então não espere vê-la.",
+    instruction: "Com base nesta descrição",
+    responseInstruction: "Responda apenas com a palavra que você acredita estar sendo descrita, em letras maiúsculas. Não adicione nenhuma explicação nem pontuação."
   }
 };
 

@@ -6,7 +6,7 @@ export const de = {
     buildSubtitle: "Fügt abwechselnd Wörter hinzu, um einen Satz zu bilden",
     startSentence: "Beginne deinen Satz...",
     inputPlaceholder: "Gib EIN Wort ein...",
-    addWord: "Wort hinzufügen",
+    addWord: "Hinzufügen",
     makeGuess: "Raten",
     aiThinking: "KI denkt nach...",
     aiDelayed: "Die KI ist derzeit beschäftigt. Bitte versuche es gleich noch einmal.",

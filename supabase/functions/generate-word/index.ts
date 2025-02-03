@@ -36,6 +36,12 @@ const languagePrompts = {
     task: "Tu tarea es encontrar una frase para describir esta palabra sin usarla directamente.",
     instruction: "Responde con una frase completa y gramaticalmente correcta que comience con",
     noQuotes: "No añadas comillas ni backticks. Simplemente responde con la frase."
+  },
+  pt: {
+    systemPrompt: "Você está ajudando em um jogo de palavras. A palavra secreta é",
+    task: "Sua tarefa é encontrar uma frase para descrever esta palavra sem usá-la diretamente.",
+    instruction: "Responda com uma frase completa e gramaticalmente correta que comece com",
+    noQuotes: "Não adicione aspas nem backticks. Simplesmente responda com a frase."
   }
 };
 

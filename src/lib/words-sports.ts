@@ -213,6 +213,46 @@ export const spanishSportsWords = [
   "LACROSSE"
 ];
 
+export const portugueseSportsWords = [
+  "FUTEBOL",
+  "TÊNIS",
+  "GOLFE",
+  "BEISEBOL",
+  "BASQUETEBOL",
+  "VÓLEI",
+  "HÓQUEI",
+  "RÚGUEBI",
+  "CRÍQUETE",
+  "NATAÇÃO",
+  "CORRIDA",
+  "CICLISMO",
+  "ESQUI",
+  "BOXE",
+  "PATINAÇÃO",
+  "SURFE",
+  "ESCALADA",
+  "MERGULHO",
+  "VELA",
+  "LUTA",
+  "GINÁSTICA",
+  "ESGRIMA",
+  "MOTOCICLISMO",
+  "TIRO",
+  "HIPISMO",
+  "ANDEBOL",
+  "SNOWBOARD",
+  "POLO AQUÁTICO",
+  "TRIÁTLO",
+  "HALTEROFILISMO",
+  "JUDÔ",
+  "TAEKWONDO",
+  "SKATEBOARD",
+  "WINDSURF",
+  "BADMINTON",
+  "REMO",
+  "LACROSSE"
+];
+
 export const getRandomSportsWord = (language: string = 'en') => {
   let wordList;
   switch (language) {
@@ -227,6 +267,9 @@ export const getRandomSportsWord = (language: string = 'en') => {
       break;
     case 'es':
       wordList = spanishSportsWords;
+      break;
+    case 'pt':
+      wordList = portugueseSportsWords;
       break;
     default:
       wordList = englishSportsWords;
