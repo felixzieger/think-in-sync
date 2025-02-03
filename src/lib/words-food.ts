@@ -201,6 +201,48 @@ export const spanishFoodWords = [
   "MERMELADA"
 ];
 
+export const portugueseFoodWords = [
+  "PIZZA",
+  "PASTA",
+  "PÃO",
+  "QUEIJO",
+  "MAÇÃ",
+  "BANANA",
+  "LARANJA",
+  "CENOURA",
+  "BATATA",
+  "TOMATE",
+  "FRANGO",
+  "CARNE",
+  "PEIXE",
+  "ARROZ",
+  "SOPA",
+  "SALADA",
+  "BOLO",
+  "BOLACHA",
+  "CHOCOLATE",
+  "MEL",
+  "UVAS",
+  "LIMÃO",
+  "PIMENTA",
+  "CEBOLA",
+  "ALHO",
+  "COUVE",
+  "BRÓCOLIS",
+  "ESPINAFRE",
+  "COGUMELO",
+  "ABÓBORA",
+  "ABOBRINHA",
+  "PIMENTÃO",
+  "MILHO",
+  "ABACATE",
+  "IOGURTE",
+  "NOZES",
+  "CEREAIS",
+  "CREME",
+  "GELEIA"
+];
+
 export const getRandomFoodWord = (language: string = 'en') => {
   let wordList;
   switch (language) {
@@ -215,6 +257,9 @@ export const getRandomFoodWord = (language: string = 'en') => {
       break;
     case 'es':
       wordList = spanishFoodWords;
+      break;
+    case 'pt':
+      wordList = portugueseFoodWords;
       break;
     default:
       wordList = englishFoodWords;
