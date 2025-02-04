@@ -8,15 +8,18 @@ import { ContestSection } from "./welcome/ContestSection";
 import { HuggingFaceLink } from "./welcome/HuggingFaceLink";
 import { MainActions } from "./welcome/MainActions";
 import { HowToPlayDialog } from "./welcome/HowToPlayDialog";
+import { CreditsDialog } from "./welcome/CreditsDialog";
+import { Mail } from "lucide-react";
 
 interface WelcomeScreenProps {
   onStartDaily: () => void;
   onStartNew: () => void;
 }
 
-export const WelcomeScreen = ({ onStartDaily: onStartDaily, onStartNew: onStartNew }: WelcomeScreenProps) => {
+export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) => {
   const [showHighScores, setShowHighScores] = useState(false);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
+  const [showCredits, setShowCredits] = useState(false);
   const t = useTranslation();
 
   useEffect(() => {
@@ -37,7 +40,6 @@ export const WelcomeScreen = ({ onStartDaily: onStartDaily, onStartNew: onStartN
         animate={{ opacity: 1 }}
         className="max-w-2xl mx-auto text-center space-y-8"
       >
-
         <div className="relative">
           <h1 className="mb-4 text-4xl font-bold text-gray-900">{t.welcome.title}</h1>
           <div className="absolute top-0 right-0">
@@ -63,18 +65,25 @@ export const WelcomeScreen = ({ onStartDaily: onStartDaily, onStartNew: onStartN
         className="max-w-2xl mx-auto text-center mt-8"
       >
         <div className="mt-12 text-sm text-gray-500 space-y-2">
-          <p>
-            Made by{" "}
-            <a href="https://www.linkedin.com/in/sandro-mikautadze/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Sandro</a>,{" "}
-            <a href="https://www.linkedin.com/in/alessandro-pranzo/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Alessandro</a>,{" "}
-            <a href="https://www.linkedin.com/in/mattia-martino-528363225/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline"> Mattia</a>,{" "}
-            <a href="https://www.linkedin.com/in/michael-sheroubi/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Michael</a>,{" "}
-            <a href="https://www.linkedin.com/in/michael-sheroubi/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Emiliano</a>, and{" "}
-            <a href="https://felixzieger.de/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Felix</a>{" "}
-          </p>
+          <div className="flex justify-center items-center gap-4">
+            <button
+              onClick={() => setShowCredits(true)}
+              className="text-primary hover:text-primary/80 transition-colors"
+            >
+              Made by M1X
+            </button>
+            <span>•</span>
+            <a
+              href="mailto:hello@think-in-sync.com"
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+              title="Send us feedback"
+            >
+              <Mail className="w-4 h-4" />
+              <span>Feedback</span>
+            </a>
+          </div>
         </div>
-      </motion.div >
-
+      </motion.div>
 
       <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
@@ -88,6 +97,11 @@ export const WelcomeScreen = ({ onStartDaily: onStartDaily, onStartNew: onStartN
       <HowToPlayDialog
         open={showHowToPlay}
         onOpenChange={setShowHowToPlay}
+      />
+
+      <CreditsDialog
+        open={showCredits}
+        onOpenChange={setShowCredits}
       />
     </>
   );
