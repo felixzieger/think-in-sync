@@ -8,6 +8,7 @@ import { ContestSection } from "./welcome/ContestSection";
 import { HuggingFaceLink } from "./welcome/HuggingFaceLink";
 import { MainActions } from "./welcome/MainActions";
 import { HowToPlayDialog } from "./welcome/HowToPlayDialog";
+import { Mail } from "lucide-react";
 
 interface WelcomeScreenProps {
   onStartDaily: () => void;
@@ -37,7 +38,6 @@ export const WelcomeScreen = ({ onStartDaily: onStartDaily, onStartNew: onStartN
         animate={{ opacity: 1 }}
         className="max-w-2xl mx-auto text-center space-y-8"
       >
-
         <div className="relative">
           <h1 className="mb-4 text-4xl font-bold text-gray-900">{t.welcome.title}</h1>
           <div className="absolute top-0 right-0">
@@ -72,9 +72,18 @@ export const WelcomeScreen = ({ onStartDaily: onStartDaily, onStartNew: onStartN
             <a href="https://www.linkedin.com/in/michael-sheroubi/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Emiliano</a>, and{" "}
             <a href="https://felixzieger.de/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Felix</a>{" "}
           </p>
+          <div className="flex justify-center mt-4">
+            <a
+              href="mailto:hello@think-in-sync.com"
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+              title="Send us feedback"
+            >
+              <Mail className="w-4 h-4" />
+              <span>Feedback</span>
+            </a>
+          </div>
         </div>
-      </motion.div >
-
+      </motion.div>
 
       <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
