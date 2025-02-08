@@ -27,5 +27,5 @@ dist-ssr
 .aider*
 secrets.sh
 
-supbase/.branches
+supbase/.branches/
 supabase/.temp
