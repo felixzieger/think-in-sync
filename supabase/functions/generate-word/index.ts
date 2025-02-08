@@ -1,5 +1,19 @@
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { Mistral } from "npm:@mistralai/mistralai";
+import * as Sentry from "https://deno.land/x/sentry/index.mjs";
+
+Sentry.init({
+  dsn: "https://ca41c3f96489cc1b3e69c9a44704f7ee@o4508722276007936.ingest.de.sentry.io/4508772265558096",
+  defaultIntegrations: false,
+  // Performance Monitoring
+  tracesSampleRate: 1.0,
+  // Set sampling rate for profiling - this is relative to tracesSampleRate
+  profilesSampleRate: 1.0,
+});
+
+Sentry.setTag('region', Deno.env.get('SB_REGION'));
+Sentry.setTag('execution_id', Deno.env.get('SB_EXECUTION_ID'));
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -71,6 +85,11 @@ async function tryMistral(currentWord: string, existingSentence: string, languag
     temperature: 0.5
   });
 
+  if (!response?.choices?.[0]?.message?.content) {
+    console.error('Invalid Mistral API response structure:', response);
+    throw new Error('Received invalid response structure from Mistral API');
+  }
+
   const aiResponse = response.choices[0].message.content.trim();
   console.log('Mistral full response:', aiResponse);
 
@@ -107,12 +126,25 @@ async function tryOpenRouter(currentWord: string, existingSentence: string, lang
   });
 
   if (!response.ok) {
-    throw new Error(`OpenRouter API error: ${response.status}`);
+    const errorText = await response.text();
+    console.error('OpenRouter API error response:', {
+      status: response.status,
+      statusText: response.statusText,
+      body: errorText
+    });
+    throw new Error(`OpenRouter API error (${response.status}): ${errorText}`);
   }
 
   const data = await response.json();
+  console.log('OpenRouter raw response:', data);
+
+  if (!data?.choices?.[0]?.message?.content) {
+    console.error('Invalid OpenRouter API response structure:', data);
+    throw new Error('Received invalid response structure from OpenRouter API');
+  }
+
   const aiResponse = data.choices[0].message.content.trim();
-  console.log('OpenRouter full response:', aiResponse);
+  console.log('OpenRouter processed response:', aiResponse);
 
   return aiResponse
     .slice(existingSentence.length)
@@ -141,20 +173,44 @@ serve(async (req) => {
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     } catch (mistralError) {
-      console.error('Mistral error:', mistralError);
-      console.log('Falling back to OpenRouter...');
+      console.error('Mistral API error:', {
+        error: mistralError,
+        message: mistralError.message,
+        stack: mistralError.stack
+      });
+      Sentry.captureException(mistralError);
 
-      const word = await tryOpenRouter(currentWord, existingSentence, language);
-      console.log('Successfully generated word with OpenRouter:', word);
-      return new Response(
-        JSON.stringify({ word }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      console.log('Falling back to OpenRouter...');
+      try {
+        const word = await tryOpenRouter(currentWord, existingSentence, language);
+        console.log('Successfully generated word with OpenRouter:', word);
+        return new Response(
+          JSON.stringify({ word }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      } catch (openRouterError) {
+        console.error('OpenRouter API error:', {
+          error: openRouterError,
+          message: openRouterError.message,
+          stack: openRouterError.stack
+        });
+        Sentry.captureException(openRouterError);
+        throw new Error(`All word generation attempts failed. Last error: ${openRouterError.message}`);
+      }
     }
   } catch (error) {
-    console.error('Error generating word:', error);
+    console.error('Fatal error in generate-word function:', {
+      error: error,
+      message: error.message,
+      stack: error.stack
+    });
+    Sentry.captureException(error);
+    
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
