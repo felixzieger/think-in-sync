@@ -72,6 +72,7 @@ export const GuessDisplay = ({
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={handleSetShowConfirmDialog}
+        lives={lives}
       />
 
       <WordDisplay currentWord={currentWord} />
