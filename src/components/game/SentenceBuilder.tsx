@@ -67,10 +67,11 @@ export const SentenceBuilder = ({
   return (
     <div className="space-y-6">
       <RoundHeader
-        currentWord={currentWord}
         successfulRounds={successfulRounds}
         onBack={onBack}
-        onClose={handleClose}
+        showConfirmDialog={showConfirmDialog}
+        setShowConfirmDialog={setShowConfirmDialog}
+        onCancel={onClose}
       />
 
       <Hearts lives={lives} />
@@ -91,15 +92,15 @@ export const SentenceBuilder = ({
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t.game.exitTitle}</AlertDialogTitle>
+            <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
             <AlertDialogDescription>
-              {t.game.exitDescription}
+              {t.game.leaveGameDescription}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t.common.cancel}</AlertDialogCancel>
+            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
             <AlertDialogAction onClick={onClose}>
-              {t.common.confirm}
+              {t.game.confirm}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
