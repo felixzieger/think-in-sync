@@ -38,6 +38,7 @@ export const GameContainer = () => {
   const [aiGuess, setAiGuess] = useState<string>("");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
   const [totalWordsInSuccessfulRounds, setTotalWordsInSuccessfulRounds] = useState<number>(0);
+  const [lives, setLives] = useState<number>(3);
   const { toast } = useToast();
   const t = useTranslation();
   const { language, setLanguage } = useContext(LanguageContext);
@@ -92,7 +93,16 @@ export const GameContainer = () => {
 
       if (gameError) throw gameError;
 
-      const newSessionId = await createSession(urlGameId);
+      const { data: sessionData, error: sessionError } = await supabase
+        .from('sessions')
+        .select('id, lives')
+        .eq('game_id', urlGameId)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      const newSessionId = sessionData?.id || await createSession(urlGameId);
+      const currentLives = sessionData?.lives ?? 3;
 
       // Set the language to match the game's language
       if (gameData.language) {
@@ -105,6 +115,7 @@ export const GameContainer = () => {
       setCurrentWordIndex(0);
       setGameId(urlGameId);
       setSessionId(newSessionId);
+      setLives(currentLives);
       setGameState("building-sentence");
       console.log("Game started from URL with game ID:", urlGameId);
     } catch (error) {
@@ -186,6 +197,7 @@ export const GameContainer = () => {
       setGameState("building-sentence");
       setSuccessfulRounds(0);
       setTotalWordsInSuccessfulRounds(0);
+      setLives(3);
       console.log("Game started with theme:", theme, "language:", language);
     } catch (error) {
       console.error('Error starting new game:', error);
@@ -265,6 +277,14 @@ export const GameContainer = () => {
 
       if (isCorrect) {
         setTotalWordsInSuccessfulRounds(prev => prev + finalSentence.length);
+      } else {
+        const newLives = lives - 1;
+        setLives(newLives);
+        // Update lives in the database
+        await supabase
+          .from('sessions')
+          .update({ lives: newLives })
+          .eq('id', sessionId);
       }
 
       await saveGameResult(sentenceString, guess, isCorrect);
@@ -293,6 +313,10 @@ export const GameContainer = () => {
       } else {
         handleGameReview();
       }
+    } else if (lives > 1) {
+      setGameState("building-sentence");
+      setSentence([]);
+      setAiGuess("");
     } else {
       setGameState("game-review");
     }
@@ -362,6 +386,7 @@ export const GameContainer = () => {
             normalizeWord={(word: string) => normalizeWord(word, language)}
             onBack={handleBack}
             onClose={handleBack}
+            lives={lives}
           />
         ) : gameState === "showing-guess" ? (
           <GuessDisplay
@@ -372,15 +397,16 @@ export const GameContainer = () => {
             onGameReview={handleGameReview}
             onBack={handleBack}
             currentScore={successfulRounds}
-            avgWordsPerRound={getAverageWordsPerSuccessfulRound()}
+            avgWordsPerRound={getAverageWordsPerRound()}
             sessionId={sessionId}
             currentTheme={currentTheme}
             normalizeWord={(word: string) => normalizeWord(word, language)}
+            lives={lives}
           />
         ) : (
           <GameReview
             currentScore={successfulRounds}
-            avgWordsPerRound={getAverageWordsPerSuccessfulRound()}
+            avgWordsPerRound={getAverageWordsPerRound()}
             onPlayAgain={handlePlayAgain}
             onBack={handleBack}
             gameId={gameId}
