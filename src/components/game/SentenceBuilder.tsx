@@ -49,4 +49,61 @@ export const SentenceBuilder = ({
 }: SentenceBuilderProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasMultipleWords, setHasMultipleWords] = useState(false);
-  const
+  const t = useTranslation();
+
+  const handleInputChange = (value: string) => {
+    setHasMultipleWords(value.trim().includes(" "));
+    onInputChange(value);
+  };
+
+  const handleClose = () => {
+    if (sentence.length > 0) {
+      setShowConfirmDialog(true);
+    } else {
+      onClose();
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <RoundHeader
+        currentWord={currentWord}
+        successfulRounds={successfulRounds}
+        onBack={onBack}
+        onClose={handleClose}
+      />
+
+      <Hearts lives={lives} />
+
+      <WordDisplay currentWord={currentWord} normalizeWord={normalizeWord} />
+
+      <SentenceDisplay sentence={sentence} />
+
+      <InputForm
+        playerInput={playerInput}
+        onInputChange={handleInputChange}
+        onSubmitWord={onSubmitWord}
+        onMakeGuess={onMakeGuess}
+        isAiThinking={isAiThinking}
+        hasMultipleWords={hasMultipleWords}
+      />
+
+      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t.game.exitTitle}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t.game.exitDescription}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t.common.cancel}</AlertDialogCancel>
+            <AlertDialogAction onClick={onClose}>
+              {t.common.confirm}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
+};
