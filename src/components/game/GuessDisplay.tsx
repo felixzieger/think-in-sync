@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -19,6 +20,7 @@ interface GuessDisplayProps {
   onGameReview: () => void;
   onBack?: () => void;
   normalizeWord: (word: string) => string;
+  lives: number;
 }
 
 export const GuessDisplay = ({
@@ -33,6 +35,7 @@ export const GuessDisplay = ({
   onBack,
   onGameReview,
   normalizeWord,
+  lives,
 }: GuessDisplayProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const t = useTranslation();

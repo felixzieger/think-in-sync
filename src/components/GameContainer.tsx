@@ -355,7 +355,7 @@ export const GameContainer = () => {
     return normalizeWord(aiGuess, language) === normalizeWord(currentWord, language);
   };
 
-  const getAverageWordsPerSuccessfulRound = () => {
+  const getAverageWordsPerRound = () => {
     if (successfulRounds === 0) return 0;
     return totalWordsInSuccessfulRounds / successfulRounds;
   };

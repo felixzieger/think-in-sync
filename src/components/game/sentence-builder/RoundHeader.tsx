@@ -1,3 +1,4 @@
+
 import { House } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/hooks/useTranslation";
