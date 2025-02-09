@@ -22,7 +22,7 @@ export const StatsDialog = ({
 
       const { count } = await supabase
         .from("game_results")
-        .select("*", { count: "exact", head: true })
+        .select("*", { count: "exact" })
         .gte("created_at", today.toISOString());
 
       return count || 0;
@@ -34,7 +34,7 @@ export const StatsDialog = ({
     queryFn: async () => {
       const { count } = await supabase
         .from("game_results")
-        .select("*", { count: "exact", head: true });
+        .select("*", { count: "exact" });
 
       return count || 0;
     },
