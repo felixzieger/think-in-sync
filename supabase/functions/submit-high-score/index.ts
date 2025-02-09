@@ -68,9 +68,7 @@ Deno.serve(async (req) => {
     })
 
     // Verify that claimed score matches actual successful rounds
-    // TODO FIX ME AGAIN
-    // if (score !== successfulRounds) {
-    if (0 === 1) {
+    if (score !== successfulRounds) {
       Sentry.captureException('Score verification failed')
       return new Response(
         JSON.stringify({

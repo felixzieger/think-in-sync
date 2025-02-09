@@ -79,7 +79,7 @@ export const englishWords = [
   "BRUSH",
   "TOOTH",
   "HAND",
-  "FEET",
+  "FOOT",
   "EYE",
   "NOSE",
   "EAR",
@@ -112,7 +112,6 @@ export const englishWords = [
   "TELEVISION",
   "RADIO",
   "BATTERY",
-  "CANDLE",
   "FENCE",
   "MAILBOX",
   "BRICK",
@@ -159,7 +158,7 @@ export const englishWords = [
   "HAT",
   "CAP",
   "MASK",
-  "SUNGALASSES",
+  "SUNGLASSES",
   "WATCH",
   "NECKLACE",
   "BRACELET",
@@ -178,14 +177,11 @@ export const englishWords = [
   "SLEEPINGBAG",
   "PICNIC",
   "BENCH",
-  "FENCE",
   "GATE",
   "SIGN",
   "CROSSWALK",
   "TRAFFICLIGHT",
   "SIDEWALK",
-  "LANTERN",
-  "BALLOON",
   "POSTCARD",
   "STAMP",
   "LETTER",
@@ -193,7 +189,6 @@ export const englishWords = [
   "PARKING",
   "STREET",
   "HIGHWAY",
-  "BRIDGE",
   "TUNNEL",
   "STATUE",
   "FOUNTAIN",
@@ -207,7 +202,6 @@ export const englishWords = [
   "TELESCOPE",
   "MICROSCOPE",
   "MAGNET",
-  "BATTERY",
   "BULB",
   "SOCKET",
   "PLUG",
@@ -236,7 +230,7 @@ export const englishWords = [
   "MUSEUM",
   "THEATER",
   "CIRCUS",
-    "ANT",
+  "ANT",
   "SPIDER",
   "MOTH",
   "BEAN",
@@ -372,7 +366,7 @@ export const germanWords = [
   "PINSEL",
   "ZAHN",
   "HAND",
-  "FÜSSE",
+  "FUSS",
   "AUGE",
   "NASE",
   "OHR",
@@ -405,7 +399,6 @@ export const germanWords = [
   "FERNSEHER",
   "RADIO",
   "BATTERIE",
-  "KERZE",  // duplicate
   "ZAUN",
   "BRIEFKASTEN",
   "BACKSTEIN",
@@ -423,7 +416,6 @@ export const germanWords = [
   "TROCKNER",
   "OFEN",
   "VENTILATOR",
-  "PINSEL",   // paintbrush (same as index 78 but used for “brush” too)
   "EIMER",
   "SCHWAMM",
   "SEIFE",
@@ -449,11 +441,9 @@ export const germanWords = [
   "SOCKE",
   "STIEFEL",
   "SANDALE",
-  "HUT",  // duplicate
   "MÜTZE",
   "MASKE",
   "SONNENBRILLE",
-  "UHR",
   "HALSKETTE",
   "ARMBAND",
   "RING",
@@ -496,7 +486,6 @@ export const germanWords = [
   "TELESKOP",
   "MIKROSKOP",
   "MAGNET",
-  "BATTERIE", // duplicate
   "GLÜHBIRNE",
   "STECKDOSE",
   "STECKER",
@@ -595,7 +584,7 @@ export const frenchWords = [
   "PINCEAU",
   "DENT",
   "MAIN",
-  "PIEDS",
+  "PIED",
   "ŒIL",
   "NEZ",
   "OREILLE",
@@ -628,7 +617,6 @@ export const frenchWords = [
   "TÉLÉVISION",
   "RADIO",
   "PILE",
-  "BOUGIE", // duplicate
   "CLÔTURE",
   "BRIQUE",
   "LANTERNE",
@@ -645,7 +633,6 @@ export const frenchWords = [
   "SÈCHE-LINGE",
   "FOURNAISE",
   "VENTILATEUR",
-  "PINCEAU", // paintbrush
   "SEAU",
   "ÉPONGE",
   "SAVON",
@@ -670,7 +657,6 @@ export const frenchWords = [
   "CHAUSSETTE",
   "BOTTE",
   "SANDALE",
-  "CHAPEAU", // duplicate
   "CASQUETTE",
   "MASQUE",
   "MONTRE",
@@ -686,19 +672,15 @@ export const frenchWords = [
   "TENTE",
   "PIQUE-NIQUE",
   "BANC",
-  "CLÔTURE", // duplicate
   "PORTAIL",
   "PANNEAU",
   "TROTTOIR",
-  "LANTERNE", // duplicate
-  "BALLON",   // duplicate
   "TIMBRE",
   "LETTRE",
   "ENVELOPPE",
   "PARKING",
   "RUE",
   "AUTOROUTE",
-  "PONT",     // duplicate
   "TUNNEL",
   "STATUE",
   "FONTAINE",
@@ -712,11 +694,9 @@ export const frenchWords = [
   "TÉLESCOPE",
   "MICROSCOPE",
   "AIMANT",
-  "PILE",    // duplicate
   "AMPOULE",
   "PRISE",
   "FICHE",
-  "FIL",
   "INTERRUPTEUR",
   "CIRCUIT",
   "ROBOT",
@@ -777,8 +757,8 @@ export const italianWords = [
   "AEREO",
   "TRENO",
   "CARAMELLA",
-  "AQUILONE",
-  "PALLONCINO",
+  "COMETA",
+  "GLOBO",
   "PARCO",
   "SPIAGGIA",
   "GIOCATTOLO",
@@ -808,10 +788,10 @@ export const italianWords = [
   "NIDO",
   "ROCCIA",
   "FOGLIA",
-  "PENNELLO",
+  "PINNELLO",
   "DENTE",
   "MANO",
-  "PIEDI",
+  "PIEDE",
   "OCCHIO",
   "NASO",
   "ORECCHIO",
@@ -844,7 +824,6 @@ export const italianWords = [
   "TELEVISIONE",
   "RADIO",
   "BATTERIA",
-  "CANDELA",  // duplicate
   "RECINTO",
   "MATTONE",
   "LANTERNA",
@@ -861,7 +840,7 @@ export const italianWords = [
   "ASCIUGATRICE",
   "FORNO",
   "VENTILATORE",
-  "PENNELLO", // paintbrush
+  "PINNELLO",
   "SECCHIO",
   "SPUGNA",
   "SAPONE",
@@ -878,16 +857,14 @@ export const italianWords = [
   "MOFFOLA",
   "SCIARPA",
   "GUANTO",
-  "PANTALONI",
+  "PANTALON",
   "CAMICIA",
   "GIACCA",
   "VESTITO",
   "GONNA",
   "CALZINO",
-  "STIVALE",  // corrected translation for BOOT
   "SANDALO",
-  "CAPPELLO", // duplicate
-  "BERRETTO", // instead of MÜTZE, let's keep it consistent in Italian
+  "BERRETTO",
   "MASCHERA",
   "OROLOGIO",
   "COLLANA",
@@ -905,13 +882,10 @@ export const italianWords = [
   "TENDA",
   "PICNIC",
   "PANCHINA",
-  "RECINTO", // duplicate
   "CANCELLO",
   "SEGNALE",
   "SEMAFORO",
   "MARCIAPIEDE",
-  "LANTERNA", // duplicate
-  "PALLONCINO", // duplicate
   "CARTOLINA",
   "FRANCOBOLLO",
   "LETTERA",
@@ -919,7 +893,6 @@ export const italianWords = [
   "PARCHEGGIO",
   "STRADA",
   "AUTOSTRADA",
-  "PONTE",     // duplicate
   "TUNNEL",
   "STATUA",
   "FONTANA",
@@ -933,7 +906,6 @@ export const italianWords = [
   "TELESCOPIO",
   "MICROSCOPIO",
   "MAGNETE",
-  "BATTERIA", // duplicate
   "LAMPADINA",
   "PRESA",
   "SPINA",
@@ -1064,7 +1036,6 @@ export const spanishWords = [
   "TELEVISIÓN",
   "RADIO",
   "BATERÍA",
-  "VELA",      // duplicate
   "VALLA",
   "BUZÓN",
   "LADRILLO",
@@ -1082,7 +1053,6 @@ export const spanishWords = [
   "SECADORA",
   "HORNO",
   "VENTILADOR",
-  "PINCEL",    // paintbrush
   "CUBO",
   "ESPONJA",
   "JABÓN",
@@ -1090,7 +1060,6 @@ export const spanishWords = [
   "TELA",
   "TIJERAS",
   "CINTA",
-  "CINTA",     // RIBBON (could also say “LISTÓN”)
   "HILO",
   "AGUJA",
   "BOTÓN",
@@ -1100,7 +1069,7 @@ export const spanishWords = [
   "MANOPLA",
   "BUFANDA",
   "GUANTE",
-  "PANTALONES",
+  "PANTALÓN",
   "CAMISA",
   "CHAQUETA",
   "VESTIDO",
@@ -1108,7 +1077,6 @@ export const spanishWords = [
   "CALCETÍN",
   "BOTA",
   "SANDALIA",
-  "SOMBRERO",  // duplicate
   "GORRA",
   "MÁSCARA",
   "RELOJ",
@@ -1127,13 +1095,9 @@ export const spanishWords = [
   "HOGUERA",
   "PICNIC",
   "BANCO",
-  "VALLA",       // duplicate
-  "PUERTA",      // gate can be “PUERTA” or “PORTÓN”; used PUERTA earlier for “door,” so let's keep “PORTÓN” for gate below
   "SEÑAL",
   "SEMÁFORO",
   "ACERA",
-  "FAROL",       // duplicate
-  "GLOBO",       // duplicate
   "POSTAL",
   "SELLO",
   "CARTA",
@@ -1141,7 +1105,6 @@ export const spanishWords = [
   "ESTACIONAMIENTO",
   "CALLE",
   "AUTOPISTA",
-  "PUENTE",      // duplicate
   "TÚNEL",
   "ESTATUA",
   "FUENTE",
@@ -1155,10 +1118,8 @@ export const spanishWords = [
   "TELESCOPIO",
   "MICROSCOPIO",
   "IMÁN",
-  "BATERÍA",     // duplicate
   "BOMBILLA",
   "ENCHUFE",
-  "ENCHUFE",     // PLUG (maybe “CLAVIJA,” but “ENCHUFE” is also used)
   "CABLE",
   "INTERRUPTOR",
   "CIRCUITO",
@@ -1236,7 +1197,7 @@ export const portugueseWords = [
   "CAMA",
   "XÍCARA",
   "CHAVE",
-  "PORTA",
+  "PORTE",
   "FRANGO",
   "PATO",
   "OVELHA",
@@ -1254,7 +1215,7 @@ export const portugueseWords = [
   "PINCEL",
   "DENTE",
   "MÃO",
-  "PÉS",
+  "PÉ",
   "OLHO",
   "NARIZ",
   "ORELHA",
@@ -1287,7 +1248,6 @@ export const portugueseWords = [
   "TELEVISÃO",
   "RÁDIO",
   "BATERIA",
-  "VELA",      // duplicado
   "CERCA",
   "CAIXA DE CORREIO",
   "TIJOLO",
@@ -1300,12 +1260,11 @@ export const portugueseWords = [
   "BICICLETA",
   "FOGÃO",
   "GELADEIRA",
-  "MICRO-ONDAS",
+  "MICROONDAS",
   "MÁQUINA DE LAVAR",
   "SECADORA",
   "FORNO",
   "VENTILADOR",
-  "PINCEI",    // pincel de pintura
   "BALDE",
   "ESPONJA",
   "SABÃO",
@@ -1313,7 +1272,6 @@ export const portugueseWords = [
   "TECIDO",
   "TESOURA",
   "FITA",
-  "FITA",     // FITA (pode ser “LAÇO” para diferenciar)
   "LINHA",
   "AGULHA",
   "BOTÃO",
@@ -1323,7 +1281,7 @@ export const portugueseWords = [
   "LUVAS SEM DEDOS",
   "CACHECOL",
   "LUVAS",
-  "CALÇAS",
+  "CALÇA",
   "CAMISA",
   "JAQUETA",
   "VESTIDO",
@@ -1331,10 +1289,9 @@ export const portugueseWords = [
   "MEIA",
   "BOTA",
   "SANDÁLIA",
-  "CHAPÉU",  // duplicado
   "BONÉ",
   "MÁSCARA",
-  "RELÓGIO",  // duplicado
+  "RELÓGIO",
   "COLAR",
   "PULSEIRA",
   "ANEL",
@@ -1346,17 +1303,13 @@ export const portugueseWords = [
   "MAPA",
   "BÚSSOLA",
   "TOCHA",
-  "LANTERNA",
   "FOGUEIRA",
   "PIQUENIQUE",
   "BANCO",
-  "CERCA",       // duplicado
   "PORTÃO",
   "PLACA",
   "SEMAFÓRO",
   "CALÇADA",
-  "LANTERNA",       // duplicado
-  "BALÃO",       // duplicado
   "CARTÃO POSTAL",
   "SELO",
   "CARTA",
@@ -1364,7 +1317,6 @@ export const portugueseWords = [
   "ESTACIONAMENTO",
   "RUA",
   "RODOVIA",
-  "PONTE",      // duplicado
   "TÚNEL",
   "ESTÁTUA",
   "FONTE",
@@ -1378,10 +1330,8 @@ export const portugueseWords = [
   "TELESCÓPIO",
   "MICROSCÓPIO",
   "ÍMÃ",
-  "BATERIA",     // duplicado
   "LÂMPADA",
   "TOMADA",
-  "TOMADA",     // PLUG (pode ser “PLUGUE,” mas “TOMADA” também é comum)
   "CABO",
   "INTERRUPTOR",
   "CIRCUITO",
@@ -1392,7 +1342,6 @@ export const portugueseWords = [
   "TELA",
   "IMPRESSORA",
   "ALTO-FALANTE",
-  "FONES DE OUVIDO",
   "TELEFONE",
   "CÂMERA"
 ];

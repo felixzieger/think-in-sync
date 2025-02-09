@@ -15,16 +15,9 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Language } from "@/i18n/translations";
+import { normalizeWord } from "@/lib/wordProcessing";
 
 type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-review" | "invitation";
-
-const normalizeWord = (word: string): string => {
-  return word.normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z]/g, '')
-    .trim();
-};
 
 export const GameContainer = () => {
   const [searchParams] = useSearchParams();
@@ -268,7 +261,7 @@ export const GameContainer = () => {
       const guess = await guessWord(sentenceString, language);
       setAiGuess(guess);
 
-      const isCorrect = normalizeWord(guess) === normalizeWord(currentWord);
+      const isCorrect = normalizeWord(guess, language) === normalizeWord(currentWord, language);
 
       if (isCorrect) {
         setTotalWordsInSuccessfulRounds(prev => prev + finalSentence.length);
@@ -335,7 +328,7 @@ export const GameContainer = () => {
   }
 
   const isGuessCorrect = () => {
-    return normalizeWord(aiGuess) === normalizeWord(currentWord);
+    return normalizeWord(aiGuess, language) === normalizeWord(currentWord, language);
   };
 
   const getAverageWordsPerSuccessfulRound = () => {
@@ -366,7 +359,7 @@ export const GameContainer = () => {
             onInputChange={setPlayerInput}
             onSubmitWord={handlePlayerWord}
             onMakeGuess={handleMakeGuess}
-            normalizeWord={normalizeWord}
+            normalizeWord={(word: string) => normalizeWord(word, language)}
             onBack={handleBack}
             onClose={handleBack}
           />
@@ -382,7 +375,7 @@ export const GameContainer = () => {
             avgWordsPerRound={getAverageWordsPerSuccessfulRound()}
             sessionId={sessionId}
             currentTheme={currentTheme}
-            normalizeWord={normalizeWord}
+            normalizeWord={(word: string) => normalizeWord(word, language)}
           />
         ) : (
           <GameReview

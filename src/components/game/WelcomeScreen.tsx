@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { HighScoreBoard } from "../HighScoreBoard";
@@ -80,6 +81,15 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
             >
               <Mail className="w-4 h-4" />
               <span>Feedback</span>
+            </a>
+            <span>•</span>
+            <a
+              href="https://plausible.sonnenhof-zieger.de/think-in-sync.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:text-primary/80 transition-colors"
+            >
+              Visitor Stats
             </a>
           </div>
         </div>
