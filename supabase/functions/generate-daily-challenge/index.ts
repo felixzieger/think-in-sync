@@ -20,6 +20,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Ensure that all words are singular nouns by updating the keys for words that were originally plural.
 const wordTranslations: Record<string, Record<string, string>> = {
   "CAT": { de: "KATZE", fr: "CHAT", it: "GATTO", es: "GATO", pt: "GATO" },
   "DOG": { de: "HUND", fr: "CHIEN", it: "CANE", es: "PERRO", pt: "CÃO" },
@@ -101,7 +102,7 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "BRUSH": { de: "PINSEL", fr: "BROSSE", it: "PENNELLO", es: "Pincel", pt: "Pincel" },
   "TOOTH": { de: "ZAHN", fr: "DENT", it: "DENTE", es: "DIENTE", pt: "DENTE" },
   "HAND": { de: "HAND", fr: "MAIN", it: "MANO", es: "MANO", pt: "MÃO" },
-  "FEET": { de: "FÜSSE", fr: "PIEDS", it: "PIEDI", es: "PIES", pt: "PÉS" },
+  "FOOT": { de: "FUß", fr: "PIED", it: "PIEDE", es: "PIE", pt: "PÉ" },
   "EYE": { de: "AUGE", fr: "ŒIL", it: "OCCHIO", es: "OJO", pt: "OLHO" },
   "NOSE": { de: "NASE", fr: "NEZ", it: "NASO", es: "NARIZ", pt: "NARIZ" },
   "EAR": { de: "OHR", fr: "OREILLE", it: "ORECCHIO", es: "OREJA", pt: "ORELHA" },
@@ -136,7 +137,7 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "BATTERY": { de: "BATTERIE", fr: "PILE", it: "BATTERIA", es: "BATERÍA", pt: "BATERIA" },
   "FENCE": { de: "ZAUN", fr: "CLÔTURE", it: "RECINTO", es: "VALLA", pt: "CERCA" },
   "MAILBOX": { de: "BRIEFKASTEN", fr: "BOÎTE AUX LETTRES", it: "CASSETTA POSTALE", es: "BUZÓN", pt: "CAIXA DE CORREIO" },
-  "BRICK": { de: "BACKSTEIN", fr: "BRIQUE", it: "MATTONE", es: "LADRILLO", pt: "Tijolo" },
+  "BRICK": { de: "BACKSTEIN", fr: "BRIQUE", it: "MATTONE", es: "LADRILLO", pt: "TIJOLO" },
   "LANTERN": { de: "LATERNE", fr: "LANTERNE", it: "LANTERNA", es: "FAROL", pt: "LANTERNA" },
   "WHEEL": { de: "RAD", fr: "ROUE", it: "RUOTA", es: "RUEDA", pt: "RODA" },
   "BELL": { de: "GLOCKE", fr: "CLoche", it: "CAMPANA", es: "CAMPANA", pt: "SINO" },
@@ -157,7 +158,7 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "SOAP": { de: "SEIFE", fr: "SAVON", it: "SAPONE", es: "JABÓN", pt: "SABÃO" },
   "TOWEL": { de: "HANDTUCH", fr: "SERVIETTE", it: "ASCIUGAMANO", es: "TOALLA", pt: "TOALHA" },
   "CLOTH": { de: "STOFF", fr: "TISSU", it: "STOFFA", es: "TELA", pt: "TECIDO" },
-  "SCISSORS": { de: "SCHERE", fr: "CISEAUX", it: "FORBICI", es: "TIJERAS", pt: "TESOURA" },
+  "SCISSOR": { de: "SCHERE", fr: "CISEAU", it: "FORBICI", es: "TIJERA", pt: "TESOURA" },
   "RIBBON": { de: "BAND", fr: "RUBAN", it: "NASTRO", es: "CINTA", pt: "FITA" },
   "THREAD": { de: "FADEN", fr: "FIL", it: "FILO", es: "HILO", pt: "LINHA" },
   "NEEDLE": { de: "NADEL", fr: "AIGUILLE", it: "AGO", es: "AGUJA", pt: "AGULHA" },
@@ -167,7 +168,7 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "MITTEN": { de: "FAUSTHANDSCHUH", fr: "MOUFLE", it: "GUANTO", es: "MANOPLA", pt: "LUVA" },
   "SCARF": { de: "SCHAL", fr: "ÉCHARPE", it: "SCIARPA", es: "BUFANDA", pt: "CACHECOL" },
   "GLOVE": { de: "HANDSCHUH", fr: "GANT", it: "GUANTO", es: "GUANTE", pt: "LUVA" },
-  "PANTS": { de: "HOSE", fr: "PANTALON", it: "PANTALONI", es: "PANTALONES", pt: "CALÇAS" },
+  "TROUSER": { de: "HOSE", fr: "PANTALON", it: "PANTALONE", es: "PANTALÓN", pt: "CALÇA" },
   "SHIRT": { de: "HEMD", fr: "CHEMISE", it: "CAMICIA", es: "CAMISA", pt: "CAMISA" },
   "JACKET": { de: "JACKE", fr: "VESTE", it: "GIACCA", es: "CHAQUETA", pt: "JAQUETA" },
   "DRESS": { de: "KLEID", fr: "ROBE", it: "VESTITO", es: "VESTIDO", pt: "VESTIDO" },

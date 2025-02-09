@@ -21,32 +21,32 @@ const corsHeaders = {
 
 const languagePrompts = {
   en: {
-    systemPrompt: "You are helping in a word guessing game. Given a description, guess what single word is being described. The described word itself was not allowed in the description, so do not expect it to appear.",
+    systemPrompt: "You are helping in a word guessing game. Given a description, guess what single word is being described. The word must be a singular noun. The described word itself was not allowed in the description, so do not expect it to appear.",
     instruction: "Based on this description",
     responseInstruction: "Respond with ONLY the word you think is being described, in uppercase letters. Do not add any explanation or punctuation."
   },
   fr: {
-    systemPrompt: "Vous aidez dans un jeu de devinettes. À partir d'une description, devinez le mot unique qui est décrit. Le mot décrit n'était pas autorisé dans la description, ne vous attendez donc pas à le voir apparaître.",
+    systemPrompt: "Vous aidez dans un jeu de devinettes. À partir d'une description, devinez le mot unique qui est décrit. Le mot doit être un nom commun au singulier. Le mot décrit n'était pas autorisé dans la description, ne vous attendez donc pas à le voir apparaître.",
     instruction: "D'après cette description",
     responseInstruction: "Répondez uniquement par le mot que vous pensez être décrit, en lettres majuscules. N'ajoutez aucune explication ni ponctuation."
   },
   de: {
-    systemPrompt: "Sie helfen bei einem Worträtsel. Erraten Sie anhand einer Beschreibung, welches einzelne Wort beschrieben wird. Das beschriebene Wort durfte nicht in der Beschreibung verwendet werden, also erwarten Sie es nicht.",
+    systemPrompt: "Sie helfen bei einem Worträtsel. Erraten Sie anhand einer Beschreibung, welches einzelne Wort beschrieben wird. Das Wort muss ein Substantiv im Singular sein. Das beschriebene Wort durfte nicht in der Beschreibung verwendet werden, also erwarten Sie es nicht.",
     instruction: "Basierend auf dieser Beschreibung",
     responseInstruction: "Antworten Sie nur mit dem Wort, das Sie für beschrieben halten, in Großbuchstaben. Fügen Sie keine Erklärungen oder Satzzeichen hinzu."
   },
   it: {
-    systemPrompt: "Stai aiutando in un gioco di indovinelli. Data una descrizione, indovina quale singola parola viene descritta. La parola descritta non era permessa nella descrizione, quindi non aspettarti di trovarla.",
+    systemPrompt: "Stai aiutando in un gioco di indovinelli. Data una descrizione, indovina quale singola parola viene descritta. La parola deve essere un sostantivo singolare. La parola descritta non era permessa nella descrizione, quindi non aspettarti di trovarla.",
     instruction: "Basandoti su questa descrizione",
     responseInstruction: "Rispondi solo con la parola che pensi venga descritta, in lettere maiuscole. Non aggiungere spiegazioni o punteggiatura."
   },
   es: {
-    systemPrompt: "Estás ayudando en un juego de adivinanzas. Dada una descripción, adivina qué palabra única se está describiendo. La palabra descrita no estaba permitida en la descripción, así que no esperes verla.",
+    systemPrompt: "Estás ayudando en un juego de adivinanzas. Dada una descripción, adivina qué palabra única se está describiendo. La palabra debe ser un sustantivo singular. La palabra descrita no estaba permitida en la descripción, así que no esperes verla.",
     instruction: "Basándote en esta descripción",
     responseInstruction: "Responde únicamente con la palabra que crees que se está describiendo, en letras mayúsculas. No añadas ninguna explicación ni puntuación."
   },
   pt: {
-    systemPromp: "Estás ajudando em um jogo de adivinhação. Dada uma descrição, adivinha qual palavra única está sendo descrita. A palavra descrita não foi permitida na descrição, então não espere vê-la.",
+    systemPromp: "Estás ajudando em um jogo de adivinhação. Dada uma descrição, adivinha qual palavra única está sendo descrita. A palavra deve ser um substantivo singular. A palavra descrita não foi permitida na descrição, então não espere vê-la.",
     instruction: "Com base nesta descrição",
     responseInstruction: "Responda apenas com a palavra que você acredita estar sendo descrita, em letras maiúsculas. Não adicione nenhuma explicação nem pontuação."
   }
