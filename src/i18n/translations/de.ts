@@ -133,6 +133,12 @@ export const de = {
     leaderboard: "Bestenliste",
     credits: "Erstellt während des",
     likeGameText: "Wenn du dieses Spiel unterstützen möchtest",
+    stats: {
+      title: "Statistiken",
+      dailyGuesses: "Heute erratene Wörter",
+      totalGuesses: "Insgesamt erratene Wörter",
+      visitDashboard: "Dashboard besuchen"
+    },
     contest: {
       prize: "Wir kochen etwas...",
       terms: "Erfahre mehr",

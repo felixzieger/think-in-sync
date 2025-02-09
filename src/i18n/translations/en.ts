@@ -132,6 +132,12 @@ export const en = {
     leaderboard: "Leaderboard",
     credits: "Created during the",
     likeGameText: "If you want to support this game",
+    stats: {
+      title: "Statistics",
+      dailyGuesses: "Words guessed today",
+      totalGuesses: "Total words guessed",
+      visitDashboard: "Visit Dashboard"
+    },
     contest: {
       prize: "We are cooking something...",
       terms: "Find out more",

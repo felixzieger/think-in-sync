@@ -132,6 +132,12 @@ export const fr = {
     leaderboard: "Classement",
     credits: "Créé pendant le",
     likeGameText: "Si vous voulez soutenir ce jeu,",
+    stats: {
+      title: "Statistiques",
+      dailyGuesses: "Mots devinés aujourd'hui",
+      totalGuesses: "Total des mots devinés",
+      visitDashboard: "Visiter le Dashboard"
+    },
     contest: {
       prize: "Nous préparons quelque chose...",
       terms: "En savoir plus",
