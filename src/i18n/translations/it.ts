@@ -1,4 +1,3 @@
-
 export const it = {
   game: {
     title: "Think in Sync",
@@ -138,7 +137,7 @@ export const it = {
     stats: {
       title: "Statistiche",
       dailyGuesses: "Parole indovinate oggi",
-      totalGuesses: "Parole indovinate in totale",
+      totalGuesses: "Totale parole indovinate",
       visitDashboard: "Visita il Dashboard"
     },
     contest: {
