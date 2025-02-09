@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HighScoreBoard } from "../HighScoreBoard";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { LanguageSelector } from "./LanguageSelector";
@@ -11,6 +11,7 @@ import { MainActions } from "./welcome/MainActions";
 import { HowToPlayDialog } from "./welcome/HowToPlayDialog";
 import { CreditsDialog } from "./welcome/CreditsDialog";
 import { Mail } from "lucide-react";
+import { StatsDialog } from "./welcome/StatsDialog";
 
 interface WelcomeScreenProps {
   onStartDaily: () => void;
@@ -21,18 +22,8 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
   const [showHighScores, setShowHighScores] = useState(false);
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [showCredits, setShowCredits] = useState(false);
+  const [showStats, setShowStats] = useState(false);
   const t = useTranslation();
-
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        onStartDaily()
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [onStartDaily]);
 
   return (
     <>
@@ -83,14 +74,12 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
               <span>Feedback</span>
             </a>
             <span>•</span>
-            <a
-              href="https://plausible.sonnenhof-zieger.de/think-in-sync.com"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setShowStats(true)}
               className="text-primary hover:text-primary/80 transition-colors"
             >
-              Visitor Stats
-            </a>
+              {t.welcome.stats.title}
+            </button>
           </div>
         </div>
       </motion.div>
@@ -112,6 +101,11 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
       <CreditsDialog
         open={showCredits}
         onOpenChange={setShowCredits}
+      />
+
+      <StatsDialog
+        open={showStats}
+        onOpenChange={setShowStats}
       />
     </>
   );
