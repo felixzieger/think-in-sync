@@ -1,3 +1,4 @@
+
 export const it = {
   game: {
     title: "Think in Sync",
@@ -134,6 +135,12 @@ export const it = {
     leaderboard: "Classifica",
     credits: "Creato durante il",
     likeGameText: "Se vuoi supportare questo gioco",
+    stats: {
+      title: "Statistiche",
+      dailyGuesses: "Parole indovinate oggi",
+      totalGuesses: "Parole indovinate in totale",
+      visitDashboard: "Visita il Dashboard"
+    },
     contest: {
       prize: "Stiamo preparando qualcosa...",
       terms: "Scopri di più",
