@@ -16,7 +16,6 @@ import { RoundHeader } from "./sentence-builder/RoundHeader";
 import { WordDisplay } from "./sentence-builder/WordDisplay";
 import { SentenceDisplay } from "./sentence-builder/SentenceDisplay";
 import { InputForm } from "./sentence-builder/InputForm";
-import { Hearts } from "./sentence-builder/Hearts";
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -72,11 +71,10 @@ export const SentenceBuilder = ({
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={setShowConfirmDialog}
         onCancel={onClose}
+        lives={lives}
       />
 
-      <Hearts lives={lives} />
-
-      <WordDisplay currentWord={currentWord} normalizeWord={normalizeWord} />
+      <WordDisplay currentWord={currentWord} />
 
       <SentenceDisplay sentence={sentence} />
 

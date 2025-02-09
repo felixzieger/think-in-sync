@@ -1,17 +1,7 @@
 
-import { House } from "lucide-react";
+import { House, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/hooks/useTranslation";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 
 interface RoundHeaderProps {
   successfulRounds: number;
@@ -19,6 +9,7 @@ interface RoundHeaderProps {
   showConfirmDialog: boolean;
   setShowConfirmDialog: (show: boolean) => void;
   onCancel?: () => void;
+  lives: number;
 }
 
 export const RoundHeader = ({
@@ -26,7 +17,8 @@ export const RoundHeader = ({
   onBack,
   showConfirmDialog,
   setShowConfirmDialog,
-  onCancel
+  onCancel,
+  lives
 }: RoundHeaderProps) => {
   const t = useTranslation();
 
@@ -43,11 +35,18 @@ export const RoundHeader = ({
 
   return (
     <div className="relative">
-      <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg">
-        <span className="text-sm font-medium text-primary">
-          {t.game.round} {successfulRounds + 1}
-        </span>
-      </div>
+      {lives > 0 && (
+        <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg flex items-center gap-2">
+          <span className="text-sm font-medium text-primary">
+            {t.game.round} {successfulRounds + 1}
+          </span>
+          <span className="text-sm font-medium text-primary">|</span>
+          <div className="flex items-center gap-1">
+            <span className="text-sm font-medium text-primary">{lives}x</span>
+            <Heart className="h-4 w-4 text-primary" />
+          </div>
+        </div>
+      )}
 
       <Button
         variant="ghost"
