@@ -61,7 +61,8 @@ const openRouterModels = [
   'sophosympatheia/rogue-rose-103b-v0.2:free',
   'google/gemini-2.0-flash-exp:free',
   'meta-llama/llama-3.1-70b-instruct:free',
-  'microsoft/phi-3-medium-128k-instruct:free'
+  'microsoft/phi-3-medium-128k-instruct:free',
+  'deepseek/deepseek-chat:free',
 ];
 
 async function generateWord(currentWord: string, existingSentence: string, language: string) {
