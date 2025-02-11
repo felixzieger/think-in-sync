@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -16,6 +15,7 @@ import { RoundHeader } from "./sentence-builder/RoundHeader";
 import { WordDisplay } from "./sentence-builder/WordDisplay";
 import { SentenceDisplay } from "./sentence-builder/SentenceDisplay";
 import { InputForm } from "./sentence-builder/InputForm";
+import { Button } from "@/components/ui/button";
 
 interface SentenceBuilderProps {
   currentWord: string;
@@ -29,7 +29,6 @@ interface SentenceBuilderProps {
   normalizeWord: (word: string) => string;
   onBack?: () => void;
   onClose: () => void;
-  lives: number;
 }
 
 export const SentenceBuilder = ({
@@ -44,34 +43,46 @@ export const SentenceBuilder = ({
   normalizeWord,
   onBack,
   onClose,
-  lives,
 }: SentenceBuilderProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [hasMultipleWords, setHasMultipleWords] = useState(false);
+  const [containsTargetWord, setContainsTargetWord] = useState(false);
+  const [isTooLong, setIsTooLong] = useState(false);
   const t = useTranslation();
 
+  console.log("SentenceBuilder - Rendering with showConfirmDialog:", showConfirmDialog);
+
+  const validateInput = (input: string) => {
+    setHasMultipleWords(input.trim().split(/\s+/).length > 1);
+    setContainsTargetWord(
+      normalizeWord(input).includes(normalizeWord(currentWord))
+    );
+    setIsTooLong(input.trim().length >= 30);
+  };
+
   const handleInputChange = (value: string) => {
-    setHasMultipleWords(value.trim().includes(" "));
+    validateInput(value);
     onInputChange(value);
   };
 
-  const handleClose = () => {
-    if (sentence.length > 0) {
-      setShowConfirmDialog(true);
-    } else {
-      onClose();
-    }
+  const handleSetShowConfirmDialog = (show: boolean) => {
+    console.log("SentenceBuilder - Setting showConfirmDialog to:", show);
+    setShowConfirmDialog(show);
   };
 
+  const isValidInput = !playerInput || /^[\p{L} ]+$/u.test(playerInput);
+
   return (
-    <div className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="text-center relative"
+    >
       <RoundHeader
         successfulRounds={successfulRounds}
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
-        setShowConfirmDialog={setShowConfirmDialog}
-        onCancel={onClose}
-        lives={lives}
+        setShowConfirmDialog={handleSetShowConfirmDialog}
       />
 
       <WordDisplay currentWord={currentWord} />
@@ -85,9 +96,13 @@ export const SentenceBuilder = ({
         onMakeGuess={onMakeGuess}
         isAiThinking={isAiThinking}
         hasMultipleWords={hasMultipleWords}
+        containsTargetWord={containsTargetWord}
+        isTooLong={isTooLong}
+        isValidInput={isValidInput}
+        sentence={sentence}
       />
 
-      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+      <AlertDialog open={showConfirmDialog} onOpenChange={handleSetShowConfirmDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
@@ -96,13 +111,15 @@ export const SentenceBuilder = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t.game.cancel}</AlertDialogCancel>
-            <AlertDialogAction onClick={onClose}>
+            <AlertDialogCancel onClick={() => setShowConfirmDialog(false)}>
+              {t.game.cancel}
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={onBack}>
               {t.game.confirm}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </motion.div>
   );
 };

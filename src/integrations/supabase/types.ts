@@ -138,19 +138,16 @@ export type Database = {
           created_at: string
           game_id: string
           id: string
-          lives: number
         }
         Insert: {
           created_at?: string
           game_id: string
           id?: string
-          lives?: number
         }
         Update: {
           created_at?: string
           game_id?: string
           id?: string
-          lives?: number
         }
         Relationships: [
           {

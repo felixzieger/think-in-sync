@@ -1,7 +1,16 @@
-
-import { House, Heart } from "lucide-react";
+import { House } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/hooks/useTranslation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface RoundHeaderProps {
   successfulRounds: number;
@@ -9,7 +18,6 @@ interface RoundHeaderProps {
   showConfirmDialog: boolean;
   setShowConfirmDialog: (show: boolean) => void;
   onCancel?: () => void;
-  lives: number;
 }
 
 export const RoundHeader = ({
@@ -17,8 +25,7 @@ export const RoundHeader = ({
   onBack,
   showConfirmDialog,
   setShowConfirmDialog,
-  onCancel,
-  lives
+  onCancel
 }: RoundHeaderProps) => {
   const t = useTranslation();
 
@@ -33,20 +40,22 @@ export const RoundHeader = ({
     }
   };
 
+  const handleDialogChange = (open: boolean) => {
+    console.log("RoundHeader - Dialog state changing to:", open);
+    setShowConfirmDialog(open);
+    if (!open) {  // Dialog is closing
+      console.log("RoundHeader - Dialog closing, triggering navigation");
+      onBack?.();
+    }
+  };
+
   return (
     <div className="relative">
-      {lives > 0 && (
-        <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg flex items-center gap-2">
-          <span className="text-sm font-medium text-primary">
-            {t.game.round} {successfulRounds + 1}
-          </span>
-          <span className="text-sm font-medium text-primary">|</span>
-          <div className="flex items-center gap-1">
-            <span className="text-sm font-medium text-primary">{lives}x</span>
-            <Heart className="h-4 w-4 text-primary" />
-          </div>
-        </div>
-      )}
+      <div className="absolute right-0 top-0 bg-primary/10 px-3 py-1 rounded-lg">
+        <span className="text-sm font-medium text-primary">
+          {t.game.round} {successfulRounds + 1}
+        </span>
+      </div>
 
       <Button
         variant="ghost"
@@ -60,6 +69,21 @@ export const RoundHeader = ({
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">
         {t.game.title}
       </h2>
+
+      <AlertDialog open={showConfirmDialog} onOpenChange={handleDialogChange}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t.game.leaveGameDescription}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={onCancel}>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogAction>{t.game.confirm}</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

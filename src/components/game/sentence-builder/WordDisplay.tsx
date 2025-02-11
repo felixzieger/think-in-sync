@@ -1,10 +1,8 @@
-
 import { useEffect, useState } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 
 interface WordDisplayProps {
   currentWord: string;
-  normalizeWord?: (word: string) => string;
 }
 
 export const WordDisplay = ({ currentWord }: WordDisplayProps) => {

@@ -1,4 +1,3 @@
-
 import { KeyboardEvent, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -11,10 +10,10 @@ interface InputFormProps {
   onMakeGuess: () => void;
   isAiThinking: boolean;
   hasMultipleWords: boolean;
-  containsTargetWord?: boolean;
-  isTooLong?: boolean;
-  isValidInput?: boolean;
-  sentence?: string[];
+  containsTargetWord: boolean;
+  isTooLong: boolean;
+  isValidInput: boolean;
+  sentence: string[];
 }
 
 export const InputForm = ({
@@ -24,10 +23,10 @@ export const InputForm = ({
   onMakeGuess,
   isAiThinking,
   hasMultipleWords,
-  containsTargetWord = false,
-  isTooLong = false,
-  isValidInput = true,
-  sentence = []
+  containsTargetWord,
+  isTooLong,
+  isValidInput,
+  sentence
 }: InputFormProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const t = useTranslation();

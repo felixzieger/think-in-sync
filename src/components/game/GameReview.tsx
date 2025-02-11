@@ -177,7 +177,6 @@ export const GameReview = ({
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={setShowConfirmDialog}
         onCancel={() => setShowConfirmDialog(false)}
-        lives={0}
       />
 
       <div className="space-y-4">
