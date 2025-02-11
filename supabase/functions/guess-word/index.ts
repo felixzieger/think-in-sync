@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import * as Sentry from "https://deno.land/x/sentry/index.mjs";
 
@@ -52,9 +51,7 @@ const languagePrompts = {
 
 const openRouterModels = [
   'google/gemini-2.0-flash-exp:free',
-  'meta-llama/llama-3.1-70b-instruct:free',
-  'microsoft/phi-3-medium-128k-instruct:free',
-  'deepseek/deepseek-chat:free',
+  'mistralai/mistral-nemo'
 ];
 
 async function generateGuess(sentence: string, language: string) {

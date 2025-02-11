@@ -47,11 +47,8 @@ const languagePrompts = {
 };
 
 const openRouterModels = [
-  'sophosympatheia/rogue-rose-103b-v0.2:free',
   'google/gemini-2.0-flash-exp:free',
-  'meta-llama/llama-3.1-70b-instruct:free',
-  'microsoft/phi-3-medium-128k-instruct:free',
-  'deepseek/deepseek-chat:free',
+  'mistralai/mistral-nemo'
 ];
 
 async function generateWord(theme: string, usedWords: string[], language: string) {
