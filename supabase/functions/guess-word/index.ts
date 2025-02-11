@@ -93,7 +93,10 @@ async function generateGuess(sentence: string, language: string) {
   }
 
   const data = await response.json();
-  return data.choices[0].message.content.trim().toUpperCase();
+  return {
+    guess: data.choices[0].message.content.trim().toUpperCase(),
+    model: randomModel
+  };
 }
 
 serve(async (req) => {
@@ -105,11 +108,11 @@ serve(async (req) => {
     const { sentence, language = 'en' } = await req.json();
     console.log('Trying to guess word from sentence:', sentence, 'language:', language);
 
-    const guess = await generateGuess(sentence, language);
-    console.log('Successfully generated guess:', guess);
+    const { guess, model } = await generateGuess(sentence, language);
+    console.log('Successfully generated guess:', guess, 'using model:', model);
 
     return new Response(
-      JSON.stringify({ guess }),
+      JSON.stringify({ guess, model }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {

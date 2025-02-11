@@ -116,11 +116,13 @@ async function generateWord(currentWord: string, existingSentence: string, langu
   const aiResponse = data.choices[0].message.content.trim();
   console.log('OpenRouter processed response:', aiResponse);
 
-  return aiResponse
+  const word = aiResponse
     .slice(existingSentence.length)
     .trim()
     .split(' ')[0]
     .replace(/[.,!?]$/, '');
+
+  return { word, model: randomModel };
 }
 
 serve(async (req) => {
@@ -135,10 +137,10 @@ serve(async (req) => {
     const existingSentence = currentSentence || '';
 
     try {
-      const word = await generateWord(currentWord, existingSentence, language);
-      console.log('Successfully generated word:', word);
+      const { word, model } = await generateWord(currentWord, existingSentence, language);
+      console.log('Successfully generated word:', word, 'using model:', model);
       return new Response(
-        JSON.stringify({ word }),
+        JSON.stringify({ word, model }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     } catch (error) {

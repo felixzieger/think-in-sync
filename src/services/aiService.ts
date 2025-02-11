@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 
 export const generateAIResponse = async (currentWord: string, currentSentence: string[], language: string = 'en'): Promise<string> => {
@@ -24,11 +25,11 @@ export const generateAIResponse = async (currentWord: string, currentSentence: s
     throw new Error('No word generated');
   }
 
-  console.log('AI generated word:', data.word);
+  console.log('AI generated word:', data.word, 'using model:', data.model);
   return data.word;
 };
 
-export const guessWord = async (sentence: string, language: string): Promise<string> => {
+export const guessWord = async (sentence: string, language: string): Promise<{ guess: string; model: string }> => {
   console.log('Processing guess for sentence:', sentence);
 
   const words = sentence.trim().split(/\s+/);
@@ -55,6 +56,6 @@ export const guessWord = async (sentence: string, language: string): Promise<str
     throw new Error('No guess generated');
   }
 
-  console.log('AI guessed:', data.guess);
-  return data.guess;
+  console.log('AI guessed:', data.guess, 'using model:', data.model);
+  return { guess: data.guess, model: data.model };
 };
