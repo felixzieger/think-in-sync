@@ -1,12 +1,11 @@
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import * as Sentry from "https://deno.land/x/sentry/index.mjs";
 
 Sentry.init({
   dsn: "https://ca41c3f96489cc1b3e69c9a44704f7ee@o4508722276007936.ingest.de.sentry.io/4508772265558096",
   defaultIntegrations: false,
-  // Performance Monitoring
   tracesSampleRate: 1.0,
-  // Set sampling rate for profiling - this is relative to tracesSampleRate
   profilesSampleRate: 1.0,
 });
 
@@ -52,7 +51,6 @@ const languagePrompts = {
 };
 
 const openRouterModels = [
-  'sophosympatheia/rogue-rose-103b-v0.2:free',
   'google/gemini-2.0-flash-exp:free',
   'meta-llama/llama-3.1-70b-instruct:free',
   'microsoft/phi-3-medium-128k-instruct:free',
@@ -65,38 +63,58 @@ async function generateGuess(sentence: string, language: string) {
 
   console.log('Using OpenRouter with model:', randomModel);
 
-  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${Deno.env.get('OPENROUTER_API_KEY')}`,
-      "HTTP-Referer": "https://think-in-sync.com",
-      "X-Title": "Think in Sync",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      model: randomModel,
-      messages: [
-        {
-          role: "system",
-          content: `${prompts.systemPrompt} ${prompts.responseInstruction}`
-        },
-        {
-          role: "user",
-          content: `${prompts.instruction} "${sentence}"`
-        }
-      ]
-    })
-  });
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${Deno.env.get('OPENROUTER_API_KEY')}`,
+        "HTTP-Referer": "https://think-in-sync.com",
+        "X-Title": "Think in Sync",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: randomModel,
+        messages: [
+          {
+            role: "system",
+            content: `${prompts.systemPrompt} ${prompts.responseInstruction}`
+          },
+          {
+            role: "user",
+            content: `${prompts.instruction} "${sentence}"`
+          }
+        ]
+      })
+    });
 
-  if (!response.ok) {
-    throw new Error(`OpenRouter API error: ${response.status}`);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('OpenRouter API error:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText
+      });
+
+      if (response.status === 402) {
+        throw new Error('The AI service has reached its rate limit. Please try again in a few moments.');
+      }
+
+      throw new Error(`OpenRouter API error (${response.status}): ${errorText}`);
+    }
+
+    const data = await response.json();
+    return {
+      guess: data.choices[0].message.content.trim().toUpperCase(),
+      model: randomModel
+    };
+  } catch (error) {
+    console.error('Error in generateGuess:', error);
+    // Re-throw with more user-friendly message if it's not already a custom error
+    if (!error.message.includes('rate limit')) {
+      throw new Error('Failed to generate guess. Please try again.');
+    }
+    throw error;
   }
-
-  const data = await response.json();
-  return {
-    guess: data.choices[0].message.content.trim().toUpperCase(),
-    model: randomModel
-  };
 }
 
 serve(async (req) => {
@@ -118,10 +136,13 @@ serve(async (req) => {
   } catch (error) {
     Sentry.captureException(error);
     console.error('Error generating guess:', error);
+    
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message || 'An unexpected error occurred',
+      }),
       {
-        status: 500,
+        status: error.message.includes('rate limit') ? 429 : 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
     );
