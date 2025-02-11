@@ -1,7 +1,7 @@
 import { useState, KeyboardEvent, useEffect, useContext } from "react";
 import { useSearchParams, useParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { generateAIResponse, guessWord } from "@/services/mistralService";
+import { generateAIResponse, guessWord } from "@/services/aiService";
 import { createGame, createSession } from "@/services/gameService";
 import { getDailyGame } from "@/services/dailyGameService";
 import { useToast } from "@/components/ui/use-toast";

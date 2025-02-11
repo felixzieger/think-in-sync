@@ -1,6 +1,4 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { Mistral } from "npm:@mistralai/mistralai";
 import * as Sentry from "https://deno.land/x/sentry/index.mjs";
 
 Sentry.init({
@@ -66,50 +64,21 @@ const openRouterModels = [
   'microsoft/phi-3-medium-128k-instruct:free'
 ];
 
-async function tryMistral(currentWord: string, existingSentence: string, language: string) {
-  const client = new Mistral({
-    apiKey: Deno.env.get('MISTRAL_API_KEY'),
-  });
-
-  const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
-
-  const response = await client.chat.complete({
-    model: "mistral-large-latest",
-    messages: [
-      {
-        role: "system",
-        content: `${prompts.systemPrompt} "${currentWord}". ${prompts.task} ${prompts.instruction} "${existingSentence}". ${prompts.noQuotes}`
-      }
-    ],
-    maxTokens: 50,
-    temperature: 0.5
-  });
-
-  if (!response?.choices?.[0]?.message?.content) {
-    console.error('Invalid Mistral API response structure:', response);
-    throw new Error('Received invalid response structure from Mistral API');
+async function generateWord(currentWord: string, existingSentence: string, language: string) {
+  const openRouterKey = Deno.env.get('OPENROUTER_API_KEY');
+  if (!openRouterKey) {
+    throw new Error('OpenRouter API key not configured');
   }
 
-  const aiResponse = response.choices[0].message.content.trim();
-  console.log('Mistral full response:', aiResponse);
-
-  return aiResponse
-    .slice(existingSentence.length)
-    .trim()
-    .split(' ')[0]
-    .replace(/[.,!?]$/, '');
-}
-
-async function tryOpenRouter(currentWord: string, existingSentence: string, language: string) {
   const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
   const randomModel = openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
 
-  console.log('Trying OpenRouter with model:', randomModel);
+  console.log('Using OpenRouter with model:', randomModel);
 
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${Deno.env.get('OPENROUTER_API_KEY')}`,
+      "Authorization": `Bearer ${openRouterKey}`,
       "HTTP-Referer": "https://think-in-sync.com",
       "X-Title": "Think in Sync",
       "Content-Type": "application/json"
@@ -165,38 +134,30 @@ serve(async (req) => {
     const existingSentence = currentSentence || '';
 
     try {
-      console.log('Attempting with Mistral...');
-      const word = await tryMistral(currentWord, existingSentence, language);
-      console.log('Successfully generated word with Mistral:', word);
+      const word = await generateWord(currentWord, existingSentence, language);
+      console.log('Successfully generated word:', word);
       return new Response(
         JSON.stringify({ word }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
-    } catch (mistralError) {
-      console.error('Mistral API error:', {
-        error: mistralError,
-        message: mistralError.message,
-        stack: mistralError.stack
+    } catch (error) {
+      console.error('OpenRouter API error:', {
+        error: error,
+        message: error.message,
+        stack: error.stack
       });
-      Sentry.captureException(mistralError);
+      Sentry.captureException(error);
 
-      console.log('Falling back to OpenRouter...');
-      try {
-        const word = await tryOpenRouter(currentWord, existingSentence, language);
-        console.log('Successfully generated word with OpenRouter:', word);
-        return new Response(
-          JSON.stringify({ word }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      } catch (openRouterError) {
-        console.error('OpenRouter API error:', {
-          error: openRouterError,
-          message: openRouterError.message,
-          stack: openRouterError.stack
-        });
-        Sentry.captureException(openRouterError);
-        throw new Error(`All word generation attempts failed. Last error: ${openRouterError.message}`);
-      }
+      return new Response(
+        JSON.stringify({
+          error: 'Failed to generate word',
+          details: error.message
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      );
     }
   } catch (error) {
     console.error('Fatal error in generate-word function:', {
@@ -205,9 +166,9 @@ serve(async (req) => {
       stack: error.stack
     });
     Sentry.captureException(error);
-    
+
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error.message,
         details: process.env.NODE_ENV === 'development' ? error.stack : undefined
       }),

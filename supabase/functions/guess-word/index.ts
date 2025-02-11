@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { Mistral } from "npm:@mistralai/mistralai";
 import * as Sentry from "https://deno.land/x/sentry/index.mjs";
 
 Sentry.init({
@@ -56,40 +55,15 @@ const openRouterModels = [
   'sophosympatheia/rogue-rose-103b-v0.2:free',
   'google/gemini-2.0-flash-exp:free',
   'meta-llama/llama-3.1-70b-instruct:free',
-  'microsoft/phi-3-medium-128k-instruct:free'
+  'microsoft/phi-3-medium-128k-instruct:free',
+  'deepseek/deepseek-chat:free',
 ];
 
-async function tryMistral(sentence: string, language: string) {
-  const client = new Mistral({
-    apiKey: Deno.env.get('MISTRAL_API_KEY'),
-  });
-
-  const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
-
-  const response = await client.chat.complete({
-    model: "mistral-large-latest",
-    messages: [
-      {
-        role: "system",
-        content: `${prompts.systemPrompt} ${prompts.responseInstruction}`
-      },
-      {
-        role: "user",
-        content: `${prompts.instruction} "${sentence}"`
-      }
-    ],
-    maxTokens: 50,
-    temperature: 0.1
-  });
-
-  return response.choices[0].message.content.trim().toUpperCase();
-}
-
-async function tryOpenRouter(sentence: string, language: string) {
+async function generateGuess(sentence: string, language: string) {
   const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
   const randomModel = openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
 
-  console.log('Trying OpenRouter with model:', randomModel);
+  console.log('Using OpenRouter with model:', randomModel);
 
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
@@ -131,28 +105,15 @@ serve(async (req) => {
     const { sentence, language = 'en' } = await req.json();
     console.log('Trying to guess word from sentence:', sentence, 'language:', language);
 
-    try {
-      console.log('Attempting with Mistral...');
-      const guess = await tryMistral(sentence, language);
-      console.log('Successfully generated guess with Mistral:', guess);
-      return new Response(
-        JSON.stringify({ guess }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    } catch (mistralError) {
-      Sentry.captureException(mistralError)
-      console.error('Mistral error:', mistralError);
-      console.log('Falling back to OpenRouter...');
+    const guess = await generateGuess(sentence, language);
+    console.log('Successfully generated guess:', guess);
 
-      const guess = await tryOpenRouter(sentence, language);
-      console.log('Successfully generated guess with OpenRouter:', guess);
-      return new Response(
-        JSON.stringify({ guess }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+    return new Response(
+      JSON.stringify({ guess }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
   } catch (error) {
-    Sentry.captureException(error)
+    Sentry.captureException(error);
     console.error('Error generating guess:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
