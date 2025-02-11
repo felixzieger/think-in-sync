@@ -1,7 +1,7 @@
 import { useState, KeyboardEvent, useEffect, useContext } from "react";
 import { useSearchParams, useParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { generateAIResponse, guessWord } from "@/services/mistralService";
+import { generateAIResponse, guessWord } from "@/services/aiService";
 import { createGame, createSession } from "@/services/gameService";
 import { getDailyGame } from "@/services/dailyGameService";
 import { useToast } from "@/components/ui/use-toast";
@@ -36,6 +36,7 @@ export const GameContainer = () => {
   const [sentence, setSentence] = useState<string[]>([]);
   const [isAiThinking, setIsAiThinking] = useState(false);
   const [aiGuess, setAiGuess] = useState<string>("");
+  const [aiModel, setAiModel] = useState<string>("");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
   const [totalWordsInSuccessfulRounds, setTotalWordsInSuccessfulRounds] = useState<number>(0);
   const { toast } = useToast();
@@ -223,7 +224,7 @@ export const GameContainer = () => {
     }
   };
 
-  const saveGameResult = async (sentenceString: string, aiGuess: string, isCorrect: boolean) => {
+  const saveGameResult = async (sentenceString: string, aiGuess: string, isCorrect: boolean, model: string) => {
     try {
       const { error } = await supabase
         .from('game_results')
@@ -232,7 +233,8 @@ export const GameContainer = () => {
           description: sentenceString,
           ai_guess: aiGuess,
           is_correct: isCorrect,
-          session_id: sessionId
+          session_id: sessionId,
+          model_used: model
         });
 
       if (error) {
@@ -258,8 +260,9 @@ export const GameContainer = () => {
       if (finalSentence.length === 0) return;
 
       const sentenceString = finalSentence.join(' ');
-      const guess = await guessWord(sentenceString, language);
+      const { guess, model } = await guessWord(sentenceString, language);
       setAiGuess(guess);
+      setAiModel(model);
 
       const isCorrect = normalizeWord(guess, language) === normalizeWord(currentWord, language);
 
@@ -267,7 +270,7 @@ export const GameContainer = () => {
         setTotalWordsInSuccessfulRounds(prev => prev + finalSentence.length);
       }
 
-      await saveGameResult(sentenceString, guess, isCorrect);
+      await saveGameResult(sentenceString, guess, isCorrect, model);
       setGameState("showing-guess");
     } catch (error) {
       console.error('Error getting AI guess:', error);

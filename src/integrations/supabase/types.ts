@@ -45,6 +45,7 @@ export type Database = {
           description: string
           id: string
           is_correct: boolean
+          model_used: string | null
           session_id: string
           target_word: string
         }
@@ -54,6 +55,7 @@ export type Database = {
           description: string
           id?: string
           is_correct: boolean
+          model_used?: string | null
           session_id?: string
           target_word: string
         }
@@ -63,6 +65,7 @@ export type Database = {
           description?: string
           id?: string
           is_correct?: boolean
+          model_used?: string | null
           session_id?: string
           target_word?: string
         }
@@ -138,16 +141,19 @@ export type Database = {
           created_at: string
           game_id: string
           id: string
+          lives: number
         }
         Insert: {
           created_at?: string
           game_id: string
           id?: string
+          lives?: number
         }
         Update: {
           created_at?: string
           game_id?: string
           id?: string
+          lives?: number
         }
         Relationships: [
           {
