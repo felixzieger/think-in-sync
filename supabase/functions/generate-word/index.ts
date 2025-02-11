@@ -57,8 +57,8 @@ const languagePrompts = {
   }
 };
 
-const openRouterModels = [
-  'google/gemini-2.0-flash-exp:free',
+const primaryModel = 'google/gemini-2.0-flash-exp:free';
+const fallbackModels = [
   'mistralai/mistral-nemo'
 ];
 
@@ -69,9 +69,7 @@ async function generateWord(currentWord: string, existingSentence: string, langu
   }
 
   const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
-  const randomModel = openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
-
-  console.log('Using OpenRouter with model:', randomModel);
+  console.log('Using OpenRouter with primary model:', primaryModel);
 
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
@@ -82,7 +80,8 @@ async function generateWord(currentWord: string, existingSentence: string, langu
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      model: randomModel,
+      model: primaryModel,
+      models: fallbackModels,
       messages: [
         {
           role: "system",
@@ -119,7 +118,7 @@ async function generateWord(currentWord: string, existingSentence: string, langu
     .split(' ')[0]
     .replace(/[.,!?]$/, '');
 
-  return { word, model: randomModel };
+  return { word, model: primaryModel };
 }
 
 serve(async (req) => {

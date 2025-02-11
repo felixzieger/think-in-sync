@@ -49,16 +49,14 @@ const languagePrompts = {
   }
 };
 
-const openRouterModels = [
-  'google/gemini-2.0-flash-exp:free',
+const primaryModel = 'google/gemini-2.0-flash-exp:free';
+const fallbackModels = [
   'mistralai/mistral-nemo'
 ];
 
 async function generateGuess(sentence: string, language: string) {
   const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
-  const randomModel = openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
-
-  console.log('Using OpenRouter with model:', randomModel);
+  console.log('Using OpenRouter with primary model:', primaryModel);
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -70,7 +68,8 @@ async function generateGuess(sentence: string, language: string) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: randomModel,
+        model: primaryModel,
+        models: fallbackModels,
         messages: [
           {
             role: "system",
@@ -102,7 +101,7 @@ async function generateGuess(sentence: string, language: string) {
     const data = await response.json();
     return {
       guess: data.choices[0].message.content.trim().toUpperCase(),
-      model: randomModel
+      model: primaryModel
     };
   } catch (error) {
     console.error('Error in generateGuess:', error);
@@ -133,9 +132,9 @@ serve(async (req) => {
   } catch (error) {
     Sentry.captureException(error);
     console.error('Error generating guess:', error);
-    
+
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error.message || 'An unexpected error occurred',
       }),
       {
