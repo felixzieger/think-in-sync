@@ -16,7 +16,7 @@ interface ModelSelectorProps {
 // based on the user's subscription level
 const AVAILABLE_MODELS = [
   "google/gemini-2.0-flash-exp:free",
-  "mistralai/mistral-nemo",
+  "x-ai/grok-2-1212",
   "deepseek/deepseek-chat:free"
 ];
 
