@@ -1,10 +1,12 @@
 import { useTranslation } from "@/hooks/useTranslation";
+import { getModelDisplayName } from "@/lib/modelNames";
 
 interface GuessDescriptionProps {
   sentence: string[];
+  model?: string;
 }
 
-export const GuessDescription = ({ sentence }: GuessDescriptionProps) => {
+export const GuessDescription = ({ sentence, model }: GuessDescriptionProps) => {
   const t = useTranslation();
 
   return (
@@ -12,7 +14,7 @@ export const GuessDescription = ({ sentence }: GuessDescriptionProps) => {
       <p className="text-sm text-gray-600">
         <span className="inline-block border-b-2 border-blue-500">{t.guess.you}</span>
         {" "}{t.guess.and}{" "}
-        <span className="inline-block border-b-2 border-green-500">{t.guess.aiModel}</span>
+        <span className="inline-block border-b-2 border-green-500">{model ? getModelDisplayName(model) : t.guess.aiModel}</span>
         {" "}{t.guess.providedDescription}
       </p>
       <div className="rounded-lg bg-gray-50">

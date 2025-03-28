@@ -379,6 +379,7 @@ export const GameContainer = () => {
             sessionId={sessionId}
             currentTheme={currentTheme}
             normalizeWord={(word: string) => normalizeWord(word, language)}
+            aiModel={aiModel}
           />
         ) : (
           <GameReview

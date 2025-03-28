@@ -19,6 +19,7 @@ interface GuessDisplayProps {
   onGameReview: () => void;
   onBack?: () => void;
   normalizeWord: (word: string) => string;
+  aiModel?: string;
 }
 
 export const GuessDisplay = ({
@@ -33,6 +34,7 @@ export const GuessDisplay = ({
   onBack,
   onGameReview,
   normalizeWord,
+  aiModel,
 }: GuessDisplayProps) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const t = useTranslation();
@@ -73,7 +75,7 @@ export const GuessDisplay = ({
 
       <WordDisplay currentWord={currentWord} />
 
-      <GuessDescription sentence={sentence} />
+      <GuessDescription sentence={sentence} model={aiModel} />
 
       <GuessResult
         aiGuess={aiGuess}
