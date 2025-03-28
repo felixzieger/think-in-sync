@@ -7,6 +7,7 @@ import { getDailyGame } from "@/services/dailyGameService";
 import { useToast } from "@/components/ui/use-toast";
 import { WelcomeScreen } from "./game/WelcomeScreen";
 import { ThemeSelector } from "./game/ThemeSelector";
+import { ModelSelector } from "./game/ModelSelector";
 import { SentenceBuilder } from "./game/SentenceBuilder";
 import { GuessDisplay } from "./game/GuessDisplay";
 import { GameReview } from "./game/GameReview";
@@ -17,7 +18,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Language } from "@/i18n/translations";
 import { normalizeWord } from "@/lib/wordProcessing";
 
-type GameState = "welcome" | "theme-selection" | "building-sentence" | "showing-guess" | "game-review" | "invitation";
+type GameState = "welcome" | "theme-selection" | "model-selection" | "building-sentence" | "showing-guess" | "game-review" | "invitation";
 
 export const GameContainer = () => {
   const [searchParams] = useSearchParams();
@@ -62,15 +63,20 @@ export const GameContainer = () => {
 
   useEffect(() => {
     if (location.pathname === '/' && gameId) {
-      console.log("Location changed to root with active gameId, handling back navigation");
-      handleBack();
+      if (gameState !== "model-selection") {
+        console.log("Location changed to root with active gameId, handling back navigation");
+        handleBack();
+      }
     }
-  }, [location.pathname, gameId]);
+  }, [location.pathname, gameId, gameState]);
 
   const handleStartDaily = async () => {
     try {
       const dailyGameId = await getDailyGame(language);
-      handlePlayAgain(dailyGameId);
+      if (dailyGameId) {
+        setGameId(dailyGameId);
+        setGameState("model-selection");
+      }
     } catch (error) {
       console.error('Error starting daily game:', error);
       toast({
@@ -166,9 +172,21 @@ export const GameContainer = () => {
 
   const handleThemeSelect = async (theme: string) => {
     setCurrentTheme(theme);
+    setGameState("model-selection");
+  };
+
+  const handleModelSelect = async (model: string) => {
+    setAiModel(model);
     try {
-      const newGameId = await createGame(theme, language);
-      const newSessionId = await createSession(newGameId);
+      let newGameId = gameId;
+      let newSessionId = "";
+
+      // If we don't have a gameId (not from daily challenge), create a new game
+      if (!newGameId) {
+        newGameId = await createGame(currentTheme, language);
+      }
+
+      newSessionId = await createSession(newGameId);
 
       const { data: gameData, error: gameError } = await supabase
         .from('games')
@@ -187,7 +205,7 @@ export const GameContainer = () => {
       setGameState("building-sentence");
       setSuccessfulRounds(0);
       setTotalWordsInSuccessfulRounds(0);
-      console.log("Game started with theme:", theme, "language:", language);
+      console.log("Game started with theme:", currentTheme, "language:", language, "model:", model);
     } catch (error) {
       console.error('Error starting new game:', error);
       toast({
@@ -350,6 +368,8 @@ export const GameContainer = () => {
           <WelcomeScreen onStartDaily={handleStartDaily} onStartNew={handleStart} />
         ) : gameState === "theme-selection" ? (
           <ThemeSelector onThemeSelect={handleThemeSelect} onBack={handleBack} />
+        ) : gameState === "model-selection" ? (
+          <ModelSelector onModelSelect={handleModelSelect} onBack={handleBack} />
         ) : gameState === "invitation" ? (
           <GameInvitation onContinue={handleInvitationContinue} onBack={handleBack} />
         ) : gameState === "building-sentence" ? (

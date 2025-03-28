@@ -182,5 +182,11 @@ export const en = {
         "The AI will try to guess your word after each sentence"
       ]
     }
+  },
+  models: {
+    title: "Choose an AI Model",
+    subtitle: "Select the AI model that will play against you",
+    continue: "Continue",
+    generating: "Generating..."
   }
 };

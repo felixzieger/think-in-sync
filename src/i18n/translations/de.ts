@@ -183,5 +183,11 @@ export const de = {
         "Die KI wird nach jedem Satz versuchen, dein Wort zu erraten"
       ]
     }
+  },
+  models: {
+    title: "KI-Modell wählen",
+    subtitle: "Wähle das KI-Modell, das gegen dich spielen wird",
+    continue: "Weiter",
+    generating: "Wird generiert..."
   }
 };

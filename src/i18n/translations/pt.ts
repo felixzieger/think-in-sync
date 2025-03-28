@@ -183,5 +183,11 @@ export const pt = {
                 "A IA tentará adivinhar sua palavra após cada frase"
             ]
         }
+    },
+    models: {
+        title: "Escolha um Modelo de IA",
+        subtitle: "Selecione o modelo de IA que jogará contra você",
+        continue: "Continuar",
+        generating: "Gerando..."
     }
 };

@@ -184,5 +184,11 @@ export const it = {
         "L'IA cercherà di indovinare la tua parola dopo ogni frase"
       ]
     }
+  },
+  models: {
+    title: "Scegli un Modello IA",
+    subtitle: "Seleziona il modello IA che giocherà contro di te",
+    continue: "Continua",
+    generating: "Generazione in corso..."
   }
 };
