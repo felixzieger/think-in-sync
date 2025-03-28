@@ -1,6 +1,5 @@
-
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HighScoreBoard } from "../HighScoreBoard";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { LanguageSelector } from "./LanguageSelector";
@@ -24,6 +23,17 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
   const [showCredits, setShowCredits] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const t = useTranslation();
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        onStartDaily();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [onStartDaily]);
 
   return (
     <>
