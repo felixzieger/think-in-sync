@@ -21,10 +21,21 @@ const AVAILABLE_MODELS = [
 ];
 
 export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => {
-  const [selectedModel, setSelectedModel] = useState<string>("");
+  const [selectedModel, setSelectedModel] = useState<string>(AVAILABLE_MODELS[0]);
   const [isGenerating, setIsGenerating] = useState(false);
   const t = useTranslation();
   const { language } = useContext(LanguageContext);
+
+  const handleSubmit = async () => {
+    if (!selectedModel) return;
+    
+    setIsGenerating(true);
+    try {
+      await onModelSelect(selectedModel);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -40,22 +51,29 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
       if (e.key === 'enter' && selectedModel) {
         handleSubmit();
       }
+
+      // Model selection shortcuts
+      switch(e.key.toLowerCase()) {
+        case 'a':
+          setSelectedModel(AVAILABLE_MODELS[0]);
+          break;
+        case 'b':
+          setSelectedModel(AVAILABLE_MODELS[1]);
+          break;
+        case 'c':
+          setSelectedModel(AVAILABLE_MODELS[2]);
+          break;
+        case 'enter':
+          if (selectedModel) {
+            handleSubmit();
+          }
+          break;
+      }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [selectedModel, onBack]);
-
-  const handleSubmit = async () => {
-    if (!selectedModel) return;
-    
-    setIsGenerating(true);
-    try {
-      await onModelSelect(selectedModel);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
+  }, [selectedModel, onBack, handleSubmit]);
 
   return (
     <motion.div
@@ -79,14 +97,14 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
       <p className="text-gray-600 text-center">{t.models.subtitle}</p>
 
       <div className="space-y-4">
-        {AVAILABLE_MODELS.map((modelId) => (
+        {AVAILABLE_MODELS.map((modelId, index) => (
           <Button
             key={modelId}
             variant={selectedModel === modelId ? "default" : "outline"}
             className="w-full justify-between"
             onClick={() => setSelectedModel(modelId)}
           >
-            {modelNames[modelId]}
+            {modelNames[modelId]} <span className="text-sm opacity-50">{t.themes.pressKey} {String.fromCharCode(65 + index)}</span>
           </Button>
         ))}
       </div>
