@@ -73,7 +73,7 @@ export const GuessDisplay = ({
 
       <WordDisplay currentWord={currentWord} />
 
-      <GuessDescription sentence={sentence} aiGuess={aiGuess} />
+      <GuessDescription sentence={sentence} />
 
       <GuessResult
         aiGuess={aiGuess}

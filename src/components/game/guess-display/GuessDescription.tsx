@@ -2,10 +2,9 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 interface GuessDescriptionProps {
   sentence: string[];
-  aiGuess: string;
 }
 
-export const GuessDescription = ({ sentence, aiGuess }: GuessDescriptionProps) => {
+export const GuessDescription = ({ sentence }: GuessDescriptionProps) => {
   const t = useTranslation();
 
   return (
