@@ -12,16 +12,19 @@ interface ModelSelectorProps {
   onBack: () => void;
 }
 
+// TODO: Once user authentication is implemented, this will be replaced with a dynamic list
+// based on the user's subscription level
+const AVAILABLE_MODELS = [
+  "google/gemini-2.0-flash-exp:free",
+  "mistralai/mistral-nemo",
+  "deepseek/deepseek-chat:free"
+];
+
 export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => {
   const [selectedModel, setSelectedModel] = useState<string>("");
   const [isGenerating, setIsGenerating] = useState(false);
   const t = useTranslation();
   const { language } = useContext(LanguageContext);
-
-  // Get a subset of models that are marked as free
-  const availableModels = Object.entries(modelNames)
-    .filter(([id]) => id.endsWith(':free'))
-    .map(([id, name]) => ({ id, name }));
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -75,15 +78,15 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
 
       <p className="text-gray-600 text-center">{t.models.subtitle}</p>
 
-      <div className="space-y-4 max-h-[60vh] overflow-y-auto">
-        {availableModels.map((model) => (
+      <div className="space-y-4">
+        {AVAILABLE_MODELS.map((modelId) => (
           <Button
-            key={model.id}
-            variant={selectedModel === model.id ? "default" : "outline"}
+            key={modelId}
+            variant={selectedModel === modelId ? "default" : "outline"}
             className="w-full justify-between"
-            onClick={() => setSelectedModel(model.id)}
+            onClick={() => setSelectedModel(modelId)}
           >
-            {model.name}
+            {modelNames[modelId]}
           </Button>
         ))}
       </div>
