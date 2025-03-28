@@ -209,7 +209,7 @@ export const GameContainer = () => {
 
     setIsAiThinking(true);
     try {
-      const aiWord = await generateAIResponse(currentWord, newSentence, language);
+      const aiWord = await generateAIResponse(currentWord, newSentence, language, aiModel);
       const newSentenceWithAi = [...newSentence, aiWord];
       setSentence(newSentenceWithAi);
     } catch (error) {
@@ -260,7 +260,7 @@ export const GameContainer = () => {
       if (finalSentence.length === 0) return;
 
       const sentenceString = finalSentence.join(' ');
-      const { guess, model } = await guessWord(sentenceString, language);
+      const { guess, model } = await guessWord(sentenceString, language, aiModel);
       setAiGuess(guess);
       setAiModel(model);
 

@@ -1,14 +1,15 @@
 
 import { supabase } from "@/integrations/supabase/client";
 
-export const generateAIResponse = async (currentWord: string, currentSentence: string[], language: string = 'en'): Promise<string> => {
+export const generateAIResponse = async (currentWord: string, currentSentence: string[], language: string = 'en', model?: string): Promise<string> => {
   console.log('Calling generate-word function with:', { currentWord, currentSentence, language });
 
   const { data, error } = await supabase.functions.invoke('generate-word', {
     body: {
       currentWord,
       currentSentence: currentSentence.join(' '),
-      language
+      language,
+      model
     }
   });
 
@@ -29,7 +30,7 @@ export const generateAIResponse = async (currentWord: string, currentSentence: s
   return data.word;
 };
 
-export const guessWord = async (sentence: string, language: string): Promise<{ guess: string; model: string }> => {
+export const guessWord = async (sentence: string, language: string, model?: string): Promise<{ guess: string; model: string }> => {
   console.log('Processing guess for sentence:', sentence);
 
   const words = sentence.trim().split(/\s+/);
@@ -39,7 +40,8 @@ export const guessWord = async (sentence: string, language: string): Promise<{ g
   const { data, error } = await supabase.functions.invoke('guess-word', {
     body: {
       sentence,
-      language
+      language,
+      model
     }
   });
 
