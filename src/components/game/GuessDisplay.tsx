@@ -81,6 +81,7 @@ export const GuessDisplay = ({
         aiGuess={aiGuess}
         isCorrect={isGuessCorrect()}
         onNextRound={onNextRound}
+        model={aiModel}
       />
 
       <ActionButtons
