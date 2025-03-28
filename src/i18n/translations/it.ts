@@ -101,7 +101,11 @@ export const it = {
     aiGuessed: "L'IA ha indovinato",
     goalDescription: "Il tuo obiettivo era descrivere la parola",
     providedDescription: "hanno fornito la descrizione",
-    aiGuessedDescription: "Basandosi su questa descrizione, l'IA ha indovinato",
+    aiGuessedDescription: {
+      prefix: "Basandosi su questa descrizione,",
+      aiName: "l'IA",
+      suffix: "ha indovinato"
+    },
     correct: "Corretto! L'IA ha indovinato la parola!",
     incorrect: "Sbagliato. Riprova!",
     nextRound: "Prossimo Turno",

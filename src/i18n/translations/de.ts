@@ -100,7 +100,11 @@ export const de = {
     title: "KI-Vermutung",
     goalDescription: "Dein Ziel war es folgendes Wort zu beschreiben",
     providedDescription: "beschriebt das Wort mit",
-    aiGuessedDescription: "Basierend auf dieser Beschreibung hat die KI geraten",
+    aiGuessedDescription: {
+      prefix: "Basierend auf dieser Beschreibung",
+      aiName: "die KI",
+      suffix: "hat geraten"
+    },
     correct: "Das ist richtig!",
     incorrect: "Das ist falsch.",
     nextRound: "Nächste Runde",

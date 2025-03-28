@@ -287,6 +287,12 @@ export const modelNames: Record<string, string> = {
   "openai/gpt-3.5-turbo-0125": "OpenAI GPT-3.5 Turbo 16k"
 };
 
+export const customModelNames: Record<string, string> = {
+  "x-ai/grok-2-1212": "Grok",
+  "deepseek/deepseek-chat:free": "DeepSeek",
+  "google/gemini-2.0-flash-exp:free": "Gemini",
+};
+
 export const getModelDisplayName = (modelId: string): string => {
-  return modelNames[modelId] || modelId;
+  return customModelNames[modelId] || modelNames[modelId] || modelId;
 };

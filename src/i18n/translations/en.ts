@@ -99,7 +99,11 @@ export const en = {
     title: "AI's Guess",
     goalDescription: "Your goal was to describe the word",
     providedDescription: "provided the description",
-    aiGuessedDescription: "Based on this description, the AI guessed",
+    aiGuessedDescription: {
+      prefix: "Based on this description,",
+      aiName: "the AI",
+      suffix: "guessed"
+    },
     correct: "This is right!",
     incorrect: "This is wrong.",
     nextRound: "Next Round",

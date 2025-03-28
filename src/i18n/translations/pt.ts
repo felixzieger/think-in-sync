@@ -100,7 +100,11 @@ export const pt = {
         title: "Suposição da IA",
         goalDescription: "Seu objetivo era descrever a palavra",
         providedDescription: "forneceram a descrição",
-        aiGuessedDescription: "Com base nesta descrição, a IA adivinhou",
+        aiGuessedDescription: {
+            prefix: "Com base nesta descrição,",
+            aiName: "a IA",
+            suffix: "adivinhou"
+        },
         correct: "Isso está correto!",
         incorrect: "Isso está incorreto.",
         nextRound: "Próxima Rodada",

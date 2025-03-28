@@ -14,7 +14,9 @@ export const GuessResult = ({ aiGuess, isCorrect, onNextRound, model }: GuessRes
   return (
     <div className="space-y-4">
       <p className="text-sm text-gray-600">
-        {t.guess.aiGuessedDescription.replace("the AI", model ? getModelDisplayName(model) : t.guess.aiModel)}
+        {t.guess.aiGuessedDescription.prefix}{" "}
+        {model ? getModelDisplayName(model) : t.guess.aiGuessedDescription.aiName}{" "}
+        {t.guess.aiGuessedDescription.suffix}
       </p>
       <div className={`rounded-lg ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
         <p className={`p-4 text-2xl font-bold tracking-wider ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
