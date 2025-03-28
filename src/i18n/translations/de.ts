@@ -99,14 +99,17 @@ export const de = {
   guess: {
     title: "KI-Vermutung",
     goalDescription: "Dein Ziel war es folgendes Wort zu beschreiben",
-    providedDescription: "Du hast folgende Beschreibung gegeben",
+    providedDescription: "beschriebt das Wort mit",
     aiGuessedDescription: "Basierend auf dieser Beschreibung hat die KI geraten",
     correct: "Das ist richtig!",
     incorrect: "Das ist falsch.",
     nextRound: "Nächste Runde",
     playAgain: "Erneut spielen",
     viewLeaderboard: "In Bestenliste eintragen",
-    cheatingDetected: "Betrugsversuch erkannt!"
+    cheatingDetected: "Betrugsversuch erkannt!",
+    you: "Du",
+    and: "und",
+    aiModel: "KI-Modell"
   },
   themes: {
     title: "Wähle ein Thema",

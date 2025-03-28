@@ -98,7 +98,7 @@ export const en = {
   guess: {
     title: "AI's Guess",
     goalDescription: "Your goal was to describe the word",
-    providedDescription: "You provided the description",
+    providedDescription: "provided the description",
     aiGuessedDescription: "Based on this description, the AI guessed",
     correct: "This is right!",
     incorrect: "This is wrong.",
@@ -106,6 +106,9 @@ export const en = {
     playAgain: "Play Again",
     viewLeaderboard: "Save your score",
     cheatingDetected: "Cheating detected!",
+    you: "You",
+    and: "and",
+    aiModel: "AI Model"
   },
   themes: {
     title: "Choose a Theme",

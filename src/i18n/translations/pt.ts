@@ -1,4 +1,3 @@
-
 export const pt = {
     game: {
         title: "Think in Sync",
@@ -100,14 +99,17 @@ export const pt = {
     guess: {
         title: "Suposição da IA",
         goalDescription: "Seu objetivo era descrever a palavra",
-        providedDescription: "Você forneceu a descrição",
+        providedDescription: "forneceram a descrição",
         aiGuessedDescription: "Com base nesta descrição, a IA adivinhou",
         correct: "Isso está correto!",
         incorrect: "Isso está incorreto.",
         nextRound: "Próxima Rodada",
         playAgain: "Jogar Novamente",
         viewLeaderboard: "Ver Placar",
-        cheatingDetected: "Trapaça detectada!"
+        cheatingDetected: "Trapaça detectada!",
+        you: "Você",
+        and: "e",
+        aiModel: "Modelo de IA"
     },
     themes: {
         title: "Escolha um Tema",

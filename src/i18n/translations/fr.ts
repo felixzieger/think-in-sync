@@ -98,14 +98,17 @@ export const fr = {
   guess: {
     title: "Devinette de l'IA",
     goalDescription: "Votre objectif était de décrire le mot",
-    providedDescription: "Vous avez fourni la description",
+    providedDescription: "ont fourni la description",
     aiGuessedDescription: "Sur la base de cette description, l'IA a deviné",
     correct: "C'est correct !",
     incorrect: "C'est incorrect.",
     nextRound: "Tour Suivant",
     playAgain: "Rejouer",
     viewLeaderboard: "Voir les Scores",
-    cheatingDetected: "Tentative de triche détectée !"
+    cheatingDetected: "Tentative de triche détectée !",
+    you: "Vous",
+    and: "et",
+    aiModel: "Modèle IA"
   },
   themes: {
     title: "Choisissez un Thème",

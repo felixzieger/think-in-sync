@@ -99,14 +99,17 @@ export const es = {
   guess: {
     title: "Suposición de la IA",
     goalDescription: "Tu objetivo era describir la palabra",
-    providedDescription: "Proporcionaste la descripción",
+    providedDescription: "proporcionaron la descripción",
     aiGuessedDescription: "Basándose en esta descripción, la IA adivinó",
     correct: "¡Esto es correcto!",
     incorrect: "Esto es incorrecto.",
     nextRound: "Siguiente Ronda",
     playAgain: "Jugar de Nuevo",
     viewLeaderboard: "Ver Clasificación",
-    cheatingDetected: "¡Trampa detectada!"
+    cheatingDetected: "¡Trampa detectada!",
+    you: "Tú",
+    and: "y",
+    aiModel: "Modelo de IA"
   },
   themes: {
     title: "Elige un Tema",

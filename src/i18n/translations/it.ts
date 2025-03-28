@@ -100,14 +100,17 @@ export const it = {
     sentence: "La tua frase",
     aiGuessed: "L'IA ha indovinato",
     goalDescription: "Il tuo obiettivo era descrivere la parola",
-    providedDescription: "Hai fornito la descrizione",
+    providedDescription: "hanno fornito la descrizione",
     aiGuessedDescription: "Basandosi su questa descrizione, l'IA ha indovinato",
     correct: "Corretto! L'IA ha indovinato la parola!",
     incorrect: "Sbagliato. Riprova!",
     nextRound: "Prossimo Turno",
     playAgain: "Gioca Ancora",
     viewLeaderboard: "Vedi Classifica",
-    cheatingDetected: "Tentativo di imbroglio rilevato!"
+    cheatingDetected: "Tentativo di imbroglio rilevato!",
+    you: "Tu",
+    and: "e",
+    aiModel: "Modello IA"
   },
   themes: {
     title: "Scegli un Tema",
