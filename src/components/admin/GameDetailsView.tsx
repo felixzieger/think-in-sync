@@ -43,7 +43,6 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
             )}
             <GuessDescription
               sentence={currentResult?.description?.split(' ') || []}
-              aiGuess={currentResult?.ai_guess || ''}
             />
             <p className="text-sm text-gray-600 mt-2">
               {t.guess.aiGuessedDescription}: <span className="font-medium">{currentResult?.ai_guess}</span>
@@ -54,7 +53,6 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
               <h3 className="font-semibold mb-2">{t.game.review.friendDescription}</h3>
               <GuessDescription
                 sentence={friendResult.description?.split(' ') || []}
-                aiGuess={friendResult.ai_guess || ''}
               />
               <p className="text-sm text-gray-600 mt-2">
                 {t.guess.aiGuessedDescription}: <span className="font-medium">{friendResult.ai_guess}</span>
