@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 
+interface SentenceWord {
+  word: string;
+  provider: 'player' | 'ai';
+}
+
 interface SentenceDisplayProps {
-  sentence: string[];
+  sentence: SentenceWord[];
 }
 
 export const SentenceDisplay = ({ sentence }: SentenceDisplayProps) => {
@@ -14,7 +19,7 @@ export const SentenceDisplay = ({ sentence }: SentenceDisplayProps) => {
       className="mb-4 text-left p-3 rounded-lg bg-gray-50"
     >
       <p className="text-gray-700">
-        {sentence.join(" ")}
+        {sentence.map(w => w.word).join(" ")}
       </p>
     </motion.div>
   );

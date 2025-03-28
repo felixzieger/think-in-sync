@@ -3,6 +3,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/hooks/useTranslation";
 
+interface SentenceWord {
+  word: string;
+  provider: 'player' | 'ai';
+}
+
 interface InputFormProps {
   playerInput: string;
   onInputChange: (value: string) => void;
@@ -13,7 +18,7 @@ interface InputFormProps {
   containsTargetWord: boolean;
   isTooLong: boolean;
   isValidInput: boolean;
-  sentence: string[];
+  sentence: SentenceWord[];
 }
 
 export const InputForm = ({

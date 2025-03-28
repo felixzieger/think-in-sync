@@ -20,6 +20,11 @@ import { normalizeWord } from "@/lib/wordProcessing";
 
 type GameState = "welcome" | "theme-selection" | "model-selection" | "building-sentence" | "showing-guess" | "game-review" | "invitation";
 
+interface SentenceWord {
+  word: string;
+  provider: 'player' | 'ai';
+}
+
 export const GameContainer = () => {
   const [searchParams] = useSearchParams();
   const { gameId: urlGameId } = useParams();
@@ -34,7 +39,7 @@ export const GameContainer = () => {
   const [words, setWords] = useState<string[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [playerInput, setPlayerInput] = useState<string>("");
-  const [sentence, setSentence] = useState<string[]>([]);
+  const [sentence, setSentence] = useState<SentenceWord[]>([]);
   const [isAiThinking, setIsAiThinking] = useState(false);
   const [aiGuess, setAiGuess] = useState<string>("");
   const [aiModel, setAiModel] = useState<string>("");
@@ -221,14 +226,14 @@ export const GameContainer = () => {
     if (!playerInput.trim()) return;
 
     const word = playerInput.trim();
-    const newSentence = [...sentence, word];
+    const newSentence: SentenceWord[] = [...sentence, { word, provider: 'player' as const }];
     setSentence(newSentence);
     setPlayerInput("");
 
     setIsAiThinking(true);
     try {
-      const aiWord = await generateAIResponse(currentWord, newSentence, language, aiModel);
-      const newSentenceWithAi = [...newSentence, aiWord];
+      const aiWord = await generateAIResponse(currentWord, newSentence.map(w => w.word), language, aiModel);
+      const newSentenceWithAi: SentenceWord[] = [...newSentence, { word: aiWord, provider: 'ai' as const }];
       setSentence(newSentenceWithAi);
     } catch (error) {
       console.error('Error in AI turn:', error);
@@ -268,16 +273,16 @@ export const GameContainer = () => {
   const handleMakeGuess = async () => {
     setIsAiThinking(true);
     try {
-      let finalSentence = sentence;
+      let finalSentence: SentenceWord[] = sentence;
       if (playerInput.trim()) {
-        finalSentence = [...sentence, playerInput.trim()];
+        finalSentence = [...sentence, { word: playerInput.trim(), provider: 'player' as const }];
         setSentence(finalSentence);
         setPlayerInput("");
       }
 
       if (finalSentence.length === 0) return;
 
-      const sentenceString = finalSentence.join(' ');
+      const sentenceString = finalSentence.map(w => w.word).join(' ');
       const { guess, model } = await guessWord(sentenceString, language, aiModel);
       setAiGuess(guess);
       setAiModel(model);

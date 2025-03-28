@@ -17,10 +17,15 @@ import { SentenceDisplay } from "./sentence-builder/SentenceDisplay";
 import { InputForm } from "./sentence-builder/InputForm";
 import { Button } from "@/components/ui/button";
 
+interface SentenceWord {
+  word: string;
+  provider: 'player' | 'ai';
+}
+
 interface SentenceBuilderProps {
   currentWord: string;
   successfulRounds: number;
-  sentence: string[];
+  sentence: SentenceWord[];
   playerInput: string;
   isAiThinking: boolean;
   onInputChange: (value: string) => void;

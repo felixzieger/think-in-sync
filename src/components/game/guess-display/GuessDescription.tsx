@@ -1,8 +1,13 @@
 import { useTranslation } from "@/hooks/useTranslation";
 import { getModelDisplayName } from "@/lib/modelNames";
 
+interface SentenceWord {
+  word: string;
+  provider: 'player' | 'ai';
+}
+
 interface GuessDescriptionProps {
-  sentence: string[];
+  sentence: SentenceWord[];
   model?: string;
 }
 
@@ -19,16 +24,16 @@ export const GuessDescription = ({ sentence, model }: GuessDescriptionProps) => 
       </p>
       <div className="rounded-lg bg-gray-50">
         <p className="p-4 text-2xl tracking-wider text-gray-800 flex flex-wrap gap-1">
-          {sentence.map((word, index) => (
+          {sentence.map((wordObj, index) => (
             <span
               key={index}
               className={`inline-block ${
-                index % 2 === 0
-                  ? "border-b-2 border-blue-500" // Player words (even indices)
-                  : "border-b-2 border-green-500" // AI words (odd indices)
+                wordObj.provider === 'player'
+                  ? "border-b-2 border-blue-500" // Player words
+                  : "border-b-2 border-green-500" // AI words
               }`}
             >
-              {word}
+              {wordObj.word}
             </span>
           ))}
         </p>

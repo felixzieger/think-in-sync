@@ -18,6 +18,11 @@ interface GameResult {
   is_correct: boolean;
 }
 
+interface SentenceWord {
+  word: string;
+  provider: 'player' | 'ai';
+}
+
 interface ComparisonDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -27,6 +32,13 @@ interface ComparisonDialogProps {
 
 const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: ComparisonDialogProps) => {
   const t = useTranslation();
+
+  const convertToSentenceWords = (description: string): SentenceWord[] => {
+    return description.split(' ').map((word, index) => ({
+      word,
+      provider: index % 2 === 0 ? 'player' as const : 'ai' as const
+    }));
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -42,7 +54,7 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
               <h3 className="font-semibold mb-2">{t.game.review.yourDescription}</h3>
             )}
             <GuessDescription
-              sentence={currentResult?.description?.split(' ') || []}
+              sentence={currentResult?.description ? convertToSentenceWords(currentResult.description) : []}
             />
             <p className="text-sm text-gray-600 mt-2">
               {t.guess.aiGuessedDescription}: <span className="font-medium">{currentResult?.ai_guess}</span>
@@ -52,7 +64,7 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
             <div>
               <h3 className="font-semibold mb-2">{t.game.review.friendDescription}</h3>
               <GuessDescription
-                sentence={friendResult.description?.split(' ') || []}
+                sentence={friendResult.description ? convertToSentenceWords(friendResult.description) : []}
               />
               <p className="text-sm text-gray-600 mt-2">
                 {t.guess.aiGuessedDescription}: <span className="font-medium">{friendResult.ai_guess}</span>
