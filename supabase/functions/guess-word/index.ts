@@ -54,11 +54,11 @@ const openRouterModels = [
   'mistralai/mistral-nemo'
 ];
 
-async function generateGuess(sentence: string, language: string) {
+async function generateGuess(sentence: string, language: string, model?: string) {
   const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
-  const randomModel = openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
+  const selectedModel = model || openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
 
-  console.log('Using OpenRouter with model:', randomModel);
+  console.log('Using OpenRouter with model:', selectedModel);
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -70,7 +70,7 @@ async function generateGuess(sentence: string, language: string) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: randomModel,
+        model: selectedModel,
         messages: [
           {
             role: "system",
@@ -102,7 +102,7 @@ async function generateGuess(sentence: string, language: string) {
     const data = await response.json();
     return {
       guess: data.choices[0].message.content.trim().toUpperCase(),
-      model: randomModel
+      model: selectedModel
     };
   } catch (error) {
     console.error('Error in generateGuess:', error);
@@ -120,14 +120,14 @@ serve(async (req) => {
   }
 
   try {
-    const { sentence, language = 'en' } = await req.json();
-    console.log('Trying to guess word from sentence:', sentence, 'language:', language);
+    const { sentence, language = 'en', model } = await req.json();
+    console.log('Trying to guess word from sentence:', sentence, 'language:', language, 'model:', model);
 
-    const { guess, model } = await generateGuess(sentence, language);
-    console.log('Successfully generated guess:', guess, 'using model:', model);
+    const { guess, model: usedModel } = await generateGuess(sentence, language, model);
+    console.log('Successfully generated guess:', guess, 'using model:', usedModel);
 
     return new Response(
-      JSON.stringify({ guess, model }),
+      JSON.stringify({ guess, model: usedModel }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {

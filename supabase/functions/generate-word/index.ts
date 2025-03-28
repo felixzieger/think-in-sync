@@ -62,16 +62,16 @@ const openRouterModels = [
   'mistralai/mistral-nemo'
 ];
 
-async function generateWord(currentWord: string, existingSentence: string, language: string) {
+async function generateWord(currentWord: string, existingSentence: string, language: string, model?: string) {
   const openRouterKey = Deno.env.get('OPENROUTER_API_KEY');
   if (!openRouterKey) {
     throw new Error('OpenRouter API key not configured');
   }
 
   const prompts = languagePrompts[language as keyof typeof languagePrompts] || languagePrompts.en;
-  const randomModel = openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
+  const selectedModel = model || openRouterModels[Math.floor(Math.random() * openRouterModels.length)];
 
-  console.log('Using OpenRouter with model:', randomModel);
+  console.log('Using OpenRouter with model:', selectedModel);
 
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
@@ -82,7 +82,7 @@ async function generateWord(currentWord: string, existingSentence: string, langu
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      model: randomModel,
+      model: selectedModel,
       messages: [
         {
           role: "system",
@@ -119,7 +119,7 @@ async function generateWord(currentWord: string, existingSentence: string, langu
     .split(' ')[0]
     .replace(/[.,!?]$/, '');
 
-  return { word, model: randomModel };
+  return { word, model: selectedModel };
 }
 
 serve(async (req) => {
@@ -128,16 +128,16 @@ serve(async (req) => {
   }
 
   try {
-    const { currentWord, currentSentence, language = 'en' } = await req.json();
-    console.log('Generating word for:', { currentWord, currentSentence, language });
+    const { currentWord, currentSentence, language = 'en', model } = await req.json();
+    console.log('Generating word for:', { currentWord, currentSentence, language, model });
 
     const existingSentence = currentSentence || '';
 
     try {
-      const { word, model } = await generateWord(currentWord, existingSentence, language);
-      console.log('Successfully generated word:', word, 'using model:', model);
+      const { word, model: usedModel } = await generateWord(currentWord, existingSentence, language, model);
+      console.log('Successfully generated word:', word, 'using model:', usedModel);
       return new Response(
-        JSON.stringify({ word, model }),
+        JSON.stringify({ word, model: usedModel }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     } catch (error) {
