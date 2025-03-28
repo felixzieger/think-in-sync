@@ -288,9 +288,11 @@ export const modelNames: Record<string, string> = {
 };
 
 export const customModelNames: Record<string, string> = {
+  "google/gemini-2.0-flash-exp:free": "Gemini",
+  "google/gemini-2.0-flash-lite-001": "Gemini",
   "x-ai/grok-2-1212": "Grok",
   "deepseek/deepseek-chat:free": "DeepSeek",
-  "google/gemini-2.0-flash-exp:free": "Gemini",
+  "meta-llama/llama-3.3-70b-instruct:free": "Llama"
 };
 
 export const getModelDisplayName = (modelId: string): string => {
