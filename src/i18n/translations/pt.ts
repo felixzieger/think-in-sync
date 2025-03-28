@@ -186,7 +186,7 @@ export const pt = {
     },
     models: {
         title: "Escolha um Modelo de IA",
-        subtitle: "Selecione o modelo de IA que jogará contra você",
+        subtitle: "Selecione o modelo de IA que jogará junto com você",
         continue: "Continuar",
         generating: "Gerando..."
     }

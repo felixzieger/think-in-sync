@@ -182,5 +182,11 @@ export const fr = {
         "L'IA essaiera de deviner votre mot après chaque phrase"
       ]
     }
+  },
+  models: {
+    title: "Choisissez un Modèle IA",
+    subtitle: "Sélectionnez le modèle IA qui jouera avec vous",
+    continue: "Continuer",
+    generating: "Génération en cours..."
   }
 };

@@ -185,7 +185,7 @@ export const en = {
   },
   models: {
     title: "Choose an AI Model",
-    subtitle: "Select the AI model that will play against you",
+    subtitle: "Select the AI model that will play together with you",
     continue: "Continue",
     generating: "Generating..."
   }

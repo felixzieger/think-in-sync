@@ -186,7 +186,7 @@ export const de = {
   },
   models: {
     title: "KI-Modell wählen",
-    subtitle: "Wähle das KI-Modell, das gegen dich spielen wird",
+    subtitle: "Wähle das KI-Modell, das mit dir zusammen spielen wird",
     continue: "Weiter",
     generating: "Wird generiert..."
   }
