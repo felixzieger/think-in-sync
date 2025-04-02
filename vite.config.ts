@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    allowedHosts: ["mistral-ai-game-jam-description-improv.hf.space", "think-in-sync.com"],
   },
   plugins: [react()],
   resolve: {
