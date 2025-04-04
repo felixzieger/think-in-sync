@@ -47,7 +47,6 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
         <div className="relative">
           <h1 className="mb-4 text-4xl font-bold text-gray-900">{t.welcome.title}</h1>
           <div className="absolute top-0 right-0 flex items-center gap-4">
-            <UserMenu />
             <LanguageSelector />
           </div>
           <p className="text-lg text-gray-600">

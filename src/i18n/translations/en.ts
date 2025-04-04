@@ -191,7 +191,9 @@ export const en = {
     title: "Choose an AI Model",
     subtitle: "Select the AI model that will play together with you",
     continue: "Continue",
-    generating: "Generating..."
+    generating: "Generating...",
+    custom: "Custom Model",
+    searchPlaceholder: "Search for a model..."
   },
   auth: {
     login: {

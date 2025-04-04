@@ -192,7 +192,9 @@ export const de = {
     title: "KI-Modell wählen",
     subtitle: "Wähle das KI-Modell, das mit dir zusammen spielen wird",
     continue: "Weiter",
-    generating: "Wird generiert..."
+    generating: "Wird generiert...",
+    custom: "Benutzerdefiniertes Modell",
+    searchPlaceholder: "Nach einem Modell suchen..."
   },
   auth: {
     login: {

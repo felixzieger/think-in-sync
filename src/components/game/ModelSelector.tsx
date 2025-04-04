@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -6,6 +6,13 @@ import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { ArrowLeft } from "lucide-react";
 import { modelNames } from "@/lib/modelNames";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ModelSelectorProps {
   onModelSelect: (model: string) => void;
@@ -16,13 +23,23 @@ interface ModelSelectorProps {
 // based on the user's subscription level
 const AVAILABLE_MODELS = [
   "google/gemini-2.0-flash-lite-001",
-  // "x-ai/grok-2-1212",
   "deepseek/deepseek-chat:free",
   "meta-llama/llama-3.3-70b-instruct:free",
+  "custom",
+];
+
+// A larger set of models that can be selected
+const SEARCHABLE_MODELS = [
+  "google/gemini-2.0-flash-001",
+  "anthropic/claude-3.7-sonnet",
+  "openai/gpt-4o",
+  "mistralai/mistral-large-2411",
+  "x-ai/grok-beta",
 ];
 
 export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => {
   const [selectedModel, setSelectedModel] = useState<string>(AVAILABLE_MODELS[0]);
+  const [customModel, setCustomModel] = useState<string>("");
   const [isGenerating, setIsGenerating] = useState(false);
   const t = useTranslation();
   const { language } = useContext(LanguageContext);
@@ -32,7 +49,7 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
     
     setIsGenerating(true);
     try {
-      await onModelSelect(selectedModel);
+      await onModelSelect(selectedModel === "custom" ? customModel : selectedModel);
     } finally {
       setIsGenerating(false);
     }
@@ -64,6 +81,10 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
         case 'c':
           setSelectedModel(AVAILABLE_MODELS[2]);
           break;
+        case 'd':
+          e.preventDefault();
+          setSelectedModel("custom");
+          break;
         case 'enter':
           if (selectedModel) {
             handleSubmit();
@@ -74,7 +95,7 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [selectedModel, onBack, handleSubmit]);
+  }, [selectedModel, customModel, onBack, handleSubmit]);
 
   return (
     <motion.div
@@ -105,15 +126,41 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
             className="w-full justify-between"
             onClick={() => setSelectedModel(modelId)}
           >
-            {modelNames[modelId]} <span className="text-sm opacity-50">{t.themes.pressKey} {String.fromCharCode(65 + index)}</span>
+            {modelId === "custom" ? t.models.custom : modelNames[modelId]} 
+            <span className="text-sm opacity-50">{t.themes.pressKey} {String.fromCharCode(65 + index)}</span>
           </Button>
         ))}
+
+        {selectedModel === "custom" && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Select
+              value={customModel}
+              onValueChange={setCustomModel}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={t.models.searchPlaceholder} />
+              </SelectTrigger>
+              <SelectContent>
+                {SEARCHABLE_MODELS.map((model) => (
+                  <SelectItem key={model} value={model}>
+                    {modelNames[model] || model}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </motion.div>
+        )}
       </div>
 
       <Button
         onClick={handleSubmit}
         className="w-full"
-        disabled={!selectedModel || isGenerating}
+        disabled={!selectedModel || (selectedModel === "custom" && !customModel) || isGenerating}
       >
         {isGenerating ? t.models.generating : `${t.models.continue} ⏎`}
       </Button>

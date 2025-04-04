@@ -187,7 +187,9 @@ export const fr = {
     title: "Choisissez un Modèle d'IA",
     subtitle: "Sélectionnez le modèle d'IA qui jouera avec vous",
     continue: "Continuer",
-    generating: "Génération en cours..."
+    generating: "Génération en cours...",
+    custom: "Modèle Personnalisé",
+    searchPlaceholder: "Rechercher un modèle..."
   },
   auth: {
     login: {

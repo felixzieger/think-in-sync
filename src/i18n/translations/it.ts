@@ -193,7 +193,9 @@ export const it = {
     title: "Scegli un Modello IA",
     subtitle: "Seleziona il modello IA che giocherà con te",
     continue: "Continua",
-    generating: "Generazione..."
+    generating: "Generazione...",
+    custom: "Modello Personalizzato",
+    searchPlaceholder: "Cerca un modello..."
   },
   auth: {
     login: {

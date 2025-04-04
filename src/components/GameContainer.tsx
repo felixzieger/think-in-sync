@@ -17,6 +17,7 @@ import { LanguageContext } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Language } from "@/i18n/translations";
 import { normalizeWord } from "@/lib/wordProcessing";
+import { UserMenu } from "./auth/UserMenu";
 
 type GameState = "welcome" | "theme-selection" | "model-selection" | "building-sentence" | "showing-guess" | "game-review" | "invitation";
 
@@ -364,6 +365,11 @@ export const GameContainer = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center p-1 md:p-4">
+      {gameState === "welcome" && (
+        <div className="absolute top-2 right-2 flex items-center gap-4">
+          <UserMenu />
+        </div>
+      )}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

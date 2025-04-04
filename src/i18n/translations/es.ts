@@ -192,7 +192,9 @@ export const es = {
     title: "Elige un Modelo de IA",
     subtitle: "Selecciona el modelo de IA que jugará contigo",
     continue: "Continuar",
-    generating: "Generando..."
+    generating: "Generando...",
+    custom: "Modelo Personalizado",
+    searchPlaceholder: "Buscar un modelo..."
   },
   auth: {
     login: {
