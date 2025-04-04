@@ -1,17 +1,9 @@
----
-title: Think in Sync
-emoji: 🧠
-colorFrom: blue
-colorTo: pink
-short_description: An addictive AI-powered word puzzle.
-sdk: docker
-app_port: 8080
-pinned: false
----
 # Think in Sync
 
 You will be given a secret word. You aim to describe this secret word so an AI can guess it.
 However, you can only say one word at a time, taking turns with another AI.
+
+[Play the game at think-in-sync.com](https://think-in-sync.com)
 
 ## Develop locally
 
