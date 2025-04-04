@@ -10,7 +10,7 @@ import { HuggingFaceLink } from "./welcome/HuggingFaceLink";
 import { MainActions } from "./welcome/MainActions";
 import { HowToPlayDialog } from "./welcome/HowToPlayDialog";
 import { CreditsDialog } from "./welcome/CreditsDialog";
-import { Mail } from "lucide-react";
+import { Mail, Award, BarChart } from "lucide-react";
 import { StatsDialog } from "./welcome/StatsDialog";
 import { UserMenu } from "../auth/UserMenu";
 
@@ -73,9 +73,10 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
           <div className="flex justify-center items-center gap-4">
             <button
               onClick={() => setShowCredits(true)}
-              className="text-primary hover:text-primary/80 transition-colors"
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
             >
-              Made by M1X
+              <Award className="w-4 h-4" />
+              Credits
             </button>
             <span>•</span>
             <a
@@ -89,9 +90,10 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
             <span>•</span>
             <button
               onClick={() => setShowStats(true)}
-              className="text-primary hover:text-primary/80 transition-colors"
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
             >
-              {t.welcome.stats.title}
+              <BarChart className="w-4 h-4" />
+              <span>{t.welcome.stats.title}</span>
             </button>
           </div>
         </div>
