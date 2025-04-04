@@ -184,9 +184,59 @@ export const fr = {
     }
   },
   models: {
-    title: "Choisissez un Modèle IA",
-    subtitle: "Sélectionnez le modèle IA qui jouera avec vous",
+    title: "Choisissez un Modèle d'IA",
+    subtitle: "Sélectionnez le modèle d'IA qui jouera avec vous",
     continue: "Continuer",
     generating: "Génération en cours..."
+  },
+  auth: {
+    login: {
+      linkText: "Se connecter",
+      title: "Se connecter",
+      subtitle: "Connectez-vous à votre compte",
+      email: "Email",
+      password: "Mot de passe",
+      submit: "Se connecter",
+      loggingIn: "Connexion en cours...",
+      noAccount: "Vous n'avez pas de compte ?",
+      register: "S'inscrire"
+    },
+    loginSuccess: {
+      title: "Connexion réussie",
+      description: "Vous êtes connecté avec succès"
+    },
+    loginError: {
+      title: "Échec de la connexion",
+      description: "Une erreur s'est produite lors de la tentative de connexion"
+    },
+    register: {
+      linkText: "S'inscrire",
+      title: "S'inscrire",
+      description: "Créez un nouveau compte",
+      email: "Email",
+      password: "Mot de passe",
+      confirmPassword: "Confirmer le mot de passe",
+      submit: "S'inscrire",
+      registering: "Inscription en cours...",
+      haveAccount: "Vous avez déjà un compte ?",
+      login: "Se connecter"
+    },
+    registerSuccess: {
+      title: "Inscription réussie",
+      description: "Votre compte a été créé avec succès"
+    },
+    registerError: {
+      title: "Échec de l'inscription",
+      description: "Une erreur s'est produite lors de la tentative d'inscription"
+    },
+    logoutSuccess: {
+      title: "Déconnexion",
+      description: "Vous avez été déconnecté avec succès"
+    },
+    form: {
+      email: "Email",
+      password: "Mot de passe",
+      logout: "Se déconnecter"
+    }
   }
 };

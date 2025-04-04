@@ -191,8 +191,58 @@ export const it = {
   },
   models: {
     title: "Scegli un Modello IA",
-    subtitle: "Seleziona il modello IA che giocherà insieme a te",
+    subtitle: "Seleziona il modello IA che giocherà con te",
     continue: "Continua",
-    generating: "Generazione in corso..."
+    generating: "Generazione..."
+  },
+  auth: {
+    login: {
+      linkText: "Accedi",
+      title: "Accedi",
+      subtitle: "Accedi al tuo account",
+      email: "Email",
+      password: "Password",
+      submit: "Accedi",
+      loggingIn: "Accesso in corso...",
+      noAccount: "Non hai un account?",
+      register: "Registrati"
+    },
+    loginSuccess: {
+      title: "Accesso riuscito",
+      description: "Hai effettuato l'accesso con successo"
+    },
+    loginError: {
+      title: "Accesso fallito",
+      description: "Si è verificato un errore durante l'accesso"
+    },
+    register: {
+      linkText: "Registrati",
+      title: "Registrati",
+      description: "Crea un nuovo account",
+      email: "Email",
+      password: "Password",
+      confirmPassword: "Conferma password",
+      submit: "Registrati",
+      registering: "Registrazione in corso...",
+      haveAccount: "Hai già un account?",
+      login: "Accedi"
+    },
+    registerSuccess: {
+      title: "Registrazione completata",
+      description: "Il tuo account è stato creato con successo"
+    },
+    registerError: {
+      title: "Registrazione fallita",
+      description: "Si è verificato un errore durante la registrazione"
+    },
+    logoutSuccess: {
+      title: "Disconnesso",
+      description: "Hai effettuato la disconnessione con successo"
+    },
+    form: {
+      email: "Email",
+      password: "Password",
+      logout: "Disconnetti"
+    }
   }
 };

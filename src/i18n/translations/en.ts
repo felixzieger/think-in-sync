@@ -192,5 +192,55 @@ export const en = {
     subtitle: "Select the AI model that will play together with you",
     continue: "Continue",
     generating: "Generating..."
+  },
+  auth: {
+    login: {
+      linkText: "Login",
+      title: "Login",
+      subtitle: "Sign in to your account",
+      email: "Email",
+      password: "Password",
+      submit: "Login",
+      loggingIn: "Logging in...",
+      noAccount: "Don't have an account?",
+      register: "Register"
+    },
+    loginSuccess: {
+      title: "Login successful",
+      description: "You have been successfully logged in"
+    },
+    loginError: {
+      title: "Login failed",
+      description: "An error occurred while trying to log in"
+    },
+    register: {
+      linkText: "Register",
+      title: "Register",
+      description: "Create a new account",
+      email: "Email",
+      password: "Password",
+      confirmPassword: "Confirm Password",
+      submit: "Register",
+      registering: "Registering...",
+      haveAccount: "Already have an account?",
+      login: "Login"
+    },
+    registerSuccess: {
+      title: "Registration successful",
+      description: "Your account has been created successfully"
+    },
+    registerError: {
+      title: "Registration failed",
+      description: "An error occurred while trying to register"
+    },
+    logoutSuccess: {
+      title: "Logged out",
+      description: "You have been successfully logged out"
+    },
+    form: {
+      email: "Email",
+      password: "Password",
+      logout: "Logout"
+    }
   }
 };

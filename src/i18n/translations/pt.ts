@@ -190,8 +190,58 @@ export const pt = {
     },
     models: {
         title: "Escolha um Modelo de IA",
-        subtitle: "Selecione o modelo de IA que jogará junto com você",
+        subtitle: "Selecione o modelo de IA que jogará com você",
         continue: "Continuar",
         generating: "Gerando..."
+    },
+    auth: {
+        login: {
+            linkText: "Entrar",
+            title: "Entrar",
+            subtitle: "Entre na sua conta",
+            email: "Email",
+            password: "Senha",
+            submit: "Entrar",
+            loggingIn: "Entrando...",
+            noAccount: "Não tem uma conta?",
+            register: "Registrar"
+        },
+        loginSuccess: {
+            title: "Login bem-sucedido",
+            description: "Você entrou com sucesso"
+        },
+        loginError: {
+            title: "Falha no login",
+            description: "Ocorreu um erro ao tentar fazer login"
+        },
+        register: {
+            linkText: "Registrar",
+            title: "Registrar",
+            description: "Crie uma nova conta",
+            email: "Email",
+            password: "Senha",
+            confirmPassword: "Confirmar senha",
+            submit: "Registrar",
+            registering: "Registrando...",
+            haveAccount: "Já tem uma conta?",
+            login: "Entrar"
+        },
+        registerSuccess: {
+            title: "Registro bem-sucedido",
+            description: "Sua conta foi criada com sucesso"
+        },
+        registerError: {
+            title: "Falha no registro",
+            description: "Ocorreu um erro ao tentar se registrar"
+        },
+        logoutSuccess: {
+            title: "Desconectado",
+            description: "Você foi desconectado com sucesso"
+        },
+        form: {
+            email: "Email",
+            password: "Senha",
+            logout: "Sair"
+        }
     }
 };

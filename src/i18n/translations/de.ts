@@ -193,5 +193,55 @@ export const de = {
     subtitle: "Wähle das KI-Modell, das mit dir zusammen spielen wird",
     continue: "Weiter",
     generating: "Wird generiert..."
+  },
+  auth: {
+    login: {
+      linkText: "Anmelden",
+      title: "Anmelden",
+      subtitle: "Melde dich bei deinem Konto an",
+      email: "E-Mail",
+      password: "Passwort",
+      submit: "Anmelden",
+      loggingIn: "Wird angemeldet...",
+      noAccount: "Noch kein Konto?",
+      register: "Registrieren"
+    },
+    loginSuccess: {
+      title: "Anmeldung erfolgreich",
+      description: "Du wurdest erfolgreich angemeldet"
+    },
+    loginError: {
+      title: "Anmeldung fehlgeschlagen",
+      description: "Bei der Anmeldung ist ein Fehler aufgetreten"
+    },
+    register: {
+      linkText: "Registrieren",
+      title: "Registrieren",
+      description: "Erstelle ein neues Konto",
+      email: "E-Mail",
+      password: "Passwort",
+      confirmPassword: "Passwort bestätigen",
+      submit: "Registrieren",
+      registering: "Registrieren...",
+      haveAccount: "Bereits ein Konto?",
+      login: "Anmelden"
+    },
+    registerSuccess: {
+      title: "Registrierung erfolgreich",
+      description: "Dein Konto wurde erfolgreich erstellt"
+    },
+    registerError: {
+      title: "Registrierung fehlgeschlagen",
+      description: "Bei der Registrierung ist ein Fehler aufgetreten"
+    },
+    logoutSuccess: {
+      title: "Abgemeldet",
+      description: "Du wurdest erfolgreich abgemeldet"
+    },
+    form: {
+      email: "E-Mail",
+      password: "Passwort",
+      logout: "Abmelden"
+    }
   }
 };

@@ -187,5 +187,61 @@ export const es = {
         "La IA intentará adivinar tu palabra después de cada frase"
       ]
     }
+  },
+  models: {
+    title: "Elige un Modelo de IA",
+    subtitle: "Selecciona el modelo de IA que jugará contigo",
+    continue: "Continuar",
+    generating: "Generando..."
+  },
+  auth: {
+    login: {
+      linkText: "Iniciar sesión",
+      title: "Iniciar sesión",
+      subtitle: "Inicia sesión en tu cuenta",
+      email: "Correo electrónico",
+      password: "Contraseña",
+      submit: "Iniciar sesión",
+      loggingIn: "Iniciando sesión...",
+      noAccount: "¿No tienes una cuenta?",
+      register: "Registrarse"
+    },
+    loginSuccess: {
+      title: "Inicio de sesión exitoso",
+      description: "Has iniciado sesión correctamente"
+    },
+    loginError: {
+      title: "Error de inicio de sesión",
+      description: "Ocurrió un error al intentar iniciar sesión"
+    },
+    register: {
+      linkText: "Registrarse",
+      title: "Registrarse",
+      description: "Crea una nueva cuenta",
+      email: "Correo electrónico",
+      password: "Contraseña",
+      confirmPassword: "Confirmar contraseña",
+      submit: "Registrarse",
+      registering: "Registrando...",
+      haveAccount: "¿Ya tienes una cuenta?",
+      login: "Iniciar sesión"
+    },
+    registerSuccess: {
+      title: "Registro exitoso",
+      description: "Tu cuenta ha sido creada exitosamente"
+    },
+    registerError: {
+      title: "Error de registro",
+      description: "Ocurrió un error al intentar registrarse"
+    },
+    logoutSuccess: {
+      title: "Sesión cerrada",
+      description: "Has cerrado la sesión correctamente"
+    },
+    form: {
+      email: "Correo electrónico",
+      password: "Contraseña",
+      logout: "Cerrar sesión"
+    }
   }
 };

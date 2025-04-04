@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { HighScoreBoard } from "../HighScoreBoard";
@@ -11,6 +12,7 @@ import { HowToPlayDialog } from "./welcome/HowToPlayDialog";
 import { CreditsDialog } from "./welcome/CreditsDialog";
 import { Mail } from "lucide-react";
 import { StatsDialog } from "./welcome/StatsDialog";
+import { UserMenu } from "../auth/UserMenu";
 
 interface WelcomeScreenProps {
   onStartDaily: () => void;
@@ -44,7 +46,8 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
       >
         <div className="relative">
           <h1 className="mb-4 text-4xl font-bold text-gray-900">{t.welcome.title}</h1>
-          <div className="absolute top-0 right-0">
+          <div className="absolute top-0 right-0 flex items-center gap-4">
+            <UserMenu />
             <LanguageSelector />
           </div>
           <p className="text-lg text-gray-600">
