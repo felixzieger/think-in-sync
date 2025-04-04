@@ -18,6 +18,10 @@ type AuthContextType = {
     error: Error | null;
     success: boolean;
   }>;
+  signInWithGitHub: () => Promise<{
+    error: Error | null;
+    success: boolean;
+  }>;
   signOut: () => Promise<void>;
 };
 
@@ -88,6 +92,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const signInWithGitHub = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+      });
+      return { error, success: !error };
+    } catch (error) {
+      return { error: error as Error, success: false };
+    }
+  };
+
   const signOut = async () => {
     await supabase.auth.signOut();
   };
@@ -101,6 +116,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         signIn,
         signUp,
         signInWithGoogle,
+        signInWithGitHub,
         signOut,
       }}
     >

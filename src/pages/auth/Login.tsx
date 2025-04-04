@@ -13,6 +13,17 @@ import { useTranslation } from "@/hooks/useTranslation";
 declare global {
   interface Window {
     handleSignInWithGoogle: (response: { credential: string }) => Promise<void>;
+    google?: {
+      accounts: {
+        id: {
+          initialize: (config: {
+            client_id: string;
+            callback: (response: { credential: string }) => Promise<void>;
+          }) => void;
+          prompt: () => void;
+        };
+      };
+    };
   }
 }
 
@@ -22,7 +33,7 @@ const formSchema = z.object({
 });
 
 export const Login = () => {
-  const { signIn, signInWithGoogle } = useAuth();
+  const { signIn, signInWithGoogle, signInWithGitHub } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -41,6 +52,13 @@ export const Login = () => {
     const script = document.createElement('script');
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
+    script.onload = () => {
+      // Initialize Google Identity Services
+      window.google?.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: window.handleSignInWithGoogle,
+      });
+    };
     document.body.appendChild(script);
 
     return () => {
@@ -80,6 +98,35 @@ export const Login = () => {
     };
   }, [signInWithGoogle, toast, navigate, t.auth.loginSuccess, t.auth.loginError]);
 
+  const handleGitHubLogin = async () => {
+    try {
+      setIsLoading(true);
+      const { error, success } = await signInWithGitHub();
+      
+      if (success) {
+        toast({
+          title: t.auth.loginSuccess.title,
+          description: t.auth.loginSuccess.description,
+        });
+        navigate("/");
+      } else if (error) {
+        toast({
+          variant: "destructive",
+          title: t.auth.loginError.title,
+          description: error.message,
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: t.auth.loginError.title,
+        description: t.auth.loginError.description,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsLoading(true);
@@ -117,28 +164,33 @@ export const Login = () => {
           <p className="mt-2 text-sm text-gray-600">{t.auth.login.subtitle}</p>
         </div>
         
-        <div
-          id="g_id_onload"
-          data-client_id={import.meta.env.VITE_GOOGLE_CLIENT_ID}
-          data-context="signin"
-          data-ux_mode="popup"
-          data-callback="handleSignInWithGoogle"
-          data-itp_support="true"
-        />
+        <div className="flex flex-col gap-4">
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full flex items-center justify-center gap-2"
+            onClick={() => {
+              window.google?.accounts.id.prompt();
+            }}
+            disabled={isLoading}
+          >
+            <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4" />
+            Continue with Google
+          </Button>
 
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full flex items-center justify-center gap-2 mb-4"
-          onClick={() => {
-            // @ts-ignore - google is added by the script
-            window.google?.accounts.id.prompt();
-          }}
-          disabled={isLoading}
-        >
-          <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4" />
-          Continue with Google
-        </Button>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full flex items-center justify-center gap-2"
+            onClick={handleGitHubLogin}
+            disabled={isLoading}
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+            Continue with GitHub
+          </Button>
+        </div>
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
