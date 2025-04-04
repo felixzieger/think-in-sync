@@ -193,7 +193,8 @@ export const en = {
     continue: "Continue",
     generating: "Generating...",
     custom: "Custom Model",
-    searchPlaceholder: "Search for a model..."
+    searchPlaceholder: "Search for a model...",
+    loginRequired: "Please log in or register to use custom models"
   },
   auth: {
     login: {

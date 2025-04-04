@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Lock } from "lucide-react";
 import { modelNames } from "@/lib/modelNames";
+import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -43,6 +45,7 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
   const [isGenerating, setIsGenerating] = useState(false);
   const t = useTranslation();
   const { language } = useContext(LanguageContext);
+  const { user } = useAuth();
 
   const handleSubmit = async () => {
     if (!selectedModel) return;
@@ -126,7 +129,10 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
             className="w-full justify-between"
             onClick={() => setSelectedModel(modelId)}
           >
-            {modelId === "custom" ? t.models.custom : modelNames[modelId]} 
+            <div className="flex items-center gap-2">
+              {modelId === "custom" ? t.models.custom : modelNames[modelId]}
+              {modelId === "custom" && !user && <Lock className="h-4 w-4" />}
+            </div>
             <span className="text-sm opacity-50">{t.themes.pressKey} {String.fromCharCode(65 + index)}</span>
           </Button>
         ))}
@@ -138,21 +144,36 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <Select
-              value={customModel}
-              onValueChange={setCustomModel}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={t.models.searchPlaceholder} />
-              </SelectTrigger>
-              <SelectContent>
-                {SEARCHABLE_MODELS.map((model) => (
-                  <SelectItem key={model} value={model}>
-                    {modelNames[model] || model}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            {user ? (
+              <Select
+                value={customModel}
+                onValueChange={setCustomModel}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={t.models.searchPlaceholder} />
+                </SelectTrigger>
+                <SelectContent>
+                  {SEARCHABLE_MODELS.map((model) => (
+                    <SelectItem key={model} value={model}>
+                      {modelNames[model] || model}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <div className="text-center text-sm text-gray-600">
+                <p>{t.models.loginRequired}</p>
+                <div className="mt-2 flex justify-center gap-2">
+                  <Link to="/auth/login" className="text-primary hover:underline">
+                    {t.auth.login.linkText}
+                  </Link>
+                  <span>or</span>
+                  <Link to="/auth/register" className="text-primary hover:underline">
+                    {t.auth.register.linkText}
+                  </Link>
+                </div>
+              </div>
+            )}
           </motion.div>
         )}
       </div>
@@ -160,7 +181,7 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
       <Button
         onClick={handleSubmit}
         className="w-full"
-        disabled={!selectedModel || (selectedModel === "custom" && !customModel) || isGenerating}
+        disabled={!selectedModel || (selectedModel === "custom" && !customModel && user !== null) || isGenerating}
       >
         {isGenerating ? t.models.generating : `${t.models.continue} ⏎`}
       </Button>

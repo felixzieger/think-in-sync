@@ -194,7 +194,8 @@ export const pt = {
         continue: "Continuar",
         generating: "Gerando...",
         custom: "Modelo Personalizado",
-        searchPlaceholder: "Pesquisar um modelo..."
+        searchPlaceholder: "Pesquisar um modelo...",
+        loginRequired: "Por favor, faça login ou registre-se para usar modelos personalizados"
     },
     auth: {
         login: {

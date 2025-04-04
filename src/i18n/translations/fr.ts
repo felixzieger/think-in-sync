@@ -189,7 +189,8 @@ export const fr = {
     continue: "Continuer",
     generating: "Génération en cours...",
     custom: "Modèle Personnalisé",
-    searchPlaceholder: "Rechercher un modèle..."
+    searchPlaceholder: "Rechercher un modèle...",
+    loginRequired: "Veuillez vous connecter ou vous inscrire pour utiliser des modèles personnalisés"
   },
   auth: {
     login: {

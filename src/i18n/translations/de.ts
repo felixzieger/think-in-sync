@@ -194,7 +194,8 @@ export const de = {
     continue: "Weiter",
     generating: "Wird generiert...",
     custom: "Benutzerdefiniertes Modell",
-    searchPlaceholder: "Nach einem Modell suchen..."
+    searchPlaceholder: "Nach einem Modell suchen...",
+    loginRequired: "Bitte melde dich an oder registriere dich, um benutzerdefinierte Modelle zu verwenden"
   },
   auth: {
     login: {
