@@ -45,6 +45,8 @@ export const GameContainer = () => {
   const [aiGuess, setAiGuess] = useState<string>("");
   const [aiModel, setAiModel] = useState<string>("");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
+  const [wrongGuesses, setWrongGuesses] = useState<number>(0);
+  const [guessSequence, setGuessSequence] = useState<Array<'success' | 'wrong'>>([]);
   const [totalWordsInSuccessfulRounds, setTotalWordsInSuccessfulRounds] = useState<number>(0);
   const { toast } = useToast();
   const t = useTranslation();
@@ -142,6 +144,8 @@ export const GameContainer = () => {
     setAiGuess("");
     setCurrentTheme("standard");
     setSuccessfulRounds(0);
+    setWrongGuesses(0);
+    setGuessSequence([]);
     setTotalWordsInSuccessfulRounds(0);
     setWords([]);
     setCurrentWordIndex(0);
@@ -210,6 +214,8 @@ export const GameContainer = () => {
       setCurrentWordIndex(0);
       setGameState("building-sentence");
       setSuccessfulRounds(0);
+      setWrongGuesses(0);
+      setGuessSequence([]);
       setTotalWordsInSuccessfulRounds(0);
       console.log("Game started with theme:", currentTheme, "language:", language, "model:", model);
     } catch (error) {
@@ -309,19 +315,21 @@ export const GameContainer = () => {
   };
 
   const handleNextRound = () => {
-    if (isGuessCorrect()) {
+    const wasCorrect = isGuessCorrect();
+    if (wasCorrect) {
       setSuccessfulRounds(prev => prev + 1);
-      if (currentWordIndex < words.length - 1) {
-        setCurrentWordIndex(prev => prev + 1);
-        setGameState("building-sentence");
-        setSentence([]);
-        setAiGuess("");
-        console.log("Next round started with word:", words[currentWordIndex + 1]);
-      } else {
-        handleGameReview();
-      }
     } else {
-      setGameState("game-review");
+      setWrongGuesses(prev => prev + 1);
+    }
+    setGuessSequence(prev => [...prev, wasCorrect ? 'success' : 'wrong']);
+
+    if (currentWordIndex < words.length - 1) {
+      setCurrentWordIndex(prev => prev + 1);
+      setGameState("building-sentence");
+      setSentence([]);
+      setAiGuess("");
+    } else {
+      handleGameReview();
     }
   };
 
@@ -329,6 +337,8 @@ export const GameContainer = () => {
     setSentence([]);
     setAiGuess("");
     setSuccessfulRounds(0);
+    setWrongGuesses(0);
+    setGuessSequence([]);
     setTotalWordsInSuccessfulRounds(0);
     setWords([]);
     setCurrentWordIndex(0);
@@ -387,6 +397,9 @@ export const GameContainer = () => {
           <SentenceBuilder
             currentWord={currentWord}
             successfulRounds={successfulRounds}
+            totalRounds={words.length}
+            wrongGuesses={wrongGuesses}
+            guessSequence={guessSequence}
             sentence={sentence}
             playerInput={playerInput}
             isAiThinking={isAiThinking}
@@ -406,6 +419,9 @@ export const GameContainer = () => {
             onGameReview={handleGameReview}
             onBack={handleBack}
             currentScore={successfulRounds}
+            totalRounds={words.length}
+            wrongGuesses={wrongGuesses}
+            guessSequence={guessSequence}
             avgWordsPerRound={getAverageWordsPerSuccessfulRound()}
             sessionId={sessionId}
             currentTheme={currentTheme}
@@ -415,6 +431,8 @@ export const GameContainer = () => {
         ) : (
           <GameReview
             currentScore={successfulRounds}
+            wrongGuesses={wrongGuesses}
+            totalRounds={words.length}
             avgWordsPerRound={getAverageWordsPerSuccessfulRound()}
             onPlayAgain={handlePlayAgain}
             onBack={handleBack}
@@ -422,6 +440,7 @@ export const GameContainer = () => {
             sessionId={sessionId}
             currentTheme={currentTheme}
             fromSession={fromSession}
+            words={words}
           />
         )}
       </motion.div>

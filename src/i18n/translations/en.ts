@@ -21,6 +21,7 @@ export const en = {
     confirm: "Confirm",
     describeWord: "Your goal is to describe the word",
     nextRound: "Next Round",
+    nextWord: "Next Word",
     playAgain: "Play Again",
     saveScore: "Save Score",
     review: {
@@ -37,6 +38,10 @@ export const en = {
       urlCopyErrorDesc: "Please try copying the URL manually",
       youWin: "You Won!",
       youLost: "You Lost!",
+      correct: "Correct",
+      wrong: "Wrong",
+      total: "Total",
+      avgWords: "Average Words per Round",
       friendScore: (score: number, avgWords: string) =>
         `The person that challenged you completed ${score} rounds successfully with an average of ${avgWords} words.`,
       word: "Word",

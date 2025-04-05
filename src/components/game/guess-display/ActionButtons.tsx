@@ -21,11 +21,9 @@ export const ActionButtons = ({
 
   return (
     <div className="flex justify-center gap-4">
-      {isCorrect ? (
-        <Button onClick={onNextRound} className="text-white">{t.game.nextRound} ⏎</Button>
-      ) : (
-        <Button onClick={onGameReview} className="text-white">{t.game.review.title} ⏎</Button>
-      )}
+      <Button onClick={onNextRound} className="text-white">
+        {isCorrect ? t.game.nextRound : t.game.nextWord} ⏎
+      </Button>
     </div>
   );
 };

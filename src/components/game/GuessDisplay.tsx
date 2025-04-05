@@ -7,14 +7,22 @@ import { GuessDescription } from "./guess-display/GuessDescription";
 import { GuessResult } from "./guess-display/GuessResult";
 import { ActionButtons } from "./guess-display/ActionButtons";
 
+interface SentenceWord {
+  word: string;
+  provider: 'player' | 'ai';
+}
+
 interface GuessDisplayProps {
   currentScore: number;
   currentWord: string;
-  sentence: string[];
+  sentence: SentenceWord[];
   aiGuess: string;
   avgWordsPerRound: number;
   sessionId: string;
   currentTheme: string;
+  totalRounds: number;
+  wrongGuesses: number;
+  guessSequence: Array<'success' | 'wrong'>;
   onNextRound: () => void;
   onGameReview: () => void;
   onBack?: () => void;
@@ -30,6 +38,9 @@ export const GuessDisplay = ({
   avgWordsPerRound,
   sessionId,
   currentTheme,
+  totalRounds,
+  wrongGuesses,
+  guessSequence,
   onNextRound,
   onBack,
   onGameReview,
@@ -48,17 +59,13 @@ export const GuessDisplay = ({
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
-        if (isGuessCorrect()) {
-          onNextRound();
-        } else {
-          onGameReview();
-        }
+        onNextRound();
       }
     };
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [isGuessCorrect, onNextRound, onGameReview]);
+  }, [onNextRound]);
 
   return (
     <motion.div
@@ -68,6 +75,9 @@ export const GuessDisplay = ({
     >
       <RoundHeader
         successfulRounds={currentScore}
+        totalRounds={totalRounds}
+        wrongGuesses={wrongGuesses}
+        guessSequence={guessSequence}
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={handleSetShowConfirmDialog}

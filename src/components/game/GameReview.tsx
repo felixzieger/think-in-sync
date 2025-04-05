@@ -25,10 +25,13 @@ interface GameReviewProps {
   sessionId: string;
   currentTheme: string;
   fromSession?: string | null;
+  words: string[];
 }
 
 export const GameReview = ({
   currentScore,
+  wrongGuesses,
+  totalRounds,
   avgWordsPerRound,
   onPlayAgain,
   onBack,
@@ -36,6 +39,7 @@ export const GameReview = ({
   sessionId,
   currentTheme,
   fromSession,
+  words,
 }: GameReviewProps) => {
   const t = useTranslation();
   const { toast } = useToast();
@@ -173,6 +177,8 @@ export const GameReview = ({
     >
       <RoundHeader
         successfulRounds={currentScore}
+        totalRounds={totalRounds}
+        wrongGuesses={wrongGuesses}
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={setShowConfirmDialog}
@@ -180,15 +186,46 @@ export const GameReview = ({
       />
 
       <div className="space-y-4">
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <p className="text-lg">
-            {t.game.review.successfulRounds}: <span className="font-bold">{currentScore}</span>
-          </p>
-          <p className="text-sm text-gray-600">
-            {t.leaderboard.wordsPerRound}: {avgWordsPerRound.toFixed(1)}
-          </p>
-          {renderComparisonResult()}
+        <h2 className="text-2xl font-bold text-gray-900">
+          {t.game.review.title}
+        </h2>
+        <div className="space-y-2">
+          <div className="rounded-lg bg-gray-50 p-6">
+            <div className="flex justify-center items-center gap-8">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-green-600">{currentScore}</div>
+                <div className="text-sm text-gray-600">{t.game.review.correct}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-red-600">{wrongGuesses}</div>
+                <div className="text-sm text-gray-600">{t.game.review.wrong}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-gray-600">{totalRounds}</div>
+                <div className="text-sm text-gray-600">{t.game.review.total}</div>
+              </div>
+            </div>
+            <div className="mt-4 space-y-1">
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full"
+                  style={{ width: `${(currentScore / totalRounds) * 100}%` }}
+                />
+                <div
+                  className="bg-gradient-to-r from-red-500 to-red-600 h-2 rounded-full -mt-2"
+                  style={{ 
+                    width: `${(wrongGuesses / totalRounds) * 100}%`,
+                    marginLeft: `${(currentScore / totalRounds) * 100}%`
+                  }}
+                />
+              </div>
+              <p className="text-sm text-gray-600 text-center">
+                {t.game.review.avgWords}: {avgWordsPerRound.toFixed(1)}
+              </p>
+            </div>
+          </div>
         </div>
+        {renderComparisonResult()}
 
         <GameDetailsView gameResults={gameResults} fromSession={fromSession} />
 

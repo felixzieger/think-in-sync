@@ -25,6 +25,9 @@ interface SentenceWord {
 interface SentenceBuilderProps {
   currentWord: string;
   successfulRounds: number;
+  totalRounds: number;
+  wrongGuesses: number;
+  guessSequence: Array<'success' | 'wrong'>;
   sentence: SentenceWord[];
   playerInput: string;
   isAiThinking: boolean;
@@ -39,6 +42,9 @@ interface SentenceBuilderProps {
 export const SentenceBuilder = ({
   currentWord,
   successfulRounds,
+  totalRounds,
+  wrongGuesses,
+  guessSequence,
   sentence,
   playerInput,
   isAiThinking,
@@ -85,6 +91,9 @@ export const SentenceBuilder = ({
     >
       <RoundHeader
         successfulRounds={successfulRounds}
+        totalRounds={totalRounds}
+        wrongGuesses={wrongGuesses}
+        guessSequence={guessSequence}
         onBack={onBack}
         showConfirmDialog={showConfirmDialog}
         setShowConfirmDialog={handleSetShowConfirmDialog}
