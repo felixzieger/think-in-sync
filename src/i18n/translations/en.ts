@@ -89,7 +89,7 @@ export const en = {
     scoreSubmitted: "Score Submitted!",
     scoreSubmittedDesc: "Your score has been added to the leaderboard",
     modes: {
-      daily: "Daily Challenge",
+      daily: "Daily 10",
       "all-time": "All Time"
     },
     error: {
@@ -139,7 +139,7 @@ export const en = {
     title: "Think in Sync",
     subtitle: "Team up with AI to craft a clue and have a different AI guess your secret word!",
     startButton: "Start Game",
-    startDailyButton: "Daily Challenge",
+    startDailyButton: "Play Daily 10",
     startNewButton: "New Game",
     dailyLeaderboard: "Today's Ranking",
     howToPlay: "How to Play",
@@ -192,6 +192,11 @@ export const en = {
         "Try to be creative and descriptive",
         "The AI will try to guess your word after each sentence"
       ]
+    },
+    gameModes: {
+      title: "Game Modes",
+      daily: "Daily 10: Everyone gets the same wordlist, refreshed every 24 hours",
+      custom: "New Game: Choose your own theme and play a personal game"
     }
   },
   models: {

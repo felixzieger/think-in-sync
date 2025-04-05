@@ -85,7 +85,7 @@ export const de = {
     scoreSubmitted: "Punktzahl eingereicht!",
     scoreSubmittedDesc: "Deine Punktzahl wurde zur Bestenliste hinzugefügt",
     modes: {
-      daily: "Tägliche Herausforderung",
+      daily: "Die heutigen Täglichen 10",
       "all-time": "Bestenliste"
     },
     error: {
@@ -135,7 +135,7 @@ export const de = {
     title: "Think in Sync",
     subtitle: "Arbeite mit KI zusammen, um einen Hinweis zu erstellen und lass eine andere KI dein geheimes Wort erraten!",
     startButton: "Spiel starten",
-    startDailyButton: "Tägliche Herausforderung",
+    startDailyButton: "Spiele die Täglichen 10",
     startNewButton: "Neues Spiel",
     dailyLeaderboard: "Tagesranking",
     howToPlay: "Spielanleitung",
@@ -188,6 +188,11 @@ export const de = {
         "Sei kreativ und beschreibend",
         "Die KI wird nach jedem Satz versuchen, dein Wort zu erraten"
       ]
+    },
+    gameModes: {
+      title: "Spielmodi",
+      daily: "Tägliche 10: Alle Spieler erhalten die gleiche Wortliste, die sich alle 24 Stunden erneuert",
+      custom: "Neues Spiel: Wähle dein eigenes Thema und spiele dein persönliches Spiel"
     }
   },
   models: {

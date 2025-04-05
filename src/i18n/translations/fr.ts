@@ -84,7 +84,7 @@ export const fr = {
     scoreSubmitted: "Score soumis !",
     scoreSubmittedDesc: "Votre score a été ajouté au classement",
     modes: {
-      daily: "Défi du Jour",
+      daily: "Quotidien 10 d'aujourd'hui",
       "all-time": "Historique"
     },
     error: {
@@ -130,7 +130,7 @@ export const fr = {
     title: "Think in Sync",
     subtitle: "Collaborez avec une IA pour créer un indice, puis laissez-en une autre deviner votre mot secret !",
     startButton: "Commencer",
-    startDailyButton: "Défi du Jour",
+    startDailyButton: "Jouer Quotidien 10",
     startNewButton: "Nouvelle Partie",
     dailyLeaderboard: "Classement du jour",
     howToPlay: "Comment Jouer",
@@ -183,6 +183,11 @@ export const fr = {
         "Soyez créatif et descriptif",
         "L'IA essaiera de deviner votre mot après chaque phrase"
       ]
+    },
+    gameModes: {
+      title: "Modes de Jeu",
+      daily: "Quotidien 10 : La même liste de mots pour tous, renouvelée toutes les 24 heures",
+      custom: "Nouvelle Partie : Choisissez un thème et jouez votre partie personnelle"
     }
   },
   models: {

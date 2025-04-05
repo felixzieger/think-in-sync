@@ -85,7 +85,7 @@ export const es = {
     scoreSubmitted: "¡Puntuación enviada!",
     scoreSubmittedDesc: "Tu puntuación ha sido añadida a la tabla de clasificación",
     modes: {
-      daily: "Desafío Diario",
+      daily: "Diario 10 de hoy",
       "all-time": "Histórico"
     },
     error: {
@@ -135,7 +135,7 @@ export const es = {
     title: "Think in Sync",
     subtitle: "¡Forma equipo con la IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
     startButton: "Comenzar juego",
-    startDailyButton: "Desafío Diario",
+    startDailyButton: "Jugar Diario 10",
     startNewButton: "Nuevo Juego",
     dailyLeaderboard: "Ranking diario",
     howToPlay: "Cómo jugar",
@@ -188,6 +188,11 @@ export const es = {
         "Sé creativo y descriptivo",
         "La IA intentará adivinar tu palabra después de cada frase"
       ]
+    },
+    gameModes: {
+      title: "Modos de Juego",
+      daily: "Diario 10: La misma lista de palabras para todos, renovada cada 24 horas",
+      custom: "Nuevo Juego: Elige un tema y juega tu partida personal"
     }
   },
   models: {

@@ -85,7 +85,7 @@ export const pt = {
         scoreSubmitted: "Pontuação enviada!",
         scoreSubmittedDesc: "Sua pontuação foi adicionada ao placar",
         modes: {
-            daily: "Desafio Diário",
+            daily: "Diário 10 de hoje",
             "all-time": "Histórico"
         },
         error: {
@@ -135,7 +135,7 @@ export const pt = {
         title: "Think in Sync",
         subtitle: "Forme uma equipe com a IA para criar uma pista e deixe outra IA adivinhar sua palavra secreta!",
         startButton: "Iniciar jogo",
-        startDailyButton: "Desafio Diário",
+        startDailyButton: "Jogar Diário 10",
         startNewButton: "Novo Jogo",
         dailyLeaderboard: "Placar diário",
         howToPlay: "Como jogar",
@@ -188,6 +188,11 @@ export const pt = {
                 "Seja criativo e descritivo",
                 "A IA tentará adivinhar sua palavra após cada frase"
             ]
+        },
+        gameModes: {
+            title: "Modos de Jogo",
+            daily: "Diário 10: A mesma lista de palavras para todos, atualizada a cada 24 horas",
+            custom: "Novo Jogo: Escolha um tema e jogue seu jogo pessoal"
         }
     },
     models: {

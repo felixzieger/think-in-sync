@@ -33,6 +33,13 @@ export const HowToPlayDialog = ({ open, onOpenChange }: HowToPlayDialogProps) =>
                 ))}
               </ul>
             </div>
+            <div>
+              <h3 className="font-medium text-gray-800">{t.howToPlay.gameModes.title}</h3>
+              <ul className="list-disc list-inside space-y-1">
+                <li>{t.howToPlay.gameModes.daily}</li>
+                <li>{t.howToPlay.gameModes.custom}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </DialogContent>

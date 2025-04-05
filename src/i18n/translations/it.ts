@@ -84,7 +84,7 @@ export const it = {
     scoreSubmitted: "Punteggio inviato!",
     scoreSubmittedDesc: "Il tuo punteggio è stato aggiunto alla classifica",
     modes: {
-      daily: "Sfida Giornaliera",
+      daily: "Giornaliero 10 di oggi",
       "all-time": "Classifica Generale"
     },
     error: {
@@ -136,7 +136,7 @@ export const it = {
     title: "Think in Sync",
     subtitle: "Fai squadra con l'IA per creare un indizio e lascia che un'altra IA indovini la tua parola segreta!",
     startButton: "Inizia gioco",
-    startDailyButton: "Sfida Giornaliera",
+    startDailyButton: "Gioca Giornaliero 10",
     startNewButton: "Nuova Partita",
     dailyLeaderboard: "Classifica di oggi",
     howToPlay: "Come giocare",
@@ -189,6 +189,11 @@ export const it = {
         "Sii creativo e descrittivo",
         "L'IA cercherà di indovinare la tua parola dopo ogni frase"
       ]
+    },
+    gameModes: {
+      title: "Modalità di Gioco",
+      daily: "Giornaliero 10: La stessa lista di parole per tutti, rinnovata ogni 24 ore",
+      custom: "Nuova Partita: Scegli un tema e gioca la tua partita personale"
     }
   },
   models: {
