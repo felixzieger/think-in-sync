@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Copy } from "lucide-react";
+import { Copy, Home } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +18,8 @@ import { RoundHeader } from "./sentence-builder/RoundHeader";
 
 interface GameReviewProps {
   currentScore: number;
+  wrongGuesses: number;
+  totalRounds: number;
   avgWordsPerRound: number;
   onPlayAgain: (game_id?: string, fromSession?: string) => void;
   onBack?: () => void;
@@ -151,6 +153,12 @@ export const GameReview = ({
     onPlayAgain();
   };
 
+  const handleHomeClick = () => {
+    if (onBack) {
+      onBack();
+    }
+  };
+
   const renderComparisonResult = () => {
     if (!friendData) return null;
 
@@ -175,20 +183,21 @@ export const GameReview = ({
       animate={{ opacity: 1 }}
       className="text-center space-y-6"
     >
-      <RoundHeader
-        successfulRounds={currentScore}
-        totalRounds={totalRounds}
-        wrongGuesses={wrongGuesses}
-        onBack={onBack}
-        showConfirmDialog={showConfirmDialog}
-        setShowConfirmDialog={setShowConfirmDialog}
-        onCancel={() => setShowConfirmDialog(false)}
-      />
-
-      <div className="space-y-4">
+      <div className="relative flex items-center justify-center">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute left-0 text-gray-600 hover:text-primary"
+          onClick={handleHomeClick}
+        >
+          <Home className="h-5 w-5" />
+        </Button>
         <h2 className="text-2xl font-bold text-gray-900">
           {t.game.review.title}
         </h2>
+      </div>
+
+      <div className="space-y-4">
         <div className="space-y-2">
           <div className="rounded-lg bg-gray-50 p-6">
             <div className="flex justify-center items-center gap-8">

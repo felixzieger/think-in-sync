@@ -24,6 +24,8 @@ export const en = {
     nextWord: "Next Word",
     playAgain: "Play Again",
     saveScore: "Save Score",
+    skipWord: "Skip word",
+    finishGame: "Finish game",
     review: {
       title: "Game Review",
       successfulRounds: "Successful Rounds",

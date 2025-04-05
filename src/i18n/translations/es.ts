@@ -24,6 +24,8 @@ export const es = {
     playAgain: "Jugar de Nuevo",
     saveScore: "Guardar Puntuación",
     playNewWords: "Jugar nuevas palabras",
+    skipWord: "Saltar palabra",
+    finishGame: "Terminar juego",
     review: {
       title: "Resumen del Juego",
       successfulRounds: "Rondas Exitosas",

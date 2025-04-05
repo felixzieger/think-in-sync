@@ -116,6 +116,16 @@ export const SentenceBuilder = ({
         sentence={sentence}
       />
 
+      <div className="mt-4 flex justify-center gap-4 text-sm">
+        <Button
+          variant="link"
+          className="text-muted-foreground hover:text-primary"
+          onClick={onClose}
+        >
+          {t.game.finishGame}
+        </Button>
+      </div>
+
       <AlertDialog open={showConfirmDialog} onOpenChange={handleSetShowConfirmDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>

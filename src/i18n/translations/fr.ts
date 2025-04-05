@@ -23,6 +23,8 @@ export const fr = {
     nextRound: "Tour Suivant",
     playAgain: "Rejouer",
     saveScore: "Sauvegarder le Score",
+    skipWord: "Passer le mot",
+    finishGame: "Terminer la partie",
     review: {
       title: "Résumé de la Partie",
       successfulRounds: "Manches Réussies",

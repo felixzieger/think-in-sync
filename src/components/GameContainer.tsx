@@ -408,7 +408,7 @@ export const GameContainer = () => {
             onMakeGuess={handleMakeGuess}
             normalizeWord={(word: string) => normalizeWord(word, language)}
             onBack={handleBack}
-            onClose={handleBack}
+            onClose={handleGameReview}
           />
         ) : gameState === "showing-guess" ? (
           <GuessDisplay
@@ -441,6 +441,7 @@ export const GameContainer = () => {
             currentTheme={currentTheme}
             fromSession={fromSession}
             words={words}
+            guessSequence={guessSequence}
           />
         )}
       </motion.div>

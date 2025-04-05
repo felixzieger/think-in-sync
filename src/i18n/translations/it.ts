@@ -23,6 +23,8 @@ export const it = {
     nextRound: "Prossimo Turno",
     playAgain: "Gioca Ancora",
     saveScore: "Salva Punteggio",
+    skipWord: "Salta parola",
+    finishGame: "Termina gioco",
     review: {
       title: "Riepilogo Partita",
       successfulRounds: "Turni Riusciti",
