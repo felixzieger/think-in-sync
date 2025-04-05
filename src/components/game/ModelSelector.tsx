@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
-import { ArrowLeft, Lock } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { modelNames } from "@/lib/modelNames";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
@@ -131,7 +131,7 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
           >
             <div className="flex items-center gap-2">
               {modelId === "custom" ? t.models.custom : modelNames[modelId]}
-              {modelId === "custom" && !user && <Lock className="h-4 w-4" />}
+              {modelId === "custom" && !user}
             </div>
             <span className="text-sm opacity-50">{t.themes.pressKey} {String.fromCharCode(65 + index)}</span>
           </Button>
