@@ -136,7 +136,7 @@ export const de = {
     subtitle: "Arbeite mit KI zusammen, um einen Hinweis zu erstellen und lass eine andere KI dein geheimes Wort erraten!",
     startButton: "Spiel starten",
     startDailyButton: "Spiele die Täglichen 10",
-    startNewButton: "Neues Spiel",
+    startNewButton: "Freestyle spielen",
     dailyLeaderboard: "Tagesranking",
     howToPlay: "Spielanleitung",
     leaderboard: "Bestenliste",
@@ -192,7 +192,7 @@ export const de = {
     gameModes: {
       title: "Spielmodi",
       daily: "Tägliche 10: Alle Spieler erhalten die gleiche Wortliste, die sich alle 24 Stunden erneuert",
-      custom: "Neues Spiel: Wähle dein eigenes Thema und spiele dein persönliches Spiel"
+      custom: "Freestyle: Wähle dein eigenes Thema und spiele dein persönliches Spiel"
     }
   },
   models: {

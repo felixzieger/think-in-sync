@@ -140,7 +140,7 @@ export const en = {
     subtitle: "Team up with AI to craft a clue and have a different AI guess your secret word!",
     startButton: "Start Game",
     startDailyButton: "Play Daily 10",
-    startNewButton: "New Game",
+    startNewButton: "Play Freestyle",
     dailyLeaderboard: "Today's Ranking",
     howToPlay: "How to Play",
     leaderboard: "Leaderboard",
@@ -196,7 +196,7 @@ export const en = {
     gameModes: {
       title: "Game Modes",
       daily: "Daily 10: Everyone gets the same wordlist, refreshed every 24 hours",
-      custom: "New Game: Choose your own theme and play a personal game"
+      custom: "Freestyle: Choose your own theme and play a personal game"
     }
   },
   models: {

@@ -137,7 +137,7 @@ export const it = {
     subtitle: "Fai squadra con l'IA per creare un indizio e lascia che un'altra IA indovini la tua parola segreta!",
     startButton: "Inizia gioco",
     startDailyButton: "Gioca Giornaliero 10",
-    startNewButton: "Nuova Partita",
+    startNewButton: "Gioca Freestyle",
     dailyLeaderboard: "Classifica di oggi",
     howToPlay: "Come giocare",
     leaderboard: "Classifica",
@@ -193,7 +193,7 @@ export const it = {
     gameModes: {
       title: "Modalità di Gioco",
       daily: "Giornaliero 10: La stessa lista di parole per tutti, rinnovata ogni 24 ore",
-      custom: "Nuova Partita: Scegli un tema e gioca la tua partita personale"
+      custom: "Freestyle: Scegli un tema e gioca la tua partita personale"
     }
   },
   models: {

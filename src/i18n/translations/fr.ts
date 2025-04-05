@@ -131,7 +131,7 @@ export const fr = {
     subtitle: "Collaborez avec une IA pour créer un indice, puis laissez-en une autre deviner votre mot secret !",
     startButton: "Commencer",
     startDailyButton: "Jouer Quotidien 10",
-    startNewButton: "Nouvelle Partie",
+    startNewButton: "Jouer Freestyle",
     dailyLeaderboard: "Classement du jour",
     howToPlay: "Comment Jouer",
     leaderboard: "Classement",
@@ -187,7 +187,7 @@ export const fr = {
     gameModes: {
       title: "Modes de Jeu",
       daily: "Quotidien 10 : La même liste de mots pour tous, renouvelée toutes les 24 heures",
-      custom: "Nouvelle Partie : Choisissez un thème et jouez votre partie personnelle"
+      custom: "Freestyle : Choisissez un thème et jouez votre partie personnelle"
     }
   },
   models: {

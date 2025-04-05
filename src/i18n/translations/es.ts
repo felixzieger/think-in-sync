@@ -136,7 +136,7 @@ export const es = {
     subtitle: "¡Forma equipo con la IA para crear una pista y deja que otra IA adivine tu palabra secreta!",
     startButton: "Comenzar juego",
     startDailyButton: "Jugar Diario 10",
-    startNewButton: "Nuevo Juego",
+    startNewButton: "Jugar Freestyle",
     dailyLeaderboard: "Ranking diario",
     howToPlay: "Cómo jugar",
     leaderboard: "Clasificación",
@@ -192,7 +192,7 @@ export const es = {
     gameModes: {
       title: "Modos de Juego",
       daily: "Diario 10: La misma lista de palabras para todos, renovada cada 24 horas",
-      custom: "Nuevo Juego: Elige un tema y juega tu partida personal"
+      custom: "Freestyle: Elige un tema y juega tu partida personal"
     }
   },
   models: {

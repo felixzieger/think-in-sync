@@ -136,7 +136,7 @@ export const pt = {
         subtitle: "Forme uma equipe com a IA para criar uma pista e deixe outra IA adivinhar sua palavra secreta!",
         startButton: "Iniciar jogo",
         startDailyButton: "Jogar Diário 10",
-        startNewButton: "Novo Jogo",
+        startNewButton: "Jogar Freestyle",
         dailyLeaderboard: "Placar diário",
         howToPlay: "Como jogar",
         leaderboard: "Placar",
@@ -192,7 +192,7 @@ export const pt = {
         gameModes: {
             title: "Modos de Jogo",
             daily: "Diário 10: A mesma lista de palavras para todos, atualizada a cada 24 horas",
-            custom: "Novo Jogo: Escolha um tema e jogue seu jogo pessoal"
+            custom: "Freestyle: Escolha um tema e jogue seu jogo pessoal"
         }
     },
     models: {
