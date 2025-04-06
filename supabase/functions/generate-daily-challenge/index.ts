@@ -152,7 +152,6 @@ const wordTranslations: Record<string, Record<string, string>> = {
   "DRYER": { de: "TROCKNER", fr: "SÈCHE-LINGE", it: "ASCUGATRICE", es: "SECADORA", pt: "SECADORA" },
   "FURNACE": { de: "OFEN", fr: "FOURNAISE", it: "FORNACE", es: "HORNO", pt: "FORNALHA" },
   "FAN": { de: "VENTILATOR", fr: "VENTILATEUR", it: "VENTILATORE", es: "VENTILADOR", pt: "VENTILADOR" },
-  "PAINTBRUSH": { de: "PINSEL", fr: "PINCEAU", it: "PENNELLO", es: "Pincel", pt: "Pincel" },
   "BUCKET": { de: "EIMER", fr: "SEAU", it: "SECCHIO", es: "CUBO", pt: "BALDE" },
   "SPONGE": { de: "SCHWAMM", fr: "ÉPONGE", it: "SPUGNA", es: "ESPONJA", pt: "ESPONJA" },
   "SOAP": { de: "SEIFE", fr: "SAVON", it: "SAPONE", es: "JABÓN", pt: "SABÃO" },
