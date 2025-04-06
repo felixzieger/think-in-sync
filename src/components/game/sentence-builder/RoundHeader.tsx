@@ -92,10 +92,6 @@ export const RoundHeader = ({
             <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
             <span className="text-sm font-medium text-red-700">{wrongGuesses}</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <div className="h-2.5 w-2.5 rounded-full bg-gray-300" />
-            <span className="text-sm font-medium text-gray-700">{remainingRounds}</span>
-          </div>
         </div>
       )}
 
