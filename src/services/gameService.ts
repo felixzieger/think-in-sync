@@ -60,10 +60,14 @@ export const createGame = async (theme: string, language: Language = 'en'): Prom
 export const createSession = async (gameId: string): Promise<string> => {
   console.log('Creating new session for game:', gameId);
 
+  // Get the current user
+  const { data: { user } } = await supabase.auth.getUser();
+
   const { data: session, error } = await supabase
     .from('sessions')
     .insert({
-      game_id: gameId
+      game_id: gameId,
+      user_id: user?.id
     })
     .select()
     .single();
