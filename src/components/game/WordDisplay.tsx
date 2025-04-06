@@ -10,18 +10,6 @@ interface WordDisplayProps {
 }
 
 export const WordDisplay = ({ currentWord, successfulRounds, onContinue }: WordDisplayProps) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const imagePath = `/think_in_sync_assets/${currentWord.toLowerCase()}.jpg`;
-  const isMobile = useIsMobile();
-
-  useEffect(() => {
-    if (!isMobile) {
-      const img = new Image();
-      img.onload = () => setImageLoaded(true);
-      img.src = imagePath;
-      console.log("Attempting to load image:", imagePath);
-    }
-  }, [imagePath, isMobile]);
 
   return (
     <motion.div
@@ -31,13 +19,6 @@ export const WordDisplay = ({ currentWord, successfulRounds, onContinue }: WordD
     >
       <h2 className="mb-4 text-2xl font-semibold text-gray-900">Your Word</h2>
       <div className="mb-4 overflow-hidden rounded-lg bg-secondary/10">
-        {!isMobile && imageLoaded && (
-          <img
-            src={imagePath}
-            alt={currentWord}
-            className="mx-auto h-48 w-full object-cover"
-          />
-        )}
         <p className="p-6 text-4xl font-bold tracking-wider text-secondary">
           {currentWord}
         </p>
