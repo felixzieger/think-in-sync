@@ -20,8 +20,9 @@ export const es = {
     cancel: "Cancelar",
     confirm: "Confirmar",
     describeWord: "Tu objetivo es describir la palabra",
-    nextRound: "Siguiente Ronda",
-    playAgain: "Jugar de Nuevo",
+    nextRound: "Siguiente ronda",
+    nextWord: "Siguiente palabra",
+    playAgain: "Jugar de nuevo",
     saveScore: "Guardar Puntuación",
     playNewWords: "Jugar nuevas palabras",
     skipWord: "Saltar palabra",
@@ -47,10 +48,11 @@ export const es = {
       friendWords: "Amigo",
       result: "Resultado",
       details: "Detalles",
-      yourDescription: "Tu Descripción",
-      friendDescription: "Descripción del Amigo",
-      aiGuessed: "La IA adivinó",
-      words: "Palabras"
+      yourDescription: "Tu descripción",
+      friendDescription: "Descripción del amigo",
+      aiGuessed: "IA adivinó",
+      words: "Palabras",
+      avgWords: "Promedio de palabras por ronda"
     },
     invitation: {
       title: "Invitación al Juego",

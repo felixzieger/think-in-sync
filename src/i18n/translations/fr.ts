@@ -20,7 +20,8 @@ export const fr = {
     cancel: "Annuler",
     confirm: "Confirmer",
     describeWord: "Votre objectif est de décrire le mot",
-    nextRound: "Tour Suivant",
+    nextRound: "Ronde suivante",
+    nextWord: "Mot suivant",
     playAgain: "Rejouer",
     saveScore: "Sauvegarder le Score",
     skipWord: "Passer le mot",
@@ -40,16 +41,17 @@ export const fr = {
       youWin: "Vous avez gagné !",
       youLost: "Vous avez perdu !",
       friendScore: (score: number, avgWords: string) =>
-        `La personne qui vous a défié a complété ${score} manches avec une moyenne de ${avgWords} mots.`,
+        `La personne qui vous a mis au défi a complété ${score} rondes avec succès avec une moyenne de ${avgWords} mots.`,
       word: "Mot",
       yourWords: "Vous",
       friendWords: "Ami",
       result: "Résultat",
       details: "Détails",
-      yourDescription: "Votre Description",
-      friendDescription: "Description de l'Ami",
-      aiGuessed: "L'IA a deviné",
-      words: "Mots"
+      yourDescription: "Votre description",
+      friendDescription: "Description de l'ami",
+      aiGuessed: "IA a deviné",
+      words: "Mots",
+      avgWords: "Moyenne de mots par ronde"
     },
     invitation: {
       title: "Invitation au Jeu",

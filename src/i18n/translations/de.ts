@@ -21,6 +21,7 @@ export const de = {
     confirm: "Bestätigen",
     describeWord: "Dein Ziel ist es folgendes Wort zu beschreiben",
     nextRound: "Nächste Runde",
+    nextWord: "Nächstes Wort",
     playAgain: "Erneut spielen",
     saveScore: "Punktzahl speichern",
     playNewWords: "Neue Wörter spielen",
@@ -50,7 +51,8 @@ export const de = {
       yourDescription: "Deine Beschreibung",
       friendDescription: "Beschreibung des Freundes",
       aiGuessed: "KI hat geraten",
-      words: "Wörter"
+      words: "Wörter",
+      avgWords: "Durchschnittliche Wörter pro Runde"
     },
     invitation: {
       title: "Spieleinladung",
