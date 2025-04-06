@@ -61,8 +61,6 @@ export const SentenceBuilder = ({
   const [isTooLong, setIsTooLong] = useState(false);
   const t = useTranslation();
 
-  console.log("SentenceBuilder - Rendering with showConfirmDialog:", showConfirmDialog);
-
   const validateInput = (input: string) => {
     setHasMultipleWords(input.trim().split(/\s+/).length > 1);
     setContainsTargetWord(
