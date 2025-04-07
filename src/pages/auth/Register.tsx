@@ -20,6 +20,9 @@ declare global {
           initialize: (config: {
             client_id: string;
             callback: (response: { credential: string }) => Promise<void>;
+            auto_select?: boolean;
+            itp_support?: boolean;
+            use_fedcm_for_prompt?: boolean;
           }) => void;
           prompt: () => void;
         };
@@ -60,6 +63,19 @@ export const Register = () => {
     const script = document.createElement('script');
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
+    script.onload = () => {
+      // Initialize Google Identity Services
+      window.google?.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: window.handleSignInWithGoogle,
+        auto_select: true,
+        itp_support: true,
+        use_fedcm_for_prompt: true
+      });
+
+      // Display the One Tap dialog
+      window.google?.accounts.id.prompt();
+    };
     document.body.appendChild(script);
 
     return () => {
@@ -87,7 +103,7 @@ export const Register = () => {
         }
         
         setIsOAuthLoading(true);
-        const { error } = await signInWithGoogle();
+        const { error } = await signInWithGoogle(response.credential);
         
         if (error) {
           setIsOAuthLoading(false);
@@ -174,33 +190,34 @@ export const Register = () => {
             <p className="mt-2 text-sm text-gray-600">{t.auth.register.description}</p>
           </div>
           
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 items-center">
             <div
               id="g_id_onload"
               data-client_id={import.meta.env.VITE_GOOGLE_CLIENT_ID}
               data-context="signin"
               data-ux_mode="popup"
               data-callback="handleSignInWithGoogle"
+              data-auto_select="false"
               data-itp_support="true"
+              data-use_fedcm_for_prompt="true"
             />
             
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full flex items-center justify-center gap-2"
-              onClick={() => {
-                window.google?.accounts.id.prompt();
-              }}
-              disabled={isLoading || isEmbedded}
-            >
-              <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4" />
-              Continue with Google
-            </Button>
+            <div className="w-full flex justify-center">
+              <div 
+                className="g_id_signin"
+                data-type="standard"
+                data-shape="pill"
+                data-theme="outline"
+                data-text="signin_with"
+                data-size="large"
+                data-logo_alignment="left"
+              />
+            </div>
 
             <Button
               type="button"
               variant="outline"
-              className="w-full flex items-center justify-center gap-2"
+              className="flex items-center justify-center gap-2 h-10 rounded-full border-2 px-6"
               onClick={handleGitHubLogin}
               disabled={isLoading || isEmbedded}
             >

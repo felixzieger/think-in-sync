@@ -14,7 +14,7 @@ type AuthContextType = {
     error: Error | null;
     success: boolean;
   }>;
-  signInWithGoogle: () => Promise<{
+  signInWithGoogle: (credential: string) => Promise<{
     error: Error | null;
     success: boolean;
   }>;
@@ -75,16 +75,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (credential: string) => {
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithIdToken({
         provider: 'google',
-        options: {
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          },
-        },
+        token: credential,
       });
       return { error, success: !error };
     } catch (error) {
