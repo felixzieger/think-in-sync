@@ -27,14 +27,14 @@ interface SentenceWord {
 }
 
 export const GameContainer = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { gameId: urlGameId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const fromSessionParam = searchParams.get('from_session');
   const [fromSession, setFromSession] = useState<string | null>(fromSessionParam);
   const [gameState, setGameState] = useState<GameState>(fromSessionParam ? "invitation" : "welcome");
-  const [currentTheme, setCurrentTheme] = useState<string>("standard");
+  const [currentTheme, setCurrentTheme] = useState<string>(searchParams.get('theme') || "standard");
   const [sessionId, setSessionId] = useState<string>("");
   const [gameId, setGameId] = useState<string>("");
   const [words, setWords] = useState<string[]>([]);
@@ -43,7 +43,7 @@ export const GameContainer = () => {
   const [sentence, setSentence] = useState<SentenceWord[]>([]);
   const [isAiThinking, setIsAiThinking] = useState(false);
   const [aiGuess, setAiGuess] = useState<string>("");
-  const [aiModel, setAiModel] = useState<string>("");
+  const [aiModel, setAiModel] = useState<string>(searchParams.get('model') || "");
   const [successfulRounds, setSuccessfulRounds] = useState<number>(0);
   const [wrongGuesses, setWrongGuesses] = useState<number>(0);
   const [guessSequence, setGuessSequence] = useState<Array<'success' | 'wrong'>>([]);
@@ -55,13 +55,32 @@ export const GameContainer = () => {
   const currentWord = words[currentWordIndex] || "";
 
   useEffect(() => {
-    if (gameState === "theme-selection") {
-      setGameId("");
-      setSessionId("");
+    const path = location.pathname;
+    
+    if (path === '/') {
+      setGameState("welcome");
+      setSentence([]);
+      setAiGuess("");
+      setCurrentTheme("standard");
+      setSuccessfulRounds(0);
+      setWrongGuesses(0);
+      setGuessSequence([]);
+      setTotalWordsInSuccessfulRounds(0);
       setWords([]);
       setCurrentWordIndex(0);
+      setGameId("");
+      setSessionId("");
+      setFromSession(null);
+      setAiModel("");
+      setSearchParams({});
+    } else if (path === '/game/daily/model') {
+      setGameState("model-selection");
+    } else if (path === '/game/freestyle/theme') {
+      setGameState("theme-selection");
+    } else if (path === '/game/freestyle/model') {
+      setGameState("model-selection");
     }
-  }, [gameState]);
+  }, [location.pathname, setSearchParams, searchParams]);
 
   useEffect(() => {
     if (urlGameId && !gameId) {
@@ -83,7 +102,7 @@ export const GameContainer = () => {
       const dailyGameId = await getDailyGame(language);
       if (dailyGameId) {
         setGameId(dailyGameId);
-        setGameState("model-selection");
+        navigate('/game/daily/model');
       }
     } catch (error) {
       console.error('Error starting daily game:', error);
@@ -134,24 +153,11 @@ export const GameContainer = () => {
   };
 
   const handleStart = () => {
-    setGameState("theme-selection");
+    navigate('/game/freestyle/theme');
   };
 
   const handleBack = () => {
-    console.log("Handling back navigation, resetting game state");
-    setGameState("welcome");
-    setSentence([]);
-    setAiGuess("");
-    setCurrentTheme("standard");
-    setSuccessfulRounds(0);
-    setWrongGuesses(0);
-    setGuessSequence([]);
-    setTotalWordsInSuccessfulRounds(0);
-    setWords([]);
-    setCurrentWordIndex(0);
-    setGameId("");
-    setSessionId("");
-    setFromSession(null);
+    setSearchParams({});
     navigate('/');
   };
 
@@ -182,7 +188,7 @@ export const GameContainer = () => {
 
   const handleThemeSelect = async (theme: string) => {
     setCurrentTheme(theme);
-    setGameState("model-selection");
+    navigate('/game/freestyle/model');
   };
 
   const handleModelSelect = async (model: string) => {

@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "@/pages/Index";
 import { AdminIndex } from "@/pages/admin/Index";
@@ -20,6 +19,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/game" element={<Index />} />
+            <Route path="/game/daily/model" element={<Index />} />
+            <Route path="/game/freestyle/theme" element={<Index />} />
+            <Route path="/game/freestyle/model" element={<Index />} />
             <Route path="/game/:gameId" element={<Index />} />
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/register" element={<Register />} />
