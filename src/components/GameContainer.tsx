@@ -72,7 +72,6 @@ export const GameContainer = () => {
       setSessionId("");
       setFromSession(null);
       setAiModel("");
-      setSearchParams({});
     } else if (path === '/game/daily/model') {
       setGameState("model-selection");
     } else if (path === '/game/freestyle/theme') {
