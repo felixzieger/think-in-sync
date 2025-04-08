@@ -57,7 +57,13 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
               sentence={currentResult?.description ? convertToSentenceWords(currentResult.description) : []}
             />
             <p className="text-sm text-gray-600 mt-2">
-              {t.guess.aiGuessedDescription}: <span className="font-medium">{currentResult?.ai_guess}</span>
+              {typeof t.guess.aiGuessedDescription === 'object' ? (
+                <>
+                  {t.guess.aiGuessedDescription.prefix} {t.guess.aiGuessedDescription.aiName} {t.guess.aiGuessedDescription.suffix}
+                </>
+              ) : (
+                t.guess.aiGuessedDescription
+              )}: <span className="font-medium">{currentResult?.ai_guess}</span>
             </p>
           </div>
           {friendResult && (
@@ -67,7 +73,13 @@ const ComparisonDialog = ({ isOpen, onClose, currentResult, friendResult }: Comp
                 sentence={friendResult.description ? convertToSentenceWords(friendResult.description) : []}
               />
               <p className="text-sm text-gray-600 mt-2">
-                {t.guess.aiGuessedDescription}: <span className="font-medium">{friendResult.ai_guess}</span>
+                {typeof t.guess.aiGuessedDescription === 'object' ? (
+                  <>
+                    {t.guess.aiGuessedDescription.prefix} {t.guess.aiGuessedDescription.aiName} {t.guess.aiGuessedDescription.suffix}
+                  </>
+                ) : (
+                  t.guess.aiGuessedDescription
+                )}: <span className="font-medium">{friendResult.ai_guess}</span>
               </p>
             </div>
           )}
