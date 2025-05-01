@@ -50,7 +50,7 @@ const languagePrompts = {
 };
 
 const openRouterModels = [
-  'google/gemini-2.0-flash-exp:free',
+  'google/gemini-2.5-flash-preview',
   'mistralai/mistral-nemo'
 ];
 
@@ -133,9 +133,9 @@ serve(async (req) => {
   } catch (error) {
     Sentry.captureException(error);
     console.error('Error generating guess:', error);
-    
+
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error.message || 'An unexpected error occurred',
       }),
       {

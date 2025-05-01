@@ -24,7 +24,7 @@ interface ModelSelectorProps {
 // TODO: Once user authentication is implemented, this will be replaced with a dynamic list
 // based on the user's subscription level
 const AVAILABLE_MODELS = [
-  "google/gemini-2.0-flash-lite-001",
+  'google/gemini-2.5-flash-preview',
   "deepseek/deepseek-chat:free",
   "meta-llama/llama-3.3-70b-instruct:free",
   "custom",
@@ -32,7 +32,6 @@ const AVAILABLE_MODELS = [
 
 // A larger set of models that can be selected
 const SEARCHABLE_MODELS = [
-  "google/gemini-2.0-flash-001",
   "anthropic/claude-3.7-sonnet",
   "openai/gpt-4o",
   "mistralai/mistral-large-2411",
@@ -49,7 +48,7 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
 
   const handleSubmit = async () => {
     if (!selectedModel) return;
-    
+
     setIsGenerating(true);
     try {
       await onModelSelect(selectedModel === "custom" ? customModel : selectedModel);
@@ -61,20 +60,20 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement) return;
-      
+
       // Allow backspace to go back
       if (e.key === 'backspace') {
         e.preventDefault();
         onBack();
       }
-      
+
       // Allow enter to submit if a model is selected
       if (e.key === 'enter' && selectedModel) {
         handleSubmit();
       }
 
       // Model selection shortcuts
-      switch(e.key.toLowerCase()) {
+      switch (e.key.toLowerCase()) {
         case 'a':
           setSelectedModel(AVAILABLE_MODELS[0]);
           break;
