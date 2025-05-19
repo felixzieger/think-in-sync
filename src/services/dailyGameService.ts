@@ -1,13 +1,20 @@
 import { supabase } from "@/integrations/supabase/client";
 
-export const getDailyGame = async (language: string = 'en'): Promise<string> => {
+interface DailyGameData {
+  game_id: string;
+  words: string[];
+  theme: string;
+  language: string;
+}
+
+export const getDailyGame = async (language: string = 'en'): Promise<DailyGameData> => {
   console.log('Fetching daily game for language:', language);
 
   try {
     // First try to get a daily challenge in the user's language
     let { data: dailyChallenge, error } = await supabase
       .from('daily_challenges')
-      .select('game_id, games!inner(language)')
+      .select('game_id, games!inner(words, theme, language)')
       .eq('is_active', true)
       .eq('games.language', language)
       .maybeSingle();
@@ -17,7 +24,7 @@ export const getDailyGame = async (language: string = 'en'): Promise<string> => 
       console.log('No daily challenge found for language:', language, 'falling back to English');
       const { data: englishChallenge, error: englishError } = await supabase
         .from('daily_challenges')
-        .select('game_id, games!inner(language)')
+        .select('game_id, games!inner(words, theme, language)')
         .eq('is_active', true)
         .eq('games.language', 'en')
         .maybeSingle();
@@ -29,7 +36,12 @@ export const getDailyGame = async (language: string = 'en'): Promise<string> => 
     }
 
     console.log('Found daily game:', dailyChallenge.game_id);
-    return dailyChallenge.game_id;
+    return {
+      game_id: dailyChallenge.game_id,
+      words: dailyChallenge.games.words,
+      theme: dailyChallenge.games.theme,
+      language: dailyChallenge.games.language
+    };
   } catch (error) {
     console.error('Error fetching daily game:', error);
     throw error;

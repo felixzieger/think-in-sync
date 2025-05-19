@@ -72,8 +72,6 @@ export const GameContainer = () => {
       setSessionId("");
       setFromSession(null);
       setAiModel("");
-    } else if (path === '/game/daily/model') {
-      setGameState("model-selection");
     } else if (path === '/game/freestyle/theme') {
       setGameState("theme-selection");
     } else if (path === '/game/freestyle/model') {
@@ -98,10 +96,23 @@ export const GameContainer = () => {
 
   const handleStartDaily = async () => {
     try {
-      const dailyGameId = await getDailyGame(language);
-      if (dailyGameId) {
-        setGameId(dailyGameId);
-        navigate('/game/daily/model');
+      const dailyGame = await getDailyGame(language);
+      if (dailyGame) {
+        setGameId(dailyGame.game_id);
+        setAiModel("google/gemini-2.5-flash-preview");
+        
+        // Set up game state with data from the daily game
+        setWords(dailyGame.words);
+        setCurrentWordIndex(0);
+        setCurrentTheme(dailyGame.theme);
+        
+        // Create session
+        const newSessionId = await createSession(dailyGame.game_id);
+        setSessionId(newSessionId);
+        
+        // Set game state and navigate
+        setGameState("building-sentence");
+        navigate(`/game/${dailyGame.game_id}`);
       }
     } catch (error) {
       console.error('Error starting daily game:', error);
