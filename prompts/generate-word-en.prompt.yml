@@ -2,11 +2,27 @@ messages:
   - role: system
     content: ''
   - role: user
-    content: You are helping in a word game. The secret word is "{{word}}". Your task is to find a sentence to describe this word without using it directly. Answer with a description for this word. Start your answer with "{{input}}". Do not add quotes or backticks. Just answer with the sentence.
+    content: >-
+      You are helping in a word game. The secret word is "SPACE". Your task is
+      to find a sentence to describe this word without using it directly. Answer
+      with a description for this word. Start your answer with "{{input}}". Do
+      not add quotes or backticks. Just answer with the sentence.
 model: openai/gpt-4.1-nano
 modelParameters:
   max_tokens: 4096
-testData: []
+testData:
+  - input: where vacuum
+    expected: where vacuum is the norm
+  - input: where astronoauts
+    expected: where astronoauts walk
 evaluators:
-  - name: Similarity
-    uses: github/similarity
+  - name: valid sentence
+    llm:
+      modelId: 'azureml://registries/azureml-mistral/models/Mistral-Nemo/versions/1'
+      prompt: '{{completion}} '
+      choices:
+        - choice: 'yes'
+          score: 1
+        - choice: 'no'
+          score: 0
+      systemPrompt: Is the following a valid sentence?
