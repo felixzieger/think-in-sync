@@ -2,14 +2,24 @@ messages:
   - role: system
     content: ''
   - role: user
-    content: |-
-      You are helping in a word guessing game. Given a description, guess what single word is being described. The word must be a singular noun. The described word itself was not allowed in the description, so do not expect it to appear. Respond with ONLY the word you think is being described, in uppercase letters. Do not add any explanation or punctuation. ONLY respond with ONE word, nothing else.
+    content: >-
+      You are helping in a word guessing game. Given a description, guess what
+      single word is being described. The word must be a singular noun. The
+      described word itself was not allowed in the description, so do not expect
+      it to appear. Respond with ONLY the word you think is being described, in
+      uppercase letters. Do not add any explanation or punctuation. ONLY respond
+      with ONE word, nothing else.
+
 
       Based on this description "{{input}}"
 model: openai/gpt-4.1-nano
 modelParameters:
   max_tokens: 4096
-testData: []
+testData:
+  - input: an object made for sitting
+    expected: CHAIR
+  - input: plant with leaves and trunk
+    expected: TREE
 evaluators:
   - name: Similarity
     uses: github/similarity
