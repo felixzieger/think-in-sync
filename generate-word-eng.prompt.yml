@@ -13,6 +13,8 @@ modelParameters:
 testData:
   - input: A
     expected: plant
+  - input: A large plant
+    expected: leaves
 evaluators:
   - name: Similarity
     uses: github/similarity
