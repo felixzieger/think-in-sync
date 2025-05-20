@@ -3,17 +3,19 @@ messages:
     content: ''
   - role: user
     content: >-
-      You are helping in a word game. The secret word is "{{currentWord}}". Your
-      task is to find a sentence to describe this word without using it
-      directly. Answer with a description for this word. Start your answer with
-      "{{input}}". Do not add quotes or backticks. Just answer with the
-      sentence.
-model: openai/gpt-4o
+      You are helping in a word game. The secret word is "TREE". Your task is to
+      find a sentence to describe this word without using it directly. Answer
+      with a description for this word. Start your answer with "{{input}}". Do
+      not add quotes or backticks. Just answer with the sentence.
+model: openai/gpt-4.1-nano
 modelParameters:
   max_tokens: 4096
 testData:
   - input: A
-    expected: A metal
+    expected: plant
 evaluators:
   - name: Similarity
     uses: github/similarity
+  - name: Leaves
+    string:
+      contains: leaves
