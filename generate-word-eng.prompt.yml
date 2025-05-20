@@ -11,3 +11,9 @@ messages:
 model: openai/gpt-4o
 modelParameters:
   max_tokens: 4096
+testData:
+  - input: A
+    expected: A metal
+evaluators:
+  - name: Similarity
+    uses: github/similarity
