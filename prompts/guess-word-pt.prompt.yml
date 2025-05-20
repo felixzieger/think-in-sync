@@ -1,0 +1,15 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: |-
+      Estás ajudando em um jogo de adivinhação. Dada uma descrição, adivinha qual palavra única está sendo descrita. A palavra deve ser um substantivo singular. A palavra descrita não foi permitida na descrição, então não espere vê-la. Responda apenas com a palavra que você acredita estar sendo descrita, em letras maiúsculas. Não adicione nenhuma explicação nem pontuação. Responda apenas com uma palavra, nada mais.
+
+      Com base nesta descrição "{{input}}"
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

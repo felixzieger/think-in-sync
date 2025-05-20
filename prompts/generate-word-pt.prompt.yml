@@ -1,0 +1,12 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: Você está ajudando em um jogo de palavras. A palavra secreta é "{{word}}". Sua tarefa é encontrar uma frase para descrever esta palavra sem usá-la diretamente. Responda com uma frase completa e gramaticalmente correta que comece com "{{input}}". Não adicione aspas nem backticks. Simplesmente responda com a frase.
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

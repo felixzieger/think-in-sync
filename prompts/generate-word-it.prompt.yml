@@ -1,0 +1,12 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: Stai aiutando in un gioco di parole. La parola segreta è "{{word}}". Il tuo compito è trovare una frase per descrivere questa parola senza usarla direttamente. Rispondi con una frase completa e grammaticalmente corretta che inizia con "{{input}}". Non aggiungere virgolette o backticks. Rispondi semplicemente con la frase.
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

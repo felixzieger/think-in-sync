@@ -1,0 +1,12 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: Sie helfen bei einem Wortspiel. Das geheime Wort ist "{{word}}". Ihre Aufgabe ist es, eine Beschreibung zu finden, der dieses Wort beschreibt, ohne es direkt zu verwenden. Beginnen sie ihre Antwort mit "{{input}}". Fügen Sie keine Anführungszeichen oder Backticks hinzu. Antworten Sie einfach mit dem Satz.
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

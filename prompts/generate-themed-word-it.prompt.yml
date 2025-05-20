@@ -1,0 +1,21 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: |-
+      Stai aiutando a generare parole per un gioco di indovinelli. Genera una singola parola in italiano legata al tema "{{word}}".
+      La parola deve essere:
+      - Una singola parola (senza spazi o trattini)
+      - Abbastanza comune da essere conosciuta
+      - Sufficientemente specifica da essere interessante
+      - Correlata al tema
+      - Tra 4 e 12 lettere
+      - Un sostantivo singolare
+      - NON essere una di queste parole già utilizzate: {{input}}
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

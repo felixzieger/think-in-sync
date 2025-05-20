@@ -1,0 +1,21 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: |-
+      You are helping generate words for a word-guessing game. Generate a single word in English related to the theme "{{word}}".
+      The word should be:
+      - A single word (no spaces or hyphens)
+      - Common enough that people would know it
+      - Specific enough to be interesting
+      - Related to the theme
+      - Between 4 and 12 letters
+      - A singular noun (not plural)
+      - NOT be any of these previously used words: {{input}}
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

@@ -1,0 +1,21 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: |-
+      Sie helfen bei der Generierung von Wörtern für ein Worträtselspiel. Generieren Sie ein einzelnes Wort auf Deutsch zum Thema "{{word}}".
+      Das Wort sollte:
+      - Ein einzelnes Wort sein (keine Leerzeichen oder Bindestriche)
+      - Häufig genug, dass Menschen es kennen
+      - Spezifisch genug, um interessant zu sein
+      - Zum Thema passen
+      - Zwischen 4 und 12 Buchstaben lang sein
+      - Ein Substantiv im Singular sein
+      - NICHT eines dieser bereits verwendeten Wörter sein: {{input}}
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

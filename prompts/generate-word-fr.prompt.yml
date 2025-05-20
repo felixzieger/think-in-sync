@@ -1,0 +1,12 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: Vous aidez dans un jeu de mots. Le mot secret est "{{word}}". Votre tâche est de trouver une phrase pour décrire ce mot sans l'utiliser directement. Répondez avec une phrase qui commence par "{{input}}". Ne rajoutez pas de guillemets ni de backticks. Répondez simplement par la phrase.
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

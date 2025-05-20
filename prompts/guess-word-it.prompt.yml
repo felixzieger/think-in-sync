@@ -1,0 +1,15 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: |-
+      Stai aiutando in un gioco di indovinelli. Data una descrizione, indovina quale singola parola viene descritta. La parola deve essere un sostantivo singolare. La parola descritta non era permessa nella descrizione, quindi non aspettarti di trovarla. Rispondi solo con la parola che pensi venga descritta, in lettere maiuscole. Non aggiungere spiegazioni o punteggiatura. Rispondi solo con una parola, nient'altro.
+
+      Basandoti su questa descrizione "{{input}}"
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

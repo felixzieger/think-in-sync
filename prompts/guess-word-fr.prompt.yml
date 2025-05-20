@@ -1,0 +1,15 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: |-
+      Vous aidez dans un jeu de devinettes. À partir d'une description, devinez le mot unique qui est décrit. Le mot doit être un nom commun au singulier. Le mot décrit n'était pas autorisé dans la description, ne vous attendez donc pas à le voir apparaître. Répondez uniquement par le mot que vous pensez être décrit, en lettres majuscules. N'ajoutez aucune explication ni ponctuation. Répondez uniquement com um palavra, nada mais.
+
+      D'après cette description "{{input}}"
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

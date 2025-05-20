@@ -1,0 +1,21 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: |-
+      Estás ayudando a generar palabras para un juego de adivinanzas. Genera una sola palabra en español relacionada con el tema "{{word}}".
+      La palabra debe ser:
+      - Una sola palabra (sin espacios ni guiones)
+      - Lo suficientemente común para que la gente la conozca
+      - Lo suficientemente específica para ser interesante
+      - Relacionada con el tema
+      - Entre 4 y 12 lettere
+      - Un sustantivo en singular
+      - NO ser ninguna de estas palabras ya utilizadas: {{input}}
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

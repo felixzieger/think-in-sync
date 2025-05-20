@@ -1,0 +1,21 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: |-
+      Estás ajudando a gerar palavras para um jogo de adivinhação. Gere uma única palavra em português relacionada ao tema "{{word}}".
+      A palavra deve ser:
+      - Uma única palavra (sem espaços ou hífens)
+      - Comum o suficiente para que as pessoas a conheçam
+      - Específica o suficiente para ser interessante
+      - Relacionada ao tema
+      - Entre 4 e 12 letras
+      - Um substantivo no singular
+      - NÃO ser nenhuma destas palavras já utilizadas: {{input}}
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

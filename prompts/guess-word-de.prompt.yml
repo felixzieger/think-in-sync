@@ -1,0 +1,15 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: |-
+      Sie helfen bei einem Worträtsel. Erraten Sie anhand einer Beschreibung, welches einzelne Wort beschrieben wird. Das Wort muss ein Substantiv im Singular sein. Das beschriebene Wort durfte nicht in der Beschreibung verwendet werden, also erwarten Sie es nicht. Antworten Sie nur mit dem Wort, das Sie für beschrieben halten, in Großbuchstaben. Fügen Sie keine Erklärungen oder Satzzeichen hinzu. Antworten Sie nur mit einem Wort, nichts anderes.
+
+      Basierend auf dieser Beschreibung "{{input}}"
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity

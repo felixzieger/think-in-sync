@@ -1,0 +1,21 @@
+messages:
+  - role: system
+    content: ''
+  - role: user
+    content: |-
+      Vous aidez à générer des mots pour un jeu de devinettes. Générez un seul mot en français lié au thème "{{word}}".
+      Le mot doit être :
+      - Un seul mot (pas d'espaces ni de traits d'union)
+      - Assez courant pour que les gens le connaissent
+      - Suffisamment spécifique pour être intéressant
+      - En rapport avec le thème
+      - Entre 4 et 12 lettres
+      - Un nom commun au singulier
+      - NE PAS être l'un de ces mots déjà utilisés : {{input}}
+model: openai/gpt-4.1-nano
+modelParameters:
+  max_tokens: 4096
+testData: []
+evaluators:
+  - name: Similarity
+    uses: github/similarity
