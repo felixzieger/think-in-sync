@@ -4,8 +4,8 @@ messages:
       You are helping in a word game. The secret word is "{{currentWord}}". Your
       task is to find a sentence to describe this word without using it
       directly. Answer with a description for this word. Start your answer with
-      "{{existingSentence}}". Do not add quotes or backticks. Just answer with
-      the sentence.
+      "{{input}}". Do not add quotes or backticks. Just answer with the
+      sentence.
   - role: user
     content: ''
 model: openai/gpt-4o
