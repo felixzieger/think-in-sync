@@ -24,7 +24,7 @@ interface ModelSelectorProps {
 // TODO: Once user authentication is implemented, this will be replaced with a dynamic list
 // based on the user's subscription level
 const AVAILABLE_MODELS = [
-  'google/gemini-2.5-flash-preview',
+  'google/gemini-2.5-flash-lite',
   "deepseek/deepseek-chat:free",
   "meta-llama/llama-3.3-70b-instruct:free",
   "custom",

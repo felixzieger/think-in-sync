@@ -47,7 +47,7 @@ const languagePrompts = {
 };
 
 const openRouterModels = [
-  'google/gemini-2.5-flash-preview',
+  'google/gemini-2.5-flash-lite',
   'mistralai/mistral-nemo'
 ];
 

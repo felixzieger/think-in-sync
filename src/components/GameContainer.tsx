@@ -99,7 +99,7 @@ export const GameContainer = () => {
       const dailyGame = await getDailyGame(language);
       if (dailyGame) {
         setGameId(dailyGame.game_id);
-        setAiModel("google/gemini-2.5-flash-preview");
+        setAiModel("google/gemini-2.5-flash-lite");
         
         // Set up game state with data from the daily game
         setWords(dailyGame.words);
