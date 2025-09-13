@@ -14,7 +14,8 @@ export default defineConfig(() => ({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      injectRegister: 'auto',
+      // We register SW via the React hook
+      injectRegister: null,
       devOptions: {
         enabled: true,
       },
@@ -67,6 +68,7 @@ export default defineConfig(() => ({
     })
   ],
   build: {
+    sourcemap: true,
     // Keep the warning helpful but less noisy if slightly over
     chunkSizeWarningLimit: 900,
     rollupOptions: {
