@@ -56,7 +56,7 @@ export const UserMenu = () => {
             asChild
             className="flex items-center gap-2"
           >
-            <Link to="/auth/login">
+            <Link to="/auth/login" aria-label={t.auth.login.linkText} title={t.auth.login.linkText}>
               <LogIn className="h-4 w-4" />
               <span className="hidden md:inline-block">{t.auth.login.linkText}</span>
             </Link>
@@ -67,7 +67,7 @@ export const UserMenu = () => {
             asChild
             className="flex items-center gap-2"
           >
-            <Link to="/auth/register">
+            <Link to="/auth/register" aria-label={t.auth.register.linkText} title={t.auth.register.linkText}>
               <User className="h-4 w-4" />
               <span className="hidden md:inline-block">{t.auth.register.linkText}</span>
             </Link>
