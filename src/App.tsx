@@ -6,6 +6,7 @@ const AdminLogin = lazy(() => import("@/pages/admin/Login").then(m => ({ default
 const Login = lazy(() => import("@/pages/auth/Login"));
 const Register = lazy(() => import("@/pages/auth/Register"));
 import { Toaster } from "@/components/ui/toaster";
+import { PWAUpdatePrompt } from "@/components/pwa/PWAUpdatePrompt";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
@@ -36,6 +37,7 @@ function App() {
             </Routes>
           </Suspense>
           <Toaster />
+          <PWAUpdatePrompt />
         </Router>
       </AuthProvider>
     </QueryClientProvider>

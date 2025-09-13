@@ -1,4 +1,11 @@
 export const es = {
+  app: {
+    update: {
+      title: "Actualización disponible",
+      description: "Una nueva versión de Think in Sync está lista.",
+      refresh: "Actualizar"
+    }
+  },
   game: {
     title: "Think in Sync",
     round: "Ronda",
