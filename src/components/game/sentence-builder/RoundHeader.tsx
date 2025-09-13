@@ -20,7 +20,6 @@ interface RoundHeaderProps {
   onBack?: () => void;
   showConfirmDialog: boolean;
   setShowConfirmDialog: (show: boolean) => void;
-  onCancel?: () => void;
 }
 
 export const RoundHeader = ({
@@ -31,7 +30,6 @@ export const RoundHeader = ({
   onBack,
   showConfirmDialog,
   setShowConfirmDialog,
-  onCancel
 }: RoundHeaderProps) => {
   const t = useTranslation();
   const currentRound = successfulRounds + wrongGuesses;
@@ -39,17 +37,12 @@ export const RoundHeader = ({
   const isShortGame = totalRounds <= 10;
 
   const handleHomeClick = () => {
+    console.log("RoundHeader: Home click", { successfulRounds, wrongGuesses });
     if (successfulRounds > 0 || wrongGuesses > 0) {
       setShowConfirmDialog(true);
     } else {
+       console.log("RoundHeader: Navigating back without confirm");
       onBack?.();
-    }
-  };
-
-  const handleDialogChange = (open: boolean) => {
-    setShowConfirmDialog(open);
-    if (!open && onBack) {
-      onBack();
     }
   };
 
@@ -63,7 +56,7 @@ export const RoundHeader = ({
       <Button
         variant="ghost"
         size="icon"
-        className="absolute left-0 top-0 text-gray-600 hover:text-white"
+        className="absolute left-0 top-0 z-10 text-gray-600 hover:text-white"
         onClick={handleHomeClick}
       >
         <Home className="h-5 w-5" />
@@ -95,7 +88,8 @@ export const RoundHeader = ({
         </div>
       )}
 
-      <AlertDialog open={showConfirmDialog} onOpenChange={handleDialogChange}>
+      {/* The dialog is controlled by parent (SentenceBuilder). Keep a lightweight copy here for screens that use RoundHeader standalone. */}
+      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
@@ -104,8 +98,15 @@ export const RoundHeader = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={onCancel}>{t.game.cancel}</AlertDialogCancel>
-            <AlertDialogAction>{t.game.confirm}</AlertDialogAction>
+            <AlertDialogCancel onClick={() => setShowConfirmDialog(false)}>{t.game.cancel}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                console.log("RoundHeader: Confirm back clicked");
+                onBack?.();
+              }}
+            >
+              {t.game.confirm}
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

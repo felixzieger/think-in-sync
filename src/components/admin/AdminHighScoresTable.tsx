@@ -84,9 +84,9 @@ export const AdminHighScoresTable = () => {
   }
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border border-border/50">
       <Table>
-        <TableHeader>
+        <TableHeader className="bg-muted/50">
           <TableRow>
             <TableHead>Player</TableHead>
             <TableHead>Score</TableHead>

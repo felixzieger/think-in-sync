@@ -1,12 +1,8 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Eye } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useTranslation } from "@/hooks/useTranslation";
 import { GuessDescription } from "@/components/game/guess-display/GuessDescription";
 
@@ -122,54 +118,48 @@ export const GameDetailsView = ({ gameResults = [], fromSession }: { gameResults
   };
 
   return (
-    <div className="relative overflow-x-auto rounded-lg border">
-      <table className="w-full text-sm text-left">
-        <thead className="text-xs uppercase bg-gray-50">
-          <tr>
-            <th className="px-6 py-3">
-              {t.game.round}
-            </th>
-            <th className="px-6 py-3">
+    <div className="relative overflow-x-auto rounded-lg border border-border/50">
+      <Table>
+        <TableHeader className="bg-muted/50">
+          <TableRow>
+            <TableHead className="uppercase text-xs">{t.game.round}</TableHead>
+            <TableHead className="uppercase text-xs">
               {friendResults.length > 0 ? t.game.review.yourWords : t.game.review.words}
-            </th>
+            </TableHead>
             {friendResults.length > 0 && (
-              <th className="px-6 py-3">
-                {t.game.review.friendWords}
-              </th>
+              <TableHead className="uppercase text-xs">{t.game.review.friendWords}</TableHead>
             )}
-            <th className="px-6 py-3">
+            <TableHead className="uppercase text-xs">
               <span className="sr-only">{t.game.review.details}</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {gameResults.map((result) => {
             const friendResult = getFriendResult(result.target_word);
             return (
-              <tr
+              <TableRow
                 key={result.id}
-                className="bg-white border-b hover:bg-gray-50 cursor-pointer"
+                className="cursor-pointer"
                 onClick={() => setSelectedResult(result)}
               >
-                <td className="px-6 py-4 font-medium">
-                  {result.target_word}
-                </td>
-                <td className="px-6 py-4">
+                <TableCell className="font-medium">{result.target_word}</TableCell>
+                <TableCell>
                   {result.is_correct ? '✅' : '❌'} {getWordCount(result.description)}
-                </td>
+                </TableCell>
                 {friendResults.length > 0 && (
-                  <td className="px-6 py-4">
+                  <TableCell>
                     {friendResult ? `${friendResult.is_correct ? '✅' : '❌'} ${getWordCount(friendResult.description)}` : '-'}
-                  </td>
+                  </TableCell>
                 )}
-                <td className="px-6 py-4">
-                  <Eye className="h-4 w-4 text-gray-500" />
-                </td>
-              </tr>
+                <TableCell>
+                  <Eye className="h-4 w-4 text-muted-foreground" />
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
 
       <ComparisonDialog
         isOpen={!!selectedResult}

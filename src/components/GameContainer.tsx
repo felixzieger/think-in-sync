@@ -85,14 +85,8 @@ export const GameContainer = () => {
     }
   }, [urlGameId]);
 
-  useEffect(() => {
-    if (location.pathname === '/' && gameId) {
-      if (gameState !== "model-selection") {
-        console.log("Location changed to root with active gameId, handling back navigation");
-        handleBack();
-      }
-    }
-  }, [location.pathname, gameId, gameState]);
+  // Removed redundant back-navigation loop when at root with an active game.
+  // The effect above (path === '/') already resets state; no need to re-navigate.
 
   const handleStartDaily = async () => {
     try {

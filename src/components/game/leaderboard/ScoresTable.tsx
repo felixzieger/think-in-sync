@@ -73,9 +73,9 @@ export const ScoresTable = ({
   const t = useTranslation();
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border border-border/50">
       <Table>
-        <TableHeader>
+        <TableHeader className="bg-muted/50">
           <TableRow>
             <TableHead>{t.leaderboard.rank}</TableHead>
             <TableHead>{t.leaderboard.player}</TableHead>

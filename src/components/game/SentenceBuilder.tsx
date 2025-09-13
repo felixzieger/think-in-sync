@@ -124,24 +124,7 @@ export const SentenceBuilder = ({
         </Button>
       </div>
 
-      <AlertDialog open={showConfirmDialog} onOpenChange={handleSetShowConfirmDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>{t.game.leaveGameTitle}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {t.game.leaveGameDescription}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setShowConfirmDialog(false)}>
-              {t.game.cancel}
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={onBack}>
-              {t.game.confirm}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      {/* Confirmation dialog is rendered in RoundHeader to avoid duplicate overlays */}
     </motion.div>
   );
 };
