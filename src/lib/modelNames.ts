@@ -182,6 +182,7 @@ export const modelNames: Record<string, string> = {
   "mistralai/codestral-2501": "Mistral Codestral 2501",
   "microsoft/phi-4": "Microsoft Phi 4",
   "deepseek/deepseek-chat": "DeepSeek V3",
+  "deepseek/deepseek-chat:free": "DeepSeek V3",
   "sao10k/l3.3-euryale-70b": "Sao10K Llama 3.3 Euryale 70B",
   "openai/o1": "OpenAI o1",
   "x-ai/grok-2-vision-1212": "xAI Grok 2 Vision 1212",
