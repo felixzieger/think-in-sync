@@ -1,5 +1,5 @@
 
-import { motion } from "framer-motion";
+// Removed framer-motion to avoid initial fade-in animations on load
 import { useState, useEffect } from "react";
 import { HighScoreBoard } from "../HighScoreBoard";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -39,9 +39,7 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
 
   return (
     <>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+      <div
         className="max-w-2xl mx-auto text-center space-y-8"
       >
         <div className="relative">
@@ -60,12 +58,9 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
           onShowHowToPlay={() => setShowHowToPlay(true)}
           onShowHighScores={() => setShowHighScores(true)}
         />
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
+      <div
         className="max-w-2xl mx-auto text-center mt-8"
       >
         <div className="mt-12 text-sm text-gray-500 space-y-2">
@@ -96,7 +91,7 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
             </button>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       <Dialog open={showHighScores} onOpenChange={setShowHighScores}>
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">

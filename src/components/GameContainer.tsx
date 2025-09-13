@@ -391,8 +391,6 @@ export const GameContainer = () => {
         </div>
       )}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
         className="w-full md:max-w-md rounded-none md:rounded-xl bg-transparent md:bg-white p-4 md:p-8 md:shadow-lg"
       >
         {gameState === "welcome" ? (
