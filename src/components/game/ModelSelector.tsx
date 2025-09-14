@@ -24,9 +24,9 @@ interface ModelSelectorProps {
 // TODO: Once user authentication is implemented, this will be replaced with a dynamic list
 // based on the user's subscription level
 const AVAILABLE_MODELS = [
-  'google/gemini-2.5-flash-lite',
-  "deepseek/deepseek-chat:free",
-  "meta-llama/llama-3.3-70b-instruct:free",
+  "google/gemini-2.5-flash",
+  "deepseek/deepseek-chat-v3.1",
+  "meta-llama/llama-3.3-70b-instruct",
   "custom",
 ];
 
@@ -35,7 +35,7 @@ const SEARCHABLE_MODELS = [
   "anthropic/claude-3.7-sonnet",
   "openai/gpt-4o",
   "mistralai/mistral-large-2411",
-  "x-ai/grok-beta",
+  "x-ai/grok-3-beta",
 ];
 
 export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => {
