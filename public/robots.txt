@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://think-in-sync.com/sitemap.xml
