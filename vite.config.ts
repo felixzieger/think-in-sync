@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import { VitePWA } from 'vite-plugin-pwa'
-import react from "@vitejs/plugin-react-swc";
+import { reactRouter } from "@react-router/dev/vite";
 import path from "path";
 
 // https://vitejs.dev/config/
@@ -11,7 +11,7 @@ export default defineConfig(() => ({
     allowedHosts: ["mistral-ai-game-jam-description-improv.hf.space", "think-in-sync.com"],
   },
   plugins: [
-    react(),
+    reactRouter(),
     VitePWA({
       registerType: 'autoUpdate',
       // We register SW via the React hook
@@ -71,17 +71,6 @@ export default defineConfig(() => ({
     sourcemap: true,
     // Keep the warning helpful but less noisy if slightly over
     chunkSizeWarningLimit: 900,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          // Group large libs into their own async chunks
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'motion': ['framer-motion'],
-          'supabase': ['@supabase/supabase-js'],
-          'tanstack': ['@tanstack/react-query']
-        },
-      },
-    },
   },
   resolve: {
     alias: {

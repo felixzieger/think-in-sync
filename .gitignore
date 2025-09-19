@@ -31,3 +31,6 @@ secrets.sh
 
 supbase/.branches/
 supabase/.temp
+
+# React Router
+.react-router/
