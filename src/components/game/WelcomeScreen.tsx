@@ -1,6 +1,6 @@
 
 // Removed framer-motion to avoid initial fade-in animations on load
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { HighScoreBoard } from "../HighScoreBoard";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { LanguageSelector } from "./LanguageSelector";
@@ -25,6 +25,11 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
   const [showCredits, setShowCredits] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const t = useTranslation();
+
+  const handleCreditsClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    setShowCredits(true);
+  };
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -65,13 +70,14 @@ export const WelcomeScreen = ({ onStartDaily, onStartNew }: WelcomeScreenProps) 
       >
         <div className="mt-12 text-sm text-gray-500 space-y-2">
           <div className="flex justify-center items-center gap-4">
-            <button
-              onClick={() => setShowCredits(true)}
+            <a
+              href="/credits"
+              onClick={handleCreditsClick}
               className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
             >
               <Award className="w-4 h-4" />
               Credits
-            </button>
+            </a>
             <span>•</span>
             <a
               href="mailto:hello@think-in-sync.com"
