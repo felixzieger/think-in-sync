@@ -19,7 +19,7 @@ export default defineConfig(() => ({
       devOptions: {
         enabled: true,
       },
-      includeAssets: ['favicon.ico', 'og-image.png', 'think-in-sync.png'],
+      includeAssets: ['favicon.ico', 'og-image.webp', 'think-in-sync.webp'],
       manifest: {
         id: '/',
         name: 'Think in Sync',
@@ -31,19 +31,19 @@ export default defineConfig(() => ({
         background_color: '#0ea5e9',
         theme_color: '#0ea5e9',
         icons: [
-          { src: '/think-in-sync.png', sizes: 'any', type: 'image/png', purpose: 'any' },
-          { src: '/think-in-sync.png', sizes: 'any', type: 'image/png', purpose: 'maskable' }
+          { src: '/think-in-sync.webp', sizes: 'any', type: 'image/webp', purpose: 'any' },
+          { src: '/think-in-sync.webp', sizes: 'any', type: 'image/webp', purpose: 'maskable' }
         ],
         screenshots: [
-          { src: '/desktop.png', type: 'image/png', form_factor: 'wide', label: 'Gameplay on desktop', width: 2384, height: 1988 },
-          { src: '/mobile.png', type: 'image/png', form_factor: 'narrow', label: 'Gameplay on mobile', width: 1176, height: 1988 }
+          { src: '/desktop.webp', type: 'image/webp', form_factor: 'wide', label: 'Gameplay on desktop', width: 2384, height: 1988 },
+          { src: '/mobile.webp', type: 'image/webp', form_factor: 'narrow', label: 'Gameplay on mobile', width: 1176, height: 1988 }
         ],
         categories: ['games', 'puzzle'],
         prefer_related_applications: false,
       },
       workbox: {
         navigateFallback: 'index.html',
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
         runtimeCaching: [
           {
             // Cache same‑origin images with SWR
