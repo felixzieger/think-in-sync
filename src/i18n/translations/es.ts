@@ -48,6 +48,9 @@ export const es = {
       urlCopyErrorDesc: "Por favor, intenta copiar la URL manualmente",
       youWin: "¡Has ganado!",
       youLost: "¡Has perdido!",
+      correct: "Correcto",
+      wrong: "Incorrecto",
+      total: "Total",
       friendScore: (score: number, avgWords: string) =>
         `La persona que te desafió completó ${score} rondas exitosamente con un promedio de ${avgWords} palabras.`,
       word: "Palabra",

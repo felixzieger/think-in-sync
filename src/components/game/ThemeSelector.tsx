@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useContext } from "react";
-import { LanguageContext } from "@/contexts/LanguageContext";
+import { LanguageContext } from "@/contexts/language-context";
 import { ArrowLeft } from "lucide-react";
 
 type Theme = "standard" | "technology" | "sports" | "food" | "custom";
@@ -21,6 +21,17 @@ export const ThemeSelector = ({ onThemeSelect, onBack }: ThemeSelectorProps) => 
   const inputRef = useRef<HTMLInputElement>(null);
   const t = useTranslation();
   const { language } = useContext(LanguageContext);
+
+  const handleSubmit = useCallback(async () => {
+    if (selectedTheme === "custom" && !customTheme.trim()) return;
+    
+    setIsGenerating(true);
+    try {
+      await onThemeSelect(selectedTheme === "custom" ? customTheme : selectedTheme);
+    } finally {
+      setIsGenerating(false);
+    }
+  }, [customTheme, onThemeSelect, selectedTheme]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -42,7 +53,7 @@ export const ThemeSelector = ({ onThemeSelect, onBack }: ThemeSelectorProps) => 
           break;
         case 'enter':
           if (selectedTheme !== "custom" || customTheme.trim()) {
-            handleSubmit();
+            void handleSubmit();
           }
           break;
         case 'backspace':
@@ -54,7 +65,7 @@ export const ThemeSelector = ({ onThemeSelect, onBack }: ThemeSelectorProps) => 
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [selectedTheme, customTheme, language, onBack]);
+  }, [customTheme, handleSubmit, onBack, selectedTheme]);
 
   useEffect(() => {
     if (selectedTheme === "custom") {
@@ -64,20 +75,9 @@ export const ThemeSelector = ({ onThemeSelect, onBack }: ThemeSelectorProps) => 
     }
   }, [selectedTheme]);
 
-  const handleSubmit = async () => {
-    if (selectedTheme === "custom" && !customTheme.trim()) return;
-    
-    setIsGenerating(true);
-    try {
-      await onThemeSelect(selectedTheme === "custom" ? customTheme : selectedTheme);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
   const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && customTheme.trim()) {
-      handleSubmit();
+      void handleSubmit();
     }
   };
 

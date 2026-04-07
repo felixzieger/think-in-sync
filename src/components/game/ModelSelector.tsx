@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useContext } from "react";
-import { LanguageContext } from "@/contexts/LanguageContext";
+import { LanguageContext } from "@/contexts/language-context";
 import { ArrowLeft } from "lucide-react";
 import { modelNames } from "@/lib/modelNames";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/auth-context";
 import { Link } from "react-router-dom";
 import {
   Select,
@@ -46,7 +46,7 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
   const { language } = useContext(LanguageContext);
   const { user } = useAuth();
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (!selectedModel) return;
 
     setIsGenerating(true);
@@ -55,7 +55,7 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
     } finally {
       setIsGenerating(false);
     }
-  };
+  }, [customModel, onModelSelect, selectedModel]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -65,11 +65,6 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
       if (e.key === 'backspace') {
         e.preventDefault();
         onBack();
-      }
-
-      // Allow enter to submit if a model is selected
-      if (e.key === 'enter' && selectedModel) {
-        handleSubmit();
       }
 
       // Model selection shortcuts
@@ -89,7 +84,7 @@ export const ModelSelector = ({ onModelSelect, onBack }: ModelSelectorProps) => 
           break;
         case 'enter':
           if (selectedModel) {
-            handleSubmit();
+            void handleSubmit();
           }
           break;
       }

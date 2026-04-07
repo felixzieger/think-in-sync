@@ -106,15 +106,20 @@ async function generateGuess(sentence: string, language: string, model?: string)
     };
   } catch (error) {
     console.error('Error in generateGuess:', error);
+    const message = error instanceof Error ? error.message : String(error);
+
     // Re-throw with more user-friendly message if it's not already a custom error
-    if (!error.message.includes('rate limit')) {
-      throw new Error('Failed to generate guess. Please try again.');
+    if (!message.includes('rate limit')) {
+      throw Object.assign(new Error('Failed to generate guess. Please try again.'), {
+        cause: error,
+      });
     }
+
     throw error;
   }
 }
 
-serve(async (req) => {
+serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -134,12 +139,16 @@ serve(async (req) => {
     Sentry.captureException(error);
     console.error('Error generating guess:', error);
 
+    const message = error instanceof Error
+      ? error.message
+      : 'An unexpected error occurred';
+
     return new Response(
       JSON.stringify({
-        error: error.message || 'An unexpected error occurred',
+        error: message,
       }),
       {
-        status: error.message.includes('rate limit') ? 429 : 500,
+        status: message.includes('rate limit') ? 429 : 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
     );

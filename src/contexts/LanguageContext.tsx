@@ -1,29 +1,26 @@
-import { createContext, useState, useEffect, ReactNode } from 'react';
+import { useState, ReactNode } from 'react';
 import { Language } from '@/i18n/translations';
+import { LanguageContext } from '@/contexts/language-context';
 
-interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
+const supportedLanguages = ['en', 'fr', 'de', 'it', 'es', 'pt'] as const;
+
+function getInitialLanguage(): Language {
+  if (typeof window === 'undefined') {
+    return 'en';
+  }
+
+  const savedLang = localStorage.getItem('language');
+  return supportedLanguages.includes(savedLang as Language)
+    ? (savedLang as Language)
+    : 'en';
 }
-
-export const LanguageContext = createContext<LanguageContextType>({
-  language: 'en',
-  setLanguage: () => { },
-});
 
 interface LanguageProviderProps {
   children: ReactNode;
 }
 
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
-  const [language, setLanguage] = useState<Language>('en');
-
-  useEffect(() => {
-    const savedLang = localStorage.getItem('language') as Language;
-    if (savedLang && ['en', 'fr', 'de', 'it', 'es', 'pt'].includes(savedLang)) {
-      setLanguage(savedLang);
-    }
-  }, []);
+  const [language, setLanguage] = useState<Language>(getInitialLanguage);
 
   const handleSetLanguage = (lang: Language) => {
     setLanguage(lang);

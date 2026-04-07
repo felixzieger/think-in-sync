@@ -1,7 +1,6 @@
-
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/auth-context";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { LogIn, LogOut, User } from "lucide-react";
@@ -12,11 +11,11 @@ export const UserMenu = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const t = useTranslation();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   if (!mounted) return null;
 

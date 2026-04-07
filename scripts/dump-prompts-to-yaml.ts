@@ -25,6 +25,8 @@ interface PromptFile {
   }[];
 }
 
+type PromptTemplate = Record<string, string>;
+
 // Function to extract prompts from a file
 function extractPromptsFromFile(filePath: string): Record<string, PromptFile> {
   try {
@@ -39,10 +41,10 @@ function extractPromptsFromFile(filePath: string): Record<string, PromptFile> {
     }
 
     const languagePromptsStr = languagePromptsMatch[1];
-    const languagePrompts = eval(`(${languagePromptsStr})`);
+    const languagePrompts = eval(`(${languagePromptsStr})`) as Record<string, PromptTemplate>;
 
     // For each language, create a prompt file
-    Object.entries(languagePrompts).forEach(([lang, promptData]: [string, any]) => {
+    Object.entries(languagePrompts).forEach(([lang, promptData]) => {
       let userContent: string;
       
       // Handle different prompt structures
@@ -107,7 +109,7 @@ async function main() {
 
     // Get all function directories
     const functionDirs = fs.readdirSync(functionsDir)
-      .filter(dir => fs.statSync(path.join(functionsDir, dir)).isDirectory());
+      .filter((dir: string) => fs.statSync(path.join(functionsDir, dir)).isDirectory());
 
     // Process each function
     for (const dir of functionDirs) {

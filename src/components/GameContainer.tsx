@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, useEffect, useContext } from "react";
+import { useState, KeyboardEvent, useEffect, useContext, useCallback } from "react";
 import { useSearchParams, useParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/aiService";
@@ -13,7 +13,7 @@ import { GuessDisplay } from "./game/GuessDisplay";
 import { GameReview } from "./game/GameReview";
 import { GameInvitation } from "./game/GameInvitation";
 import { useTranslation } from "@/hooks/useTranslation";
-import { LanguageContext } from "@/contexts/LanguageContext";
+import { LanguageContext } from "@/contexts/language-context";
 import { supabase } from "@/integrations/supabase/client";
 import { Language } from "@/i18n/translations";
 import { normalizeWord } from "@/lib/wordProcessing";
@@ -79,46 +79,7 @@ export const GameContainer = () => {
     }
   }, [location.pathname, setSearchParams, searchParams]);
 
-  useEffect(() => {
-    if (urlGameId && !gameId) {
-      handleLoadGameFromUrl();
-    }
-  }, [urlGameId]);
-
-  // Removed redundant back-navigation loop when at root with an active game.
-  // The effect above (path === '/') already resets state; no need to re-navigate.
-
-  const handleStartDaily = async () => {
-    try {
-      const dailyGame = await getDailyGame(language);
-      if (dailyGame) {
-        setGameId(dailyGame.game_id);
-        setAiModel("google/gemini-2.5-flash-lite");
-        
-        // Set up game state with data from the daily game
-        setWords(dailyGame.words);
-        setCurrentWordIndex(0);
-        setCurrentTheme(dailyGame.theme);
-        
-        // Create session
-        const newSessionId = await createSession(dailyGame.game_id);
-        setSessionId(newSessionId);
-        
-        // Set game state and navigate
-        setGameState("building-sentence");
-        navigate(`/game/${dailyGame.game_id}`);
-      }
-    } catch (error) {
-      console.error('Error starting daily game:', error);
-      toast({
-        title: "Error",
-        description: "Failed to start the daily challenge. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleLoadGameFromUrl = async () => {
+  const handleLoadGameFromUrl = useCallback(async () => {
     if (!urlGameId) return;
 
     try {
@@ -153,6 +114,45 @@ export const GameContainer = () => {
         variant: "destructive",
       });
       navigate('/');
+    }
+  }, [navigate, setLanguage, toast, urlGameId]);
+
+  useEffect(() => {
+    if (urlGameId && !gameId) {
+      void handleLoadGameFromUrl();
+    }
+  }, [gameId, handleLoadGameFromUrl, urlGameId]);
+
+  // Removed redundant back-navigation loop when at root with an active game.
+  // The effect above (path === '/') already resets state; no need to re-navigate.
+
+  const handleStartDaily = async () => {
+    try {
+      const dailyGame = await getDailyGame(language);
+      if (dailyGame) {
+        setGameId(dailyGame.game_id);
+        setAiModel("google/gemini-2.5-flash-lite");
+        
+        // Set up game state with data from the daily game
+        setWords(dailyGame.words);
+        setCurrentWordIndex(0);
+        setCurrentTheme(dailyGame.theme);
+        
+        // Create session
+        const newSessionId = await createSession(dailyGame.game_id);
+        setSessionId(newSessionId);
+        
+        // Set game state and navigate
+        setGameState("building-sentence");
+        navigate(`/game/${dailyGame.game_id}`);
+      }
+    } catch (error) {
+      console.error('Error starting daily game:', error);
+      toast({
+        title: "Error",
+        description: "Failed to start the daily challenge. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -449,7 +449,6 @@ export const GameContainer = () => {
             currentTheme={currentTheme}
             fromSession={fromSession}
             words={words}
-            guessSequence={guessSequence}
           />
         )}
       </motion.div>

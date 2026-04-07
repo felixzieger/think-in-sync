@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/button";
@@ -97,38 +97,9 @@ export const GameReview = ({
     }
   }, [sessionId, fromSession]);
 
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      // Only handle Enter key if high scores dialog is not open
-      if (e.key === 'Enter' && !showHighScores) {
-        handlePlayAgain();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [showHighScores]); // Add showHighScores to dependencies
-
-  const handleCopyUrl = async () => {
+  const handlePlayAgain = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(shareUrl);
-      toast({
-        title: t.game.review.urlCopied,
-        description: t.game.review.urlCopiedDesc,
-      });
-    } catch (err) {
-      console.error('Failed to copy URL:', err);
-      toast({
-        title: t.game.review.urlCopyError,
-        description: t.game.review.urlCopyErrorDesc,
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handlePlayAgain = async () => {
-    try {
-      const { data: session, error } = await supabase
+      const { error } = await supabase
         .from('sessions')
         .insert({
           game_id: gameId
@@ -144,6 +115,34 @@ export const GameReview = ({
       toast({
         title: "Error",
         description: "Failed to restart the game. Please try again.",
+        variant: "destructive",
+      });
+    }
+  }, [fromSession, gameId, onPlayAgain, toast]);
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && !showHighScores) {
+        void handlePlayAgain();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [handlePlayAgain, showHighScores]);
+
+  const handleCopyUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      toast({
+        title: t.game.review.urlCopied,
+        description: t.game.review.urlCopiedDesc,
+      });
+    } catch (err) {
+      console.error('Failed to copy URL:', err);
+      toast({
+        title: t.game.review.urlCopyError,
+        description: t.game.review.urlCopyErrorDesc,
         variant: "destructive",
       });
     }

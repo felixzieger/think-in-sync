@@ -12,12 +12,16 @@ export const getDailyGame = async (language: string = 'en'): Promise<DailyGameDa
 
   try {
     // First try to get a daily challenge in the user's language
-    let { data: dailyChallenge, error } = await supabase
+    const { data: initialDailyChallenge, error: dailyChallengeError } = await supabase
       .from('daily_challenges')
       .select('game_id, games!inner(words, theme, language)')
       .eq('is_active', true)
       .eq('games.language', language)
       .maybeSingle();
+
+    if (dailyChallengeError) throw dailyChallengeError;
+
+    let dailyChallenge = initialDailyChallenge;
 
     // If no challenge exists in user's language, fall back to English
     if (!dailyChallenge) {

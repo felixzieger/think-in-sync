@@ -48,6 +48,9 @@ export const de = {
       urlCopyErrorDesc: "Bitte versuche die URL manuell zu kopieren",
       youWin: "Du hast gewonnen!",
       youLost: "Du hast verloren!",
+      correct: "Richtig",
+      wrong: "Falsch",
+      total: "Gesamt",
       friendScore: (score: number, avgWords: string) =>
         `Die Person, die dich herausgefordert hat, hat ${score} Runden erfolgreich mit durchschnittlich ${avgWords} Wörtern abgeschlossen.`,
       word: "Wort",

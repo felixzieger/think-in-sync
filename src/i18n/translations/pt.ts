@@ -48,6 +48,9 @@ export const pt = {
             urlCopyErrorDesc: "Por favor, tente copiar a URL manualmente",
             youWin: "Você ganhou!",
             youLost: "Você perdeu!",
+            correct: "Correto",
+            wrong: "Errado",
+            total: "Total",
             friendScore: (score: number, avgWords: string) =>
                 `A pessoa que te desafiou completou ${score} rodadas com sucesso com uma média de ${avgWords} palavras.`,
             word: "Palavra",
