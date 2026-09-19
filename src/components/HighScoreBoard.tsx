@@ -9,7 +9,7 @@ import { ScoresTable } from "./game/leaderboard/ScoresTable";
 import { LeaderboardHeader } from "./game/leaderboard/LeaderboardHeader";
 import { LeaderboardPagination } from "./game/leaderboard/LeaderboardPagination";
 import { getDailyGames } from "@/services/dailyGameService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 interface HighScore {
   id: string;

@@ -1,5 +1,5 @@
 import { useState, KeyboardEvent, useEffect, useContext, useCallback } from "react";
-import { useSearchParams, useParams, useNavigate, useLocation } from "react-router-dom";
+import { useSearchParams, useParams, useNavigate, useLocation } from "react-router";
 import { motion } from "framer-motion";
 import { generateAIResponse, guessWord } from "@/services/aiService";
 import { createGame, createSession } from "@/services/gameService";

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { CreditsContent } from "@/components/game/welcome/CreditsContent";
 
 const Credits = () => {

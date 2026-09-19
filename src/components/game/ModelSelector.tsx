@@ -7,7 +7,7 @@ import { LanguageContext } from "@/contexts/language-context";
 import { ArrowLeft } from "lucide-react";
 import { modelNames } from "@/lib/modelNames";
 import { useAuth } from "@/contexts/auth-context";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import {
   Select,
   SelectContent,

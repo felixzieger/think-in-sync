@@ -13,7 +13,7 @@ import { HighScoreBoard } from "@/components/HighScoreBoard";
 import { GameDetailsView } from "@/components/admin/GameDetailsView";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router";
 import { RoundHeader } from "./sentence-builder/RoundHeader";
 
 interface GameReviewProps {
